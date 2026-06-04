@@ -11,7 +11,7 @@ Kiwoom-Github-Active-Project/
 ├── kiwoom/              # 런타임 패키지
 ├── examples/            # API 예제 코드
 ├── examples_prove/      # 예제 실행 증적
-├── generator/           # 각종 자동 생성기 (예제 코드, Postman 등)
+├── utils/               # 각종 자동 생성기 (예제 코드, Postman 등)
 ├── convention/          # 코드 컨벤션 문서
 └── postman/             # Postman Collection
 ```
@@ -45,7 +45,7 @@ examples/
 
 `examples/`를 실행한 출력 결과를 API별 `.txt` 파일로 저장합니다.
 
-### `generator/`
+### `utils/`
 
 > API가 수십~수백 개이므로 수작업 시 실수와 비효율이 발생합니다. 스펙으로부터 일괄 생성하여 일관성과 작업 효율을 확보하기 위해 만들었습니다.
 
