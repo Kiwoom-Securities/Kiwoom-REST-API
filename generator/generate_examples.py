@@ -1,7 +1,7 @@
 """Generate runnable Kiwoom examples directly from the official workbook.
 
 This v2 generator is intentionally self-contained. It does not import the
-legacy ``utils`` package and does not require intermediate ``api_list.csv`` or
+legacy ``generator`` package and does not require intermediate ``api_list.csv`` or
 ``kiwoom_api_spec.json`` files.
 """
 
@@ -30,9 +30,9 @@ for _path in (ROOT, SRC_ROOT):
         sys.path.insert(0, path_text)
 
 DEFAULT_XLSX = ROOT / "키움 REST API 문서.xlsx"
-DEFAULT_OUTPUT_DIR = ROOT / "Examples"
-DEFAULT_MAPPING_PATH = ROOT / "utils_v2" / "function_name_map.csv"
-DEFAULT_REPORT_PATH = ROOT / "utils_v2" / "examples_generation_report.json"
+DEFAULT_OUTPUT_DIR = ROOT / "examples"
+DEFAULT_MAPPING_PATH = ROOT / "generator" / "function_name_map.csv"
+DEFAULT_REPORT_PATH = ROOT / "generator" / "examples_generation_report.json"
 
 SECTION_KEYS = ("Request", "Response", "Request Example", "Response Example")
 TEMPLATE_KINDS = frozenset({"rest", "oauth", "websocket_request_once", "websocket_realtime"})

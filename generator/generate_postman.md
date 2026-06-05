@@ -1,6 +1,6 @@
 # generate_postman.py 구조 설명
 
-`generate_postman.py`는 키움 REST API 원천 `xlsx` 파일을 입력받아 Postman Collection v2.1 JSON을 직접 생성하는 단일 실행파일입니다. 기존 `utils` 패키지를 import하지 않으며, `api_list.csv`나 `kiwoom_api_spec.json` 같은 중간 산출물을 필수 입력으로 사용하지 않습니다.
+`generate_postman.py`는 키움 REST API 원천 `xlsx` 파일을 입력받아 Postman Collection v2.1 JSON을 직접 생성하는 단일 실행파일입니다. 레거시 생성기 패키지를 import하지 않으며, `api_list.csv`나 `kiwoom_api_spec.json` 같은 중간 산출물을 필수 입력으로 사용하지 않습니다.
 
 ## 실행 흐름
 
@@ -40,7 +40,7 @@ CLI 진입점은 파일 하단의 `_parse_args()`와 `main()`입니다.
 
 ### 2. 기본 Postman 설정
 
-`utils_v2/postman_collection_config.json`이 기본 config 파일입니다.
+`generator/postman_collection_config.json`이 기본 config 파일입니다.
 `default_postman_config()`는 해당 파일이 없거나 config 항목이 비어 있을 때 적용되는 기본 정책입니다.
 
 기본 설정:
@@ -61,7 +61,7 @@ CLI 진입점은 파일 하단의 `_parse_args()`와 `main()`입니다.
 
 주의:
 
-- `--config`를 생략하면 `utils_v2/postman_collection_config.json`을 사용합니다.
+- `--config`를 생략하면 `generator/postman_collection_config.json`을 사용합니다.
 - config 파일이 없어도 동작해야 하므로 fallback 기본 정책은 이 함수 안에 완결되어 있어야 합니다.
 
 ### 3. xlsx 파싱
@@ -115,7 +115,7 @@ CLI 진입점은 파일 하단의 `_parse_args()`와 `main()`입니다.
 
 주의:
 
-- `--config`를 생략하면 `utils_v2/postman_collection_config.json`을 사용하고, 다른 파일을 넘기면 해당 파일이 기본 config를 대체/보강합니다.
+- `--config`를 생략하면 `generator/postman_collection_config.json`을 사용하고, 다른 파일을 넘기면 해당 파일이 기본 config를 대체/보강합니다.
 - 기본값을 완전히 대체하는 항목과 기본값에 merge되는 항목을 구분해야 합니다.
 - 현재 `request_value_overrides.by_field`는 기본값 위에 override를 덮어씁니다.
 
@@ -320,10 +320,10 @@ Postman pre-request/test script를 만드는 섹션입니다.
 현재 주요 옵션:
 
 ```bash
-uv run utils_v2/generate_postman.py workbook.xlsx
-uv run utils_v2/generate_postman.py workbook.xlsx --out postman/kiwoom-openapi.postman_collection.json
-uv run utils_v2/generate_postman.py workbook.xlsx --config custom_postman_config.json
-uv run utils_v2/generate_postman.py workbook.xlsx --no-report
+uv run python generator/generate_postman.py workbook.xlsx
+uv run python generator/generate_postman.py workbook.xlsx --out postman/kiwoom-openapi.postman_collection.json
+uv run python generator/generate_postman.py workbook.xlsx --config custom_postman_config.json
+uv run python generator/generate_postman.py workbook.xlsx --no-report
 ```
 
 수정 포인트:
@@ -344,10 +344,10 @@ uv run utils_v2/generate_postman.py workbook.xlsx --no-report
 
 ## 금지된 방향
 
-`utils_v2`는 다음 방향을 피해야 합니다.
+`generator`는 다음 방향을 피해야 합니다.
 
-- 기존 `utils` 모듈 import
-- 기존 Postman generator wrapper 호출
+- 레거시 생성기 모듈 import
+- 레거시 Postman generator wrapper 호출
 - 중간 `api_list.csv`, `kiwoom_api_spec.json`을 필수 입력으로 되돌리기
 - 파일 끝에 임시 patch/appending 코드 추가
 - request builder를 작은 adapter 함수들로 불필요하게 감싸기

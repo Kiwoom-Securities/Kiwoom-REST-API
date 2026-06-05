@@ -1,7 +1,7 @@
 """Generate a Postman collection directly from the official Kiwoom workbook.
 
 This v2 generator is a standalone implementation. It does not import legacy
-``utils`` modules and does not require ``api_list.csv`` or
+``generator`` modules and does not require ``api_list.csv`` or
 ``kiwoom_api_spec.json`` as intermediate inputs.
 """
 
@@ -30,8 +30,8 @@ for _path in (ROOT, SRC_ROOT):
         sys.path.insert(0, path_text)
 
 DEFAULT_OUTPUT_PATH = ROOT / "postman" / "kiwoom-openapi.postman_collection.json"
-DEFAULT_CONFIG_PATH = ROOT / "utils_v2" / "postman_collection_config.json"
-DEFAULT_REPORT_PATH = ROOT / "utils_v2" / "generate_postman_report.json"
+DEFAULT_CONFIG_PATH = ROOT / "generator" / "postman_collection_config.json"
+DEFAULT_REPORT_PATH = ROOT / "generator" / "generate_postman_report.json"
 POSTMAN_SCHEMA = "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 SECTION_KEYS = ("Request", "Response", "Request Example", "Response Example")
 REQUIRED_STATIC_VARIABLES = (
