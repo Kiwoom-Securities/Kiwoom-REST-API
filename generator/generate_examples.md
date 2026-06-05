@@ -1,6 +1,6 @@
 # generate_examples.py 구조 설명
 
-`generate_examples.py`는 키움 REST API 원천 `xlsx` 파일을 입력받아 실행 가능한 Python 예제 파일을 직접 생성하는 단일 실행파일입니다. 기존 `utils` 패키지를 import하지 않으며, `api_list.csv`나 `kiwoom_api_spec.json` 같은 중간 산출물을 필수 입력으로 사용하지 않습니다.
+`generate_examples.py`는 키움 REST API 원천 `xlsx` 파일을 입력받아 실행 가능한 Python 예제 파일을 직접 생성하는 단일 실행파일입니다. 레거시 생성기 패키지를 import하지 않으며, `api_list.csv`나 `kiwoom_api_spec.json` 같은 중간 산출물을 필수 입력으로 사용하지 않습니다.
 
 ## 실행 흐름
 
@@ -12,7 +12,7 @@ xlsx
   -> validate_mapping()
   -> generate_examples()
   -> render_*_example()
-  -> Examples/**/*.py
+  -> examples/**/*.py
 ```
 
 CLI 진입점은 파일 하단의 `_parse_args()`와 `main()`입니다.
@@ -92,7 +92,7 @@ CLI 진입점은 파일 하단의 `_parse_args()`와 `main()`입니다.
 
 수정 포인트:
 
-- 기본 mapping 파일은 `utils_v2/function_name_map.csv`입니다.
+- 기본 mapping 파일은 `generator/function_name_map.csv`입니다.
 - 최신 함수명은 이 mapping 파일의 `function_name` 컬럼에 반영되어 있습니다.
 - `function_name_map.csv` 포맷을 바꾸려면 `MAPPING_COLUMNS`와 `load_mapping()`을 봅니다.
 - 임시 함수명 override 옵션을 바꾸려면 `FUNCTION_NAME_OVERRIDE_COLUMNS`와 `apply_function_name_overrides()`를 봅니다.
@@ -101,7 +101,7 @@ CLI 진입점은 파일 하단의 `_parse_args()`와 `main()`입니다.
 
 주의:
 
-- `--mapping`을 생략하면 `utils_v2/function_name_map.csv`를 사용합니다.
+- `--mapping`을 생략하면 `generator/function_name_map.csv`를 사용합니다.
 - `--function-name-overrides`는 별도 임시 override가 필요할 때만 명시합니다.
 - 기본 mapping 파일을 제거하거나 다른 경로를 넘기면 `default_mapping_entry()` 기준 자동 생성/커스텀 mapping으로 동작할 수 있습니다.
 - examples 생성 정책만 다루며 Postman 생성기와 공유하지 않습니다.
@@ -259,10 +259,10 @@ WebSocket 관련 renderer는 세 종류입니다.
 현재 주요 옵션:
 
 ```bash
-uv run utils_v2/generate_examples.py workbook.xlsx --out Examples
-uv run utils_v2/generate_examples.py workbook.xlsx --kind rest --kind oauth
-uv run utils_v2/generate_examples.py workbook.xlsx --mapping custom_function_name_map.csv
-uv run utils_v2/generate_examples.py workbook.xlsx --function-name-overrides custom_function_name_overrides.csv
+uv run python generator/generate_examples.py workbook.xlsx --out examples
+uv run python generator/generate_examples.py workbook.xlsx --kind rest --kind oauth
+uv run python generator/generate_examples.py workbook.xlsx --mapping custom_function_name_map.csv
+uv run python generator/generate_examples.py workbook.xlsx --function-name-overrides custom_function_name_overrides.csv
 ```
 
 수정 포인트:
@@ -283,10 +283,10 @@ uv run utils_v2/generate_examples.py workbook.xlsx --function-name-overrides cus
 
 ## 금지된 방향
 
-`utils_v2`는 다음 방향을 피해야 합니다.
+`generator`는 다음 방향을 피해야 합니다.
 
-- 기존 `utils` 모듈 import
-- 기존 generator wrapper 호출
+- 레거시 생성기 모듈 import
+- 레거시 generator wrapper 호출
 - 중간 `api_list.csv`, `kiwoom_api_spec.json`을 필수 입력으로 되돌리기
 - 파일 끝에 임시 patch/appending 코드 추가
 - 사용처가 하나뿐인 adapter layer 추가
