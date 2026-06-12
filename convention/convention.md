@@ -47,13 +47,17 @@ examples/
 - `create_`: 생성, 발급
 - `delete_`: 삭제, 폐기
 - `buy_`, `sell_`, `modify_`, `cancel_`: 주문 계열 동작
-- `request_`: 조건검색 등 요청 성격이 강한 WebSocket 단건 요청
+- `request_`: 조건검색 등 요청 성격이 강한 WebSocket 호출
 - `subscribe_`: 실시간 WebSocket 구독
 
 WebSocket 실시간 예제는 사용 패턴에 따라 suffix를 붙일 수 있다.
 
 - `_async`: 실시간 메시지를 직접 수신해 DataFrame 또는 JSON 형태로 반환하는 예제
 - `_pubsub`: 수신 메시지를 in-process Pub/Sub 구조로 분배하는 예제
+
+suffix는 `template` 값과 무관하다. `_async`와 `_pubsub`는 모두 `template: websocket_realtime`을 사용하며, suffix는 같은 실시간 템플릿의 사용 패턴 차이만 나타낸다.
+
+조건검색 실시간(CNSRREQ 실시간)은 도메인 용어 보존을 위해 `request_` 접두어를 유지하되, 실제로는 `websocket_realtime` 템플릿과 `_async`/`_pubsub` 변형을 가진다. 즉 `request_` 접두어가 항상 단건 요청을 의미하지는 않는다.
 
 ---
 
@@ -75,7 +79,8 @@ WebSocket 실시간 예제는 사용 패턴에 따라 suffix를 붙일 수 있�
 
 ## 5. 프론트매터
 
-모든 예제 파일은 최상단에 YAML 스타일 주석 블록을 둔다.
+모든 예제 파일은 파일 상단에 YAML 스타일 주석 블록을 둔다.
+단, 수동 생성 마커가 있는 경우 마커 주석이 프론트매터 위에 올 수 있다. (이 절 하단 "수동 생성 마커" 참고)
 
 ```python
 # ---
@@ -105,6 +110,26 @@ WebSocket 실시간 예제는 사용 패턴에 따라 suffix를 붙일 수 있�
 - `oauth`
 - `websocket_request_once`
 - `websocket_realtime`
+
+`_async`/`_pubsub` suffix는 별도 template 값을 두지 않으며, 자세한 내용은 3절을 참고한다.
+
+### 수동 생성 마커
+
+자동 생성으로 다루기 어려워 수동 검수가 필요한 API는 프론트매터 바로 위에 마커 주석을 둔다.
+예를 들어 조건검색 요청(CNSRREQ)은 같은 WebSocket 연결에서 CNSRLST를 선행 호출해야 안정적으로 응답하므로 수동 생성 대상이다.
+
+```python
+# 수동 생성 필요: CNSRREQ는 같은 WebSocket 연결에서 CNSRLST 선행 호출 후 요청해야 안정적으로 응답합니다.
+# generator marker: MANUAL_REQUIRED_API_IDS
+# ---
+# api_id: ka10172
+# ...
+# ---
+```
+
+- 첫 줄은 수동 생성이 필요한 이유를 사람이 읽을 수 있게 적는다.
+- 둘째 줄 `# generator marker: MANUAL_REQUIRED_API_IDS`는 생성기가 인식하는 고정 마커이다.
+- 마커 주석은 항상 프론트매터 위에 두며, 임의로 제거하지 않는다.
 
 ---
 
@@ -228,7 +253,7 @@ NUMERIC_COLUMNS = (
 
 ## 8. 표시용 Helper
 
-DataFrame을 출력하는 예제는 `_format_display()`와 `_format_display_value()`를 포함한다.
+REST, OAuth, WebSocket 단건 요청 예제처럼 DataFrame을 사람이 읽기 좋게 출력하는 예제는 `_format_display()`와 `_format_display_value()`를 함께 둔다.
 
 ```python
 def _format_display(df: pd.DataFrame) -> pd.DataFrame:
@@ -243,7 +268,7 @@ def _format_display_value(value: object) -> object:
 - `NUMERIC_COLUMNS`에 포함된 컬럼만 표시용 천 단위 콤마 포맷을 적용한다.
 - 코드 실행 결과를 사람이 읽기 쉽게 보여주기 위한 helper이며, API 응답 의미를 바꾸지 않는다.
 
-WebSocket Pub/Sub 예제처럼 DataFrame을 만들지 않는 파일은 표시용 helper를 생략할 수 있다.
+WebSocket 실시간 수신 예제는 표시 포맷보다 수신 구조가 중요하므로 `_format_display()`만 두거나(단순 복사) 생략할 수 있으며, 이 경우 `_format_display_value()`는 두지 않는다. Pub/Sub 예제처럼 DataFrame을 만들지 않는 파일은 표시용 helper를 모두 생략할 수 있다.
 
 ---
 
@@ -367,10 +392,16 @@ WebSocket 단건 요청 예제는 `template: websocket_request_once`를 사용�
 기본 규칙은 다음과 같다.
 
 - `async def` 대표 함수를 사용한다.
-- `get_ws_client().request_once(api_url=API_URL, body=body)`로 요청한다.
+- 단순 단건 요청은 `get_ws_client().request_once(api_url=API_URL, body=body)`로 요청한다. (예: `list_domestic_condition_searches`)
 - `output: Literal["dataframe", "json"] = "dataframe"` 파라미터를 둔다.
 - `output == "json"`이면 원본 응답 dict를 반환한다.
 - DataFrame 출력이 필요한 경우 REST 예제와 동일하게 `TABLE_KEYS`, `COLUMNS`, `SUMMARY_COLUMNS`, `_format_display()`를 사용할 수 있다.
+
+선행 호출이 필요한 API는 `request_once()` 대신 같은 연결을 유지하는 패턴을 사용한다.
+
+- 예: 조건검색 요청(CNSRREQ)은 같은 연결에서 CNSRLST를 먼저 호출해야 한다.
+- `await client.connect(api_url=API_URL)`로 연결을 연 뒤, 송수신을 묶은 `_send_and_receive()` helper로 CNSRLST → CNSRREQ를 순차 호출한다.
+- 이 경우 `request_once()`를 사용하지 않으며, 이런 파일은 수동 생성 마커를 둔다. (5절 참고)
 
 실행 블록은 `asyncio.run(main())`을 사용한다.
 
@@ -433,12 +464,21 @@ def build_realtime_reg_packet(
 
 FID 기반 실시간 데이터는 `decode_values()`를 사용해 사람이 읽을 수 있는 key로 변환할 수 있다.
 
+조건검색 실시간(CNSRREQ 실시간)처럼 초기 조회 데이터와 실시간 데이터가 분리되어 도착하는 예제는 결과 key를 더 세분화한다.
+
+- 조건검색식 목록, 조회데이터, 실시간데이터, 시스템메시지, 요약처럼 단계별로 key를 나눈다.
+- 같은 연결에서 CNSRLST를 먼저 호출한 뒤 CNSRREQ로 실시간 등록을 한다.
+- 종료 시 CNSRCLR로 실시간 등록을 해제하고 연결을 닫는다.
+- 이런 파일도 수동 생성 마커를 둔다. (5절 참고)
+
 ---
 
-## 14. WebSocket Pub/Sub 템플릿
+## 14. WebSocket Pub/Sub 변형
 
 Pub/Sub 예제는 WebSocket 수신 메시지를 여러 소비자에게 분배하는 구조를 보여준다.
 실전 인프라가 아니라 샘플코드 안에서 이해 가능한 in-process 구조를 사용한다.
+
+Pub/Sub는 별도 frontmatter `template` 값이 아니라 `websocket_realtime`의 한 변형이며, 대표 함수명에 `_pubsub` suffix를 붙여 구분한다.
 
 기본 규칙은 다음과 같다.
 
@@ -448,6 +488,18 @@ Pub/Sub 예제는 WebSocket 수신 메시지를 여러 소비자에게 분배하
 - publisher는 WebSocket 메시지를 topic별 queue로 publish한다.
 - 예시 subscriber는 전략 로직과 로그/저장 로직처럼 역할을 나눠 보여준다.
 - 대표 함수명은 `_pubsub` suffix를 사용한다.
+
+topic은 `kiwoom.` 네임스페이스로 구분한다.
+
+| topic | 용도 |
+| --- | --- |
+| `kiwoom.realtime.{type}` | 실시간(REAL) 데이터, 실시간 타입별 분기 |
+| `kiwoom.realtime` | 타입을 판별할 수 없는 실시간 데이터 |
+| `kiwoom.system.reg` | 등록(REG) 응답 |
+| `kiwoom.system` | 시스템(SYSTEM) 메시지 |
+| `kiwoom.system.{trnm}` | 기타 trnm 시스템 메시지 (trnm은 소문자로 정규화) |
+| `kiwoom.raw` | dict가 아닌 원본 메시지 등 분류 불가 메시지 |
+| `kiwoom.all` | 모든 메시지를 받는 통합 topic |
 
 Pub/Sub 예제의 대표 함수는 반환값보다 실행 구조 설명이 중요하므로 `-> None`을 사용할 수 있다.
 
@@ -511,34 +563,12 @@ if __name__ == "__main__":
 
 ## 16. 응답 구조별 반환 규칙
 
-플랫 응답은 하나의 DataFrame으로 반환한다.
+상수 정의는 7절을 따르고, 이 절은 응답 구조에 따른 반환 형태만 정리한다.
 
-```python
-TABLE_KEYS = {}
-```
-
-테이블 응답은 table key별 DataFrame dict로 반환한다.
-
-```python
-TABLE_KEYS = {
-    "daly_trde_dtl": "일별거래상세"
-}
-```
-
-테이블 + 요약 응답은 `SUMMARY_KEY`를 앞에 두고, 그 뒤에 테이블 DataFrame을 둔다.
-
-```python
-SUMMARY_KEY = "요약"
-SUMMARY_COLUMNS = {
-    ...
-}
-```
-
-REST 예제에서 응답 메시지가 존재하면 `MESSAGE_KEY`가 가장 앞에 올 수 있다.
-
-```python
-MESSAGE_KEY = "메시지"
-```
+- 플랫 응답(`TABLE_KEYS = {}`): 하나의 `pd.DataFrame`으로 반환한다.
+- 테이블 응답: table key별 `pd.DataFrame` dict로 반환한다.
+- 테이블 + 요약 응답: `SUMMARY_KEY`를 가장 앞에 두고, 그 뒤에 테이블 DataFrame을 둔다.
+- REST 응답 메시지가 존재하면 `MESSAGE_KEY`가 결과 dict의 가장 앞에 올 수 있다.
 
 WebSocket 실시간 수신 예제는 시스템 메시지와 실시간 데이터를 구분해 반환할 수 있다.
 
@@ -558,6 +588,7 @@ WebSocket 실시간 수신 예제는 시스템 메시지와 실시간 데이터�
 샘플코드의 주석은 사용자가 코드를 변형할 때 기준이 되는 설명이다.
 
 - 프론트매터는 제거하지 않는다.
+- 수동 생성 마커(`# generator marker: MANUAL_REQUIRED_API_IDS`)는 제거하지 않는다.
 - 인증, 출력, API 호출, 결과 출력 주석은 유지한다.
 - REST 함수 내부의 번호 주석은 유지한다.
 - WebSocket 자동 처리 설명 주석은 유지한다.

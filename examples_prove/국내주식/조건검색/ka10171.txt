@@ -1,0 +1,12 @@
+INFO:kiwoom.core.ws_client:websocket connecting: wss://api.kiwoom.com:10000/api/dostk/websocket
+INFO:kiwoom.core.ws_client:websocket connected
+INFO:kiwoom.core.ws_client:websocket sending LOGIN packet
+INFO:kiwoom.core.ws_client:websocket login acknowledged
+INFO:kiwoom.core.ws_client:websocket sent request
+INFO:kiwoom.core.ws_client:websocket received message
+INFO:kiwoom.core.ws_client:websocket received response
+INFO:kiwoom.core.ws_client:websocket closed
+조건검색식 목록 조건검색식 일련번호      조건검색식 명
+         0      조건 TEST
+         1    조건 TEST 2
+         2 testtesttest
