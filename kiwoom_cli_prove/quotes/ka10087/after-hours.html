@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: transparent; display: flex; justify-content: center; padding: 32px; }
+  .window {
+    background: #282a36;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    min-width: 480px;
+    max-width: 960px;
+    overflow: hidden;
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .titlebar {
+    background: #21222c;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+  .title {
+    flex: 1;
+    text-align: center;
+    color: #bd93f9;
+    font-size: 12px;
+    margin-right: 36px;
+  }
+  .body { padding: 20px 24px; }
+  .meta { color: #6272a4; margin-bottom: 12px; }
+  .meta span { color: #50fa7b; }
+  pre {
+    color: #f8f8f2;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+    <div class="title">kiwoom quotes after-hours</div>
+  </div>
+  <div class="body">
+    <div class="meta"><span>$</span> kiwoom quotes after-hours --code 005930 --format json</div>
+    <div class="meta">mode=read · exit=0 · elapsed=0.43s</div>
+    <pre>{&quot;bid_req_base_tm&quot;:&quot;145048&quot;,&quot;ovt_sigpric_sel_bid_jub_pre_5&quot;:&quot;0&quot;,&quot;ovt_sigpric_sel_bid_jub_pre_4&quot;:&quot;0&quot;,&quot;ovt_sigpric_sel_bid_jub_pre_3&quot;:&quot;0&quot;,&quot;ovt_sigpric_sel_bid_jub_pre_2&quot;:&quot;0&quot;,&quot;ovt_sigpric_sel_bid_jub_pre_1&quot;:&quot;0&quot;,&quot;ovt_sigpric_sel_bid_qty_5&quot;:&quot;0&quot;,&quot;ovt_sigpric_sel_bid_qty_4&quot;:&quot;0&quot;,&quot;ovt_sigpric_sel_bid_qty_3&quot;:&quot;0&quot;,&quot;ovt_sigpric_sel_bid_qty_2&quot;:&quot;0&quot;,&quot;ovt_sigpric_sel_bid_qty_1&quot;:&quot;0&quot;,&quot;ovt_sigpric_sel_bid_5&quot;:&quot;-0&quot;,&quot;ovt_sigpric_sel_bid_4&quot;:&quot;-0&quot;,&quot;ovt_sigpric_sel_bid_3&quot;:&quot;-0&quot;,&quot;ovt_sigpric_sel_bid_2&quot;:&quot;-0&quot;,&quot;ovt_sigpric_sel_bid_1&quot;:&quot;-0&quot;,&quot;ovt_sigpric_buy_bid_1&quot;:&quot;-0&quot;,&quot;ovt_sigpric_buy_bid_2&quot;:&quot;-0&quot;,&quot;ovt_sigpric_buy_bid_3&quot;:&quot;-0&quot;,&quot;ovt_sigpric_buy_bid_4&quot;:&quot;-0&quot;,&quot;ovt_sigpric_buy_bid_5&quot;:&quot;-0&quot;,&quot;ovt_sigpric_buy_bid_qty_1&quot;:&quot;0&quot;,&quot;ovt_sigpric_buy_bid_qty_2&quot;:&quot;0&quot;,&quot;ovt_sigpric_buy_bid_qty_3&quot;:&quot;0&quot;,&quot;ovt_sigpric_buy_bid_qty_4&quot;:&quot;0&quot;,&quot;ovt_sigpric_buy_bid_qty_5&quot;:&quot;0&quot;,&quot;ovt_sigpric_buy_bid_jub_pre_1&quot;:&quot;0&quot;,&quot;ovt_sigpric_buy_bid_jub_pre_2&quot;:&quot;0&quot;,&quot;ovt_sigpric_buy_bid_jub_pre_3&quot;:&quot;0&quot;,&quot;ovt_sigpric_buy_bid_jub_pre_4&quot;:&quot;0&quot;,&quot;ovt_sigpric_buy_bid_jub_pre_5&quot;:&quot;0&quot;,&quot;ovt_sigpric_sel_bid_tot_req&quot;:&quot;0&quot;,&quot;ovt_sigpric_buy_bid_tot_req&quot;:&quot;0&quot;,&quot;sel_bid_tot_req_jub_pre&quot;:&quot;+216&quot;,&quot;sel_bid_tot_req&quot;:&quot;160871&quot;,&quot;buy_bid_tot_req&quot;:&quot;718226&quot;,&quot;buy_bid_tot_req_jub_pre&quot;:&quot;+18&quot;,&quot;ovt_sel_bid_tot_req_jub_pre&quot;:&quot;0&quot;,&quot;ovt_sel_bid_tot_req&quot;:&quot;0&quot;,&quot;ovt_buy_bid_tot_req&quot;:&quot;0&quot;,&quot;ovt_buy_bid_tot_req_jub_pre&quot;:&quot;0&quot;,&quot;ovt_sigpric_cur_prc&quot;:&quot;334000&quot;,&quot;ovt_sigpric_pred_pre_sig&quot;:&quot;0&quot;,&quot;ovt_sigpric_pred_pre&quot;:&quot;0&quot;,&quot;ovt_sigpric_flu_rt&quot;:&quot;0.00&quot;,&quot;ovt_sigpric_acc_trde_qty&quot;:&quot;0&quot;,&quot;return_code&quot;:0,&quot;return_msg&quot;:&quot;정상적으로 처리되었습니다&quot;}</pre>
+  </div>
+</div>
+</body>
+</html>

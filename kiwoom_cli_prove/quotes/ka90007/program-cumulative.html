@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: transparent; display: flex; justify-content: center; padding: 32px; }
+  .window {
+    background: #282a36;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    min-width: 480px;
+    max-width: 960px;
+    overflow: hidden;
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .titlebar {
+    background: #21222c;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+  .title {
+    flex: 1;
+    text-align: center;
+    color: #bd93f9;
+    font-size: 12px;
+    margin-right: 36px;
+  }
+  .body { padding: 20px 24px; }
+  .meta { color: #6272a4; margin-bottom: 12px; }
+  .meta span { color: #50fa7b; }
+  pre {
+    color: #f8f8f2;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+    <div class="title">kiwoom quotes program-cumulative</div>
+  </div>
+  <div class="body">
+    <div class="meta"><span>$</span> kiwoom quotes program-cumulative --date 20260528 --basis amount --market kospi --exchange KRX --format json</div>
+    <div class="meta">mode=read · exit=0 · elapsed=0.38s</div>
+    <pre>{&quot;prm_trde_acc_trnsn&quot;:[{&quot;dt&quot;:&quot;20260701&quot;,&quot;kospi200&quot;:&quot;+1338.09&quot;,&quot;basis&quot;:&quot;9.01&quot;,&quot;dfrt_trde_tdy&quot;:&quot;--182922&quot;,&quot;dfrt_trde_acc&quot;:&quot;+126099&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;--1067934&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--40395436&quot;,&quot;all_tdy&quot;:&quot;--1250857&quot;,&quot;all_acc&quot;:&quot;--40269334&quot;},{&quot;dt&quot;:&quot;20260630&quot;,&quot;kospi200&quot;:&quot;+1370.73&quot;,&quot;basis&quot;:&quot;14.27&quot;,&quot;dfrt_trde_tdy&quot;:&quot;+80537&quot;,&quot;dfrt_trde_acc&quot;:&quot;+309021&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;--2789060&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--39327502&quot;,&quot;all_tdy&quot;:&quot;--2708523&quot;,&quot;all_acc&quot;:&quot;--39018477&quot;},{&quot;dt&quot;:&quot;20260629&quot;,&quot;kospi200&quot;:&quot;+1352.54&quot;,&quot;basis&quot;:&quot;13.96&quot;,&quot;dfrt_trde_tdy&quot;:&quot;+338575&quot;,&quot;dfrt_trde_acc&quot;:&quot;+228484&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;--5150825&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--36538442&quot;,&quot;all_tdy&quot;:&quot;--4812250&quot;,&quot;all_acc&quot;:&quot;--36309954&quot;},{&quot;dt&quot;:&quot;20260626&quot;,&quot;kospi200&quot;:&quot;+1366.49&quot;,&quot;basis&quot;:&quot;19.41&quot;,&quot;dfrt_trde_tdy&quot;:&quot;--387911&quot;,&quot;dfrt_trde_acc&quot;:&quot;--110091&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;--2570103&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--31387617&quot;,&quot;all_tdy&quot;:&quot;--2958014&quot;,&quot;all_acc&quot;:&quot;--31497704&quot;},{&quot;dt&quot;:&quot;20260625&quot;,&quot;kospi200&quot;:&quot;+1454.15&quot;,&quot;basis&quot;:&quot;7.45&quot;,&quot;dfrt_trde_tdy&quot;:&quot;--137269&quot;,&quot;dfrt_trde_acc&quot;:&quot;+277820&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;+1542367&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--28817514&quot;,&quot;all_tdy&quot;:&quot;+1405097&quot;,&quot;all_acc&quot;:&quot;--28539690&quot;},{&quot;dt&quot;:&quot;20260624&quot;,&quot;kospi200&quot;:&quot;+1369.62&quot;,&quot;basis&quot;:&quot;12.23&quot;,&quot;dfrt_trde_tdy&quot;:&quot;--363396&quot;,&quot;dfrt_trde_acc&quot;:&quot;+415089&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;--2758760&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--30359881&quot;,&quot;all_tdy&quot;:&quot;--3122156&quot;,&quot;all_acc&quot;:&quot;--29944787&quot;},{&quot;dt&quot;:&quot;20260623&quot;,&quot;kospi200&quot;:&quot;+1321.70&quot;,&quot;basis&quot;:&quot;18.70&quot;,&quot;dfrt_trde_tdy&quot;:&quot;--93517&quot;,&quot;dfrt_trde_acc&quot;:&quot;+778485&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;--4584824&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--27601121&quot;,&quot;all_tdy&quot;:&quot;--4678341&quot;,&quot;all_acc&quot;:&quot;--26822631&quot;},{&quot;dt&quot;:&quot;20260622&quot;,&quot;kospi200&quot;:&quot;+1477.22&quot;,&quot;basis&quot;:&quot;13.28&quot;,&quot;dfrt_trde_tdy&quot;:&quot;--41931&quot;,&quot;dfrt_trde_acc&quot;:&quot;+872002&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;--2508010&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--23016297&quot;,&quot;all_tdy&quot;:&quot;--2549940&quot;,&quot;all_acc&quot;:&quot;--22144290&quot;},{&quot;dt&quot;:&quot;20260619&quot;,&quot;kospi200&quot;:&quot;+1459.48&quot;,&quot;basis&quot;:&quot;16.02&quot;,&quot;dfrt_trde_tdy&quot;:&quot;+299879&quot;,&quot;dfrt_trde_acc&quot;:&quot;+913933&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;--995702&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--20508287&quot;,&quot;all_tdy&quot;:&quot;--695823&quot;,&quot;all_acc&quot;:&quot;--19594350&quot;},{&quot;dt&quot;:&quot;20260618&quot;,&quot;kospi200&quot;:&quot;+1459.23&quot;,&quot;basis&quot;:&quot;10.87&quot;,&quot;dfrt_trde_tdy&quot;:&quot;--38571&quot;,&quot;dfrt_trde_acc&quot;:&quot;+614054&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;--938322&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--19512585&quot;,&quot;all_tdy&quot;:&quot;--976892&quot;,&quot;all_acc&quot;:&quot;--18898527&quot;},{&quot;dt&quot;:&quot;20260617&quot;,&quot;kospi200&quot;:&quot;+1416.97&quot;,&quot;basis&quot;:&quot;11.88&quot;,&quot;dfrt_trde_tdy&quot;:&quot;--64881&quot;,&quot;dfrt_trde_acc&quot;:&quot;+652625&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;--1434547&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--18574263&quot;,&quot;all_tdy&quot;:&quot;--1499428&quot;,&quot;all_acc&quot;:&quot;--17921635&quot;},{&quot;dt&quot;:&quot;20260616&quot;,&quot;kospi200&quot;:&quot;+1391.74&quot;,&quot;basis&quot;:&quot;11.36&quot;,&quot;dfrt_trde_tdy&quot;:&quot;+4061&quot;,&quot;dfrt_trde_acc&quot;:&quot;+717506&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;+460161&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--17139716&quot;,&quot;all_tdy&quot;:&quot;+464223&quot;,&quot;all_acc&quot;:&quot;--16422207&quot;},{&quot;dt&quot;:&quot;20260615&quot;,&quot;kospi200&quot;:&quot;+1360.26&quot;,&quot;basis&quot;:&quot;15.74&quot;,&quot;dfrt_trde_tdy&quot;:&quot;+648627&quot;,&quot;dfrt_trde_acc&quot;:&quot;+713445&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;--837658&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--17599877&quot;,&quot;all_tdy&quot;:&quot;--189031&quot;,&quot;all_acc&quot;:&quot;--16886430&quot;},{&quot;dt&quot;:&quot;20260612&quot;,&quot;kospi200&quot;:&quot;+1291.32&quot;,&quot;basis&quot;:&quot;8.53&quot;,&quot;dfrt_trde_tdy&quot;:&quot;+784721&quot;,&quot;dfrt_trde_acc&quot;:&quot;+64818&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;+1073520&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--16762219&quot;,&quot;all_tdy&quot;:&quot;+1858241&quot;,&quot;all_acc&quot;:&quot;--16697399&quot;},{&quot;dt&quot;:&quot;20260611&quot;,&quot;kospi200&quot;:&quot;+1231.54&quot;,&quot;basis&quot;:&quot;-5.84&quot;,&quot;dfrt_trde_tdy&quot;:&quot;--422406&quot;,&quot;dfrt_trde_acc&quot;:&quot;--719903&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;--1958171&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--17835739&quot;,&quot;all_tdy&quot;:&quot;--2380577&quot;,&quot;all_acc&quot;:&quot;--18555640&quot;},{&quot;dt&quot;:&quot;20260610&quot;,&quot;kospi200&quot;:&quot;+1227.12&quot;,&quot;basis&quot;:&quot;2.28&quot;,&quot;dfrt_trde_tdy&quot;:&quot;--472079&quot;,&quot;dfrt_trde_acc&quot;:&quot;--297497&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;--1831111&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--15877568&quot;,&quot;all_tdy&quot;:&quot;--2303190&quot;,&quot;all_acc&quot;:&quot;--16175063&quot;},{&quot;dt&quot;:&quot;20260609&quot;,&quot;kospi200&quot;:&quot;+1293.40&quot;,&quot;basis&quot;:&quot;-5.60&quot;,&quot;dfrt_trde_tdy&quot;:&quot;+95471&quot;,&quot;dfrt_trde_acc&quot;:&quot;+174582&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;--1447391&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--14046457&quot;,&quot;all_tdy&quot;:&quot;--1351920&quot;,&quot;all_acc&quot;:&quot;--13871873&quot;},{&quot;dt&quot;:&quot;20260608&quot;,&quot;kospi200&quot;:&quot;+1186.54&quot;,&quot;basis&quot;:&quot;-8.29&quot;,&quot;dfrt_trde_tdy&quot;:&quot;--375683&quot;,&quot;dfrt_trde_acc&quot;:&quot;+79111&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;+1053336&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--12599066&quot;,&quot;all_tdy&quot;:&quot;+677654&quot;,&quot;all_acc&quot;:&quot;--12519953&quot;},{&quot;dt&quot;:&quot;20260605&quot;,&quot;kospi200&quot;:&quot;+1297.02&quot;,&quot;basis&quot;:&quot;1.13&quot;,&quot;dfrt_trde_tdy&quot;:&quot;--117753&quot;,&quot;dfrt_trde_acc&quot;:&quot;+454794&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;--854459&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--13652402&quot;,&quot;all_tdy&quot;:&quot;--972212&quot;,&quot;all_acc&quot;:&quot;--13197607&quot;},{&quot;dt&quot;:&quot;20260604&quot;,&quot;kospi200&quot;:&quot;+1379.56&quot;,&quot;basis&quot;:&quot;1.84&quot;,&quot;dfrt_trde_tdy&quot;:&quot;+136797&quot;,&quot;dfrt_trde_acc&quot;:&quot;+572547&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;--3924862&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--12797943&quot;,&quot;all_tdy&quot;:&quot;--3788065&quot;,&quot;all_acc&quot;:&quot;--12225395&quot;},{&quot;dt&quot;:&quot;20260602&quot;,&quot;kospi200&quot;:&quot;+1407.23&quot;,&quot;basis&quot;:&quot;2.72&quot;,&quot;dfrt_trde_tdy&quot;:&quot;+44464&quot;,&quot;dfrt_trde_acc&quot;:&quot;+435750&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;--4868886&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--8873081&quot;,&quot;all_tdy&quot;:&quot;--4824422&quot;,&quot;all_acc&quot;:&quot;--8437330&quot;},{&quot;dt&quot;:&quot;20260601&quot;,&quot;kospi200&quot;:&quot;+1399.91&quot;,&quot;basis&quot;:&quot;17.79&quot;,&quot;dfrt_trde_tdy&quot;:&quot;+1139&quot;,&quot;dfrt_trde_acc&quot;:&quot;+391286&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;--2152082&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--4004195&quot;,&quot;all_tdy&quot;:&quot;--2150942&quot;,&quot;all_acc&quot;:&quot;--3612908&quot;},{&quot;dt&quot;:&quot;20260529&quot;,&quot;kospi200&quot;:&quot;+1342.82&quot;,&quot;basis&quot;:&quot;7.18&quot;,&quot;dfrt_trde_tdy&quot;:&quot;+398524&quot;,&quot;dfrt_trde_acc&quot;:&quot;+390147&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;+552825&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--1852113&quot;,&quot;all_tdy&quot;:&quot;+951349&quot;,&quot;all_acc&quot;:&quot;--1461966&quot;},{&quot;dt&quot;:&quot;20260528&quot;,&quot;kospi200&quot;:&quot;+1292.57&quot;,&quot;basis&quot;:&quot;1.68&quot;,&quot;dfrt_trde_tdy&quot;:&quot;--8377&quot;,&quot;dfrt_trde_acc&quot;:&quot;--8377&quot;,&quot;ndiffpro_trde_tdy&quot;:&quot;--2404938&quot;,&quot;ndiffpro_trde_acc&quot;:&quot;--2404938&quot;,&quot;all_tdy&quot;:&quot;--2413315&quot;,&quot;all_acc&quot;:&quot;--2413315&quot;}],&quot;return_code&quot;:0,&quot;return_msg&quot;:&quot;정상적으로 처리되었습니다&quot;}</pre>
+  </div>
+</div>
+</body>
+</html>

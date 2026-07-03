@@ -1,5 +1,3 @@
-from collections.abc import Iterator
-import time
 from typing import Any
 
 import requests
@@ -122,48 +120,6 @@ class KiwoomClient:
             extra_headers=extra_headers or None,
         )
 
-    def paginate(
-        self,
-        *,
-        api_url: str | None = None,
-        api: str | None = None,
-        api_id: str | None = None,
-        path: str | None = None,
-        body: dict[str, Any] | None = None,
-        method: str = "POST",
-        max_pages: int | None = None,
-        request_delay_seconds: float = 0,
-    ) -> Iterator[KiwoomResponse]:
-        """연속조회가 끝날 때까지 페이지를 순서대로 yield합니다."""
-        if max_pages is not None and max_pages < 1:
-            raise ValueError("max_pages must be greater than 0")
-        if request_delay_seconds < 0:
-            raise ValueError("request_delay_seconds must be greater than or equal to 0")
-
-        cont_yn: str | None = None
-        next_key: str | None = None
-        page_count = 0
-        while True:
-            response = self.fetch_page(
-                api_url=api_url,
-                api=api,
-                api_id=api_id,
-                path=path,
-                body=body,
-                method=method,
-                cont_yn=cont_yn,
-                next_key=next_key,
-            )
-            yield response
-            page_count += 1
-            if not response.continuation.has_next:
-                break
-            if max_pages is not None and page_count >= max_pages:
-                break
-            cont_yn = response.continuation.cont_yn or "Y"
-            next_key = response.continuation.next_key or ""
-            if request_delay_seconds > 0:
-                time.sleep(request_delay_seconds)
 
 def _validate_extra_headers(extra_headers: dict[str, str] | None) -> None:
     if not extra_headers:

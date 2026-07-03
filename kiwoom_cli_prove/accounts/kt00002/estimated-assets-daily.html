@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: transparent; display: flex; justify-content: center; padding: 32px; }
+  .window {
+    background: #282a36;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    min-width: 480px;
+    max-width: 960px;
+    overflow: hidden;
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .titlebar {
+    background: #21222c;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+  .title {
+    flex: 1;
+    text-align: center;
+    color: #bd93f9;
+    font-size: 12px;
+    margin-right: 36px;
+  }
+  .body { padding: 20px 24px; }
+  .meta { color: #6272a4; margin-bottom: 12px; }
+  .meta span { color: #50fa7b; }
+  pre {
+    color: #f8f8f2;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+    <div class="title">kiwoom accounts estimated-assets-daily</div>
+  </div>
+  <div class="body">
+    <div class="meta"><span>$</span> kiwoom accounts estimated-assets-daily --from 20260501 --to 20260528 --format json</div>
+    <div class="meta">mode=account_read · exit=0 · elapsed=0.40s</div>
+    <pre>{&quot;daly_prsm_dpst_aset_amt_prst&quot;:[{&quot;dt&quot;:&quot;20260511&quot;,&quot;entr&quot;:&quot;099930999764&quot;,&quot;grnt_use_amt&quot;:&quot;000000000000&quot;,&quot;crd_loan&quot;:&quot;000000000000&quot;,&quot;ls_grnt&quot;:&quot;000000000000&quot;,&quot;repl_amt&quot;:&quot;000378487130&quot;,&quot;prsm_dpst_aset_amt&quot;:&quot;000000000000&quot;,&quot;prsm_dpst_aset_amt_bncr_skip&quot;:&quot;000000000000&quot;},{&quot;dt&quot;:&quot;20260512&quot;,&quot;entr&quot;:&quot;099930999764&quot;,&quot;grnt_use_amt&quot;:&quot;000000000000&quot;,&quot;crd_loan&quot;:&quot;000000000000&quot;,&quot;ls_grnt&quot;:&quot;000000000000&quot;,&quot;repl_amt&quot;:&quot;000378487130&quot;,&quot;prsm_dpst_aset_amt&quot;:&quot;000000000000&quot;,&quot;prsm_dpst_aset_amt_bncr_skip&quot;:&quot;000000000000&quot;},{&quot;dt&quot;:&quot;20260513&quot;,&quot;entr&quot;:&quot;099930999764&quot;,&quot;grnt_use_amt&quot;:&quot;000000000000&quot;,&quot;crd_loan&quot;:&quot;000000000000&quot;,&quot;ls_grnt&quot;:&quot;000000000000&quot;,&quot;repl_amt&quot;:&quot;000378487130&quot;,&quot;prsm_dpst_aset_amt&quot;:&quot;000000000000&quot;,&quot;prsm_dpst_aset_amt_bncr_skip&quot;:&quot;000000000000&quot;},{&quot;dt&quot;:&quot;20260514&quot;,&quot;entr&quot;:&quot;099930999764&quot;,&quot;grnt_use_amt&quot;:&quot;000000000000&quot;,&quot;crd_loan&quot;:&quot;000000000000&quot;,&quot;ls_grnt&quot;:&quot;000000000000&quot;,&quot;repl_amt&quot;:&quot;000378487130&quot;,&quot;prsm_dpst_aset_amt&quot;:&quot;000000000000&quot;,&quot;prsm_dpst_aset_amt_bncr_skip&quot;:&quot;000000000000&quot;},{&quot;dt&quot;:&quot;20260515&quot;,&quot;entr&quot;:&quot;099930999764&quot;,&quot;grnt_use_amt&quot;:&quot;000000000000&quot;,&quot;crd_loan&quot;:&quot;000000000000&quot;,&quot;ls_grnt&quot;:&quot;000000000000&quot;,&quot;repl_amt&quot;:&quot;000407901770&quot;,&quot;prsm_dpst_aset_amt&quot;:&quot;000000000000&quot;,&quot;prsm_dpst_aset_amt_bncr_skip&quot;:&quot;000000000000&quot;},{&quot;dt&quot;:&quot;20260516&quot;,&quot;entr&quot;:&quot;099930999764&quot;,&quot;grnt_use_amt&quot;:&quot;000000000000&quot;,&quot;crd_loan&quot;:&quot;000000000000&quot;,&quot;ls_grnt&quot;:&quot;000000000000&quot;,&quot;repl_amt&quot;:&quot;000407901770&quot;,&quot;prsm_dpst_aset_amt&quot;:&quot;000000000000&quot;,&quot;prsm_dpst_aset_amt_bncr_skip&quot;:&quot;000000000000&quot;},{&quot;dt&quot;:&quot;20260518&quot;,&quot;entr&quot;:&quot;099930999764&quot;,&quot;grnt_use_amt&quot;:&quot;000000000000&quot;,&quot;crd_loan&quot;:&quot;000000000000&quot;,&quot;ls_grnt&quot;:&quot;000000000000&quot;,&quot;repl_amt&quot;:&quot;000407901770&quot;,&quot;prsm_dpst_aset_amt&quot;:&quot;000000000000&quot;,&quot;prsm_dpst_aset_amt_bncr_skip&quot;:&quot;000000000000&quot;},{&quot;dt&quot;:&quot;20260519&quot;,&quot;entr&quot;:&quot;099930999764&quot;,&quot;grnt_use_amt&quot;:&quot;000000000000&quot;,&quot;crd_loan&quot;:&quot;000000000000&quot;,&quot;ls_grnt&quot;:&quot;000000000000&quot;,&quot;repl_amt&quot;:&quot;000374641240&quot;,&quot;prsm_dpst_aset_amt&quot;:&quot;000000000000&quot;,&quot;prsm_dpst_aset_amt_bncr_skip&quot;:&quot;000000000000&quot;},{&quot;dt&quot;:&quot;20260520&quot;,&quot;entr&quot;:&quot;099930999764&quot;,&quot;grnt_use_amt&quot;:&quot;000000000000&quot;,&quot;crd_loan&quot;:&quot;000000000000&quot;,&quot;ls_grnt&quot;:&quot;000000000000&quot;,&quot;repl_amt&quot;:&quot;000387984260&quot;,&quot;prsm_dpst_aset_amt&quot;:&quot;100533835451&quot;,&quot;prsm_dpst_aset_amt_bncr_skip&quot;:&quot;100533835451&quot;},{&quot;dt&quot;:&quot;20260521&quot;,&quot;entr&quot;:&quot;099930999764&quot;,&quot;grnt_use_amt&quot;:&quot;000000000000&quot;,&quot;crd_loan&quot;:&quot;000000000000&quot;,&quot;ls_grnt&quot;:&quot;000000000000&quot;,&quot;repl_amt&quot;:&quot;000380187790&quot;,&quot;prsm_dpst_aset_amt&quot;:&quot;100518850618&quot;,&quot;prsm_dpst_aset_amt_bncr_skip&quot;:&quot;100518850618&quot;},{&quot;dt&quot;:&quot;20260522&quot;,&quot;entr&quot;:&quot;099930779734&quot;,&quot;grnt_use_amt&quot;:&quot;000000000000&quot;,&quot;crd_loan&quot;:&quot;000000000000&quot;,&quot;ls_grnt&quot;:&quot;000000000000&quot;,&quot;repl_amt&quot;:&quot;000411466490&quot;,&quot;prsm_dpst_aset_amt&quot;:&quot;000000000000&quot;,&quot;prsm_dpst_aset_amt_bncr_skip&quot;:&quot;000000000000&quot;},{&quot;dt&quot;:&quot;20260523&quot;,&quot;entr&quot;:&quot;099930779734&quot;,&quot;grnt_use_amt&quot;:&quot;000000000000&quot;,&quot;crd_loan&quot;:&quot;000000000000&quot;,&quot;ls_grnt&quot;:&quot;000000000000&quot;,&quot;repl_amt&quot;:&quot;000411466490&quot;,&quot;prsm_dpst_aset_amt&quot;:&quot;000000000000&quot;,&quot;prsm_dpst_aset_amt_bncr_skip&quot;:&quot;000000000000&quot;},{&quot;dt&quot;:&quot;20260524&quot;,&quot;entr&quot;:&quot;099930779734&quot;,&quot;grnt_use_amt&quot;:&quot;000000000000&quot;,&quot;crd_loan&quot;:&quot;000000000000&quot;,&quot;ls_grnt&quot;:&quot;000000000000&quot;,&quot;repl_amt&quot;:&quot;000411466490&quot;,&quot;prsm_dpst_aset_amt&quot;:&quot;000000000000&quot;,&quot;prsm_dpst_aset_amt_bncr_skip&quot;:&quot;000000000000&quot;},{&quot;dt&quot;:&quot;20260526&quot;,&quot;entr&quot;:&quot;099930779734&quot;,&quot;grnt_use_amt&quot;:&quot;000000000000&quot;,&quot;crd_loan&quot;:&quot;000000000000&quot;,&quot;ls_grnt&quot;:&quot;000000000000&quot;,&quot;repl_amt&quot;:&quot;000411466490&quot;,&quot;prsm_dpst_aset_amt&quot;:&quot;100469328887&quot;,&quot;prsm_dpst_aset_amt_bncr_skip&quot;:&quot;100469328887&quot;},{&quot;dt&quot;:&quot;20260527&quot;,&quot;entr&quot;:&quot;099930778842&quot;,&quot;grnt_use_amt&quot;:&quot;000000000000&quot;,&quot;crd_loan&quot;:&quot;000000000000&quot;,&quot;ls_grnt&quot;:&quot;000000000000&quot;,&quot;repl_amt&quot;:&quot;000403142060&quot;,&quot;prsm_dpst_aset_amt&quot;:&quot;100475940973&quot;,&quot;prsm_dpst_aset_amt_bncr_skip&quot;:&quot;100475940973&quot;},{&quot;dt&quot;:&quot;20260528&quot;,&quot;entr&quot;:&quot;099930778842&quot;,&quot;grnt_use_amt&quot;:&quot;000000000000&quot;,&quot;crd_loan&quot;:&quot;000000000000&quot;,&quot;ls_grnt&quot;:&quot;000000000000&quot;,&quot;repl_amt&quot;:&quot;000403142060&quot;,&quot;prsm_dpst_aset_amt&quot;:&quot;100340763878&quot;,&quot;prsm_dpst_aset_amt_bncr_skip&quot;:&quot;100340763878&quot;}],&quot;return_code&quot;:0,&quot;return_msg&quot;:&quot;일자별 계좌별 추정예탁자산 내역이 조회 되었습니다.&quot;}</pre>
+  </div>
+</div>
+</body>
+</html>

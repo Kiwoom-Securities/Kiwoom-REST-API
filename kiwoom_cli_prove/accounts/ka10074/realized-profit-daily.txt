@@ -1,0 +1,1 @@
+{"tot_buy_amt":"396000","tot_sell_amt":"396000","rlzt_pl":"327749","trde_cmsn":"110","trde_tax":"792","dt_rlzt_pl":[{"dt":"20260522","buy_amt":"396000","sell_amt":"396000","tdy_sel_pl":"327749","tdy_trde_cmsn":"110","tdy_trde_tax":"792"}],"return_code":0,"return_msg":" 조회가 완료되었습니다."}

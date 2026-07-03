@@ -1,3 +1,4 @@
+import asyncio
 import json
 import logging
 from collections.abc import AsyncIterator, Callable
@@ -40,6 +41,11 @@ class KiwoomWebSocketClient:
         self._connect_factory = connect_factory or _default_connect
         self._websocket: Any | None = None
 
+    @property
+    def is_connected(self) -> bool:
+        """Whether a live WebSocket connection is currently open."""
+        return self._websocket is not None
+
     async def connect(self, *, api_url: str, retry_on_auth_failure: bool = True) -> None:
         if self._websocket is not None:
             await self.close()
@@ -68,8 +74,11 @@ class KiwoomWebSocketClient:
         await self.connect(api_url=api_url)
         try:
             logger.info("websocket sent request")
-            await self._send_packet(body)
-            message = await self._receive_message()
+            await self.send(body)
+            try:
+                message = await asyncio.wait_for(self._receive_message(), timeout=self.timeout_seconds)
+            except TimeoutError as exc:
+                raise TimeoutError(f"websocket response timed out after {self.timeout_seconds}s") from exc
             logger.info("websocket received response")
             return message
         finally:
@@ -83,7 +92,15 @@ class KiwoomWebSocketClient:
     ) -> None:
         await self.connect(api_url=api_url)
         logger.info("websocket sent subscribe request")
-        await self._send_packet(body)
+        await self.send(body)
+
+    async def send(self, payload: Any) -> None:
+        """Send a packet over the current WebSocket connection."""
+        await self._send_packet(payload)
+
+    async def recv(self) -> Any:
+        """Receive the next non-ping, non-login message over the current connection."""
+        return await self._receive_message()
 
     async def iter_messages(self) -> AsyncIterator[Any]:
         if self._websocket is None:

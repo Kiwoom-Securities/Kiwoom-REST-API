@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: transparent; display: flex; justify-content: center; padding: 32px; }
+  .window {
+    background: #282a36;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    min-width: 480px;
+    max-width: 960px;
+    overflow: hidden;
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .titlebar {
+    background: #21222c;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+  .title {
+    flex: 1;
+    text-align: center;
+    color: #bd93f9;
+    font-size: 12px;
+    margin-right: 36px;
+  }
+  .body { padding: 20px 24px; }
+  .meta { color: #6272a4; margin-bottom: 12px; }
+  .meta span { color: #50fa7b; }
+  pre {
+    color: #f8f8f2;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+    <div class="title">kiwoom quotes by-stock</div>
+  </div>
+  <div class="body">
+    <div class="meta"><span>$</span> kiwoom quotes by-stock --code 005930 --from 20260501 --to 20260528 --institution-price buy --foreign-price buy --format json</div>
+    <div class="meta">mode=read · exit=0 · elapsed=0.37s</div>
+    <pre>{&quot;orgn_prsm_avg_pric&quot;:&quot;294454&quot;,&quot;for_prsm_avg_pric&quot;:&quot;295464&quot;,&quot;stk_orgn_trde_trnsn&quot;:[{&quot;dt&quot;:&quot;20260528&quot;,&quot;close_pric&quot;:&quot;-299500&quot;,&quot;pre_sig&quot;:&quot;5&quot;,&quot;pred_pre&quot;:&quot;-7500&quot;,&quot;flu_rt&quot;:&quot;-2.44&quot;,&quot;trde_qty&quot;:&quot;30195334&quot;,&quot;orgn_dt_acc&quot;:&quot;7957373.000000&quot;,&quot;orgn_daly_nettrde_qty&quot;:&quot;-1613562&quot;,&quot;for_dt_acc&quot;:&quot;940462931.000000&quot;,&quot;for_daly_nettrde_qty&quot;:&quot;-5987336&quot;,&quot;limit_exh_rt&quot;:&quot;+48.28&quot;},{&quot;dt&quot;:&quot;20260527&quot;,&quot;close_pric&quot;:&quot;+307000&quot;,&quot;pre_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+8000&quot;,&quot;flu_rt&quot;:&quot;+2.68&quot;,&quot;trde_qty&quot;:&quot;33916688&quot;,&quot;orgn_dt_acc&quot;:&quot;9570935.000000&quot;,&quot;orgn_daly_nettrde_qty&quot;:&quot;1550904&quot;,&quot;for_dt_acc&quot;:&quot;946450267.000000&quot;,&quot;for_daly_nettrde_qty&quot;:&quot;1281143&quot;,&quot;limit_exh_rt&quot;:&quot;+48.39&quot;},{&quot;dt&quot;:&quot;20260526&quot;,&quot;close_pric&quot;:&quot;+299000&quot;,&quot;pre_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+6500&quot;,&quot;flu_rt&quot;:&quot;+2.22&quot;,&quot;trde_qty&quot;:&quot;23441371&quot;,&quot;orgn_dt_acc&quot;:&quot;8020031.000000&quot;,&quot;orgn_daly_nettrde_qty&quot;:&quot;1513469&quot;,&quot;for_dt_acc&quot;:&quot;945169124.000000&quot;,&quot;for_daly_nettrde_qty&quot;:&quot;2559184&quot;,&quot;limit_exh_rt&quot;:&quot;+48.36&quot;},{&quot;dt&quot;:&quot;20260522&quot;,&quot;close_pric&quot;:&quot;-292500&quot;,&quot;pre_sig&quot;:&quot;5&quot;,&quot;pred_pre&quot;:&quot;-7000&quot;,&quot;flu_rt&quot;:&quot;-2.34&quot;,&quot;trde_qty&quot;:&quot;18395274&quot;,&quot;orgn_dt_acc&quot;:&quot;6506562.000000&quot;,&quot;orgn_daly_nettrde_qty&quot;:&quot;-307631&quot;,&quot;for_dt_acc&quot;:&quot;942609940.000000&quot;,&quot;for_daly_nettrde_qty&quot;:&quot;-4146497&quot;,&quot;limit_exh_rt&quot;:&quot;+48.32&quot;},{&quot;dt&quot;:&quot;20260521&quot;,&quot;close_pric&quot;:&quot;+299500&quot;,&quot;pre_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+23500&quot;,&quot;flu_rt&quot;:&quot;+8.51&quot;,&quot;trde_qty&quot;:&quot;36168689&quot;,&quot;orgn_dt_acc&quot;:&quot;6814193.000000&quot;,&quot;orgn_daly_nettrde_qty&quot;:&quot;2608486&quot;,&quot;for_dt_acc&quot;:&quot;946756437.000000&quot;,&quot;for_daly_nettrde_qty&quot;:&quot;3787274&quot;,&quot;limit_exh_rt&quot;:&quot;+48.39&quot;},{&quot;dt&quot;:&quot;20260520&quot;,&quot;close_pric&quot;:&quot;+276000&quot;,&quot;pre_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+500&quot;,&quot;flu_rt&quot;:&quot;+0.18&quot;,&quot;trde_qty&quot;:&quot;35662077&quot;,&quot;orgn_dt_acc&quot;:&quot;4205707.000000&quot;,&quot;orgn_daly_nettrde_qty&quot;:&quot;2756787&quot;,&quot;for_dt_acc&quot;:&quot;942969163.000000&quot;,&quot;for_daly_nettrde_qty&quot;:&quot;-5634060&quot;,&quot;limit_exh_rt&quot;:&quot;+48.32&quot;},{&quot;dt&quot;:&quot;20260519&quot;,&quot;close_pric&quot;:&quot;-275500&quot;,&quot;pre_sig&quot;:&quot;5&quot;,&quot;pred_pre&quot;:&quot;-5500&quot;,&quot;flu_rt&quot;:&quot;-1.96&quot;,&quot;trde_qty&quot;:&quot;30767569&quot;,&quot;orgn_dt_acc&quot;:&quot;1448920.000000&quot;,&quot;orgn_daly_nettrde_qty&quot;:&quot;1418906&quot;,&quot;for_dt_acc&quot;:&quot;948603223.000000&quot;,&quot;for_daly_nettrde_qty&quot;:&quot;-10795428&quot;,&quot;limit_exh_rt&quot;:&quot;+48.42&quot;},{&quot;dt&quot;:&quot;20260518&quot;,&quot;close_pric&quot;:&quot;+351500&quot;,&quot;pre_sig&quot;:&quot;1&quot;,&quot;pred_pre&quot;:&quot;+81000&quot;,&quot;flu_rt&quot;:&quot;+29.94&quot;,&quot;trde_qty&quot;:&quot;12184&quot;,&quot;orgn_dt_acc&quot;:&quot;30014.000000&quot;,&quot;orgn_daly_nettrde_qty&quot;:&quot;951&quot;,&quot;for_dt_acc&quot;:&quot;959398651.000000&quot;,&quot;for_daly_nettrde_qty&quot;:&quot;147653139&quot;,&quot;limit_exh_rt&quot;:&quot;+51.21&quot;},{&quot;dt&quot;:&quot;20260515&quot;,&quot;close_pric&quot;:&quot;-266000&quot;,&quot;pre_sig&quot;:&quot;5&quot;,&quot;pred_pre&quot;:&quot;-49000&quot;,&quot;flu_rt&quot;:&quot;-15.56&quot;,&quot;trde_qty&quot;:&quot;6804&quot;,&quot;orgn_dt_acc&quot;:&quot;29063.000000&quot;,&quot;orgn_daly_nettrde_qty&quot;:&quot;177&quot;,&quot;for_dt_acc&quot;:&quot;811745512.000000&quot;,&quot;for_daly_nettrde_qty&quot;:&quot;-9773634&quot;,&quot;limit_exh_rt&quot;:&quot;+48.68&quot;},{&quot;dt&quot;:&quot;20260514&quot;,&quot;close_pric&quot;:&quot;315000&quot;,&quot;pre_sig&quot;:&quot;0&quot;,&quot;pred_pre&quot;:&quot;0&quot;,&quot;flu_rt&quot;:&quot;0.00&quot;,&quot;trde_qty&quot;:&quot;0&quot;,&quot;orgn_dt_acc&quot;:&quot;28886.000000&quot;,&quot;orgn_daly_nettrde_qty&quot;:&quot;0&quot;,&quot;for_dt_acc&quot;:&quot;821519146.000000&quot;,&quot;for_daly_nettrde_qty&quot;:&quot;139478218&quot;,&quot;limit_exh_rt&quot;:&quot;+51.21&quot;},{&quot;dt&quot;:&quot;20260513&quot;,&quot;close_pric&quot;:&quot;-315000&quot;,&quot;pre_sig&quot;:&quot;4&quot;,&quot;pred_pre&quot;:&quot;-134500&quot;,&quot;flu_rt&quot;:&quot;-29.92&quot;,&quot;trde_qty&quot;:&quot;56460&quot;,&quot;orgn_dt_acc&quot;:&quot;28886.000000&quot;,&quot;orgn_daly_nettrde_qty&quot;:&quot;-29431&quot;,&quot;for_dt_acc&quot;:&quot;682040928.000000&quot;,&quot;for_daly_nettrde_qty&quot;:&quot;134398721&quot;,&quot;limit_exh_rt&quot;:&quot;+51.21&quot;},{&quot;dt&quot;:&quot;20260512&quot;,&quot;close_pric&quot;:&quot;-449500&quot;,&quot;pre_sig&quot;:&quot;5&quot;,&quot;pred_pre&quot;:&quot;-150500&quot;,&quot;flu_rt&quot;:&quot;-25.08&quot;,&quot;trde_qty&quot;:&quot;19365&quot;,&quot;orgn_dt_acc&quot;:&quot;58317.000000&quot;,&quot;orgn_daly_nettrde_qty&quot;:&quot;4064&quot;,&quot;for_dt_acc&quot;:&quot;547642207.000000&quot;,&quot;for_daly_nettrde_qty&quot;:&quot;125371554&quot;,&quot;limit_exh_rt&quot;:&quot;+51.21&quot;},{&quot;dt&quot;:&quot;20260511&quot;,&quot;close_pric&quot;:&quot;-600000&quot;,&quot;pre_sig&quot;:&quot;5&quot;,&quot;pred_pre&quot;:&quot;-170000&quot;,&quot;flu_rt&quot;:&quot;-22.08&quot;,&quot;trde_qty&quot;:&quot;140534&quot;,&quot;orgn_dt_acc&quot;:&quot;54253.000000&quot;,&quot;orgn_daly_nettrde_qty&quot;:&quot;3044&quot;,&quot;for_dt_acc&quot;:&quot;422270653.000000&quot;,&quot;for_daly_nettrde_qty&quot;:&quot;117125108&quot;,&quot;limit_exh_rt&quot;:&quot;+51.21&quot;},{&quot;dt&quot;:&quot;20260508&quot;,&quot;close_pric&quot;:&quot;+770000&quot;,&quot;pre_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+155000&quot;,&quot;flu_rt&quot;:&quot;+25.20&quot;,&quot;trde_qty&quot;:&quot;7142&quot;,&quot;orgn_dt_acc&quot;:&quot;51209.000000&quot;,&quot;orgn_daly_nettrde_qty&quot;:&quot;-4851&quot;,&quot;for_dt_acc&quot;:&quot;305145545.000000&quot;,&quot;for_daly_nettrde_qty&quot;:&quot;-11195787&quot;,&quot;limit_exh_rt&quot;:&quot;+49.21&quot;},{&quot;dt&quot;:&quot;20260507&quot;,&quot;close_pric&quot;:&quot;+615000&quot;,&quot;pre_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+125000&quot;,&quot;flu_rt&quot;:&quot;+25.51&quot;,&quot;trde_qty&quot;:&quot;19828&quot;,&quot;orgn_dt_acc&quot;:&quot;56060.000000&quot;,&quot;orgn_daly_nettrde_qty&quot;:&quot;6976&quot;,&quot;for_dt_acc&quot;:&quot;316341332.000000&quot;,&quot;for_daly_nettrde_qty&quot;:&quot;93747823&quot;,&quot;limit_exh_rt&quot;:&quot;+51.21&quot;},{&quot;dt&quot;:&quot;20260506&quot;,&quot;close_pric&quot;:&quot;+490000&quot;,&quot;pre_sig&quot;:&quot;1&quot;,&quot;pred_pre&quot;:&quot;+113000&quot;,&quot;flu_rt&quot;:&quot;+29.97&quot;,&quot;trde_qty&quot;:&quot;27309&quot;,&quot;orgn_dt_acc&quot;:&quot;49084.000000&quot;,&quot;orgn_daly_nettrde_qty&quot;:&quot;23002&quot;,&quot;for_dt_acc&quot;:&quot;222593509.000000&quot;,&quot;for_daly_nettrde_qty&quot;:&quot;107538156&quot;,&quot;limit_exh_rt&quot;:&quot;+51.21&quot;},{&quot;dt&quot;:&quot;20260504&quot;,&quot;close_pric&quot;:&quot;+377000&quot;,&quot;pre_sig&quot;:&quot;1&quot;,&quot;pred_pre&quot;:&quot;+87000&quot;,&quot;flu_rt&quot;:&quot;+30.00&quot;,&quot;trde_qty&quot;:&quot;71682&quot;,&quot;orgn_dt_acc&quot;:&quot;26082.000000&quot;,&quot;orgn_daly_nettrde_qty&quot;:&quot;26082&quot;,&quot;for_dt_acc&quot;:&quot;115055353.000000&quot;,&quot;for_daly_nettrde_qty&quot;:&quot;115055353&quot;,&quot;limit_exh_rt&quot;:&quot;+51.21&quot;}],&quot;return_code&quot;:0,&quot;return_msg&quot;:&quot;정상적으로 처리되었습니다&quot;}</pre>
+  </div>
+</div>
+</body>
+</html>

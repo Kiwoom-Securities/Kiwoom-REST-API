@@ -9,6 +9,7 @@ from kiwoom.core.types import Mode, normalize_mode
 
 SETTINGS_FILE_NAME = "settings.json"
 MODE_ENV_VAR = "KIWOOM_MODE"
+PROFILE_ENV_VAR = "KIWOOM_PROFILE"
 
 
 def get_mode_from_env() -> Mode | None:
@@ -19,6 +20,13 @@ def get_mode_from_env() -> Mode | None:
         return normalize_mode(value)
     except ValueError as exc:
         raise InvalidModeError(value) from exc
+
+
+def get_profile_from_env() -> str | None:
+    value = os.getenv(PROFILE_ENV_VAR)
+    if not value:
+        return None
+    return value.strip() or None
 
 
 def settings_path() -> Path:

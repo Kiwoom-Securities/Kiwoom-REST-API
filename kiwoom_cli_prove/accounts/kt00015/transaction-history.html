@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: transparent; display: flex; justify-content: center; padding: 32px; }
+  .window {
+    background: #282a36;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    min-width: 480px;
+    max-width: 960px;
+    overflow: hidden;
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .titlebar {
+    background: #21222c;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+  .title {
+    flex: 1;
+    text-align: center;
+    color: #bd93f9;
+    font-size: 12px;
+    margin-right: 36px;
+  }
+  .body { padding: 20px 24px; }
+  .meta { color: #6272a4; margin-bottom: 12px; }
+  .meta span { color: #50fa7b; }
+  pre {
+    color: #f8f8f2;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+    <div class="title">kiwoom accounts transaction-history</div>
+  </div>
+  <div class="body">
+    <div class="meta"><span>$</span> kiwoom accounts transaction-history --from 20260501 --to 20260528 --kind 0 --product all --exchange KRX --format json</div>
+    <div class="meta">mode=account_read · exit=0 · elapsed=0.39s</div>
+    <pre>{&quot;acnt_no&quot;:&quot;**************이재혁]&quot;,&quot;trst_ovrl_trde_prps_array&quot;:[{&quot;trde_dt&quot;:&quot;20260522&quot;,&quot;trde_no&quot;:&quot;000000001&quot;,&quot;rmrk_nm&quot;:&quot;장내매수&quot;,&quot;crd_deal_tp_nm&quot;:&quot;보통매매&quot;,&quot;exct_amt&quot;:&quot;000000000220030&quot;,&quot;loan_amt_rpya&quot;:&quot;000000000000000&quot;,&quot;fc_trde_amt&quot;:&quot;0.00&quot;,&quot;fc_exct_amt&quot;:&quot;0.00&quot;,&quot;entra_remn&quot;:&quot;000099930779734&quot;,&quot;crnc_cd&quot;:&quot;KRW&quot;,&quot;trde_ocr_tp&quot;:&quot;9&quot;,&quot;trde_kind_nm&quot;:&quot;매매&quot;,&quot;stk_nm&quot;:&quot;삼성전자&quot;,&quot;trde_amt&quot;:&quot;000000000220000&quot;,&quot;trde_agri_tax&quot;:&quot;000000000000000&quot;,&quot;rpy_diffa&quot;:&quot;000000000000000&quot;,&quot;fc_trde_tax&quot;:&quot;0.00&quot;,&quot;dly_sum&quot;:&quot;000000000000000&quot;,&quot;fc_entra&quot;:&quot;0.00&quot;,&quot;mdia_tp_nm&quot;:&quot;REST API&quot;,&quot;io_tp&quot;:&quot;2&quot;,&quot;io_tp_nm&quot;:&quot;매수&quot;,&quot;orig_deal_no&quot;:&quot;000000000&quot;,&quot;stk_cd&quot;:&quot;A005930&quot;,&quot;trde_qty_jwa_cnt&quot;:&quot;1&quot;,&quot;cmsn&quot;:&quot;000000000000030&quot;,&quot;int_ls_usfe&quot;:&quot;000000000000000&quot;,&quot;fc_cmsn&quot;:&quot;0.00&quot;,&quot;fc_dly_sum&quot;:&quot;0.00&quot;,&quot;vlbl_nowrm&quot;:&quot;1,702&quot;,&quot;proc_tm&quot;:&quot;04:05:18&quot;,&quot;isin_cd&quot;:&quot;KR7005930003&quot;,&quot;stex_cd&quot;:&quot;KRX&quot;,&quot;stex_nm&quot;:&quot;한국거래소&quot;,&quot;trde_unit&quot;:&quot;220,000&quot;,&quot;incm_resi_tax&quot;:&quot;000000000000000&quot;,&quot;loan_dt&quot;:&quot;&quot;,&quot;uncl_ocr&quot;:&quot;&quot;,&quot;rpym_sum&quot;:&quot;&quot;,&quot;cntr_dt&quot;:&quot;20260520&quot;,&quot;rcpy_no&quot;:&quot;&quot;,&quot;prcsr&quot;:&quot;DAILY&quot;,&quot;proc_brch&quot;:&quot;영업부&quot;,&quot;trde_stle&quot;:&quot;&quot;,&quot;txon_base_pric&quot;:&quot;0.00&quot;,&quot;tax_sum_cmsn&quot;:&quot;000000000000030&quot;,&quot;frgn_pay_txam&quot;:&quot;0.00&quot;,&quot;fc_uncl_ocr&quot;:&quot;0.00&quot;,&quot;rpym_sum_fr&quot;:&quot;&quot;,&quot;rcpmnyer&quot;:&quot;&quot;,&quot;trde_prtc_tp&quot;:&quot;11&quot;},{&quot;trde_dt&quot;:&quot;20260527&quot;,&quot;trde_no&quot;:&quot;000000001&quot;,&quot;rmrk_nm&quot;:&quot;장내매도&quot;,&quot;crd_deal_tp_nm&quot;:&quot;보통매매&quot;,&quot;exct_amt&quot;:&quot;000000000395158&quot;,&quot;loan_amt_rpya&quot;:&quot;000000000000000&quot;,&quot;fc_trde_amt&quot;:&quot;0.00&quot;,&quot;fc_exct_amt&quot;:&quot;0.00&quot;,&quot;entra_remn&quot;:&quot;000099931174892&quot;,&quot;crnc_cd&quot;:&quot;KRW&quot;,&quot;trde_ocr_tp&quot;:&quot;9&quot;,&quot;trde_kind_nm&quot;:&quot;매매&quot;,&quot;stk_nm&quot;:&quot;삼성전자&quot;,&quot;trde_amt&quot;:&quot;000000000396000&quot;,&quot;trde_agri_tax&quot;:&quot;000000000000792&quot;,&quot;rpy_diffa&quot;:&quot;000000000000000&quot;,&quot;fc_trde_tax&quot;:&quot;0.00&quot;,&quot;dly_sum&quot;:&quot;000000000000000&quot;,&quot;fc_entra&quot;:&quot;0.00&quot;,&quot;mdia_tp_nm&quot;:&quot;REST API&quot;,&quot;io_tp&quot;:&quot;1&quot;,&quot;io_tp_nm&quot;:&quot;매도&quot;,&quot;orig_deal_no&quot;:&quot;000000000&quot;,&quot;stk_cd&quot;:&quot;A005930&quot;,&quot;trde_qty_jwa_cnt&quot;:&quot;1&quot;,&quot;cmsn&quot;:&quot;000000000000050&quot;,&quot;int_ls_usfe&quot;:&quot;000000000000000&quot;,&quot;fc_cmsn&quot;:&quot;0.00&quot;,&quot;fc_dly_sum&quot;:&quot;0.00&quot;,&quot;vlbl_nowrm&quot;:&quot;1,701&quot;,&quot;proc_tm&quot;:&quot;04:05:11&quot;,&quot;isin_cd&quot;:&quot;KR7005930003&quot;,&quot;stex_cd&quot;:&quot;KRX&quot;,&quot;stex_nm&quot;:&quot;한국거래소&quot;,&quot;trde_unit&quot;:&quot;396,000&quot;,&quot;incm_resi_tax&quot;:&quot;000000000000000&quot;,&quot;loan_dt&quot;:&quot;&quot;,&quot;uncl_ocr&quot;:&quot;&quot;,&quot;rpym_sum&quot;:&quot;&quot;,&quot;cntr_dt&quot;:&quot;20260522&quot;,&quot;rcpy_no&quot;:&quot;&quot;,&quot;prcsr&quot;:&quot;DAILY&quot;,&quot;proc_brch&quot;:&quot;영업부&quot;,&quot;trde_stle&quot;:&quot;&quot;,&quot;txon_base_pric&quot;:&quot;0.00&quot;,&quot;tax_sum_cmsn&quot;:&quot;000000000000842&quot;,&quot;frgn_pay_txam&quot;:&quot;0.00&quot;,&quot;fc_uncl_ocr&quot;:&quot;0.00&quot;,&quot;rpym_sum_fr&quot;:&quot;&quot;,&quot;rcpmnyer&quot;:&quot;&quot;,&quot;trde_prtc_tp&quot;:&quot;11&quot;},{&quot;trde_dt&quot;:&quot;20260527&quot;,&quot;trde_no&quot;:&quot;000000002&quot;,&quot;rmrk_nm&quot;:&quot;장내매수&quot;,&quot;crd_deal_tp_nm&quot;:&quot;보통매매&quot;,&quot;exct_amt&quot;:&quot;000000000396050&quot;,&quot;loan_amt_rpya&quot;:&quot;000000000000000&quot;,&quot;fc_trde_amt&quot;:&quot;0.00&quot;,&quot;fc_exct_amt&quot;:&quot;0.00&quot;,&quot;entra_remn&quot;:&quot;000099930778842&quot;,&quot;crnc_cd&quot;:&quot;KRW&quot;,&quot;trde_ocr_tp&quot;:&quot;9&quot;,&quot;trde_kind_nm&quot;:&quot;매매&quot;,&quot;stk_nm&quot;:&quot;삼성전자&quot;,&quot;trde_amt&quot;:&quot;000000000396000&quot;,&quot;trde_agri_tax&quot;:&quot;000000000000000&quot;,&quot;rpy_diffa&quot;:&quot;000000000000000&quot;,&quot;fc_trde_tax&quot;:&quot;0.00&quot;,&quot;dly_sum&quot;:&quot;000000000000000&quot;,&quot;fc_entra&quot;:&quot;0.00&quot;,&quot;mdia_tp_nm&quot;:&quot;REST API&quot;,&quot;io_tp&quot;:&quot;2&quot;,&quot;io_tp_nm&quot;:&quot;매수&quot;,&quot;orig_deal_no&quot;:&quot;000000000&quot;,&quot;stk_cd&quot;:&quot;A005930&quot;,&quot;trde_qty_jwa_cnt&quot;:&quot;1&quot;,&quot;cmsn&quot;:&quot;000000000000050&quot;,&quot;int_ls_usfe&quot;:&quot;000000000000000&quot;,&quot;fc_cmsn&quot;:&quot;0.00&quot;,&quot;fc_dly_sum&quot;:&quot;0.00&quot;,&quot;vlbl_nowrm&quot;:&quot;1,702&quot;,&quot;proc_tm&quot;:&quot;04:05:11&quot;,&quot;isin_cd&quot;:&quot;KR7005930003&quot;,&quot;stex_cd&quot;:&quot;KRX&quot;,&quot;stex_nm&quot;:&quot;한국거래소&quot;,&quot;trde_unit&quot;:&quot;396,000&quot;,&quot;incm_resi_tax&quot;:&quot;000000000000000&quot;,&quot;loan_dt&quot;:&quot;&quot;,&quot;uncl_ocr&quot;:&quot;&quot;,&quot;rpym_sum&quot;:&quot;&quot;,&quot;cntr_dt&quot;:&quot;20260522&quot;,&quot;rcpy_no&quot;:&quot;&quot;,&quot;prcsr&quot;:&quot;DAILY&quot;,&quot;proc_brch&quot;:&quot;영업부&quot;,&quot;trde_stle&quot;:&quot;&quot;,&quot;txon_base_pric&quot;:&quot;0.00&quot;,&quot;tax_sum_cmsn&quot;:&quot;000000000000050&quot;,&quot;frgn_pay_txam&quot;:&quot;0.00&quot;,&quot;fc_uncl_ocr&quot;:&quot;0.00&quot;,&quot;rpym_sum_fr&quot;:&quot;&quot;,&quot;rcpmnyer&quot;:&quot;&quot;,&quot;trde_prtc_tp&quot;:&quot;11&quot;}],&quot;return_code&quot;:0,&quot;return_msg&quot;:&quot;조회가 완료되었습니다&quot;}</pre>
+  </div>
+</div>
+</body>
+</html>

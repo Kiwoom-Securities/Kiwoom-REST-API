@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: transparent; display: flex; justify-content: center; padding: 32px; }
+  .window {
+    background: #282a36;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    min-width: 480px;
+    max-width: 960px;
+    overflow: hidden;
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .titlebar {
+    background: #21222c;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+  .title {
+    flex: 1;
+    text-align: center;
+    color: #bd93f9;
+    font-size: 12px;
+    margin-right: 36px;
+  }
+  .body { padding: 20px 24px; }
+  .meta { color: #6272a4; margin-bottom: 12px; }
+  .meta span { color: #50fa7b; }
+  pre {
+    color: #f8f8f2;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+    <div class="title">kiwoom accounts gold-all-order-fills</div>
+  </div>
+  <div class="body">
+    <div class="meta"><span>$</span> kiwoom accounts gold-all-order-fills --date 20260522 --order order --market-deal 1 --asset-kind all --side all --format json</div>
+    <div class="meta">mode=account_read · exit=0 · elapsed=0.40s</div>
+    <pre>{&quot;acnt_ord_cntr_prst&quot;:[{&quot;stk_bond_tp&quot;:&quot;1&quot;,&quot;ord_no&quot;:&quot;0000038&quot;,&quot;stk_cd&quot;:&quot;A005930&quot;,&quot;trde_tp&quot;:&quot;시장가&quot;,&quot;io_tp_nm&quot;:&quot;현금매수&quot;,&quot;ord_qty&quot;:&quot;0000000001&quot;,&quot;ord_uv&quot;:&quot;0000000000&quot;,&quot;cnfm_qty&quot;:&quot;0000000000&quot;,&quot;data_send_end_tp&quot;:&quot;접수&quot;,&quot;mrkt_deal_tp&quot;:&quot;1&quot;,&quot;rsrv_tp&quot;:&quot;&quot;,&quot;orig_ord_no&quot;:&quot;0000000&quot;,&quot;stk_nm&quot;:&quot;삼성전자&quot;,&quot;dcd_tp_nm&quot;:&quot;삼일&quot;,&quot;crd_deal_tp&quot;:&quot;보통매매&quot;,&quot;cntr_qty&quot;:&quot;0000000001&quot;,&quot;cntr_uv&quot;:&quot;0000396000&quot;,&quot;ord_remnq&quot;:&quot;&quot;,&quot;comm_ord_tp&quot;:&quot;REST API&quot;,&quot;mdfy_cncl_tp&quot;:&quot;&quot;,&quot;dmst_stex_tp&quot;:&quot;KRX&quot;,&quot;cond_uv&quot;:&quot;0000000000&quot;},{&quot;stk_bond_tp&quot;:&quot;1&quot;,&quot;ord_no&quot;:&quot;0000039&quot;,&quot;stk_cd&quot;:&quot;A005930&quot;,&quot;trde_tp&quot;:&quot;시장가&quot;,&quot;io_tp_nm&quot;:&quot;현금매도&quot;,&quot;ord_qty&quot;:&quot;0000000001&quot;,&quot;ord_uv&quot;:&quot;0000000000&quot;,&quot;cnfm_qty&quot;:&quot;0000000000&quot;,&quot;data_send_end_tp&quot;:&quot;접수&quot;,&quot;mrkt_deal_tp&quot;:&quot;1&quot;,&quot;rsrv_tp&quot;:&quot;&quot;,&quot;orig_ord_no&quot;:&quot;0000000&quot;,&quot;stk_nm&quot;:&quot;삼성전자&quot;,&quot;dcd_tp_nm&quot;:&quot;삼일&quot;,&quot;crd_deal_tp&quot;:&quot;보통매매&quot;,&quot;cntr_qty&quot;:&quot;0000000001&quot;,&quot;cntr_uv&quot;:&quot;0000396000&quot;,&quot;ord_remnq&quot;:&quot;&quot;,&quot;comm_ord_tp&quot;:&quot;REST API&quot;,&quot;mdfy_cncl_tp&quot;:&quot;&quot;,&quot;dmst_stex_tp&quot;:&quot;KRX&quot;,&quot;cond_uv&quot;:&quot;0000000000&quot;},{&quot;stk_bond_tp&quot;:&quot;1&quot;,&quot;ord_no&quot;:&quot;0000040&quot;,&quot;stk_cd&quot;:&quot;A005930&quot;,&quot;trde_tp&quot;:&quot;지정가&quot;,&quot;io_tp_nm&quot;:&quot;현금매수&quot;,&quot;ord_qty&quot;:&quot;0000000001&quot;,&quot;ord_uv&quot;:&quot;0000210000&quot;,&quot;cnfm_qty&quot;:&quot;0000000000&quot;,&quot;data_send_end_tp&quot;:&quot;주문거부&quot;,&quot;mrkt_deal_tp&quot;:&quot;1&quot;,&quot;rsrv_tp&quot;:&quot;&quot;,&quot;orig_ord_no&quot;:&quot;0000000&quot;,&quot;stk_nm&quot;:&quot;삼성전자&quot;,&quot;dcd_tp_nm&quot;:&quot;삼일&quot;,&quot;crd_deal_tp&quot;:&quot;보통매매&quot;,&quot;cntr_qty&quot;:&quot;0000000000&quot;,&quot;cntr_uv&quot;:&quot;0000000000&quot;,&quot;ord_remnq&quot;:&quot;&quot;,&quot;comm_ord_tp&quot;:&quot;REST API&quot;,&quot;mdfy_cncl_tp&quot;:&quot;&quot;,&quot;dmst_stex_tp&quot;:&quot;KRX&quot;,&quot;cond_uv&quot;:&quot;0000000000&quot;},{&quot;stk_bond_tp&quot;:&quot;1&quot;,&quot;ord_no&quot;:&quot;0000047&quot;,&quot;stk_cd&quot;:&quot;A005930&quot;,&quot;trde_tp&quot;:&quot;지정가&quot;,&quot;io_tp_nm&quot;:&quot;현금매수&quot;,&quot;ord_qty&quot;:&quot;0000000001&quot;,&quot;ord_uv&quot;:&quot;0000210000&quot;,&quot;cnfm_qty&quot;:&quot;0000000000&quot;,&quot;data_send_end_tp&quot;:&quot;주문거부&quot;,&quot;mrkt_deal_tp&quot;:&quot;1&quot;,&quot;rsrv_tp&quot;:&quot;&quot;,&quot;orig_ord_no&quot;:&quot;0000000&quot;,&quot;stk_nm&quot;:&quot;삼성전자&quot;,&quot;dcd_tp_nm&quot;:&quot;삼일&quot;,&quot;crd_deal_tp&quot;:&quot;보통매매&quot;,&quot;cntr_qty&quot;:&quot;0000000000&quot;,&quot;cntr_uv&quot;:&quot;0000000000&quot;,&quot;ord_remnq&quot;:&quot;&quot;,&quot;comm_ord_tp&quot;:&quot;REST API&quot;,&quot;mdfy_cncl_tp&quot;:&quot;&quot;,&quot;dmst_stex_tp&quot;:&quot;KRX&quot;,&quot;cond_uv&quot;:&quot;0000000000&quot;},{&quot;stk_bond_tp&quot;:&quot;1&quot;,&quot;ord_no&quot;:&quot;0000048&quot;,&quot;stk_cd&quot;:&quot;A005930&quot;,&quot;trde_tp&quot;:&quot;지정가&quot;,&quot;io_tp_nm&quot;:&quot;현금매수&quot;,&quot;ord_qty&quot;:&quot;0000000001&quot;,&quot;ord_uv&quot;:&quot;0000210000&quot;,&quot;cnfm_qty&quot;:&quot;0000000000&quot;,&quot;data_send_end_tp&quot;:&quot;주문거부&quot;,&quot;mrkt_deal_tp&quot;:&quot;1&quot;,&quot;rsrv_tp&quot;:&quot;&quot;,&quot;orig_ord_no&quot;:&quot;0000000&quot;,&quot;stk_nm&quot;:&quot;삼성전자&quot;,&quot;dcd_tp_nm&quot;:&quot;삼일&quot;,&quot;crd_deal_tp&quot;:&quot;보통매매&quot;,&quot;cntr_qty&quot;:&quot;0000000000&quot;,&quot;cntr_uv&quot;:&quot;0000000000&quot;,&quot;ord_remnq&quot;:&quot;&quot;,&quot;comm_ord_tp&quot;:&quot;REST API&quot;,&quot;mdfy_cncl_tp&quot;:&quot;&quot;,&quot;dmst_stex_tp&quot;:&quot;SOR&quot;,&quot;cond_uv&quot;:&quot;0000000000&quot;},{&quot;stk_bond_tp&quot;:&quot;1&quot;,&quot;ord_no&quot;:&quot;0000049&quot;,&quot;stk_cd&quot;:&quot;A005930&quot;,&quot;trde_tp&quot;:&quot;지정가&quot;,&quot;io_tp_nm&quot;:&quot;현금매수&quot;,&quot;ord_qty&quot;:&quot;0000000010&quot;,&quot;ord_uv&quot;:&quot;0000292000&quot;,&quot;cnfm_qty&quot;:&quot;0000000000&quot;,&quot;data_send_end_tp&quot;:&quot;접수&quot;,&quot;mrkt_deal_tp&quot;:&quot;1&quot;,&quot;rsrv_tp&quot;:&quot;&quot;,&quot;orig_ord_no&quot;:&quot;0000000&quot;,&quot;stk_nm&quot;:&quot;삼성전자&quot;,&quot;dcd_tp_nm&quot;:&quot;삼일&quot;,&quot;crd_deal_tp&quot;:&quot;보통매매&quot;,&quot;cntr_qty&quot;:&quot;0000000000&quot;,&quot;cntr_uv&quot;:&quot;0000000000&quot;,&quot;ord_remnq&quot;:&quot;&quot;,&quot;comm_ord_tp&quot;:&quot;REST API&quot;,&quot;mdfy_cncl_tp&quot;:&quot;&quot;,&quot;dmst_stex_tp&quot;:&quot;SOR&quot;,&quot;cond_uv&quot;:&quot;0000000000&quot;},{&quot;stk_bond_tp&quot;:&quot;1&quot;,&quot;ord_no&quot;:&quot;0000050&quot;,&quot;stk_cd&quot;:&quot;A005930&quot;,&quot;trde_tp&quot;:&quot;지정가&quot;,&quot;io_tp_nm&quot;:&quot;현금매수&quot;,&quot;ord_qty&quot;:&quot;0000000010&quot;,&quot;ord_uv&quot;:&quot;0000000000&quot;,&quot;cnfm_qty&quot;:&quot;0000000010&quot;,&quot;data_send_end_tp&quot;:&quot;접수&quot;,&quot;mrkt_deal_tp&quot;:&quot;1&quot;,&quot;rsrv_tp&quot;:&quot;&quot;,&quot;orig_ord_no&quot;:&quot;0000049&quot;,&quot;stk_nm&quot;:&quot;삼성전자&quot;,&quot;dcd_tp_nm&quot;:&quot;삼일&quot;,&quot;crd_deal_tp&quot;:&quot;보통매매&quot;,&quot;cntr_qty&quot;:&quot;0000000000&quot;,&quot;cntr_uv&quot;:&quot;0000000000&quot;,&quot;ord_remnq&quot;:&quot;&quot;,&quot;comm_ord_tp&quot;:&quot;REST API&quot;,&quot;mdfy_cncl_tp&quot;:&quot;취소확인&quot;,&quot;dmst_stex_tp&quot;:&quot;SOR&quot;,&quot;cond_uv&quot;:&quot;0000000000&quot;},{&quot;stk_bond_tp&quot;:&quot;1&quot;,&quot;ord_no&quot;:&quot;0000051&quot;,&quot;stk_cd&quot;:&quot;A005930&quot;,&quot;trde_tp&quot;:&quot;지정가&quot;,&quot;io_tp_nm&quot;:&quot;현금매수&quot;,&quot;ord_qty&quot;:&quot;0000000010&quot;,&quot;ord_uv&quot;:&quot;0000292000&quot;,&quot;cnfm_qty&quot;:&quot;0000000000&quot;,&quot;data_send_end_tp&quot;:&quot;접수&quot;,&quot;mrkt_deal_tp&quot;:&quot;1&quot;,&quot;rsrv_tp&quot;:&quot;&quot;,&quot;orig_ord_no&quot;:&quot;0000000&quot;,&quot;stk_nm&quot;:&quot;삼성전자&quot;,&quot;dcd_tp_nm&quot;:&quot;삼일&quot;,&quot;crd_deal_tp&quot;:&quot;보통매매&quot;,&quot;cntr_qty&quot;:&quot;0000000000&quot;,&quot;cntr_uv&quot;:&quot;0000000000&quot;,&quot;ord_remnq&quot;:&quot;&quot;,&quot;comm_ord_tp&quot;:&quot;REST API&quot;,&quot;mdfy_cncl_tp&quot;:&quot;&quot;,&quot;dmst_stex_tp&quot;:&quot;SOR&quot;,&quot;cond_uv&quot;:&quot;0000000000&quot;},{&quot;stk_bond_tp&quot;:&quot;1&quot;,&quot;ord_no&quot;:&quot;0000052&quot;,&quot;stk_cd&quot;:&quot;A005930&quot;,&quot;trde_tp&quot;:&quot;지정가&quot;,&quot;io_tp_nm&quot;:&quot;현금매수&quot;,&quot;ord_qty&quot;:&quot;0000000010&quot;,&quot;ord_uv&quot;:&quot;0000000000&quot;,&quot;cnfm_qty&quot;:&quot;0000000010&quot;,&quot;data_send_end_tp&quot;:&quot;접수&quot;,&quot;mrkt_deal_tp&quot;:&quot;1&quot;,&quot;rsrv_tp&quot;:&quot;&quot;,&quot;orig_ord_no&quot;:&quot;0000051&quot;,&quot;stk_nm&quot;:&quot;삼성전자&quot;,&quot;dcd_tp_nm&quot;:&quot;삼일&quot;,&quot;crd_deal_tp&quot;:&quot;보통매매&quot;,&quot;cntr_qty&quot;:&quot;0000000000&quot;,&quot;cntr_uv&quot;:&quot;0000000000&quot;,&quot;ord_remnq&quot;:&quot;&quot;,&quot;comm_ord_tp&quot;:&quot;REST API&quot;,&quot;mdfy_cncl_tp&quot;:&quot;취소확인&quot;,&quot;dmst_stex_tp&quot;:&quot;SOR&quot;,&quot;cond_uv&quot;:&quot;0000000000&quot;},{&quot;stk_bond_tp&quot;:&quot;1&quot;,&quot;ord_no&quot;:&quot;0000053&quot;,&quot;stk_cd&quot;:&quot;A005930&quot;,&quot;trde_tp&quot;:&quot;지정가&quot;,&quot;io_tp_nm&quot;:&quot;현금매수&quot;,&quot;ord_qty&quot;:&quot;0000000010&quot;,&quot;ord_uv&quot;:&quot;0000292000&quot;,&quot;cnfm_qty&quot;:&quot;0000000000&quot;,&quot;data_send_end_tp&quot;:&quot;접수&quot;,&quot;mrkt_deal_tp&quot;:&quot;1&quot;,&quot;rsrv_tp&quot;:&quot;&quot;,&quot;orig_ord_no&quot;:&quot;0000000&quot;,&quot;stk_nm&quot;:&quot;삼성전자&quot;,&quot;dcd_tp_nm&quot;:&quot;삼일&quot;,&quot;crd_deal_tp&quot;:&quot;보통매매&quot;,&quot;cntr_qty&quot;:&quot;0000000000&quot;,&quot;cntr_uv&quot;:&quot;0000000000&quot;,&quot;ord_remnq&quot;:&quot;&quot;,&quot;comm_ord_tp&quot;:&quot;REST API&quot;,&quot;mdfy_cncl_tp&quot;:&quot;&quot;,&quot;dmst_stex_tp&quot;:&quot;SOR&quot;,&quot;cond_uv&quot;:&quot;0000000000&quot;},{&quot;stk_bond_tp&quot;:&quot;1&quot;,&quot;ord_no&quot;:&quot;0000054&quot;,&quot;stk_cd&quot;:&quot;A005930&quot;,&quot;trde_tp&quot;:&quot;지정가&quot;,&quot;io_tp_nm&quot;:&quot;현금매수&quot;,&quot;ord_qty&quot;:&quot;0000000010&quot;,&quot;ord_uv&quot;:&quot;0000000000&quot;,&quot;cnfm_qty&quot;:&quot;0000000010&quot;,&quot;data_send_end_tp&quot;:&quot;접수&quot;,&quot;mrkt_deal_tp&quot;:&quot;1&quot;,&quot;rsrv_tp&quot;:&quot;&quot;,&quot;orig_ord_no&quot;:&quot;0000053&quot;,&quot;stk_nm&quot;:&quot;삼성전자&quot;,&quot;dcd_tp_nm&quot;:&quot;삼일&quot;,&quot;crd_deal_tp&quot;:&quot;보통매매&quot;,&quot;cntr_qty&quot;:&quot;0000000000&quot;,&quot;cntr_uv&quot;:&quot;0000000000&quot;,&quot;ord_remnq&quot;:&quot;&quot;,&quot;comm_ord_tp&quot;:&quot;REST API&quot;,&quot;mdfy_cncl_tp&quot;:&quot;취소확인&quot;,&quot;dmst_stex_tp&quot;:&quot;SOR&quot;,&quot;cond_uv&quot;:&quot;0000000000&quot;}],&quot;return_code&quot;:0,&quot;return_msg&quot;:&quot;조회가 완료되었습니다&quot;}</pre>
+  </div>
+</div>
+</body>
+</html>

@@ -25,9 +25,9 @@ class SettingsError(KiwoomError):
 class ModeNotConfiguredError(KiwoomError):
     def __init__(self):
         super().__init__(
-            "실행 모드가 설정되어 있지 않습니다. "
-            "`kiwoom setup` 또는 `kiwoom auth login`으로 계좌 별칭을 등록/전환하거나, "
-            "`--profile`, `--mode`, `KIWOOM_MODE` 중 하나로 명시해 주세요."
+            "사용할 계좌가 설정되어 있지 않습니다. "
+            "`kiwoom setup`으로 계좌를 등록하거나, 이미 등록한 계좌가 있으면 "
+            "`kiwoom auth switch <별칭>`으로 선택해 주세요."
         )
 
 

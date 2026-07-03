@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: transparent; display: flex; justify-content: center; padding: 32px; }
+  .window {
+    background: #282a36;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    min-width: 480px;
+    max-width: 960px;
+    overflow: hidden;
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .titlebar {
+    background: #21222c;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+  .title {
+    flex: 1;
+    text-align: center;
+    color: #bd93f9;
+    font-size: 12px;
+    margin-right: 36px;
+  }
+  .body { padding: 20px 24px; }
+  .meta { color: #6272a4; margin-bottom: 12px; }
+  .meta span { color: #50fa7b; }
+  pre {
+    color: #f8f8f2;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+    <div class="title">kiwoom rankings foreign-continuous-net</div>
+  </div>
+  <div class="body">
+    <div class="meta"><span>$</span> kiwoom rankings foreign-continuous-net --market all --side net-buy --base-date today --exchange KRX --format json</div>
+    <div class="meta">mode=read · exit=0 · elapsed=0.52s</div>
+    <pre>{&quot;for_cont_nettrde_upper&quot;:[{&quot;stk_cd&quot;:&quot;040300&quot;,&quot;stk_nm&quot;:&quot;YTN&quot;,&quot;cur_prc&quot;:&quot;+2055&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+10&quot;,&quot;dm1&quot;:&quot;+1206&quot;,&quot;dm2&quot;:&quot;+7939&quot;,&quot;dm3&quot;:&quot;+21201&quot;,&quot;tot&quot;:&quot;+30346&quot;,&quot;limit_exh_rt&quot;:&quot;+7.24&quot;,&quot;pred_pre_1&quot;:&quot;&quot;,&quot;pred_pre_2&quot;:&quot;&quot;,&quot;pred_pre_3&quot;:&quot;&quot;},{&quot;stk_cd&quot;:&quot;039340&quot;,&quot;stk_nm&quot;:&quot;한국경제TV&quot;,&quot;cur_prc&quot;:&quot;+4765&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+15&quot;,&quot;dm1&quot;:&quot;+5526&quot;,&quot;dm2&quot;:&quot;+866&quot;,&quot;dm3&quot;:&quot;+1865&quot;,&quot;tot&quot;:&quot;+8257&quot;,&quot;limit_exh_rt&quot;:&quot;+2.66&quot;,&quot;pred_pre_1&quot;:&quot;&quot;,&quot;pred_pre_2&quot;:&quot;&quot;,&quot;pred_pre_3&quot;:&quot;&quot;}],&quot;return_code&quot;:0,&quot;return_msg&quot;:&quot;정상적으로 처리되었습니다&quot;}</pre>
+  </div>
+</div>
+</body>
+</html>

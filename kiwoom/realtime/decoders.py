@@ -1,7 +1,11 @@
 """Decoder for Kiwoom WebSocket REAL messages.
 
-Translates numeric FID keys in ``values`` dicts to Korean field names
-using the mapping tables in :mod:`kiwoom.core.fid`.
+Translates numeric FID keys in ``values`` dicts to Korean field names. The
+``{fid: 한글명}`` mapping is derived from the Kiwoom WebSocket spec
+(``kiwoom_api_spec.json``): each realtime type's REAL ``values`` fields are the
+depth-2 rows nested under ``values`` in the response body. The spec is the single
+source of truth and names are returned verbatim; unknown FID keys pass through
+unchanged so no data is lost.
 
 Typical REAL message shape::
 
@@ -20,9 +24,42 @@ Typical REAL message shape::
 
 from __future__ import annotations
 
+from functools import lru_cache
 from typing import Any
 
-from kiwoom.core.fid import FID_MAP
+from kiwoom.realtime.schemas import get_realtime_schema
+
+
+@lru_cache(maxsize=None)
+def _fid_map(real_type: str) -> dict[str, str]:
+    """Extract ``{fid: 한글명}`` from the spec's REAL ``values`` rows (depth 2)."""
+    from kiwoom.specs import get_api_spec
+
+    try:
+        payload = get_api_spec(real_type)
+    except ValueError:
+        return {}
+
+    fid_map: dict[str, str] = {}
+    in_values = False
+    for row in payload.get("response", {}).get("body", []):
+        element = str(row.get("element", "")).strip()
+        depth = row.get("depth")
+        if element == "values" and depth == 1:
+            in_values = True
+            continue
+        if not in_values:
+            continue
+        if depth == 2 and element:
+            fid_map[element] = str(row.get("한글명", "")).strip()
+        elif isinstance(depth, int) and depth <= 1:
+            in_values = False
+    return fid_map
+
+
+def fid_display_map(real_type: str) -> dict[str, str]:
+    """Return the spec-defined FID -> display name mapping for a realtime type."""
+    return dict(_fid_map(real_type))
 
 
 def decode_values(real_type: str, values: dict[str, str]) -> dict[str, str]:
@@ -37,7 +74,7 @@ def decode_values(real_type: str, values: dict[str, str]) -> dict[str, str]:
     Returns:
         ``{"field_name": "value"}`` dict with human-readable keys.
     """
-    fid_map = FID_MAP.get(real_type, {})
+    fid_map = fid_display_map(real_type)
     return {fid_map.get(k, k): v for k, v in values.items()}
 
 
@@ -77,3 +114,58 @@ def decode_realtime_message(message: dict[str, Any]) -> dict[str, Any]:
             decoded_data.append(entry)
 
     return {**message, "data": decoded_data}
+
+
+def decode_realtime_message_named(message: dict[str, Any]) -> dict[str, Any]:
+    """Convert REAL message entries into named data objects.
+
+    Only ``trnm == "REAL"`` messages are decoded. Control frames such as ``REG``
+    and ``SYSTEM`` are returned unchanged. Values keep their original string
+    representation; this function changes keys/shape only and preserves unknown
+    FIDs under ``unknown``.
+    """
+    if not isinstance(message, dict):
+        return message
+
+    if str(message.get("trnm", "")).upper() != "REAL":
+        return message
+
+    data = message.get("data")
+    if not isinstance(data, list):
+        return message
+
+    named_data = []
+    for entry in data:
+        if not isinstance(entry, dict):
+            named_data.append(entry)
+            continue
+
+        real_type = str(entry.get("type", "")).strip()
+        values = entry.get("values")
+        schema = get_realtime_schema(real_type)
+        if not isinstance(values, dict) or schema is None:
+            named_data.append(entry)
+            continue
+
+        fields = schema.get("fields", {})
+        named_values: dict[str, Any] = {}
+        unknown: dict[str, Any] = {}
+        for fid, value in values.items():
+            field = fields.get(str(fid))
+            if field is None:
+                unknown[str(fid)] = value
+                continue
+            named_values[str(field["name"])] = value
+
+        named_entry: dict[str, Any] = {
+            "event": schema.get("event", real_type),
+            "type": real_type,
+            "name": entry.get("name") or schema.get("name", ""),
+            "code": entry.get("item", ""),
+            "data": named_values,
+        }
+        if unknown:
+            named_entry["unknown"] = unknown
+        named_data.append(named_entry)
+
+    return {**message, "data": named_data}

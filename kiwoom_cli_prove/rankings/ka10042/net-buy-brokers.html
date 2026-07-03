@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: transparent; display: flex; justify-content: center; padding: 32px; }
+  .window {
+    background: #282a36;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    min-width: 480px;
+    max-width: 960px;
+    overflow: hidden;
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .titlebar {
+    background: #21222c;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+  .title {
+    flex: 1;
+    text-align: center;
+    color: #bd93f9;
+    font-size: 12px;
+    margin-right: 36px;
+  }
+  .body { padding: 20px 24px; }
+  .meta { color: #6272a4; margin-bottom: 12px; }
+  .meta span { color: #50fa7b; }
+  pre {
+    color: #f8f8f2;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+    <div class="title">kiwoom rankings net-buy-brokers</div>
+  </div>
+  <div class="body">
+    <div class="meta"><span>$</span> kiwoom rankings net-buy-brokers --code 005930 --date-mode period --point today --sort close --format json</div>
+    <div class="meta">mode=read · exit=0 · elapsed=0.37s</div>
+    <pre>{&quot;netprps_trde_ori_rank&quot;:[{&quot;rank&quot;:&quot;1&quot;,&quot;mmcm_cd&quot;:&quot;12&quot;,&quot;mmcm_nm&quot;:&quot;NH투자증권&quot;},{&quot;rank&quot;:&quot;2&quot;,&quot;mmcm_cd&quot;:&quot;21&quot;,&quot;mmcm_nm&quot;:&quot;한  화&quot;},{&quot;rank&quot;:&quot;3&quot;,&quot;mmcm_cd&quot;:&quot;36&quot;,&quot;mmcm_nm&quot;:&quot;모건스탠리&quot;},{&quot;rank&quot;:&quot;4&quot;,&quot;mmcm_cd&quot;:&quot;5&quot;,&quot;mmcm_nm&quot;:&quot;미래에셋&quot;},{&quot;rank&quot;:&quot;5&quot;,&quot;mmcm_cd&quot;:&quot;50&quot;,&quot;mmcm_nm&quot;:&quot;키움증권&quot;},{&quot;rank&quot;:&quot;6&quot;,&quot;mmcm_cd&quot;:&quot;17&quot;,&quot;mmcm_nm&quot;:&quot;KB증권&quot;},{&quot;rank&quot;:&quot;7&quot;,&quot;mmcm_cd&quot;:&quot;3&quot;,&quot;mmcm_nm&quot;:&quot;한국투자증권&quot;},{&quot;rank&quot;:&quot;8&quot;,&quot;mmcm_cd&quot;:&quot;45&quot;,&quot;mmcm_nm&quot;:&quot;골드만삭스&quot;},{&quot;rank&quot;:&quot;9&quot;,&quot;mmcm_cd&quot;:&quot;86&quot;,&quot;mmcm_nm&quot;:&quot;BNK증권&quot;}],&quot;return_code&quot;:0,&quot;return_msg&quot;:&quot;정상적으로 처리되었습니다&quot;}</pre>
+  </div>
+</div>
+</body>
+</html>
