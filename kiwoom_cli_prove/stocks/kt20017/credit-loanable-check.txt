@@ -1,0 +1,1 @@
+{"crd_alow_yn":"< 신용융자 불가능 >","return_code":0,"return_msg":"조회가 완료 되었습니다.","loanable":false}

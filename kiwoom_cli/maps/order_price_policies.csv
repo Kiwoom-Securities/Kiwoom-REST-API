@@ -1,0 +1,47 @@
+command_path,order_type,price_option,price_policy,condition_price_option,condition_price_policy,description
+kiwoom orders buy,limit,--price,required,,,지정가 매수는 주문단가가 필요합니다.
+kiwoom orders buy,market,--price,forbidden,,,시장가 매수는 주문단가를 보내지 않습니다.
+kiwoom orders sell,limit,--price,required,,,지정가 매도는 주문단가가 필요합니다.
+kiwoom orders sell,market,--price,forbidden,,,시장가 매도는 주문단가를 보내지 않습니다.
+kiwoom orders credit-buy,limit,--price,required,,,지정가 신용매수는 주문단가가 필요합니다.
+kiwoom orders credit-buy,market,--price,forbidden,,,시장가 신용매수는 주문단가를 보내지 않습니다.
+kiwoom orders credit-buy,conditional-limit,--price,required,,,조건부지정가는 주문단가가 필요합니다.
+kiwoom orders credit-buy,after-hours-close,--price,forbidden,,,장마감후시간외는 별도 주문단가를 보내지 않습니다.
+kiwoom orders credit-buy,pre-open,--price,forbidden,,,장시작전시간외는 별도 주문단가를 보내지 않습니다.
+kiwoom orders credit-buy,after-hours-single,--price,required,,,시간외단일가는 주문단가가 필요합니다.
+kiwoom orders credit-buy,best-limit,--price,forbidden,,,최유리지정가는 주문단가를 보내지 않습니다.
+kiwoom orders credit-buy,top-priority,--price,forbidden,,,최우선지정가는 주문단가를 보내지 않습니다.
+kiwoom orders credit-buy,limit-ioc,--price,required,,,보통 IOC는 주문단가가 필요합니다.
+kiwoom orders credit-buy,market-ioc,--price,forbidden,,,시장가 IOC는 주문단가를 보내지 않습니다.
+kiwoom orders credit-buy,best-ioc,--price,forbidden,,,최유리 IOC는 주문단가를 보내지 않습니다.
+kiwoom orders credit-buy,limit-fok,--price,required,,,보통 FOK는 주문단가가 필요합니다.
+kiwoom orders credit-buy,market-fok,--price,forbidden,,,시장가 FOK는 주문단가를 보내지 않습니다.
+kiwoom orders credit-buy,best-fok,--price,forbidden,,,최유리 FOK는 주문단가를 보내지 않습니다.
+kiwoom orders credit-buy,stop-limit,--price,required,--condition-price,required,스톱지정가는 주문단가와 조건단가가 필요합니다.
+kiwoom orders credit-buy,mid,--price,forbidden,,,중간가는 주문단가를 보내지 않습니다.
+kiwoom orders credit-buy,mid-ioc,--price,forbidden,,,중간가 IOC는 주문단가를 보내지 않습니다.
+kiwoom orders credit-buy,mid-fok,--price,forbidden,,,중간가 FOK는 주문단가를 보내지 않습니다.
+kiwoom orders credit-sell,limit,--price,required,,,지정가 신용매도는 주문단가가 필요합니다.
+kiwoom orders credit-sell,market,--price,forbidden,,,시장가 신용매도는 주문단가를 보내지 않습니다.
+kiwoom orders credit-sell,conditional-limit,--price,required,,,조건부지정가는 주문단가가 필요합니다.
+kiwoom orders credit-sell,after-hours-close,--price,forbidden,,,장마감후시간외는 별도 주문단가를 보내지 않습니다.
+kiwoom orders credit-sell,pre-open,--price,forbidden,,,장시작전시간외는 별도 주문단가를 보내지 않습니다.
+kiwoom orders credit-sell,after-hours-single,--price,required,,,시간외단일가는 주문단가가 필요합니다.
+kiwoom orders credit-sell,best-limit,--price,forbidden,,,최유리지정가는 주문단가를 보내지 않습니다.
+kiwoom orders credit-sell,top-priority,--price,forbidden,,,최우선지정가는 주문단가를 보내지 않습니다.
+kiwoom orders credit-sell,limit-ioc,--price,required,,,보통 IOC는 주문단가가 필요합니다.
+kiwoom orders credit-sell,market-ioc,--price,forbidden,,,시장가 IOC는 주문단가를 보내지 않습니다.
+kiwoom orders credit-sell,best-ioc,--price,forbidden,,,최유리 IOC는 주문단가를 보내지 않습니다.
+kiwoom orders credit-sell,limit-fok,--price,required,,,보통 FOK는 주문단가가 필요합니다.
+kiwoom orders credit-sell,market-fok,--price,forbidden,,,시장가 FOK는 주문단가를 보내지 않습니다.
+kiwoom orders credit-sell,best-fok,--price,forbidden,,,최유리 FOK는 주문단가를 보내지 않습니다.
+kiwoom orders credit-sell,stop-limit,--price,required,--condition-price,required,스톱지정가는 주문단가와 조건단가가 필요합니다.
+kiwoom orders credit-sell,mid,--price,forbidden,,,중간가는 주문단가를 보내지 않습니다.
+kiwoom orders credit-sell,mid-ioc,--price,forbidden,,,중간가 IOC는 주문단가를 보내지 않습니다.
+kiwoom orders credit-sell,mid-fok,--price,forbidden,,,중간가 FOK는 주문단가를 보내지 않습니다.
+kiwoom orders gold-buy,limit,--price,required,,,금현물 지정가 매수는 주문단가가 필요합니다.
+kiwoom orders gold-buy,limit-ioc,--price,required,,,금현물 IOC 매수는 주문단가가 필요합니다.
+kiwoom orders gold-buy,limit-fok,--price,required,,,금현물 FOK 매수는 주문단가가 필요합니다.
+kiwoom orders gold-sell,limit,--price,required,,,금현물 지정가 매도는 주문단가가 필요합니다.
+kiwoom orders gold-sell,limit-ioc,--price,required,,,금현물 IOC 매도는 주문단가가 필요합니다.
+kiwoom orders gold-sell,limit-fok,--price,required,,,금현물 FOK 매도는 주문단가가 필요합니다.

@@ -14,6 +14,7 @@
 Kiwoom-Github-Active-Project/
 ├── .venv/
 ├── convention/
+├── docs/
 ├── examples/
 ├── examples_prove/
 ├── kiwoom/
@@ -21,8 +22,7 @@ Kiwoom-Github-Active-Project/
 ├── generator/
 ├── .env.example
 ├── .gitignore
-├── EXAMPLES_GUIDE.md
-├── GENERATOR_GUIDE.md
+├── LICENSE.md
 ├── pyproject.toml
 ├── README.md
 ├── smoke_check.py
@@ -37,6 +37,15 @@ Kiwoom-Github-Active-Project/
 ### `convention/`
 
 `examples/` 샘플코드의 폴더 구조, 파일명, 함수 구조, 주석 규칙을 설명하는 컨벤션 문서를 둡니다.
+
+### `docs/`
+
+프로젝트 매뉴얼과 운영 안내 문서를 모아둔 폴더입니다.
+
+- `MANUAL_EXAMPLES.md`: `examples/` 샘플코드 실행 가이드 (Python, uv, 환경변수, OAuth/조회/주문 예제 주의사항).
+- `MANUAL_GENERATORS.md`: `generator/` 생성기 실행 가이드 (원천 workbook → examples/Postman 생성 절차).
+- `SETUP_USERS.md`: 일반 사용자용 가이드. 공개 저장소에서는 이 문서를 `README.md`로 전환해 사용합니다.
+- `SETUP_GITHUB.md`: 공개 저장소 운영자용 구성 안내 (공개 대상 선별·배치 절차).
 
 ### `examples/`
 
@@ -71,15 +80,10 @@ Postman에서 import해 사용할 수 있는 Kiwoom OpenAPI Collection을 둡니
 Git에 포함하지 않을 파일과 폴더를 정의합니다.
 가상환경, 캐시, `.env`, 생성 중간 산출물 등을 제외합니다.
 
-### `EXAMPLES_GUIDE.md`
+### `LICENSE.md`
 
-`examples/` 샘플코드를 실행하는 방법을 설명하는 문서입니다.
-Python, uv, 환경변수, OAuth 예제, 조회 예제, 주문 예제 주의사항을 포함합니다.
-
-### `GENERATOR_GUIDE.md`
-
-`generator/` 생성기를 실행하는 방법을 설명하는 문서입니다.
-원천 workbook을 입력으로 examples와 Postman Collection을 생성하는 절차를 다룹니다.
+키움증권 OpenAPI 관련 라이선스 문서입니다.
+공개 저장소에도 포함되며, 사용 조건과 권리 범위를 정의합니다.
 
 ### `pyproject.toml`
 

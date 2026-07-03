@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: transparent; display: flex; justify-content: center; padding: 32px; }
+  .window {
+    background: #282a36;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    min-width: 480px;
+    max-width: 960px;
+    overflow: hidden;
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .titlebar {
+    background: #21222c;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+  .title {
+    flex: 1;
+    text-align: center;
+    color: #bd93f9;
+    font-size: 12px;
+    margin-right: 36px;
+  }
+  .body { padding: 20px 24px; }
+  .meta { color: #6272a4; margin-bottom: 12px; }
+  .meta span { color: #50fa7b; }
+  pre {
+    color: #f8f8f2;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+    <div class="title">kiwoom quotes strength-daily</div>
+  </div>
+  <div class="body">
+    <div class="meta"><span>$</span> kiwoom quotes strength-daily --code 005930 --format json</div>
+    <div class="meta">mode=read · exit=0 · elapsed=0.39s</div>
+    <pre>{&quot;cntr_str_daly&quot;:[{&quot;dt&quot;:&quot;20260701&quot;,&quot;cur_prc&quot;:&quot;-315750&quot;,&quot;pred_pre&quot;:&quot;-18250&quot;,&quot;pred_pre_sig&quot;:&quot;5&quot;,&quot;flu_rt&quot;:&quot;-5.46&quot;,&quot;trde_qty&quot;:&quot;&quot;,&quot;acc_trde_prica&quot;:&quot;6533481&quot;,&quot;acc_trde_qty&quot;:&quot;20269152&quot;,&quot;cntr_str&quot;:&quot;77.45&quot;,&quot;cntr_str_5min&quot;:&quot;101.39&quot;,&quot;cntr_str_20min&quot;:&quot;0.00&quot;,&quot;cntr_str_60min&quot;:&quot;0.00&quot;},{&quot;dt&quot;:&quot;20260630&quot;,&quot;cur_prc&quot;:&quot;+334000&quot;,&quot;pred_pre&quot;:&quot;+11000&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;flu_rt&quot;:&quot;+3.41&quot;,&quot;trde_qty&quot;:&quot;&quot;,&quot;acc_trde_prica&quot;:&quot;9724402&quot;,&quot;acc_trde_qty&quot;:&quot;29237216&quot;,&quot;cntr_str&quot;:&quot;126.41&quot;,&quot;cntr_str_5min&quot;:&quot;105.23&quot;,&quot;cntr_str_20min&quot;:&quot;0.00&quot;,&quot;cntr_str_60min&quot;:&quot;0.00&quot;},{&quot;dt&quot;:&quot;20260629&quot;,&quot;cur_prc&quot;:&quot;-323000&quot;,&quot;pred_pre&quot;:&quot;-16500&quot;,&quot;pred_pre_sig&quot;:&quot;5&quot;,&quot;flu_rt&quot;:&quot;-4.86&quot;,&quot;trde_qty&quot;:&quot;&quot;,&quot;acc_trde_prica&quot;:&quot;11470651&quot;,&quot;acc_trde_qty&quot;:&quot;35436521&quot;,&quot;cntr_str&quot;:&quot;100.35&quot;,&quot;cntr_str_5min&quot;:&quot;93.58&quot;,&quot;cntr_str_20min&quot;:&quot;0.00&quot;,&quot;cntr_str_60min&quot;:&quot;0.00&quot;},{&quot;dt&quot;:&quot;20260626&quot;,&quot;cur_prc&quot;:&quot;-339500&quot;,&quot;pred_pre&quot;:&quot;-19000&quot;,&quot;pred_pre_sig&quot;:&quot;5&quot;,&quot;flu_rt&quot;:&quot;-5.30&quot;,&quot;trde_qty&quot;:&quot;&quot;,&quot;acc_trde_prica&quot;:&quot;13408352&quot;,&quot;acc_trde_qty&quot;:&quot;39735951&quot;,&quot;cntr_str&quot;:&quot;90.01&quot;,&quot;cntr_str_5min&quot;:&quot;92.43&quot;,&quot;cntr_str_20min&quot;:&quot;0.00&quot;,&quot;cntr_str_60min&quot;:&quot;0.00&quot;},{&quot;dt&quot;:&quot;20260625&quot;,&quot;cur_prc&quot;:&quot;+358500&quot;,&quot;pred_pre&quot;:&quot;+18000&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;flu_rt&quot;:&quot;+5.29&quot;,&quot;trde_qty&quot;:&quot;&quot;,&quot;acc_trde_prica&quot;:&quot;12953176&quot;,&quot;acc_trde_qty&quot;:&quot;36157158&quot;,&quot;cntr_str&quot;:&quot;112.73&quot;,&quot;cntr_str_5min&quot;:&quot;90.13&quot;,&quot;cntr_str_20min&quot;:&quot;0.00&quot;,&quot;cntr_str_60min&quot;:&quot;0.00&quot;},{&quot;dt&quot;:&quot;20260624&quot;,&quot;cur_prc&quot;:&quot;+340500&quot;,&quot;pred_pre&quot;:&quot;+30500&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;flu_rt&quot;:&quot;+9.84&quot;,&quot;trde_qty&quot;:&quot;&quot;,&quot;acc_trde_prica&quot;:&quot;15837943&quot;,&quot;acc_trde_qty&quot;:&quot;47809959&quot;,&quot;cntr_str&quot;:&quot;96.63&quot;,&quot;cntr_str_5min&quot;:&quot;94.53&quot;,&quot;cntr_str_20min&quot;:&quot;0.00&quot;,&quot;cntr_str_60min&quot;:&quot;0.00&quot;},{&quot;dt&quot;:&quot;20260623&quot;,&quot;cur_prc&quot;:&quot;-310000&quot;,&quot;pred_pre&quot;:&quot;-43500&quot;,&quot;pred_pre_sig&quot;:&quot;5&quot;,&quot;flu_rt&quot;:&quot;-12.31&quot;,&quot;trde_qty&quot;:&quot;&quot;,&quot;acc_trde_prica&quot;:&quot;13714976&quot;,&quot;acc_trde_qty&quot;:&quot;41266630&quot;,&quot;cntr_str&quot;:&quot;68.21&quot;,&quot;cntr_str_5min&quot;:&quot;101.46&quot;,&quot;cntr_str_20min&quot;:&quot;0.00&quot;,&quot;cntr_str_60min&quot;:&quot;0.00&quot;},{&quot;dt&quot;:&quot;20260622&quot;,&quot;cur_prc&quot;:&quot;-353500&quot;,&quot;pred_pre&quot;:&quot;-500&quot;,&quot;pred_pre_sig&quot;:&quot;5&quot;,&quot;flu_rt&quot;:&quot;-0.14&quot;,&quot;trde_qty&quot;:&quot;&quot;,&quot;acc_trde_prica&quot;:&quot;8592604&quot;,&quot;acc_trde_qty&quot;:&quot;24330451&quot;,&quot;cntr_str&quot;:&quot;94.60&quot;,&quot;cntr_str_5min&quot;:&quot;106.12&quot;,&quot;cntr_str_20min&quot;:&quot;0.00&quot;,&quot;cntr_str_60min&quot;:&quot;0.00&quot;},{&quot;dt&quot;:&quot;20260619&quot;,&quot;cur_prc&quot;:&quot;-354000&quot;,&quot;pred_pre&quot;:&quot;-8500&quot;,&quot;pred_pre_sig&quot;:&quot;5&quot;,&quot;flu_rt&quot;:&quot;-2.34&quot;,&quot;trde_qty&quot;:&quot;&quot;,&quot;acc_trde_prica&quot;:&quot;15606827&quot;,&quot;acc_trde_qty&quot;:&quot;43284898&quot;,&quot;cntr_str&quot;:&quot;78.48&quot;,&quot;cntr_str_5min&quot;:&quot;105.47&quot;,&quot;cntr_str_20min&quot;:&quot;0.00&quot;,&quot;cntr_str_60min&quot;:&quot;0.00&quot;},{&quot;dt&quot;:&quot;20260618&quot;,&quot;cur_prc&quot;:&quot;+362500&quot;,&quot;pred_pre&quot;:&quot;+16000&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;flu_rt&quot;:&quot;+4.62&quot;,&quot;trde_qty&quot;:&quot;&quot;,&quot;acc_trde_prica&quot;:&quot;11580404&quot;,&quot;acc_trde_qty&quot;:&quot;32764450&quot;,&quot;cntr_str&quot;:&quot;134.75&quot;,&quot;cntr_str_5min&quot;:&quot;112.59&quot;,&quot;cntr_str_20min&quot;:&quot;0.00&quot;,&quot;cntr_str_60min&quot;:&quot;0.00&quot;},{&quot;dt&quot;:&quot;20260617&quot;,&quot;cur_prc&quot;:&quot;+346500&quot;,&quot;pred_pre&quot;:&quot;+3500&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;flu_rt&quot;:&quot;+1.02&quot;,&quot;trde_qty&quot;:&quot;&quot;,&quot;acc_trde_prica&quot;:&quot;6145209&quot;,&quot;acc_trde_qty&quot;:&quot;18134051&quot;,&quot;cntr_str&quot;:&quot;131.26&quot;,&quot;cntr_str_5min&quot;:&quot;106.13&quot;,&quot;cntr_str_20min&quot;:&quot;0.00&quot;,&quot;cntr_str_60min&quot;:&quot;0.00&quot;},{&quot;dt&quot;:&quot;20260616&quot;,&quot;cur_prc&quot;:&quot;+343000&quot;,&quot;pred_pre&quot;:&quot;+6000&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;flu_rt&quot;:&quot;+1.78&quot;,&quot;trde_qty&quot;:&quot;&quot;,&quot;acc_trde_prica&quot;:&quot;5970562&quot;,&quot;acc_trde_qty&quot;:&quot;17548685&quot;,&quot;cntr_str&quot;:&quot;91.53&quot;,&quot;cntr_str_5min&quot;:&quot;97.11&quot;,&quot;cntr_str_20min&quot;:&quot;0.00&quot;,&quot;cntr_str_60min&quot;:&quot;0.00&quot;},{&quot;dt&quot;:&quot;20260615&quot;,&quot;cur_prc&quot;:&quot;+337000&quot;,&quot;pred_pre&quot;:&quot;+14500&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;flu_rt&quot;:&quot;+4.50&quot;,&quot;trde_qty&quot;:&quot;&quot;,&quot;acc_trde_prica&quot;:&quot;7267809&quot;,&quot;acc_trde_qty&quot;:&quot;21500067&quot;,&quot;cntr_str&quot;:&quot;91.31&quot;,&quot;cntr_str_5min&quot;:&quot;0.00&quot;,&quot;cntr_str_20min&quot;:&quot;0.00&quot;,&quot;cntr_str_60min&quot;:&quot;0.00&quot;},{&quot;dt&quot;:&quot;20260612&quot;,&quot;cur_prc&quot;:&quot;+322500&quot;,&quot;pred_pre&quot;:&quot;+23500&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;flu_rt&quot;:&quot;+7.86&quot;,&quot;trde_qty&quot;:&quot;&quot;,&quot;acc_trde_prica&quot;:&quot;10243164&quot;,&quot;acc_trde_qty&quot;:&quot;31006148&quot;,&quot;cntr_str&quot;:&quot;114.10&quot;,&quot;cntr_str_5min&quot;:&quot;0.00&quot;,&quot;cntr_str_20min&quot;:&quot;0.00&quot;,&quot;cntr_str_60min&quot;:&quot;0.00&quot;},{&quot;dt&quot;:&quot;20260611&quot;,&quot;cur_prc&quot;:&quot;-299000&quot;,&quot;pred_pre&quot;:&quot;-3500&quot;,&quot;pred_pre_sig&quot;:&quot;5&quot;,&quot;flu_rt&quot;:&quot;-1.16&quot;,&quot;trde_qty&quot;:&quot;&quot;,&quot;acc_trde_prica&quot;:&quot;9359984&quot;,&quot;acc_trde_qty&quot;:&quot;31420307&quot;,&quot;cntr_str&quot;:&quot;102.45&quot;,&quot;cntr_str_5min&quot;:&quot;0.00&quot;,&quot;cntr_str_20min&quot;:&quot;0.00&quot;,&quot;cntr_str_60min&quot;:&quot;0.00&quot;},{&quot;dt&quot;:&quot;20260610&quot;,&quot;cur_prc&quot;:&quot;-302500&quot;,&quot;pred_pre&quot;:&quot;-19500&quot;,&quot;pred_pre_sig&quot;:&quot;5&quot;,&quot;flu_rt&quot;:&quot;-6.06&quot;,&quot;trde_qty&quot;:&quot;&quot;,&quot;acc_trde_prica&quot;:&quot;8222479&quot;,&quot;acc_trde_qty&quot;:&quot;27050362&quot;,&quot;cntr_str&quot;:&quot;86.18&quot;,&quot;cntr_str_5min&quot;:&quot;0.00&quot;,&quot;cntr_str_20min&quot;:&quot;0.00&quot;,&quot;cntr_str_60min&quot;:&quot;0.00&quot;}],&quot;return_code&quot;:0,&quot;return_msg&quot;:&quot;정상적으로 처리되었습니다&quot;}</pre>
+  </div>
+</div>
+</body>
+</html>

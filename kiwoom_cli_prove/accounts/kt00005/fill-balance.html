@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: transparent; display: flex; justify-content: center; padding: 32px; }
+  .window {
+    background: #282a36;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    min-width: 480px;
+    max-width: 960px;
+    overflow: hidden;
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .titlebar {
+    background: #21222c;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+  .title {
+    flex: 1;
+    text-align: center;
+    color: #bd93f9;
+    font-size: 12px;
+    margin-right: 36px;
+  }
+  .body { padding: 20px 24px; }
+  .meta { color: #6272a4; margin-bottom: 12px; }
+  .meta span { color: #50fa7b; }
+  pre {
+    color: #f8f8f2;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+    <div class="title">kiwoom accounts fill-balance</div>
+  </div>
+  <div class="body">
+    <div class="meta"><span>$</span> kiwoom accounts fill-balance --exchange KRX --format json</div>
+    <div class="meta">mode=account_read · exit=0 · elapsed=0.39s</div>
+    <pre>{&quot;entr&quot;:&quot;099930778842&quot;,&quot;entr_d1&quot;:&quot;099930778842&quot;,&quot;entr_d2&quot;:&quot;099930778842&quot;,&quot;pymn_alow_amt&quot;:&quot;099930778842&quot;,&quot;uncl_stk_amt&quot;:&quot;000000000000&quot;,&quot;repl_amt&quot;:&quot;000439430330&quot;,&quot;rght_repl_amt&quot;:&quot;000000000000&quot;,&quot;ord_alowa&quot;:&quot;099930778842&quot;,&quot;ch_uncla&quot;:&quot;000000000000&quot;,&quot;crd_int_npay_gold&quot;:&quot;000000000000&quot;,&quot;etc_loana&quot;:&quot;000000000000&quot;,&quot;nrpy_loan&quot;:&quot;000000000000&quot;,&quot;profa_ch&quot;:&quot;000000000000&quot;,&quot;repl_profa&quot;:&quot;000000000000&quot;,&quot;stk_buy_tot_amt&quot;:&quot;000134058529&quot;,&quot;evlt_amt_tot&quot;:&quot;000677911446&quot;,&quot;tot_pl_tot&quot;:&quot;000543852917&quot;,&quot;tot_pl_rt&quot;:&quot;405.6832&quot;,&quot;tot_re_buy_alowa&quot;:&quot;000000000000&quot;,&quot;20ord_alow_amt&quot;:&quot;501851045860&quot;,&quot;30ord_alow_amt&quot;:&quot;334567363906&quot;,&quot;40ord_alow_amt&quot;:&quot;250925522930&quot;,&quot;50ord_alow_amt&quot;:&quot;200740418344&quot;,&quot;60ord_alow_amt&quot;:&quot;167283681953&quot;,&quot;100ord_alow_amt&quot;:&quot;099930778842&quot;,&quot;crd_loan_tot&quot;:&quot;000000000000&quot;,&quot;crd_loan_ls_tot&quot;:&quot;000000000000&quot;,&quot;crd_grnt_rt&quot;:&quot;0.00&quot;,&quot;dpst_grnt_use_amt_amt&quot;:&quot;000000000000&quot;,&quot;grnt_loan_amt&quot;:&quot;000000000000&quot;,&quot;stk_cntr_remn&quot;:[{&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;&quot;,&quot;expr_dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;A005930&quot;,&quot;stk_nm&quot;:&quot;삼성전자&quot;,&quot;setl_remn&quot;:&quot;000000001702&quot;,&quot;cur_qty&quot;:&quot;000000001702&quot;,&quot;cur_prc&quot;:&quot;000000374000&quot;,&quot;buy_uv&quot;:&quot;000000067592&quot;,&quot;pur_amt&quot;:&quot;000115042364&quot;,&quot;evlt_amt&quot;:&quot;000635162174&quot;,&quot;evltv_prft&quot;:&quot;000520119810&quot;,&quot;pl_rt&quot;:&quot;452.1115&quot;},{&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;&quot;,&quot;expr_dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;A010140&quot;,&quot;stk_nm&quot;:&quot;삼성중공업&quot;,&quot;setl_remn&quot;:&quot;000000000711&quot;,&quot;cur_qty&quot;:&quot;000000000711&quot;,&quot;cur_prc&quot;:&quot;000000024600&quot;,&quot;buy_uv&quot;:&quot;000000007763&quot;,&quot;pur_amt&quot;:&quot;000005519860&quot;,&quot;evlt_amt&quot;:&quot;000017452180&quot;,&quot;evltv_prft&quot;:&quot;000011932320&quot;,&quot;pl_rt&quot;:&quot;216.1707&quot;},{&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;&quot;,&quot;expr_dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;A0106J0&quot;,&quot;stk_nm&quot;:&quot;대신 KOSPI200인덱스 X클래스&quot;,&quot;setl_remn&quot;:&quot;000000000010&quot;,&quot;cur_qty&quot;:&quot;000000000010&quot;,&quot;cur_prc&quot;:&quot;000000024915&quot;,&quot;buy_uv&quot;:&quot;000000022865&quot;,&quot;pur_amt&quot;:&quot;000000228658&quot;,&quot;evlt_amt&quot;:&quot;000000248593&quot;,&quot;evltv_prft&quot;:&quot;000000019935&quot;,&quot;pl_rt&quot;:&quot;8.7183&quot;},{&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;&quot;,&quot;expr_dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;A030000&quot;,&quot;stk_nm&quot;:&quot;제일기획&quot;,&quot;setl_remn&quot;:&quot;000000000016&quot;,&quot;cur_qty&quot;:&quot;000000000016&quot;,&quot;cur_prc&quot;:&quot;000000019480&quot;,&quot;buy_uv&quot;:&quot;000000019259&quot;,&quot;pur_amt&quot;:&quot;000000308150&quot;,&quot;evlt_amt&quot;:&quot;000000310978&quot;,&quot;evltv_prft&quot;:&quot;000000002828&quot;,&quot;pl_rt&quot;:&quot;0.9177&quot;},{&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;&quot;,&quot;expr_dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;A030200&quot;,&quot;stk_nm&quot;:&quot;KT&quot;,&quot;setl_remn&quot;:&quot;000000000011&quot;,&quot;cur_qty&quot;:&quot;000000000011&quot;,&quot;cur_prc&quot;:&quot;000000053900&quot;,&quot;buy_uv&quot;:&quot;000000068636&quot;,&quot;pur_amt&quot;:&quot;000000755000&quot;,&quot;evlt_amt&quot;:&quot;000000591525&quot;,&quot;evltv_prft&quot;:&quot;-00000163475&quot;,&quot;pl_rt&quot;:&quot;-21.6523&quot;},{&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;&quot;,&quot;expr_dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;A039490&quot;,&quot;stk_nm&quot;:&quot;키움증권&quot;,&quot;setl_remn&quot;:&quot;000000000006&quot;,&quot;cur_qty&quot;:&quot;000000000006&quot;,&quot;cur_prc&quot;:&quot;000000306500&quot;,&quot;buy_uv&quot;:&quot;000000233058&quot;,&quot;pur_amt&quot;:&quot;000001398350&quot;,&quot;evlt_amt&quot;:&quot;000001834853&quot;,&quot;evltv_prft&quot;:&quot;000000436503&quot;,&quot;pl_rt&quot;:&quot;31.2156&quot;},{&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;&quot;,&quot;expr_dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;A088980&quot;,&quot;stk_nm&quot;:&quot;맥쿼리인프라&quot;,&quot;setl_remn&quot;:&quot;000000000016&quot;,&quot;cur_qty&quot;:&quot;000000000016&quot;,&quot;cur_prc&quot;:&quot;000000011220&quot;,&quot;buy_uv&quot;:&quot;000000012944&quot;,&quot;pur_amt&quot;:&quot;000000207106&quot;,&quot;evlt_amt&quot;:&quot;000000179112&quot;,&quot;evltv_prft&quot;:&quot;-00000027994&quot;,&quot;pl_rt&quot;:&quot;-13.5167&quot;},{&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;&quot;,&quot;expr_dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;A094800&quot;,&quot;stk_nm&quot;:&quot;맵스리얼티&quot;,&quot;setl_remn&quot;:&quot;000000000030&quot;,&quot;cur_qty&quot;:&quot;000000000030&quot;,&quot;cur_prc&quot;:&quot;000000005740&quot;,&quot;buy_uv&quot;:&quot;000000004470&quot;,&quot;pur_amt&quot;:&quot;000000134100&quot;,&quot;evlt_amt&quot;:&quot;000000171816&quot;,&quot;evltv_prft&quot;:&quot;000000037716&quot;,&quot;pl_rt&quot;:&quot;28.1253&quot;},{&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;&quot;,&quot;expr_dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;A102110&quot;,&quot;stk_nm&quot;:&quot;TIGER 200&quot;,&quot;setl_remn&quot;:&quot;000000000100&quot;,&quot;cur_qty&quot;:&quot;000000000100&quot;,&quot;cur_prc&quot;:&quot;000000139520&quot;,&quot;buy_uv&quot;:&quot;000000040964&quot;,&quot;pur_amt&quot;:&quot;000004096435&quot;,&quot;evlt_amt&quot;:&quot;000013949300&quot;,&quot;evltv_prft&quot;:&quot;000009852865&quot;,&quot;pl_rt&quot;:&quot;240.5229&quot;},{&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;&quot;,&quot;expr_dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;A215000&quot;,&quot;stk_nm&quot;:&quot;골프존&quot;,&quot;setl_remn&quot;:&quot;000000000005&quot;,&quot;cur_qty&quot;:&quot;000000000005&quot;,&quot;cur_prc&quot;:&quot;000000042050&quot;,&quot;buy_uv&quot;:&quot;000000059800&quot;,&quot;pur_amt&quot;:&quot;000000299000&quot;,&quot;evlt_amt&quot;:&quot;000000209760&quot;,&quot;evltv_prft&quot;:&quot;-00000089240&quot;,&quot;pl_rt&quot;:&quot;-29.8462&quot;},{&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;&quot;,&quot;expr_dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;A330590&quot;,&quot;stk_nm&quot;:&quot;롯데리츠&quot;,&quot;setl_remn&quot;:&quot;000000000061&quot;,&quot;cur_qty&quot;:&quot;000000000061&quot;,&quot;cur_prc&quot;:&quot;000000003660&quot;,&quot;buy_uv&quot;:&quot;000000003973&quot;,&quot;pur_amt&quot;:&quot;000000242361&quot;,&quot;evlt_amt&quot;:&quot;000000222755&quot;,&quot;evltv_prft&quot;:&quot;-00000019606&quot;,&quot;pl_rt&quot;:&quot;-8.0896&quot;},{&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;&quot;,&quot;expr_dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;A459580&quot;,&quot;stk_nm&quot;:&quot;KODEX CD금리액티브(합성)&quot;,&quot;setl_remn&quot;:&quot;000000000002&quot;,&quot;cur_qty&quot;:&quot;000000000002&quot;,&quot;cur_prc&quot;:&quot;000001105730&quot;,&quot;buy_uv&quot;:&quot;000001066700&quot;,&quot;pur_amt&quot;:&quot;000002133400&quot;,&quot;evlt_amt&quot;:&quot;000002210810&quot;,&quot;evltv_prft&quot;:&quot;000000077410&quot;,&quot;pl_rt&quot;:&quot;3.6285&quot;},{&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;&quot;,&quot;expr_dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;Q520078&quot;,&quot;stk_nm&quot;:&quot;미래에셋 미국 제약 TOP3 ETN&quot;,&quot;setl_remn&quot;:&quot;000000000001&quot;,&quot;cur_qty&quot;:&quot;000000000001&quot;,&quot;cur_prc&quot;:&quot;000000014940&quot;,&quot;buy_uv&quot;:&quot;000000010245&quot;,&quot;pur_amt&quot;:&quot;000000010245&quot;,&quot;evlt_amt&quot;:&quot;000000014940&quot;,&quot;evltv_prft&quot;:&quot;000000004695&quot;,&quot;pl_rt&quot;:&quot;45.8272&quot;},{&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;&quot;,&quot;expr_dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;Q580058&quot;,&quot;stk_nm&quot;:&quot;KB KIS CD금리투자 ETN&quot;,&quot;setl_remn&quot;:&quot;000000000100&quot;,&quot;cur_qty&quot;:&quot;000000000100&quot;,&quot;cur_prc&quot;:&quot;000000053540&quot;,&quot;buy_uv&quot;:&quot;000000036835&quot;,&quot;pur_amt&quot;:&quot;000003683500&quot;,&quot;evlt_amt&quot;:&quot;000005352650&quot;,&quot;evltv_prft&quot;:&quot;000001669150&quot;,&quot;pl_rt&quot;:&quot;45.3142&quot;}],&quot;return_code&quot;:0,&quot;return_msg&quot;:&quot;조회가 완료되었습니다.&quot;}</pre>
+  </div>
+</div>
+</body>
+</html>

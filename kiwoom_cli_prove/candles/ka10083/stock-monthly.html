@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: transparent; display: flex; justify-content: center; padding: 32px; }
+  .window {
+    background: #282a36;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    min-width: 480px;
+    max-width: 960px;
+    overflow: hidden;
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .titlebar {
+    background: #21222c;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+  .title {
+    flex: 1;
+    text-align: center;
+    color: #bd93f9;
+    font-size: 12px;
+    margin-right: 36px;
+  }
+  .body { padding: 20px 24px; }
+  .meta { color: #6272a4; margin-bottom: 12px; }
+  .meta span { color: #50fa7b; }
+  pre {
+    color: #f8f8f2;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+    <div class="title">kiwoom candles stock-monthly</div>
+  </div>
+  <div class="body">
+    <div class="meta"><span>$</span> kiwoom candles stock-monthly --code 005930 --date 20260528 --adjusted 1 --format json</div>
+    <div class="meta">mode=read · exit=0 · elapsed=0.43s</div>
+    <pre>{&quot;stk_cd&quot;:&quot;005930&quot;,&quot;stk_mth_pole_chart_qry&quot;:[{&quot;cur_prc&quot;:&quot;245000&quot;,&quot;trde_qty&quot;:&quot;1069468&quot;,&quot;trde_prica&quot;:&quot;369158002100&quot;,&quot;dt&quot;:&quot;20260504&quot;,&quot;open_pric&quot;:&quot;203000&quot;,&quot;high_pric&quot;:&quot;770000&quot;,&quot;low_pric&quot;:&quot;203000&quot;,&quot;pred_pre&quot;:&quot;-45000&quot;,&quot;pred_pre_sig&quot;:&quot;5&quot;,&quot;trde_tern_rt&quot;:&quot;+0.02&quot;},{&quot;cur_prc&quot;:&quot;290000&quot;,&quot;trde_qty&quot;:&quot;4493878&quot;,&quot;trde_prica&quot;:&quot;1046815269900&quot;,&quot;dt&quot;:&quot;20260401&quot;,&quot;open_pric&quot;:&quot;150000&quot;,&quot;high_pric&quot;:&quot;351000&quot;,&quot;low_pric&quot;:&quot;125600&quot;,&quot;pred_pre&quot;:&quot;+100500&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;trde_tern_rt&quot;:&quot;+0.08&quot;},{&quot;cur_prc&quot;:&quot;189500&quot;,&quot;trde_qty&quot;:&quot;14630364&quot;,&quot;trde_prica&quot;:&quot;2937616253550&quot;,&quot;dt&quot;:&quot;20260303&quot;,&quot;open_pric&quot;:&quot;201500&quot;,&quot;high_pric&quot;:&quot;304000&quot;,&quot;low_pric&quot;:&quot;102000&quot;,&quot;pred_pre&quot;:&quot;-55500&quot;,&quot;pred_pre_sig&quot;:&quot;5&quot;,&quot;trde_tern_rt&quot;:&quot;+0.25&quot;},{&quot;cur_prc&quot;:&quot;245000&quot;,&quot;trde_qty&quot;:&quot;7296857&quot;,&quot;trde_prica&quot;:&quot;1340989903600&quot;,&quot;dt&quot;:&quot;20260202&quot;,&quot;open_pric&quot;:&quot;193500&quot;,&quot;high_pric&quot;:&quot;551000&quot;,&quot;low_pric&quot;:&quot;124300&quot;,&quot;pred_pre&quot;:&quot;+51500&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;trde_tern_rt&quot;:&quot;+0.12&quot;},{&quot;cur_prc&quot;:&quot;193500&quot;,&quot;trde_qty&quot;:&quot;1708974&quot;,&quot;trde_prica&quot;:&quot;244612124500&quot;,&quot;dt&quot;:&quot;20260102&quot;,&quot;open_pric&quot;:&quot;93500&quot;,&quot;high_pric&quot;:&quot;198700&quot;,&quot;low_pric&quot;:&quot;93500&quot;,&quot;pred_pre&quot;:&quot;+60000&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;trde_tern_rt&quot;:&quot;+0.03&quot;},{&quot;cur_prc&quot;:&quot;133500&quot;,&quot;trde_qty&quot;:&quot;1405129&quot;,&quot;trde_prica&quot;:&quot;145527203400&quot;,&quot;dt&quot;:&quot;20251201&quot;,&quot;open_pric&quot;:&quot;96200&quot;,&quot;high_pric&quot;:&quot;164700&quot;,&quot;low_pric&quot;:&quot;50200&quot;,&quot;pred_pre&quot;:&quot;-373500&quot;,&quot;pred_pre_sig&quot;:&quot;5&quot;,&quot;trde_tern_rt&quot;:&quot;+0.02&quot;},{&quot;cur_prc&quot;:&quot;507000&quot;,&quot;trde_qty&quot;:&quot;675716&quot;,&quot;trde_prica&quot;:&quot;131058040500&quot;,&quot;dt&quot;:&quot;20251103&quot;,&quot;open_pric&quot;:&quot;107400&quot;,&quot;high_pric&quot;:&quot;520000&quot;,&quot;low_pric&quot;:&quot;70000&quot;,&quot;pred_pre&quot;:&quot;+399600&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;trde_tern_rt&quot;:&quot;+0.01&quot;},{&quot;cur_prc&quot;:&quot;107400&quot;,&quot;trde_qty&quot;:&quot;3733622&quot;,&quot;trde_prica&quot;:&quot;326832585075&quot;,&quot;dt&quot;:&quot;20251001&quot;,&quot;open_pric&quot;:&quot;56000&quot;,&quot;high_pric&quot;:&quot;201000&quot;,&quot;low_pric&quot;:&quot;26950&quot;,&quot;pred_pre&quot;:&quot;+31500&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;trde_tern_rt&quot;:&quot;+0.06&quot;},{&quot;cur_prc&quot;:&quot;75900&quot;,&quot;trde_qty&quot;:&quot;38720&quot;,&quot;trde_prica&quot;:&quot;2050871600&quot;,&quot;dt&quot;:&quot;20250929&quot;,&quot;open_pric&quot;:&quot;65000&quot;,&quot;high_pric&quot;:&quot;75900&quot;,&quot;low_pric&quot;:&quot;40900&quot;,&quot;pred_pre&quot;:&quot;0&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;trde_tern_rt&quot;:&quot;+0.00&quot;}],&quot;return_code&quot;:0,&quot;return_msg&quot;:&quot;정상적으로 처리되었습니다&quot;}</pre>
+  </div>
+</div>
+</body>
+</html>

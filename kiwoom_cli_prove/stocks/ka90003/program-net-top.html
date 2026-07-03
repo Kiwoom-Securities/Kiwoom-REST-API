@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: transparent; display: flex; justify-content: center; padding: 32px; }
+  .window {
+    background: #282a36;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    min-width: 480px;
+    max-width: 960px;
+    overflow: hidden;
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .titlebar {
+    background: #21222c;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+  .title {
+    flex: 1;
+    text-align: center;
+    color: #bd93f9;
+    font-size: 12px;
+    margin-right: 36px;
+  }
+  .body { padding: 20px 24px; }
+  .meta { color: #6272a4; margin-bottom: 12px; }
+  .meta span { color: #50fa7b; }
+  pre {
+    color: #f8f8f2;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+    <div class="title">kiwoom stocks program-net-top</div>
+  </div>
+  <div class="body">
+    <div class="meta"><span>$</span> kiwoom stocks program-net-top --side net-sell --basis amount --market-code P00101 --exchange KRX --format json</div>
+    <div class="meta">mode=read · exit=0 · elapsed=1.41s</div>
+    <pre>{&quot;prm_netprps_upper_50&quot;:[{&quot;rank&quot;:&quot;1&quot;,&quot;stk_cd&quot;:&quot;005930&quot;,&quot;stk_nm&quot;:&quot;삼성전자&quot;,&quot;cur_prc&quot;:&quot;-315500&quot;,&quot;flu_sig&quot;:&quot;5&quot;,&quot;pred_pre&quot;:&quot;-18500&quot;,&quot;flu_rt&quot;:&quot;-5.54&quot;,&quot;acc_trde_qty&quot;:&quot;20518969&quot;,&quot;prm_sell_amt&quot;:&quot;2199568&quot;,&quot;prm_buy_amt&quot;:&quot;1090014&quot;,&quot;prm_netprps_amt&quot;:&quot;-1109554&quot;},{&quot;rank&quot;:&quot;2&quot;,&quot;stk_cd&quot;:&quot;000660&quot;,&quot;stk_nm&quot;:&quot;SK하이닉스&quot;,&quot;cur_prc&quot;:&quot;-2579000&quot;,&quot;flu_sig&quot;:&quot;5&quot;,&quot;pred_pre&quot;:&quot;-71000&quot;,&quot;flu_rt&quot;:&quot;-2.68&quot;,&quot;acc_trde_qty&quot;:&quot;3584514&quot;,&quot;prm_sell_amt&quot;:&quot;2783571&quot;,&quot;prm_buy_amt&quot;:&quot;2379751&quot;,&quot;prm_netprps_amt&quot;:&quot;-403821&quot;},{&quot;rank&quot;:&quot;3&quot;,&quot;stk_cd&quot;:&quot;005380&quot;,&quot;stk_nm&quot;:&quot;현대차&quot;,&quot;cur_prc&quot;:&quot;-484500&quot;,&quot;flu_sig&quot;:&quot;5&quot;,&quot;pred_pre&quot;:&quot;-10500&quot;,&quot;flu_rt&quot;:&quot;-2.12&quot;,&quot;acc_trde_qty&quot;:&quot;774911&quot;,&quot;prm_sell_amt&quot;:&quot;157711&quot;,&quot;prm_buy_amt&quot;:&quot;93326&quot;,&quot;prm_netprps_amt&quot;:&quot;-64385&quot;},{&quot;rank&quot;:&quot;4&quot;,&quot;stk_cd&quot;:&quot;105560&quot;,&quot;stk_nm&quot;:&quot;KB금융&quot;,&quot;cur_prc&quot;:&quot;-158500&quot;,&quot;flu_sig&quot;:&quot;5&quot;,&quot;pred_pre&quot;:&quot;-500&quot;,&quot;flu_rt&quot;:&quot;-0.31&quot;,&quot;acc_trde_qty&quot;:&quot;1016391&quot;,&quot;prm_sell_amt&quot;:&quot;104136&quot;,&quot;prm_buy_amt&quot;:&quot;54300&quot;,&quot;prm_netprps_amt&quot;:&quot;-49837&quot;},{&quot;rank&quot;:&quot;5&quot;,&quot;stk_cd&quot;:&quot;001440&quot;,&quot;stk_nm&quot;:&quot;대한전선&quot;,&quot;cur_prc&quot;:&quot;+36700&quot;,&quot;flu_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+2800&quot;,&quot;flu_rt&quot;:&quot;+8.26&quot;,&quot;acc_trde_qty&quot;:&quot;7105576&quot;,&quot;prm_sell_amt&quot;:&quot;100529&quot;,&quot;prm_buy_amt&quot;:&quot;50769&quot;,&quot;prm_netprps_amt&quot;:&quot;-49760&quot;},{&quot;rank&quot;:&quot;6&quot;,&quot;stk_cd&quot;:&quot;353200&quot;,&quot;stk_nm&quot;:&quot;대덕전자&quot;,&quot;cur_prc&quot;:&quot;+154100&quot;,&quot;flu_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+500&quot;,&quot;flu_rt&quot;:&quot;+0.33&quot;,&quot;acc_trde_qty&quot;:&quot;1070919&quot;,&quot;prm_sell_amt&quot;:&quot;88845&quot;,&quot;prm_buy_amt&quot;:&quot;40087&quot;,&quot;prm_netprps_amt&quot;:&quot;-48758&quot;},{&quot;rank&quot;:&quot;7&quot;,&quot;stk_cd&quot;:&quot;093370&quot;,&quot;stk_nm&quot;:&quot;후성&quot;,&quot;cur_prc&quot;:&quot;-16790&quot;,&quot;flu_sig&quot;:&quot;5&quot;,&quot;pred_pre&quot;:&quot;-3260&quot;,&quot;flu_rt&quot;:&quot;-16.26&quot;,&quot;acc_trde_qty&quot;:&quot;13011927&quot;,&quot;prm_sell_amt&quot;:&quot;93314&quot;,&quot;prm_buy_amt&quot;:&quot;55840&quot;,&quot;prm_netprps_amt&quot;:&quot;-37475&quot;},{&quot;rank&quot;:&quot;8&quot;,&quot;stk_cd&quot;:&quot;034730&quot;,&quot;stk_nm&quot;:&quot;SK&quot;,&quot;cur_prc&quot;:&quot;-764000&quot;,&quot;flu_sig&quot;:&quot;5&quot;,&quot;pred_pre&quot;:&quot;-70000&quot;,&quot;flu_rt&quot;:&quot;-8.39&quot;,&quot;acc_trde_qty&quot;:&quot;374336&quot;,&quot;prm_sell_amt&quot;:&quot;102378&quot;,&quot;prm_buy_amt&quot;:&quot;69346&quot;,&quot;prm_netprps_amt&quot;:&quot;-33032&quot;},{&quot;rank&quot;:&quot;9&quot;,&quot;stk_cd&quot;:&quot;042700&quot;,&quot;stk_nm&quot;:&quot;한미반도체&quot;,&quot;cur_prc&quot;:&quot;-249500&quot;,&quot;flu_sig&quot;:&quot;5&quot;,&quot;pred_pre&quot;:&quot;-7000&quot;,&quot;flu_rt&quot;:&quot;-2.73&quot;,&quot;acc_trde_qty&quot;:&quot;1286161&quot;,&quot;prm_sell_amt&quot;:&quot;164381&quot;,&quot;prm_buy_amt&quot;:&quot;135488&quot;,&quot;prm_netprps_amt&quot;:&quot;-28893&quot;},{&quot;rank&quot;:&quot;10&quot;,&quot;stk_cd&quot;:&quot;006260&quot;,&quot;stk_nm&quot;:&quot;LS&quot;,&quot;cur_prc&quot;:&quot;+395500&quot;,&quot;flu_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+30000&quot;,&quot;flu_rt&quot;:&quot;+8.21&quot;,&quot;acc_trde_qty&quot;:&quot;238096&quot;,&quot;prm_sell_amt&quot;:&quot;52279&quot;,&quot;prm_buy_amt&quot;:&quot;29686&quot;,&quot;prm_netprps_amt&quot;:&quot;-22593&quot;},{&quot;rank&quot;:&quot;11&quot;,&quot;stk_cd&quot;:&quot;267260&quot;,&quot;stk_nm&quot;:&quot;HD현대일렉트릭&quot;,&quot;cur_prc&quot;:&quot;+1009000&quot;,&quot;flu_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+37000&quot;,&quot;flu_rt&quot;:&quot;+3.81&quot;,&quot;acc_trde_qty&quot;:&quot;168987&quot;,&quot;prm_sell_amt&quot;:&quot;78416&quot;,&quot;prm_buy_amt&quot;:&quot;58101&quot;,&quot;prm_netprps_amt&quot;:&quot;-20314&quot;},{&quot;rank&quot;:&quot;12&quot;,&quot;stk_cd&quot;:&quot;329180&quot;,&quot;stk_nm&quot;:&quot;HD현대중공업&quot;,&quot;cur_prc&quot;:&quot;+613000&quot;,&quot;flu_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+21000&quot;,&quot;flu_rt&quot;:&quot;+3.55&quot;,&quot;acc_trde_qty&quot;:&quot;243048&quot;,&quot;prm_sell_amt&quot;:&quot;74698&quot;,&quot;prm_buy_amt&quot;:&quot;55397&quot;,&quot;prm_netprps_amt&quot;:&quot;-19301&quot;},{&quot;rank&quot;:&quot;13&quot;,&quot;stk_cd&quot;:&quot;352820&quot;,&quot;stk_nm&quot;:&quot;하이브&quot;,&quot;cur_prc&quot;:&quot;+202500&quot;,&quot;flu_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+10400&quot;,&quot;flu_rt&quot;:&quot;+5.41&quot;,&quot;acc_trde_qty&quot;:&quot;306200&quot;,&quot;prm_sell_amt&quot;:&quot;31939&quot;,&quot;prm_buy_amt&quot;:&quot;13235&quot;,&quot;prm_netprps_amt&quot;:&quot;-18704&quot;},{&quot;rank&quot;:&quot;14&quot;,&quot;stk_cd&quot;:&quot;006400&quot;,&quot;stk_nm&quot;:&quot;삼성SDI&quot;,&quot;cur_prc&quot;:&quot;+489500&quot;,&quot;flu_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+2500&quot;,&quot;flu_rt&quot;:&quot;+0.51&quot;,&quot;acc_trde_qty&quot;:&quot;391066&quot;,&quot;prm_sell_amt&quot;:&quot;62475&quot;,&quot;prm_buy_amt&quot;:&quot;44080&quot;,&quot;prm_netprps_amt&quot;:&quot;-18395&quot;},{&quot;rank&quot;:&quot;15&quot;,&quot;stk_cd&quot;:&quot;336260&quot;,&quot;stk_nm&quot;:&quot;두산퓨얼셀&quot;,&quot;cur_prc&quot;:&quot;+60100&quot;,&quot;flu_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+4100&quot;,&quot;flu_rt&quot;:&quot;+7.32&quot;,&quot;acc_trde_qty&quot;:&quot;1070734&quot;,&quot;prm_sell_amt&quot;:&quot;40559&quot;,&quot;prm_buy_amt&quot;:&quot;22288&quot;,&quot;prm_netprps_amt&quot;:&quot;-18270&quot;}],&quot;return_code&quot;:0,&quot;return_msg&quot;:&quot;정상적으로 처리되었습니다&quot;}</pre>
+  </div>
+</div>
+</body>
+</html>

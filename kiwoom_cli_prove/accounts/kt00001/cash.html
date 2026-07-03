@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: transparent; display: flex; justify-content: center; padding: 32px; }
+  .window {
+    background: #282a36;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    min-width: 480px;
+    max-width: 960px;
+    overflow: hidden;
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .titlebar {
+    background: #21222c;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+  .title {
+    flex: 1;
+    text-align: center;
+    color: #bd93f9;
+    font-size: 12px;
+    margin-right: 36px;
+  }
+  .body { padding: 20px 24px; }
+  .meta { color: #6272a4; margin-bottom: 12px; }
+  .meta span { color: #50fa7b; }
+  pre {
+    color: #f8f8f2;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+    <div class="title">kiwoom accounts cash</div>
+  </div>
+  <div class="body">
+    <div class="meta"><span>$</span> kiwoom accounts cash --cash-basis estimated --format json</div>
+    <div class="meta">mode=account_read · exit=0 · elapsed=0.42s</div>
+    <pre>{&quot;entr&quot;:&quot;000099930778842&quot;,&quot;profa_ch&quot;:&quot;000000000000000&quot;,&quot;bncr_profa_ch&quot;:&quot;000000000000000&quot;,&quot;nxdy_bncr_sell_exct&quot;:&quot;000000000000000&quot;,&quot;fc_stk_krw_repl_set_amt&quot;:&quot;000000000000000&quot;,&quot;crd_grnta_ch&quot;:&quot;000000000000000&quot;,&quot;crd_grnt_ch&quot;:&quot;000000000000000&quot;,&quot;add_grnt_ch&quot;:&quot;000000000000000&quot;,&quot;etc_profa&quot;:&quot;000000000000000&quot;,&quot;uncl_stk_amt&quot;:&quot;000000000000000&quot;,&quot;shrts_prica&quot;:&quot;000000000000000&quot;,&quot;crd_set_grnta&quot;:&quot;000100481857577&quot;,&quot;chck_ina_amt&quot;:&quot;000000000000000&quot;,&quot;etc_chck_ina_amt&quot;:&quot;000000000000000&quot;,&quot;crd_grnt_ruse&quot;:&quot;000000000000000&quot;,&quot;knx_asset_evltv&quot;:&quot;000000000000000&quot;,&quot;elwdpst_evlta&quot;:&quot;000100370209172&quot;,&quot;crd_ls_rght_frcs_amt&quot;:&quot;000000000000000&quot;,&quot;lvlh_join_amt&quot;:&quot;000000000000000&quot;,&quot;lvlh_trns_alowa&quot;:&quot;000000000000000&quot;,&quot;repl_amt&quot;:&quot;000000439430330&quot;,&quot;remn_repl_evlta&quot;:&quot;000000439430330&quot;,&quot;trst_remn_repl_evlta&quot;:&quot;000000000000000&quot;,&quot;bncr_remn_repl_evlta&quot;:&quot;000000000000000&quot;,&quot;profa_repl&quot;:&quot;000000000000000&quot;,&quot;crd_grnta_repl&quot;:&quot;000000000000000&quot;,&quot;crd_grnt_repl&quot;:&quot;000000000000000&quot;,&quot;add_grnt_repl&quot;:&quot;000000000000000&quot;,&quot;rght_repl_amt&quot;:&quot;000000000000000&quot;,&quot;pymn_alow_amt&quot;:&quot;000099930778842&quot;,&quot;wrap_pymn_alow_amt&quot;:&quot;000000000000000&quot;,&quot;ord_alow_amt&quot;:&quot;000099930778842&quot;,&quot;bncr_buy_alowa&quot;:&quot;000099930778842&quot;,&quot;20stk_ord_alow_amt&quot;:&quot;000501851045860&quot;,&quot;30stk_ord_alow_amt&quot;:&quot;000334567363906&quot;,&quot;40stk_ord_alow_amt&quot;:&quot;000250925522930&quot;,&quot;100stk_ord_alow_amt&quot;:&quot;000099930778842&quot;,&quot;ch_uncla&quot;:&quot;000000000000000&quot;,&quot;ch_uncla_dlfe&quot;:&quot;000000000000000&quot;,&quot;ch_uncla_tot&quot;:&quot;000000000000000&quot;,&quot;crd_int_npay&quot;:&quot;000000000000000&quot;,&quot;int_npay_amt_dlfe&quot;:&quot;000000000000000&quot;,&quot;int_npay_amt_tot&quot;:&quot;000000000000000&quot;,&quot;etc_loana&quot;:&quot;000000000000000&quot;,&quot;etc_loana_dlfe&quot;:&quot;000000000000000&quot;,&quot;etc_loan_tot&quot;:&quot;000000000000000&quot;,&quot;nrpy_loan&quot;:&quot;000000000000000&quot;,&quot;loan_sum&quot;:&quot;000000000000000&quot;,&quot;ls_sum&quot;:&quot;000000000000000&quot;,&quot;crd_grnt_rt&quot;:&quot;0.00&quot;,&quot;mdstrm_usfe&quot;:&quot;000000571374235&quot;,&quot;min_ord_alow_yn&quot;:&quot;000000000000000&quot;,&quot;loan_remn_evlt_amt&quot;:&quot;000000000000000&quot;,&quot;dpst_grntl_remn&quot;:&quot;000000000000000&quot;,&quot;sell_grntl_remn&quot;:&quot;000000000000000&quot;,&quot;d1_entra&quot;:&quot;000099930778842&quot;,&quot;d1_slby_exct_amt&quot;:&quot;000000000000000&quot;,&quot;d1_buy_exct_amt&quot;:&quot;000000000000000&quot;,&quot;d1_out_rep_mor&quot;:&quot;000000000000000&quot;,&quot;d1_sel_exct_amt&quot;:&quot;000000000000000&quot;,&quot;d1_pymn_alow_amt&quot;:&quot;000099930778842&quot;,&quot;d2_entra&quot;:&quot;000099930778842&quot;,&quot;d2_slby_exct_amt&quot;:&quot;000000000000000&quot;,&quot;d2_buy_exct_amt&quot;:&quot;000000000000000&quot;,&quot;d2_out_rep_mor&quot;:&quot;000000000000000&quot;,&quot;d2_sel_exct_amt&quot;:&quot;000000000000000&quot;,&quot;d2_pymn_alow_amt&quot;:&quot;000099930778842&quot;,&quot;50stk_ord_alow_amt&quot;:&quot;000200740418344&quot;,&quot;60stk_ord_alow_amt&quot;:&quot;000167283681953&quot;,&quot;stk_entr_prst&quot;:[],&quot;return_code&quot;:0,&quot;return_msg&quot;:&quot;조회가 완료되었습니다.&quot;}</pre>
+  </div>
+</div>
+</body>
+</html>

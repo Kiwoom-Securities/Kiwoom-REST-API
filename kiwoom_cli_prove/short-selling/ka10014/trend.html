@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: transparent; display: flex; justify-content: center; padding: 32px; }
+  .window {
+    background: #282a36;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    min-width: 480px;
+    max-width: 960px;
+    overflow: hidden;
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .titlebar {
+    background: #21222c;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+  .title {
+    flex: 1;
+    text-align: center;
+    color: #bd93f9;
+    font-size: 12px;
+    margin-right: 36px;
+  }
+  .body { padding: 20px 24px; }
+  .meta { color: #6272a4; margin-bottom: 12px; }
+  .meta span { color: #50fa7b; }
+  pre {
+    color: #f8f8f2;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+    <div class="title">kiwoom short-selling trend</div>
+  </div>
+  <div class="body">
+    <div class="meta"><span>$</span> kiwoom short-selling trend --code 005930 --from 20260501 --to 20260528 --format json</div>
+    <div class="meta">mode=read · exit=0 · elapsed=0.41s</div>
+    <pre>{&quot;shrts_trnsn&quot;:[{&quot;dt&quot;:&quot;20260528&quot;,&quot;close_pric&quot;:&quot;-299500&quot;,&quot;pred_pre_sig&quot;:&quot;5&quot;,&quot;pred_pre&quot;:&quot;-7500&quot;,&quot;flu_rt&quot;:&quot;-2.44&quot;,&quot;trde_qty&quot;:&quot;30195334&quot;,&quot;shrts_qty&quot;:&quot;488630&quot;,&quot;ovr_shrts_qty&quot;:&quot;5008499&quot;,&quot;trde_wght&quot;:&quot;+1.62&quot;,&quot;shrts_trde_prica&quot;:&quot;146488201&quot;,&quot;shrts_avg_pric&quot;:&quot;299794&quot;},{&quot;dt&quot;:&quot;20260527&quot;,&quot;close_pric&quot;:&quot;+307000&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+8000&quot;,&quot;flu_rt&quot;:&quot;+2.68&quot;,&quot;trde_qty&quot;:&quot;33916688&quot;,&quot;shrts_qty&quot;:&quot;871631&quot;,&quot;ovr_shrts_qty&quot;:&quot;4519869&quot;,&quot;trde_wght&quot;:&quot;+2.57&quot;,&quot;shrts_trde_prica&quot;:&quot;276148467&quot;,&quot;shrts_avg_pric&quot;:&quot;316818&quot;},{&quot;dt&quot;:&quot;20260526&quot;,&quot;close_pric&quot;:&quot;+299000&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+6500&quot;,&quot;flu_rt&quot;:&quot;+2.22&quot;,&quot;trde_qty&quot;:&quot;23441371&quot;,&quot;shrts_qty&quot;:&quot;1163311&quot;,&quot;ovr_shrts_qty&quot;:&quot;3648238&quot;,&quot;trde_wght&quot;:&quot;+4.96&quot;,&quot;shrts_trde_prica&quot;:&quot;346605994&quot;,&quot;shrts_avg_pric&quot;:&quot;297948&quot;},{&quot;dt&quot;:&quot;20260522&quot;,&quot;close_pric&quot;:&quot;-292500&quot;,&quot;pred_pre_sig&quot;:&quot;5&quot;,&quot;pred_pre&quot;:&quot;-7000&quot;,&quot;flu_rt&quot;:&quot;-2.34&quot;,&quot;trde_qty&quot;:&quot;18395274&quot;,&quot;shrts_qty&quot;:&quot;594518&quot;,&quot;ovr_shrts_qty&quot;:&quot;2484927&quot;,&quot;trde_wght&quot;:&quot;+3.23&quot;,&quot;shrts_trde_prica&quot;:&quot;174455978&quot;,&quot;shrts_avg_pric&quot;:&quot;293441&quot;},{&quot;dt&quot;:&quot;20260521&quot;,&quot;close_pric&quot;:&quot;+299500&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+23500&quot;,&quot;flu_rt&quot;:&quot;+8.51&quot;,&quot;trde_qty&quot;:&quot;36168689&quot;,&quot;shrts_qty&quot;:&quot;423484&quot;,&quot;ovr_shrts_qty&quot;:&quot;1890409&quot;,&quot;trde_wght&quot;:&quot;+1.17&quot;,&quot;shrts_trde_prica&quot;:&quot;124838084&quot;,&quot;shrts_avg_pric&quot;:&quot;294788&quot;},{&quot;dt&quot;:&quot;20260520&quot;,&quot;close_pric&quot;:&quot;+276000&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+500&quot;,&quot;flu_rt&quot;:&quot;+0.18&quot;,&quot;trde_qty&quot;:&quot;35662077&quot;,&quot;shrts_qty&quot;:&quot;716852&quot;,&quot;ovr_shrts_qty&quot;:&quot;1466925&quot;,&quot;trde_wght&quot;:&quot;+2.01&quot;,&quot;shrts_trde_prica&quot;:&quot;196406542&quot;,&quot;shrts_avg_pric&quot;:&quot;273985&quot;},{&quot;dt&quot;:&quot;20260519&quot;,&quot;close_pric&quot;:&quot;-275500&quot;,&quot;pred_pre_sig&quot;:&quot;5&quot;,&quot;pred_pre&quot;:&quot;-5500&quot;,&quot;flu_rt&quot;:&quot;-1.96&quot;,&quot;trde_qty&quot;:&quot;30767569&quot;,&quot;shrts_qty&quot;:&quot;731376&quot;,&quot;ovr_shrts_qty&quot;:&quot;750073&quot;,&quot;trde_wght&quot;:&quot;+2.38&quot;,&quot;shrts_trde_prica&quot;:&quot;202186657&quot;,&quot;shrts_avg_pric&quot;:&quot;276447&quot;},{&quot;dt&quot;:&quot;20260518&quot;,&quot;close_pric&quot;:&quot;+351500&quot;,&quot;pred_pre_sig&quot;:&quot;1&quot;,&quot;pred_pre&quot;:&quot;+81000&quot;,&quot;flu_rt&quot;:&quot;+29.94&quot;,&quot;trde_qty&quot;:&quot;12184&quot;,&quot;shrts_qty&quot;:&quot;3293&quot;,&quot;ovr_shrts_qty&quot;:&quot;18697&quot;,&quot;trde_wght&quot;:&quot;+27.03&quot;,&quot;shrts_trde_prica&quot;:&quot;633554&quot;,&quot;shrts_avg_pric&quot;:&quot;192394&quot;},{&quot;dt&quot;:&quot;20260513&quot;,&quot;close_pric&quot;:&quot;-315000&quot;,&quot;pred_pre_sig&quot;:&quot;4&quot;,&quot;pred_pre&quot;:&quot;-134500&quot;,&quot;flu_rt&quot;:&quot;-29.92&quot;,&quot;trde_qty&quot;:&quot;56460&quot;,&quot;shrts_qty&quot;:&quot;1000&quot;,&quot;ovr_shrts_qty&quot;:&quot;15404&quot;,&quot;trde_wght&quot;:&quot;+1.77&quot;,&quot;shrts_trde_prica&quot;:&quot;408810&quot;,&quot;shrts_avg_pric&quot;:&quot;408810&quot;},{&quot;dt&quot;:&quot;20260507&quot;,&quot;close_pric&quot;:&quot;+615000&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+125000&quot;,&quot;flu_rt&quot;:&quot;+25.51&quot;,&quot;trde_qty&quot;:&quot;19828&quot;,&quot;shrts_qty&quot;:&quot;1&quot;,&quot;ovr_shrts_qty&quot;:&quot;14404&quot;,&quot;trde_wght&quot;:&quot;+0.01&quot;,&quot;shrts_trde_prica&quot;:&quot;486&quot;,&quot;shrts_avg_pric&quot;:&quot;485500&quot;},{&quot;dt&quot;:&quot;20260506&quot;,&quot;close_pric&quot;:&quot;+490000&quot;,&quot;pred_pre_sig&quot;:&quot;1&quot;,&quot;pred_pre&quot;:&quot;+113000&quot;,&quot;flu_rt&quot;:&quot;+29.97&quot;,&quot;trde_qty&quot;:&quot;27309&quot;,&quot;shrts_qty&quot;:&quot;1599&quot;,&quot;ovr_shrts_qty&quot;:&quot;14403&quot;,&quot;trde_wght&quot;:&quot;+5.86&quot;,&quot;shrts_trde_prica&quot;:&quot;714960&quot;,&quot;shrts_avg_pric&quot;:&quot;447129&quot;},{&quot;dt&quot;:&quot;20260504&quot;,&quot;close_pric&quot;:&quot;+377000&quot;,&quot;pred_pre_sig&quot;:&quot;1&quot;,&quot;pred_pre&quot;:&quot;+87000&quot;,&quot;flu_rt&quot;:&quot;+30.00&quot;,&quot;trde_qty&quot;:&quot;71682&quot;,&quot;shrts_qty&quot;:&quot;198&quot;,&quot;ovr_shrts_qty&quot;:&quot;12804&quot;,&quot;trde_wght&quot;:&quot;+0.28&quot;,&quot;shrts_trde_prica&quot;:&quot;74646&quot;,&quot;shrts_avg_pric&quot;:&quot;377000&quot;},{&quot;dt&quot;:&quot;20260428&quot;,&quot;close_pric&quot;:&quot;-222500&quot;,&quot;pred_pre_sig&quot;:&quot;5&quot;,&quot;pred_pre&quot;:&quot;-4000&quot;,&quot;flu_rt&quot;:&quot;-1.77&quot;,&quot;trde_qty&quot;:&quot;1019461&quot;,&quot;shrts_qty&quot;:&quot;673&quot;,&quot;ovr_shrts_qty&quot;:&quot;12606&quot;,&quot;trde_wght&quot;:&quot;+0.07&quot;,&quot;shrts_trde_prica&quot;:&quot;150759&quot;,&quot;shrts_avg_pric&quot;:&quot;224010&quot;},{&quot;dt&quot;:&quot;20260427&quot;,&quot;close_pric&quot;:&quot;+226500&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+7000&quot;,&quot;flu_rt&quot;:&quot;+3.19&quot;,&quot;trde_qty&quot;:&quot;86503&quot;,&quot;shrts_qty&quot;:&quot;4&quot;,&quot;ovr_shrts_qty&quot;:&quot;11933&quot;,&quot;trde_wght&quot;:&quot;0.00&quot;,&quot;shrts_trde_prica&quot;:&quot;895&quot;,&quot;shrts_avg_pric&quot;:&quot;223625&quot;},{&quot;dt&quot;:&quot;20260424&quot;,&quot;close_pric&quot;:&quot;+258500&quot;,&quot;pred_pre_sig&quot;:&quot;1&quot;,&quot;pred_pre&quot;:&quot;+59400&quot;,&quot;flu_rt&quot;:&quot;+29.83&quot;,&quot;trde_qty&quot;:&quot;108333&quot;,&quot;shrts_qty&quot;:&quot;20&quot;,&quot;ovr_shrts_qty&quot;:&quot;11929&quot;,&quot;trde_wght&quot;:&quot;+0.02&quot;,&quot;shrts_trde_prica&quot;:&quot;4580&quot;,&quot;shrts_avg_pric&quot;:&quot;229000&quot;},{&quot;dt&quot;:&quot;20260423&quot;,&quot;close_pric&quot;:&quot;-199100&quot;,&quot;pred_pre_sig&quot;:&quot;5&quot;,&quot;pred_pre&quot;:&quot;-84900&quot;,&quot;flu_rt&quot;:&quot;-29.89&quot;,&quot;trde_qty&quot;:&quot;58177&quot;,&quot;shrts_qty&quot;:&quot;141&quot;,&quot;ovr_shrts_qty&quot;:&quot;11909&quot;,&quot;trde_wght&quot;:&quot;+0.24&quot;,&quot;shrts_trde_prica&quot;:&quot;40110&quot;,&quot;shrts_avg_pric&quot;:&quot;284465&quot;},{&quot;dt&quot;:&quot;20260422&quot;,&quot;close_pric&quot;:&quot;+284000&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+58500&quot;,&quot;flu_rt&quot;:&quot;+25.94&quot;,&quot;trde_qty&quot;:&quot;76751&quot;,&quot;shrts_qty&quot;:&quot;10539&quot;,&quot;ovr_shrts_qty&quot;:&quot;11768&quot;,&quot;trde_wght&quot;:&quot;+13.73&quot;,&quot;shrts_trde_prica&quot;:&quot;2335204&quot;,&quot;shrts_avg_pric&quot;:&quot;221577&quot;},{&quot;dt&quot;:&quot;20260421&quot;,&quot;close_pric&quot;:&quot;-225500&quot;,&quot;pred_pre_sig&quot;:&quot;5&quot;,&quot;pred_pre&quot;:&quot;-74500&quot;,&quot;flu_rt&quot;:&quot;-24.83&quot;,&quot;trde_qty&quot;:&quot;542280&quot;,&quot;shrts_qty&quot;:&quot;50&quot;,&quot;ovr_shrts_qty&quot;:&quot;1229&quot;,&quot;trde_wght&quot;:&quot;+0.01&quot;,&quot;shrts_trde_prica&quot;:&quot;11276&quot;,&quot;shrts_avg_pric&quot;:&quot;225500&quot;},{&quot;dt&quot;:&quot;20260420&quot;,&quot;close_pric&quot;:&quot;+300000&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+5000&quot;,&quot;flu_rt&quot;:&quot;+1.69&quot;,&quot;trde_qty&quot;:&quot;38712&quot;,&quot;shrts_qty&quot;:&quot;152&quot;,&quot;ovr_shrts_qty&quot;:&quot;1179&quot;,&quot;trde_wght&quot;:&quot;+0.39&quot;,&quot;shrts_trde_prica&quot;:&quot;44992&quot;,&quot;shrts_avg_pric&quot;:&quot;296000&quot;},{&quot;dt&quot;:&quot;20260417&quot;,&quot;close_pric&quot;:&quot;+295000&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+25000&quot;,&quot;flu_rt&quot;:&quot;+9.26&quot;,&quot;trde_qty&quot;:&quot;235268&quot;,&quot;shrts_qty&quot;:&quot;1010&quot;,&quot;ovr_shrts_qty&quot;:&quot;1027&quot;,&quot;trde_wght&quot;:&quot;+0.43&quot;,&quot;shrts_trde_prica&quot;:&quot;304910&quot;,&quot;shrts_avg_pric&quot;:&quot;301891&quot;}],&quot;return_code&quot;:0,&quot;return_msg&quot;:&quot;정상적으로 처리되었습니다&quot;}</pre>
+  </div>
+</div>
+</body>
+</html>
