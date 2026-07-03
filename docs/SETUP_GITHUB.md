@@ -44,6 +44,18 @@
 4) Postman 포함 여부
    - postman/ 은 키움 측 확인 후 공개 여부를 결정합니다. (현재 "검토" 상태)
 
+5) pyproject.toml 정리 (샘플코드 호환)
+   - 공개 저장소에는 CLI(kiwoom_cli)가 포함되지 않으므로, 납품본 pyproject.toml의
+     CLI 관련 설정을 제거해 "kiwoom 런타임 + examples" 기준으로 맞춥니다.
+     (정리하지 않으면 kiwoom_cli 참조 때문에 `uv sync`/빌드가 실패합니다.)
+   - 제거/수정 항목:
+     - [project.scripts] 의 `kiwoom = "kiwoom_cli.main:main"` 항목 삭제
+       (해당 섹션에 다른 항목이 없으면 [project.scripts] 블록 자체를 삭제)
+     - [tool.hatch.build.targets.wheel] 의 packages 에서 "kiwoom_cli" 제거 → `["kiwoom"]`
+     - 같은 섹션 artifacts 에서 `kiwoom_cli/*` 항목 삭제 (`kiwoom/_data/*.json` 만 유지)
+   - dependencies 는 kiwoom 런타임/examples 실행에 필요한 것만 유지합니다.
+   - 정리 후 `uv sync` (또는 빌드)로 정상 설치되는지 확인합니다.
+
 ---
 
 ## 3. 최종 공개 트리(예시)
@@ -79,6 +91,14 @@ Kiwoom-OpenAPI/
 - 파일: `.env.example`, `.gitignore`, `LICENSE.md`, `pyproject.toml`, `uv.lock`
 - 매핑: `docs/SETUP_USERS.md` → 새 폴더의 **`README.md`** (복사 후 이름 변경)
 
+### 복사 후 변환 (필수)
+
+- **`pyproject.toml` 정리(위 2번 5)항)**: 복사한 `pyproject.toml`에서 `kiwoom_cli`(CLI)
+  관련 설정을 제거해 "kiwoom 런타임 + examples" 기준으로 맞춘다.
+  - `[project.scripts]` 의 `kiwoom = "kiwoom_cli.main:main"` 삭제(빈 블록이면 블록 삭제)
+  - `packages` 에서 `"kiwoom_cli"` 제거 → `["kiwoom"]`
+  - `artifacts` 에서 `kiwoom_cli/*` 삭제(`kiwoom/_data/*.json` 만 유지)
+
 ### 복사하지 말 것 (제외)
 
 - 내부용: `generator/`, `examples_prove/`, `convention/`, `smoke_check.py`, `docs/`(위 매핑 제외)
@@ -96,4 +116,6 @@ Kiwoom-OpenAPI/
 
 - 생성된 폴더의 트리를 위 **3번 "최종 공개 트리"**와 대조해 일치하는지 확인하고,
   제외 대상(특히 내부 자료·실제 `.env`)이 섞이지 않았는지 점검해 운영자에게 보고한다.
+- **`pyproject.toml` 에 `kiwoom_cli` 참조가 남아있지 않은지 확인**하고, 가능하면
+  `uv sync`(또는 빌드)로 정상 설치되는지 검증한다.
 - 공개 저장소 push(원격 연결, 커밋, 푸시)는 운영자가 직접 수행하도록 안내한다.
