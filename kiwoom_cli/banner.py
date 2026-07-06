@@ -1,4 +1,4 @@
-"""`kiwoom setup` 시작 시 표시하는 ASCII 배너.
+"""`kiwoomcli setup` 시작 시 표시하는 ASCII 배너.
 
 컬러: KIWOOM 워드마크는 네이비, 오른쪽 'K' 로고는 기본 회색(#BEBEBE)에
 상단 화살표만 마젠타 핑크로 포인트. 자막/버전은 회색. 색은 대화형 터미널에서만
@@ -75,6 +75,22 @@ def _enable_windows_vt() -> bool:
         return False
 
 
+_BOX = set("╗╝═║╔╚")  # 워드마크 외곽선(그림자) 문자
+
+
+def _colorize_wordmark(segment: str) -> str:
+    """워드마크: `█` 블록은 네이비, 외곽선 문자는 #BEBEBE로 대비를 준다."""
+    out: list[str] = []
+    current: str | None = None
+    for char in segment:
+        color = _GRAY if char in _BOX else _NAVY
+        if color != current:
+            out.append(color)
+            current = color
+        out.append(char)
+    return "".join(out)
+
+
 def _arrow_start(right: str) -> int:
     """오른쪽 조각에서 마지막 공백 뒤(=상단 화살표 시작) 인덱스."""
     index = len(right)
@@ -85,7 +101,7 @@ def _arrow_start(right: str) -> int:
 
 def print_banner() -> None:
     try:
-        current = version("kiwoom-cli")
+        current = version("kiwoomcli")
     except PackageNotFoundError:
         current = "dev"
     ver_line = f"                    ver {current}"
@@ -97,9 +113,9 @@ def print_banner() -> None:
                 cut = _arrow_start(right)
                 if row == 3:
                     cut += 1  # 엘보 맨 왼쪽 한 칸은 기둥이므로 회색 유지
-                print(f"{_NAVY}{left}{_GRAY}{right[:cut]}{_MAGENTA}{right[cut:]}{_RESET}")
+                print(f"{_colorize_wordmark(left)}{_GRAY}{right[:cut]}{_MAGENTA}{right[cut:]}{_RESET}")
             else:
-                print(f"{_NAVY}{left}{_GRAY}{right}{_RESET}")
+                print(f"{_colorize_wordmark(left)}{_GRAY}{right}{_RESET}")
         print(f"{_WHITE}{_SUBTITLE}{_RESET}")
         print(f"{_WHITE}{ver_line}{_RESET}")
     else:

@@ -8,7 +8,7 @@
 
 ## 시작하기 전에
 
-- **인증은 CLI(`kiwoom setup`)로 하는 것을 권장합니다.** App Key/Secret이 운영체제 자격 증명 저장소(macOS Keychain, Windows 자격 증명 관리자, Linux Secret Service)에 저장되며, 프로젝트 폴더나 Git에는 저장되지 않습니다.
+- **인증은 CLI(`kiwoomcli setup`)로 하는 것을 권장합니다.** App Key/Secret이 운영체제 자격 증명 저장소(macOS Keychain, Windows 자격 증명 관리자, Linux Secret Service)에 저장되며, 프로젝트 폴더나 Git에는 저장되지 않습니다.
 - CLI로 인증하면 같은 자격 증명을 샘플코드(`examples/`)도 그대로 사용합니다. 즉 **CLI 인증만 마치면 `.env`를 따로 만들지 않아도 예제가 실행됩니다.**
 - 반대로 `.env`를 만들어 두면 예제가 그쪽을 먼저 사용하므로, CLI로 인증하는 경우에는 `.env`를 만들지 마세요. `.env` 방식은 자격 증명 저장소를 쓸 수 없는 환경을 위한 대체 경로이며 [부록 A](#부록-a-env-대체-경로)에서 다룹니다.
 
@@ -28,14 +28,14 @@ python3 --version
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # 3) CLI 설치
-uv tool install kiwoom-cli
+uv tool install kiwoomcli
 
 # 4) 인증 설정 (대화형: 별칭/서버/키 입력)
-kiwoom setup
+kiwoomcli setup
 
 # 5) 동작 확인
-kiwoom auth status
-kiwoom stocks info --code 005930
+kiwoomcli auth status
+kiwoomcli domestic stocks info --code 005930
 
 # 6) (선택) 샘플코드 실행 - 이 프로젝트 폴더에서
 uv sync
@@ -52,14 +52,14 @@ py --version
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 
 # 3) CLI 설치
-uv tool install kiwoom-cli
+uv tool install kiwoomcli
 
 # 4) 인증 설정 (대화형: 별칭/서버/키 입력)
-kiwoom setup
+kiwoomcli setup
 
 # 5) 동작 확인
-kiwoom auth status
-kiwoom stocks info --code 005930
+kiwoomcli auth status
+kiwoomcli domestic stocks info --code 005930
 
 # 6) (선택) 샘플코드 실행 - 이 프로젝트 폴더에서
 uv sync
@@ -189,38 +189,38 @@ uv --version
 
 ## 4단계: CLI 설치
 
-`kiwoom` 명령(CLI)을 설치합니다. `uv tool install`로 설치하면 어느 폴더에서나 `kiwoom` 명령을 쓸 수 있습니다.
+`kiwoomcli` 명령(CLI)을 설치합니다. `uv tool install`로 설치하면 어느 폴더에서나 `kiwoomcli` 명령을 쓸 수 있습니다.
 
 ### macOS/Linux
 
 ```bash
-uv tool install kiwoom-cli
+uv tool install kiwoomcli
 ```
 
 ### Windows PowerShell
 
 ```powershell
-uv tool install kiwoom-cli
+uv tool install kiwoomcli
 ```
 
 설치 확인(공통):
 
 ```bash
-kiwoom --help
+kiwoomcli --help
 ```
 
 명령 목록이 출력되면 설치된 상태입니다.
 
-> `kiwoom` 명령을 찾을 수 없다는 메시지가 나오면, `uv tool` 실행 경로가 PATH에 등록되도록 새 터미널을 열거나 `uv tool update-shell`(안내가 나올 경우)을 실행한 뒤 다시 시도하세요.
+> `kiwoomcli` 명령을 찾을 수 없다는 메시지가 나오면, `uv tool` 실행 경로가 PATH에 등록되도록 새 터미널을 열거나 `uv tool update-shell`(안내가 나올 경우)을 실행한 뒤 다시 시도하세요.
 
 ---
 
-## 5단계: 인증 설정 (`kiwoom setup`)
+## 5단계: 인증 설정 (`kiwoomcli setup`)
 
 CLI로 인증을 설정합니다. 이 한 번으로 키가 자격 증명 저장소에 저장되고, 이후 CLI와 샘플코드가 모두 이 자격 증명을 사용합니다.
 
 ```bash
-kiwoom setup
+kiwoomcli setup
 ```
 
 대화형으로 다음을 진행합니다.
@@ -233,19 +233,19 @@ kiwoom setup
 성공하면 다음과 같은 다음 단계 안내가 출력됩니다.
 
 ```text
-kiwoom auth status --profile <별칭>
-kiwoom stocks info --code 005930 --profile <별칭>
+kiwoomcli auth status --profile <별칭>
+kiwoomcli domestic stocks info --code 005930 --profile <별칭>
 ```
 
 상태 확인:
 
 ```bash
-kiwoom auth status
+kiwoomcli auth status
 ```
 
 자격 증명 존재 여부, 토큰 유효/만료 시각 등이 출력됩니다.
 
-> 같은 별칭을 다시 `kiwoom setup`하면 "전환 / 토큰만 재발급 / 키 다시 입력 / 삭제 후 재설정" 중에서 선택할 수 있습니다.
+> 같은 별칭을 다시 `kiwoomcli setup`하면 "전환 / 토큰만 재발급 / 키 다시 입력 / 삭제 후 재설정" 중에서 선택할 수 있습니다.
 
 ---
 
@@ -254,27 +254,27 @@ kiwoom auth status
 인증이 끝나면 CLI로 바로 조회할 수 있습니다. 전체 명령은 `--help`로 확인합니다.
 
 ```bash
-kiwoom --help
+kiwoomcli --help
 ```
 
 예시 — 종목 정보 조회(삼성전자 `005930`):
 
 ```bash
-kiwoom stocks info --code 005930
+kiwoomcli domestic stocks info --code 005930
 ```
 
 여러 계좌(별칭)를 쓰는 경우 `--profile`로 대상을 지정할 수 있습니다.
 
 ```bash
-kiwoom stocks info --code 005930 --profile 모의계좌
-kiwoom auth status --profile 실전계좌
+kiwoomcli domestic stocks info --code 005930 --profile 모의계좌
+kiwoomcli auth status --profile 실전계좌
 ```
 
 각 하위 명령의 옵션은 해당 명령에 `--help`를 붙여 확인합니다.
 
 ```bash
-kiwoom stocks --help
-kiwoom auth --help
+kiwoomcli domestic stocks --help
+kiwoomcli auth --help
 ```
 
 > 주문 등 실제 계좌에 영향을 줄 수 있는 명령은 별도의 확인 절차(`--confirm` 등)를 요구합니다. 실행 전 대상 계좌(`real`/`demo`)와 입력값을 반드시 확인하세요.
@@ -371,14 +371,14 @@ $env:KIWOOM_MODE
 
 ## 부록 B: 자주 발생하는 오류
 
-### `kiwoom` 명령을 찾을 수 없음
+### `kiwoomcli` 명령을 찾을 수 없음
 
 - CLI 설치 후 PATH가 반영되도록 **새 터미널**을 엽니다.
-- `uv tool install kiwoom-cli`가 정상 완료되었는지 확인합니다.
+- `uv tool install kiwoomcli`가 정상 완료되었는지 확인합니다.
 
 ### 자격 증명을 찾을 수 없음 (`CredentialsNotFoundError`)
 
-- `kiwoom setup`을 완료했는지 확인합니다: `kiwoom auth status`
+- `kiwoomcli setup`을 완료했는지 확인합니다: `kiwoomcli auth status`
 - `.env`를 로드한 상태라면, `KIWOOM_MODE`만 있고 키가 비어 있을 수 있습니다. CLI 인증을 쓰는 경우 **로드된 `.env` 환경변수를 해제**하거나 새 터미널을 사용하세요.
 
 ### 자격 증명 저장소를 쓸 수 없음 (`KeyringUnavailableError`)
@@ -398,7 +398,7 @@ $env:KIWOOM_MODE
 ## 부록 C: 보안 주의
 
 - App Key/Secret은 **운영 자금에 직접 영향**을 줄 수 있는 민감 정보입니다.
-- 가능하면 자격 증명 저장소를 쓰는 CLI 인증(`kiwoom setup`)을 사용하고, `.env`는 꼭 필요한 환경에서만 쓰세요.
+- 가능하면 자격 증명 저장소를 쓰는 CLI 인증(`kiwoomcli setup`)을 사용하고, `.env`는 꼭 필요한 환경에서만 쓰세요.
 - 키를 화면 공유, 캡처, 공용 저장소에 노출하지 마세요.
 - 운영(real)과 모의투자(demo)를 구분해 사용하고, 주문 계열 명령/예제는 대상 환경을 반드시 확인한 뒤 실행하세요.
 
@@ -411,17 +411,17 @@ $env:KIWOOM_MODE
 
 **수행 범위**: 본문 **2단계(Python) → 3단계(uv) → 4단계(CLI 설치)** 까지. 각 단계는 "버전 확인 후 없을 때만 설치"(멱등) 원칙을 따르고, OS는 자동 판별해 해당 명령만 실행한다.
 
-**멈추는 지점**: 4단계의 `kiwoom --help` 검증이 성공하면 **종료**한다. 그 다음(5단계 `kiwoom setup` 이후)은 진행하지 않는다.
+**멈추는 지점**: 4단계의 `kiwoomcli --help` 검증이 성공하면 **종료**한다. 그 다음(5단계 `kiwoomcli setup` 이후)은 진행하지 않는다.
 
-**세션 내 PATH 처리**: 설치 직후 `kiwoom`이 안 잡히면, 새 터미널 대신 `uv tool update-shell`(필요 시 `uv tool dir`/`uv tool list`로 경로 확인)로 **현재 세션에 PATH를 반영**한다. (자세한 안내는 4단계 끝의 주석 참고)
+**세션 내 PATH 처리**: 설치 직후 `kiwoomcli`이 안 잡히면, 새 터미널 대신 `uv tool update-shell`(필요 시 `uv tool dir`/`uv tool list`로 경로 확인)로 **현재 세션에 PATH를 반영**한다. (자세한 안내는 4단계 끝의 주석 참고)
 
 **절대 하지 않을 것**:
 
-- `kiwoom setup` / `kiwoom auth` / `kiwoom stocks` 등 **자격 증명이 필요한 명령 실행** — App Key/Secret은 사용자만 입력한다.
+- `kiwoomcli setup` / `kiwoomcli auth` / `kiwoomcli domestic stocks` 등 **자격 증명이 필요한 명령 실행** — App Key/Secret은 사용자만 입력한다.
 - `examples/` 실행 등 **실제 API 호출**, 특히 주문 계열.
 - `.env` 등 자격 증명 관련 파일 임의 생성.
 
-**완료 후**: CLI 설치 완료를 알리고, 남은 **1단계(키 발급)**와 **5단계(`kiwoom setup` 인증)**는 사용자가 직접 진행하도록 안내한다.
+**완료 후**: CLI 설치 완료를 알리고, 남은 **1단계(키 발급)**와 **5단계(`kiwoomcli setup` 인증)**는 사용자가 직접 진행하도록 안내한다.
 
 ---
 
@@ -430,7 +430,7 @@ $env:KIWOOM_MODE
 1. 키움에서 App Key/Secret 발급 (운영/모의 각각)
 2. Python 3.13+ 설치
 3. `uv` 설치
-4. `uv tool install kiwoom-cli`로 CLI 설치
-5. `kiwoom setup`으로 인증 설정
-6. `kiwoom auth status` / `kiwoom stocks info --code 005930`로 확인
+4. `uv tool install kiwoomcli`로 CLI 설치
+5. `kiwoomcli setup`으로 인증 설정
+6. `kiwoomcli auth status` / `kiwoomcli domestic stocks info --code 005930`로 확인
 7. (선택) 프로젝트 폴더에서 `uv sync` 후 `uv run python "examples/..."`로 샘플코드 실행

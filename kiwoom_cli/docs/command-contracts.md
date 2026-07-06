@@ -9,7 +9,7 @@ target contract and must be backed by curated maps before implementation.
 
 ## Foundation
 
-### `kiwoom setup`
+### `kiwoomcli setup`
 
 Status: Implemented
 
@@ -19,11 +19,11 @@ access.
 Example:
 
 ```sh
-kiwoom setup
-kiwoom setup --alias demo-main --mode demo
+kiwoomcli setup
+kiwoomcli setup --alias demo-main --mode demo
 ```
 
-### `kiwoom auth status`
+### `kiwoomcli auth status`
 
 Status: Implemented
 
@@ -38,16 +38,16 @@ action.
 Example:
 
 ```sh
-kiwoom auth status --profile demo-main
-kiwoom auth status --mode demo
+kiwoomcli auth status --profile demo-main
+kiwoomcli auth status --mode demo
 ```
 
-Recovery note: if a saved alias still appears in `kiwoom auth list` but shows
+Recovery note: if a saved alias still appears in `kiwoomcli auth list` but shows
 missing credentials, an expired/non-reusable token, and cannot call now, restore
-the same alias with `kiwoom auth login --alias '<alias>' --mode demo|real`, then
-verify with `kiwoom auth status --profile '<alias>'`.
+the same alias with `kiwoomcli auth login --alias '<alias>' --mode demo|real`, then
+verify with `kiwoomcli auth status --profile '<alias>'`.
 
-### `kiwoom spec search`
+### `kiwoomcli spec search`
 
 Status: Implemented
 
@@ -62,11 +62,11 @@ field, menu path, or URL.
 Example:
 
 ```sh
-kiwoom spec search ka10001 --limit 3
-kiwoom spec search 예수금 --limit 5
+kiwoomcli spec search ka10001 --limit 3
+kiwoomcli spec search 예수금 --limit 5
 ```
 
-### `kiwoom spec show`
+### `kiwoomcli spec show`
 
 Status: Implemented
 
@@ -82,10 +82,10 @@ Source: `kiwoom_api_spec.json`
 Example:
 
 ```sh
-kiwoom spec show ka10001
+kiwoomcli spec show ka10001
 ```
 
-### `kiwoom spec groups`
+### `kiwoomcli spec groups`
 
 Status: Implemented
 
@@ -97,7 +97,7 @@ Source: `kiwoom_api_spec.json`
 | --- | :---: | --- | --- | --- | --- |
 | `--format` | No | output only | `output_format` | `pretty`, `json`, `yaml` | Output format. |
 
-### `kiwoom spec apis`
+### `kiwoomcli spec apis`
 
 Status: Implemented
 
@@ -113,7 +113,7 @@ Source: `kiwoom_api_spec.json`
 
 ## Market Data
 
-### `kiwoom stocks info`
+### `kiwoomcli domestic stocks info`
 
 Status: Implemented
 
@@ -131,10 +131,10 @@ Candidate API: `ka10001`
 Example:
 
 ```sh
-kiwoom stocks info --code 005930 --format json
+kiwoomcli domestic stocks info --code 005930 --format json
 ```
 
-### `kiwoom stocks trend`
+### `kiwoomcli domestic stocks trend`
 
 Status: Implemented
 
@@ -154,10 +154,10 @@ Candidate API: `ka10013`
 Example:
 
 ```sh
-kiwoom stocks trend --code 005930 --date 20241104 --kind financing --format json
+kiwoomcli domestic stocks trend --code 005930 --date 20241104 --kind financing --format json
 ```
 
-### `kiwoom stocks realtime-rank`
+### `kiwoomcli domestic stocks realtime-rank`
 
 Status: Implemented
 
@@ -177,10 +177,10 @@ Purpose: 실시간 종목 조회 순위.
 Example:
 
 ```sh
-kiwoom stocks realtime-rank --window 1m --format json
+kiwoomcli domestic stocks realtime-rank --window 1m --format json
 ```
 
-### `kiwoom stocks brokers`
+### `kiwoomcli domestic stocks brokers`
 
 Status: Implemented
 
@@ -200,10 +200,10 @@ Purpose: 주식 거래원.
 Example:
 
 ```sh
-kiwoom stocks brokers --code 005930 --format json
+kiwoomcli domestic stocks brokers --code 005930 --format json
 ```
 
-### `kiwoom stocks fills`
+### `kiwoomcli domestic stocks fills`
 
 Status: Implemented
 
@@ -223,10 +223,10 @@ Purpose: 체결 정보.
 Example:
 
 ```sh
-kiwoom stocks fills --code 005930 --format json
+kiwoomcli domestic stocks fills --code 005930 --format json
 ```
 
-### `kiwoom stocks daily-trades`
+### `kiwoomcli domestic stocks daily-trades`
 
 Status: Implemented
 
@@ -247,10 +247,10 @@ Purpose: 일별 거래 상세.
 Example:
 
 ```sh
-kiwoom stocks daily-trades --code 005930 --from 20260529 --format json
+kiwoomcli domestic stocks daily-trades --code 005930 --from 20260529 --format json
 ```
 
-### `kiwoom stocks new-high-low`
+### `kiwoomcli domestic stocks new-high-low`
 
 Status: Implemented
 
@@ -278,10 +278,10 @@ Purpose: 신고가/신저가.
 Example:
 
 ```sh
-kiwoom stocks new-high-low --market all --kind new-high --price-basis high-low --stock-condition value --volume-condition value --credit-condition value --include-limit yes --period-days 5 --exchange KRX --format json
+kiwoomcli domestic stocks new-high-low --market all --kind new-high --price-basis high-low --stock-condition value --volume-condition value --credit-condition value --include-limit yes --period-days 5 --exchange KRX --format json
 ```
 
-### `kiwoom stocks limit-move`
+### `kiwoomcli domestic stocks limit-move`
 
 Status: Implemented
 
@@ -308,10 +308,10 @@ Purpose: 상하한가/상승하락 종목.
 Example:
 
 ```sh
-kiwoom stocks limit-move --market all --direction upper --sort code --stock-condition value --volume-condition value --credit-condition value --price-condition value --exchange KRX --format json
+kiwoomcli domestic stocks limit-move --market all --direction upper --sort code --stock-condition value --volume-condition value --credit-condition value --price-condition value --exchange KRX --format json
 ```
 
-### `kiwoom stocks high-low-near`
+### `kiwoomcli domestic stocks high-low-near`
 
 Status: Implemented
 
@@ -337,10 +337,10 @@ Purpose: 고저가 근접 종목.
 Example:
 
 ```sh
-kiwoom stocks high-low-near --kind high --near-rate value --market all --volume-condition value --stock-condition value --credit-condition value --exchange KRX --format json
+kiwoomcli domestic stocks high-low-near --kind high --near-rate value --market all --volume-condition value --stock-condition value --credit-condition value --exchange KRX --format json
 ```
 
-### `kiwoom stocks price-spike`
+### `kiwoomcli domestic stocks price-spike`
 
 Status: Implemented
 
@@ -369,10 +369,10 @@ Purpose: 가격 급등락 종목.
 Example:
 
 ```sh
-kiwoom stocks price-spike --market all --direction rise --time-unit minute --time 1 --volume-condition value --stock-condition value --credit-condition value --price-condition value --include-limit yes --exchange KRX --format json
+kiwoomcli domestic stocks price-spike --market all --direction rise --time-unit minute --time 1 --volume-condition value --stock-condition value --credit-condition value --price-condition value --include-limit yes --exchange KRX --format json
 ```
 
-### `kiwoom stocks volume-renewal`
+### `kiwoomcli domestic stocks volume-renewal`
 
 Status: Implemented
 
@@ -395,10 +395,10 @@ Purpose: 거래량 갱신 종목.
 Example:
 
 ```sh
-kiwoom stocks volume-renewal --market all --period-days 5 --volume-condition value --exchange KRX --format json
+kiwoomcli domestic stocks volume-renewal --market all --period-days 5 --volume-condition value --exchange KRX --format json
 ```
 
-### `kiwoom stocks volume-zone`
+### `kiwoomcli domestic stocks volume-zone`
 
 Status: Implemented
 
@@ -423,10 +423,10 @@ Purpose: 매물대 집중 종목.
 Example:
 
 ```sh
-kiwoom stocks volume-zone --market all --concentration-rate value --include-current yes --zone-count 1 --period-days 50 --exchange KRX --format json
+kiwoomcli domestic stocks volume-zone --market all --concentration-rate value --include-current yes --zone-count 1 --period-days 50 --exchange KRX --format json
 ```
 
-### `kiwoom stocks valuation-rank`
+### `kiwoomcli domestic stocks valuation-rank`
 
 Status: Implemented
 
@@ -447,10 +447,10 @@ Purpose: 고저 PER/PBR/ROE 순위.
 Example:
 
 ```sh
-kiwoom stocks valuation-rank --kind low-pbr --exchange KRX --format json
+kiwoomcli domestic stocks valuation-rank --kind low-pbr --exchange KRX --format json
 ```
 
-### `kiwoom stocks open-change`
+### `kiwoomcli domestic stocks open-change`
 
 Status: Implemented
 
@@ -478,10 +478,10 @@ Purpose: 시가 대비 등락률.
 Example:
 
 ```sh
-kiwoom stocks open-change --basis open --volume-condition value --market all --include-limit yes --stock-condition value --credit-condition value --amount-condition value --direction top --exchange KRX --format json
+kiwoomcli domestic stocks open-change --basis open --volume-condition value --market all --include-limit yes --stock-condition value --credit-condition value --amount-condition value --direction top --exchange KRX --format json
 ```
 
-### `kiwoom stocks broker-volume-zone`
+### `kiwoomcli domestic stocks broker-volume-zone`
 
 Status: Implemented
 
@@ -509,10 +509,10 @@ Purpose: 거래원 매물대 분석.
 Example:
 
 ```sh
-kiwoom stocks broker-volume-zone --code 005930 --from 20260529 --to 20260529 --date-mode period --position today --period-days 5 --sort close --broker-code value --exchange KRX --format json
+kiwoomcli domestic stocks broker-volume-zone --code 005930 --from 20260529 --to 20260529 --date-mode period --position today --period-days 5 --sort close --broker-code value --exchange KRX --format json
 ```
 
-### `kiwoom stocks broker-instant-volume`
+### `kiwoomcli domestic stocks broker-instant-volume`
 
 Status: Implemented
 
@@ -537,10 +537,10 @@ Purpose: 거래원 순간 거래량.
 Example:
 
 ```sh
-kiwoom stocks broker-instant-volume --broker-code value --market all --quantity-condition value --price-condition value --exchange KRX --format json
+kiwoomcli domestic stocks broker-instant-volume --broker-code value --market all --quantity-condition value --price-condition value --exchange KRX --format json
 ```
 
-### `kiwoom stocks vi-triggered`
+### `kiwoomcli domestic stocks vi-triggered`
 
 Status: Implemented
 
@@ -572,10 +572,10 @@ Purpose: 변동성완화장치 발동 종목.
 Example:
 
 ```sh
-kiwoom stocks vi-triggered --market all --session all --vi-type all --skip-stocks value --use-volume yes --min-volume value --max-volume value --use-amount yes --min-amount value --max-amount value --direction all --exchange KRX --format json
+kiwoomcli domestic stocks vi-triggered --market all --session all --vi-type all --skip-stocks value --use-volume yes --min-volume value --max-volume value --use-amount yes --min-amount value --max-amount value --direction all --exchange KRX --format json
 ```
 
-### `kiwoom stocks today-previous-fills`
+### `kiwoomcli domestic stocks today-previous-fills`
 
 Status: Implemented
 
@@ -596,10 +596,10 @@ Purpose: 당일/전일 체결량.
 Example:
 
 ```sh
-kiwoom stocks today-previous-fills --code 005930 --day today --format json
+kiwoomcli domestic stocks today-previous-fills --code 005930 --day today --format json
 ```
 
-### `kiwoom stocks investor-daily`
+### `kiwoomcli domestic stocks investor-daily`
 
 Status: Implemented
 
@@ -624,10 +624,10 @@ Purpose: 투자자별 일별 매매 종목.
 Example:
 
 ```sh
-kiwoom stocks investor-daily --from 20260529 --to 20260529 --side net-sell --market kospi --investor individual --exchange KRX --format json
+kiwoomcli domestic stocks investor-daily --from 20260529 --to 20260529 --side net-sell --market kospi --investor individual --exchange KRX --format json
 ```
 
-### `kiwoom stocks investor-by-stock`
+### `kiwoomcli domestic stocks investor-by-stock`
 
 Status: Implemented
 
@@ -651,10 +651,10 @@ Purpose: 종목별 투자자/기관 매매.
 Example:
 
 ```sh
-kiwoom stocks investor-by-stock --date 20260529 --code 005930 --basis amount --side net-buy --unit thousand --format json
+kiwoomcli domestic stocks investor-by-stock --date 20260529 --code 005930 --basis amount --side net-buy --unit thousand --format json
 ```
 
-### `kiwoom stocks investor-by-stock-total`
+### `kiwoomcli domestic stocks investor-by-stock-total`
 
 Status: Implemented
 
@@ -679,10 +679,10 @@ Purpose: 종목별 투자자/기관 매매 합계.
 Example:
 
 ```sh
-kiwoom stocks investor-by-stock-total --code 005930 --from 20260529 --to 20260529 --basis amount --side net-buy --unit thousand --format json
+kiwoomcli domestic stocks investor-by-stock-total --code 005930 --from 20260529 --to 20260529 --basis amount --side net-buy --unit thousand --format json
 ```
 
-### `kiwoom stocks today-previous-trades`
+### `kiwoomcli domestic stocks today-previous-trades`
 
 Status: Implemented
 
@@ -705,10 +705,10 @@ Purpose: 당일/전일 체결.
 Example:
 
 ```sh
-kiwoom stocks today-previous-trades --code 005930 --day today --interval-type tick --format json
+kiwoomcli domestic stocks today-previous-trades --code 005930 --day today --interval-type tick --format json
 ```
 
-### `kiwoom stocks watchlist-info`
+### `kiwoomcli domestic stocks watchlist-info`
 
 Status: Implemented
 
@@ -728,10 +728,10 @@ Purpose: 관심종목 정보.
 Example:
 
 ```sh
-kiwoom stocks watchlist-info --codes '005930|000660' --format json
+kiwoomcli domestic stocks watchlist-info --codes '005930|000660' --format json
 ```
 
-### `kiwoom stocks info-list`
+### `kiwoomcli domestic stocks info-list`
 
 Status: Implemented
 
@@ -751,10 +751,10 @@ Purpose: 종목정보 리스트.
 Example:
 
 ```sh
-kiwoom stocks info-list --market-type kospi --format json
+kiwoomcli domestic stocks info-list --market-type kospi --format json
 ```
 
-### `kiwoom stocks info-detail`
+### `kiwoomcli domestic stocks info-detail`
 
 Status: Implemented
 
@@ -774,10 +774,10 @@ Purpose: 종목정보 조회.
 Example:
 
 ```sh
-kiwoom stocks info-detail --code 005930 --format json
+kiwoomcli domestic stocks info-detail --code 005930 --format json
 ```
 
-### `kiwoom stocks sector-codes`
+### `kiwoomcli domestic stocks sector-codes`
 
 Status: Implemented
 
@@ -797,10 +797,10 @@ Purpose: 업종코드 리스트.
 Example:
 
 ```sh
-kiwoom stocks sector-codes --market kospi --format json
+kiwoomcli domestic stocks sector-codes --market kospi --format json
 ```
 
-### `kiwoom stocks member-firms`
+### `kiwoomcli domestic stocks member-firms`
 
 Status: Implemented
 
@@ -819,10 +819,10 @@ Purpose: 회원사 리스트.
 Example:
 
 ```sh
-kiwoom stocks member-firms --format json
+kiwoomcli domestic stocks member-firms --format json
 ```
 
-### `kiwoom stocks program-net-top`
+### `kiwoomcli domestic stocks program-net-top`
 
 Status: Implemented
 
@@ -853,10 +853,10 @@ such as `000` are weak evidence for this API and may produce zero rows.
 Example:
 
 ```sh
-kiwoom stocks program-net-top --side net-sell --basis amount --market-code P00101 --exchange KRX --format json
+kiwoomcli domestic stocks program-net-top --side net-sell --basis amount --market-code P00101 --exchange KRX --format json
 ```
 
-### `kiwoom stocks program-by-stock`
+### `kiwoomcli domestic stocks program-by-stock`
 
 Status: Implemented
 
@@ -878,10 +878,10 @@ Purpose: 종목별 프로그램매매 현황.
 Example:
 
 ```sh
-kiwoom stocks program-by-stock --date 20260529 --market-code value --exchange KRX --format json
+kiwoomcli domestic stocks program-by-stock --date 20260529 --market-code value --exchange KRX --format json
 ```
 
-### `kiwoom stocks credit-loanable`
+### `kiwoomcli domestic stocks credit-loanable`
 
 Status: Implemented
 
@@ -903,10 +903,10 @@ Purpose: 신용융자 가능 종목.
 Example:
 
 ```sh
-kiwoom stocks credit-loanable --format json
+kiwoomcli domestic stocks credit-loanable --format json
 ```
 
-### `kiwoom stocks credit-loanable-check`
+### `kiwoomcli domestic stocks credit-loanable-check`
 
 Status: Implemented
 
@@ -928,10 +928,10 @@ Output note: 원문 `crd_alow_yn`을 유지하고, CLI가 `loanable` 파생 필�
 Example:
 
 ```sh
-kiwoom stocks credit-loanable-check --code 005930 --format json
+kiwoomcli domestic stocks credit-loanable-check --code 005930 --format json
 ```
 
-### `kiwoom quotes price`
+### `kiwoomcli domestic quotes price`
 
 Status: Implemented
 
@@ -949,7 +949,7 @@ Candidate API: `ka10007`
 Feature note: `ka10007` is selected because its spec requires `stk_cd` and its
 response includes current-price-oriented fields such as `cur_prc`.
 
-### `kiwoom quotes balance`
+### `kiwoomcli domestic quotes balance`
 
 Status: Implemented
 
@@ -968,10 +968,10 @@ Candidate API: `ka90006`
 Example:
 
 ```sh
-kiwoom quotes balance --date 20260528 --exchange KRX --format json
+kiwoomcli domestic quotes balance --date 20260528 --exchange KRX --format json
 ```
 
-### `kiwoom quotes by-stock`
+### `kiwoomcli domestic quotes by-stock`
 
 Status: Implemented
 
@@ -993,10 +993,10 @@ Candidate API: `ka10045`
 Example:
 
 ```sh
-kiwoom quotes by-stock --code 005930 --from 20241007 --to 20241107 --institution-price buy --foreign-price buy --format json
+kiwoomcli domestic quotes by-stock --code 005930 --from 20241007 --to 20241107 --institution-price buy --foreign-price buy --format json
 ```
 
-### `kiwoom quotes list`
+### `kiwoomcli domestic quotes list`
 
 Status: Implemented
 
@@ -1014,10 +1014,10 @@ Candidate API: `ka10011`
 Example:
 
 ```sh
-kiwoom quotes list --kind all --format json
+kiwoomcli domestic quotes list --kind all --format json
 ```
 
-### `kiwoom quotes gold-price`
+### `kiwoomcli domestic quotes gold-price`
 
 Status: Implemented
 
@@ -1034,7 +1034,7 @@ Purpose: Query gold spot quote summary.
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom quotes gold-fills`
+### `kiwoomcli domestic quotes gold-fills`
 
 Status: Implemented
 
@@ -1051,7 +1051,7 @@ Purpose: Query gold spot fill trend.
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom quotes gold-daily`
+### `kiwoomcli domestic quotes gold-daily`
 
 Status: Implemented
 
@@ -1069,7 +1069,7 @@ Purpose: Query gold spot daily trend.
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom quotes gold-expected`
+### `kiwoomcli domestic quotes gold-expected`
 
 Status: Implemented
 
@@ -1086,7 +1086,7 @@ Purpose: Query gold spot expected fills.
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom quotes multi-period`
+### `kiwoomcli domestic quotes multi-period`
 
 Status: Implemented
 
@@ -1106,10 +1106,10 @@ Purpose: 주식 일/주/월/시/분 요약 시세.
 Example:
 
 ```sh
-kiwoom quotes multi-period --code 005930 --format json
+kiwoomcli domestic quotes multi-period --code 005930 --format json
 ```
 
-### `kiwoom quotes intraday-minute`
+### `kiwoomcli domestic quotes intraday-minute`
 
 Status: Implemented
 
@@ -1129,10 +1129,10 @@ Purpose: 주식 시분 시세.
 Example:
 
 ```sh
-kiwoom quotes intraday-minute --code 005930 --format json
+kiwoomcli domestic quotes intraday-minute --code 005930 --format json
 ```
 
-### `kiwoom quotes institution-daily`
+### `kiwoomcli domestic quotes institution-daily`
 
 Status: Implemented
 
@@ -1156,10 +1156,10 @@ Purpose: 일별 기관 매매 종목.
 Example:
 
 ```sh
-kiwoom quotes institution-daily --from 20260529 --to 20260529 --side net-sell --market kospi --exchange KRX --format json
+kiwoomcli domestic quotes institution-daily --from 20260529 --to 20260529 --side net-sell --market kospi --exchange KRX --format json
 ```
 
-### `kiwoom quotes strength-time`
+### `kiwoomcli domestic quotes strength-time`
 
 Status: Implemented
 
@@ -1179,10 +1179,10 @@ Purpose: 체결강도 시간별 추이.
 Example:
 
 ```sh
-kiwoom quotes strength-time --code 005930 --format json
+kiwoomcli domestic quotes strength-time --code 005930 --format json
 ```
 
-### `kiwoom quotes strength-daily`
+### `kiwoomcli domestic quotes strength-daily`
 
 Status: Implemented
 
@@ -1202,10 +1202,10 @@ Purpose: 체결강도 일별 추이.
 Example:
 
 ```sh
-kiwoom quotes strength-daily --code 005930 --format json
+kiwoomcli domestic quotes strength-daily --code 005930 --format json
 ```
 
-### `kiwoom quotes investor-intraday`
+### `kiwoomcli domestic quotes investor-intraday`
 
 Status: Implemented
 
@@ -1230,10 +1230,10 @@ Purpose: 장중 투자자별 매매.
 Example:
 
 ```sh
-kiwoom quotes investor-intraday --market all --basis combined --investor foreign --foreign-all yes --same-net-buy yes --exchange KRX --format json
+kiwoomcli domestic quotes investor-intraday --market all --basis combined --investor foreign --foreign-all yes --same-net-buy yes --exchange KRX --format json
 ```
 
-### `kiwoom quotes investor-after-close`
+### `kiwoomcli domestic quotes investor-after-close`
 
 Status: Implemented
 
@@ -1256,10 +1256,10 @@ Purpose: 장마감 후 투자자별 매매.
 Example:
 
 ```sh
-kiwoom quotes investor-after-close --market all --basis amount --side net-buy --exchange KRX --format json
+kiwoomcli domestic quotes investor-after-close --market all --basis amount --side net-buy --exchange KRX --format json
 ```
 
-### `kiwoom quotes broker-trend`
+### `kiwoomcli domestic quotes broker-trend`
 
 Status: Implemented
 
@@ -1282,10 +1282,10 @@ Purpose: 증권사별 종목 매매 동향.
 Example:
 
 ```sh
-kiwoom quotes broker-trend --broker-code value --code 005930 --from 20260529 --to 20260529 --format json
+kiwoomcli domestic quotes broker-trend --broker-code value --code 005930 --from 20260529 --to 20260529 --format json
 ```
 
-### `kiwoom quotes daily-price`
+### `kiwoomcli domestic quotes daily-price`
 
 Status: Implemented
 
@@ -1307,10 +1307,10 @@ Purpose: 일별 주가.
 Example:
 
 ```sh
-kiwoom quotes daily-price --code 005930 --date 20260529 --basis quantity --format json
+kiwoomcli domestic quotes daily-price --code 005930 --date 20260529 --basis quantity --format json
 ```
 
-### `kiwoom quotes after-hours`
+### `kiwoomcli domestic quotes after-hours`
 
 Status: Implemented
 
@@ -1330,10 +1330,10 @@ Purpose: 시간외 단일가.
 Example:
 
 ```sh
-kiwoom quotes after-hours --code 005930 --format json
+kiwoomcli domestic quotes after-hours --code 005930 --format json
 ```
 
-### `kiwoom quotes program-time`
+### `kiwoomcli domestic quotes program-time`
 
 Status: Implemented
 
@@ -1365,10 +1365,10 @@ such as `000` are weak evidence for this API and may produce zero rows.
 Example:
 
 ```sh
-kiwoom quotes program-time --date 20241101 --basis amount --market-code P00101 --interval-type minute --exchange KRX --format json
+kiwoomcli domestic quotes program-time --date 20241101 --basis amount --market-code P00101 --interval-type minute --exchange KRX --format json
 ```
 
-### `kiwoom quotes program-cumulative`
+### `kiwoomcli domestic quotes program-cumulative`
 
 Status: Implemented
 
@@ -1391,10 +1391,10 @@ Purpose: 프로그램매매 누적 추이.
 Example:
 
 ```sh
-kiwoom quotes program-cumulative --date 20260529 --basis amount --market kospi --exchange KRX --format json
+kiwoomcli domestic quotes program-cumulative --date 20260529 --basis amount --market kospi --exchange KRX --format json
 ```
 
-### `kiwoom quotes program-by-stock`
+### `kiwoomcli domestic quotes program-by-stock`
 
 Status: Implemented
 
@@ -1416,10 +1416,10 @@ Purpose: 종목 시간별 프로그램매매 추이.
 Example:
 
 ```sh
-kiwoom quotes program-by-stock --basis amount --code 005930 --date 20260529 --format json
+kiwoomcli domestic quotes program-by-stock --basis amount --code 005930 --date 20260529 --format json
 ```
 
-### `kiwoom quotes program-daily`
+### `kiwoomcli domestic quotes program-daily`
 
 Status: Implemented
 
@@ -1451,10 +1451,10 @@ such as `000` are weak evidence for this API and may produce zero rows.
 Example:
 
 ```sh
-kiwoom quotes program-daily --date 20241125 --basis amount --market-code P00101 --interval-type tick --exchange KRX --format json
+kiwoomcli domestic quotes program-daily --date 20241125 --basis amount --market-code P00101 --interval-type tick --exchange KRX --format json
 ```
 
-### `kiwoom quotes stock-program-daily`
+### `kiwoomcli domestic quotes stock-program-daily`
 
 Status: Implemented
 
@@ -1476,10 +1476,10 @@ Purpose: 종목 일별 프로그램매매 추이.
 Example:
 
 ```sh
-kiwoom quotes stock-program-daily --code 005930 --format json
+kiwoomcli domestic quotes stock-program-daily --code 005930 --format json
 ```
 
-### `kiwoom orderbooks list`
+### `kiwoomcli domestic orderbooks list`
 
 Status: Implemented
 
@@ -1495,10 +1495,10 @@ Candidate API: `ka10004`
 Example:
 
 ```sh
-kiwoom orderbooks list --code 005930 --format json
+kiwoomcli domestic orderbooks list --code 005930 --format json
 ```
 
-### `kiwoom orderbooks gold`
+### `kiwoomcli domestic orderbooks gold`
 
 Status: Implemented
 
@@ -1516,7 +1516,7 @@ Purpose: Query gold spot orderbook.
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom candles daily`
+### `kiwoomcli domestic candles daily`
 
 Status: Implemented
 
@@ -1536,10 +1536,10 @@ Candidate API: `ka10081`
 Example:
 
 ```sh
-kiwoom candles daily --code 005930 --date 20260528 --adjusted 1 --format json
+kiwoomcli domestic candles daily --code 005930 --date 20260528 --adjusted 1 --format json
 ```
 
-### `kiwoom candles by-stock`
+### `kiwoomcli domestic candles by-stock`
 
 Status: Implemented
 
@@ -1561,10 +1561,10 @@ Candidate API: `ka10060`
 Example:
 
 ```sh
-kiwoom candles by-stock --date 20241107 --code 005930 --basis amount --side net-buy --unit thousand --format json
+kiwoomcli domestic candles by-stock --date 20241107 --code 005930 --basis amount --side net-buy --unit thousand --format json
 ```
 
-### `kiwoom candles lookup`
+### `kiwoomcli domestic candles lookup`
 
 Status: Implemented
 
@@ -1585,10 +1585,10 @@ Candidate API: `ka10064`
 Example:
 
 ```sh
-kiwoom candles lookup --market all --basis amount --side net-buy --code 005930 --format json
+kiwoomcli domestic candles lookup --market all --basis amount --side net-buy --code 005930 --format json
 ```
 
-### `kiwoom candles stock-tick`
+### `kiwoomcli domestic candles stock-tick`
 
 Status: Implemented
 
@@ -1605,7 +1605,7 @@ Candidate API: `ka10079`
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom candles stock-minute`
+### `kiwoomcli domestic candles stock-minute`
 
 Status: Implemented
 
@@ -1622,7 +1622,7 @@ Candidate API: `ka10080`
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom candles stock-weekly`
+### `kiwoomcli domestic candles stock-weekly`
 
 Status: Implemented
 
@@ -1639,7 +1639,7 @@ Candidate API: `ka10082`
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom candles stock-monthly`
+### `kiwoomcli domestic candles stock-monthly`
 
 Status: Implemented
 
@@ -1656,7 +1656,7 @@ Candidate API: `ka10083`
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom candles stock-yearly`
+### `kiwoomcli domestic candles stock-yearly`
 
 Status: Implemented
 
@@ -1673,7 +1673,7 @@ Candidate API: `ka10094`
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom candles sector-tick`
+### `kiwoomcli domestic candles sector-tick`
 
 Status: Implemented
 
@@ -1689,7 +1689,7 @@ Candidate API: `ka20004`
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom candles sector-minute`
+### `kiwoomcli domestic candles sector-minute`
 
 Status: Implemented
 
@@ -1705,7 +1705,7 @@ Candidate API: `ka20005`
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom candles sector-daily`
+### `kiwoomcli domestic candles sector-daily`
 
 Status: Implemented
 
@@ -1721,7 +1721,7 @@ Candidate API: `ka20006`
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom candles sector-weekly`
+### `kiwoomcli domestic candles sector-weekly`
 
 Status: Implemented
 
@@ -1737,7 +1737,7 @@ Candidate API: `ka20007`
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom candles sector-monthly`
+### `kiwoomcli domestic candles sector-monthly`
 
 Status: Implemented
 
@@ -1753,7 +1753,7 @@ Candidate API: `ka20008`
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom candles sector-yearly`
+### `kiwoomcli domestic candles sector-yearly`
 
 Status: Implemented
 
@@ -1769,7 +1769,7 @@ Candidate API: `ka20019`
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom candles gold-tick`
+### `kiwoomcli domestic candles gold-tick`
 
 Status: Implemented
 
@@ -1786,7 +1786,7 @@ Candidate API: `ka50079`
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom candles gold-minute`
+### `kiwoomcli domestic candles gold-minute`
 
 Status: Implemented
 
@@ -1802,7 +1802,7 @@ Candidate API: `ka50080`
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom candles gold-daily`
+### `kiwoomcli domestic candles gold-daily`
 
 Status: Implemented
 
@@ -1819,7 +1819,7 @@ Candidate API: `ka50081`
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom candles gold-weekly`
+### `kiwoomcli domestic candles gold-weekly`
 
 Status: Implemented
 
@@ -1836,7 +1836,7 @@ Candidate API: `ka50082`
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom candles gold-monthly`
+### `kiwoomcli domestic candles gold-monthly`
 
 Status: Implemented
 
@@ -1853,7 +1853,7 @@ Candidate API: `ka50083`
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom candles gold-today-tick`
+### `kiwoomcli domestic candles gold-today-tick`
 
 Status: Implemented
 
@@ -1869,7 +1869,7 @@ Candidate API: `ka50091`
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom candles gold-today-minute`
+### `kiwoomcli domestic candles gold-today-minute`
 
 Status: Implemented
 
@@ -1885,7 +1885,7 @@ Candidate API: `ka50092`
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom rankings orderbook-balance`
+### `kiwoomcli domestic rankings orderbook-balance`
 
 Status: Implemented
 
@@ -1908,10 +1908,10 @@ Candidate API: `ka10020`
 Example:
 
 ```sh
-kiwoom rankings orderbook-balance --market kospi --sort net-buy-balance --volume preopen --stock-condition all --credit-condition all --exchange KRX --format json
+kiwoomcli domestic rankings orderbook-balance --market kospi --sort net-buy-balance --volume preopen --stock-condition all --credit-condition all --exchange KRX --format json
 ```
 
-### `kiwoom rankings orderbook-balance-spike`
+### `kiwoomcli domestic rankings orderbook-balance-spike`
 
 Status: Implemented
 
@@ -1935,10 +1935,10 @@ Candidate API: `ka10021`
 Example:
 
 ```sh
-kiwoom rankings orderbook-balance-spike --market kospi --side buy-balance --sort spike-quantity --interval 1 --volume 1k --stock-condition all --exchange KRX --format json
+kiwoomcli domestic rankings orderbook-balance-spike --market kospi --side buy-balance --sort spike-quantity --interval 1 --volume 1k --stock-condition all --exchange KRX --format json
 ```
 
-### `kiwoom rankings balance-rate-spike`
+### `kiwoomcli domestic rankings balance-rate-spike`
 
 Status: Implemented
 
@@ -1961,10 +1961,10 @@ Candidate API: `ka10022`
 Example:
 
 ```sh
-kiwoom rankings balance-rate-spike --market kospi --ratio buy-to-sell --interval 1 --volume 5k --stock-condition all --exchange KRX --format json
+kiwoomcli domestic rankings balance-rate-spike --market kospi --ratio buy-to-sell --interval 1 --volume 5k --stock-condition all --exchange KRX --format json
 ```
 
-### `kiwoom rankings volume-spike`
+### `kiwoomcli domestic rankings volume-spike`
 
 Status: Implemented
 
@@ -1989,10 +1989,10 @@ Candidate API: `ka10023`
 Example:
 
 ```sh
-kiwoom rankings volume-spike --market all --sort spike-quantity --time-unit minute --volume-condition value --stock-condition value --price-condition value --exchange KRX --format json
+kiwoomcli domestic rankings volume-spike --market all --sort spike-quantity --time-unit minute --volume-condition value --stock-condition value --price-condition value --exchange KRX --format json
 ```
 
-### `kiwoom rankings previous-change-rate`
+### `kiwoomcli domestic rankings previous-change-rate`
 
 Status: Implemented
 
@@ -2018,10 +2018,10 @@ Candidate API: `ka10027`
 Example:
 
 ```sh
-kiwoom rankings previous-change-rate --market all --sort rise-rate --volume all --stock-condition all --credit-condition all --include-limit yes --price-condition all --amount-condition value --exchange KRX --format json
+kiwoomcli domestic rankings previous-change-rate --market all --sort rise-rate --volume all --stock-condition all --credit-condition all --include-limit yes --price-condition all --amount-condition value --exchange KRX --format json
 ```
 
-### `kiwoom rankings list-fills`
+### `kiwoomcli domestic rankings list-fills`
 
 Status: Implemented
 
@@ -2045,10 +2045,10 @@ Candidate API: `ka10029`
 Example:
 
 ```sh
-kiwoom rankings list-fills --market all --sort rise-rate --volume all --stock-condition all --credit-condition all --price-condition all --exchange KRX --format json
+kiwoomcli domestic rankings list-fills --market all --sort rise-rate --volume all --stock-condition all --credit-condition all --price-condition all --exchange KRX --format json
 ```
 
-### `kiwoom rankings today-volume`
+### `kiwoomcli domestic rankings today-volume`
 
 Status: Implemented
 
@@ -2074,10 +2074,10 @@ Candidate API: `ka10030`
 Example:
 
 ```sh
-kiwoom rankings today-volume --market all --sort volume --stock-condition value --credit-type all --volume-condition value --price-condition value --amount-condition value --session all --exchange KRX --format json
+kiwoomcli domestic rankings today-volume --market all --sort volume --stock-condition value --credit-type all --volume-condition value --price-condition value --amount-condition value --session all --exchange KRX --format json
 ```
 
-### `kiwoom rankings previous-volume`
+### `kiwoomcli domestic rankings previous-volume`
 
 Status: Implemented
 
@@ -2099,10 +2099,10 @@ Candidate API: `ka10031`
 Example:
 
 ```sh
-kiwoom rankings previous-volume --market all --kind volume --rank-from 1 --rank-to 1 --exchange KRX --format json
+kiwoomcli domestic rankings previous-volume --market all --kind volume --rank-from 1 --rank-to 1 --exchange KRX --format json
 ```
 
-### `kiwoom rankings amount`
+### `kiwoomcli domestic rankings amount`
 
 Status: Implemented
 
@@ -2122,10 +2122,10 @@ Candidate API: `ka10032`
 Example:
 
 ```sh
-kiwoom rankings amount --market all --include-managed yes --exchange KRX --format json
+kiwoomcli domestic rankings amount --market all --include-managed yes --exchange KRX --format json
 ```
 
-### `kiwoom rankings credit-ratio`
+### `kiwoomcli domestic rankings credit-ratio`
 
 Status: Implemented
 
@@ -2148,10 +2148,10 @@ Candidate API: `ka10033`
 Example:
 
 ```sh
-kiwoom rankings credit-ratio --market all --volume-condition value --stock-condition all --include-limit yes --credit-condition all --exchange KRX --format json
+kiwoomcli domestic rankings credit-ratio --market all --volume-condition value --stock-condition all --include-limit yes --credit-condition all --exchange KRX --format json
 ```
 
-### `kiwoom rankings foreign-period-trades`
+### `kiwoomcli domestic rankings foreign-period-trades`
 
 Status: Implemented
 
@@ -2172,10 +2172,10 @@ Candidate API: `ka10034`
 Example:
 
 ```sh
-kiwoom rankings foreign-period-trades --market all --side net-sell --period today --exchange KRX --format json
+kiwoomcli domestic rankings foreign-period-trades --market all --side net-sell --period today --exchange KRX --format json
 ```
 
-### `kiwoom rankings foreign-continuous-net`
+### `kiwoomcli domestic rankings foreign-continuous-net`
 
 Status: Implemented
 
@@ -2196,10 +2196,10 @@ Candidate API: `ka10035`
 Example:
 
 ```sh
-kiwoom rankings foreign-continuous-net --market all --side net-sell --base-date today --exchange KRX --format json
+kiwoomcli domestic rankings foreign-continuous-net --market all --side net-sell --base-date today --exchange KRX --format json
 ```
 
-### `kiwoom rankings foreign-limit-usage`
+### `kiwoomcli domestic rankings foreign-limit-usage`
 
 Status: Implemented
 
@@ -2219,10 +2219,10 @@ Candidate API: `ka10036`
 Example:
 
 ```sh
-kiwoom rankings foreign-limit-usage --market all --period today --exchange KRX --format json
+kiwoomcli domestic rankings foreign-limit-usage --market all --period today --exchange KRX --format json
 ```
 
-### `kiwoom rankings foreign-broker-trades`
+### `kiwoomcli domestic rankings foreign-broker-trades`
 
 Status: Implemented
 
@@ -2244,10 +2244,10 @@ Candidate API: `ka10037`
 Example:
 
 ```sh
-kiwoom rankings foreign-broker-trades --market all --period today --side net-buy --sort amount --exchange KRX --format json
+kiwoomcli domestic rankings foreign-broker-trades --market all --period today --side net-buy --sort amount --exchange KRX --format json
 ```
 
-### `kiwoom rankings broker-by-stock`
+### `kiwoomcli domestic rankings broker-by-stock`
 
 Status: Implemented
 
@@ -2269,10 +2269,10 @@ Candidate API: `ka10038`
 Example:
 
 ```sh
-kiwoom rankings broker-by-stock --code 005930 --from 20260529 --to 20260529 --side net-sell --format json
+kiwoomcli domestic rankings broker-by-stock --code 005930 --from 20260529 --to 20260529 --side net-sell --format json
 ```
 
-### `kiwoom rankings broker-trades`
+### `kiwoomcli domestic rankings broker-trades`
 
 Status: Implemented
 
@@ -2294,10 +2294,10 @@ Candidate API: `ka10039`
 Example:
 
 ```sh
-kiwoom rankings broker-trades --broker-code value --volume-condition value --side net-buy --period previous --exchange KRX --format json
+kiwoomcli domestic rankings broker-trades --broker-code value --volume-condition value --side net-buy --period previous --exchange KRX --format json
 ```
 
-### `kiwoom rankings stock-main-brokers`
+### `kiwoomcli domestic rankings stock-main-brokers`
 
 Status: Implemented
 
@@ -2315,10 +2315,10 @@ Candidate API: `ka10040`
 Example:
 
 ```sh
-kiwoom rankings stock-main-brokers --code 005930 --format json
+kiwoomcli domestic rankings stock-main-brokers --code 005930 --format json
 ```
 
-### `kiwoom rankings net-buy-brokers`
+### `kiwoomcli domestic rankings net-buy-brokers`
 
 Status: Implemented
 
@@ -2342,10 +2342,10 @@ Candidate API: `ka10042`
 Example:
 
 ```sh
-kiwoom rankings net-buy-brokers --code 005930 --date-mode period --point today --sort close --format json
+kiwoomcli domestic rankings net-buy-brokers --code 005930 --date-mode period --point today --sort close --format json
 ```
 
-### `kiwoom rankings top-exit-brokers`
+### `kiwoomcli domestic rankings top-exit-brokers`
 
 Status: Implemented
 
@@ -2363,10 +2363,10 @@ Candidate API: `ka10053`
 Example:
 
 ```sh
-kiwoom rankings top-exit-brokers --code 005930 --format json
+kiwoomcli domestic rankings top-exit-brokers --code 005930 --format json
 ```
 
-### `kiwoom rankings same-net-trades`
+### `kiwoomcli domestic rankings same-net-trades`
 
 Status: Implemented
 
@@ -2390,10 +2390,10 @@ Candidate API: `ka10062`
 Example:
 
 ```sh
-kiwoom rankings same-net-trades --from 20260529 --market all --side net-buy --basis quantity --unit share --exchange KRX --format json
+kiwoomcli domestic rankings same-net-trades --from 20260529 --market all --side net-buy --basis quantity --unit share --exchange KRX --format json
 ```
 
-### `kiwoom rankings investor-intraday`
+### `kiwoomcli domestic rankings investor-intraday`
 
 Status: Implemented
 
@@ -2414,10 +2414,10 @@ Candidate API: `ka10065`
 Example:
 
 ```sh
-kiwoom rankings investor-intraday --side net-buy --market all --investor foreign --format json
+kiwoomcli domestic rankings investor-intraday --side net-buy --market all --investor foreign --format json
 ```
 
-### `kiwoom rankings after-hours-change-rate`
+### `kiwoomcli domestic rankings after-hours-change-rate`
 
 Status: Implemented
 
@@ -2440,10 +2440,10 @@ Candidate API: `ka10098`
 Example:
 
 ```sh
-kiwoom rankings after-hours-change-rate --market all --sort rise-rate --stock-condition value --volume value --credit-condition all --amount-condition value --format json
+kiwoomcli domestic rankings after-hours-change-rate --market all --sort rise-rate --stock-condition value --volume value --credit-condition all --amount-condition value --format json
 ```
 
-### `kiwoom rankings foreign-institution-trades`
+### `kiwoomcli domestic rankings foreign-institution-trades`
 
 Status: Implemented
 
@@ -2465,9 +2465,9 @@ Candidate API: `ka90009`
 Example:
 
 ```sh
-kiwoom rankings foreign-institution-trades --market all --basis amount --include-date yes --exchange KRX --format json
+kiwoomcli domestic rankings foreign-institution-trades --market all --basis amount --include-date yes --exchange KRX --format json
 ```
-### `kiwoom sectors program`
+### `kiwoomcli domestic sectors program`
 
 Status: Implemented
 
@@ -2485,10 +2485,10 @@ Candidate API: `ka10010`
 Example:
 
 ```sh
-kiwoom sectors program --code 005930 --format json
+kiwoomcli domestic sectors program --code 005930 --format json
 ```
 
-### `kiwoom sectors investor-flows`
+### `kiwoomcli domestic sectors investor-flows`
 
 Status: Implemented
 
@@ -2509,10 +2509,10 @@ Candidate API: `ka10051`
 Example:
 
 ```sh
-kiwoom sectors investor-flows --market kospi --basis amount --exchange ALL --format json
+kiwoomcli domestic sectors investor-flows --market kospi --basis amount --exchange ALL --format json
 ```
 
-### `kiwoom sectors price`
+### `kiwoomcli domestic sectors price`
 
 Status: Implemented
 
@@ -2531,10 +2531,10 @@ Candidate API: `ka20001`
 Example:
 
 ```sh
-kiwoom sectors price --market kospi --code 001 --format json
+kiwoomcli domestic sectors price --market kospi --code 001 --format json
 ```
 
-### `kiwoom sectors stocks`
+### `kiwoomcli domestic sectors stocks`
 
 Status: Implemented
 
@@ -2554,10 +2554,10 @@ Candidate API: `ka20002`
 Example:
 
 ```sh
-kiwoom sectors stocks --market kospi --code 001 --exchange ALL --format json
+kiwoomcli domestic sectors stocks --market kospi --code 001 --exchange ALL --format json
 ```
 
-### `kiwoom sectors indices`
+### `kiwoomcli domestic sectors indices`
 
 Status: Implemented
 
@@ -2575,10 +2575,10 @@ Candidate API: `ka20003`
 Example:
 
 ```sh
-kiwoom sectors indices --code 001 --format json
+kiwoomcli domestic sectors indices --code 001 --format json
 ```
 
-### `kiwoom sectors daily`
+### `kiwoomcli domestic sectors daily`
 
 Status: Implemented
 
@@ -2597,10 +2597,10 @@ Candidate API: `ka20009`
 Example:
 
 ```sh
-kiwoom sectors daily --market kospi --code 001 --format json
+kiwoomcli domestic sectors daily --market kospi --code 001 --format json
 ```
 
-### `kiwoom etfs info`
+### `kiwoomcli domestic etfs info`
 
 Status: Implemented
 
@@ -2618,10 +2618,10 @@ Candidate API: `ka40002`
 Example:
 
 ```sh
-kiwoom etfs info --code 069500 --format json
+kiwoomcli domestic etfs info --code 069500 --format json
 ```
 
-### `kiwoom etfs daily`
+### `kiwoomcli domestic etfs daily`
 
 Status: Implemented
 
@@ -2639,10 +2639,10 @@ Candidate API: `ka40003`
 Example:
 
 ```sh
-kiwoom etfs daily --code 069500 --format json
+kiwoomcli domestic etfs daily --code 069500 --format json
 ```
 
-### `kiwoom etfs profit`
+### `kiwoomcli domestic etfs profit`
 
 Status: Implemented
 
@@ -2662,10 +2662,10 @@ Candidate API: `ka40001`
 Example:
 
 ```sh
-kiwoom etfs profit --code 069500 --index-code 207 --period year --format json
+kiwoomcli domestic etfs profit --code 069500 --index-code 207 --period year --format json
 ```
 
-### `kiwoom etfs list`
+### `kiwoomcli domestic etfs list`
 
 Status: Implemented
 
@@ -2688,10 +2688,10 @@ Candidate API: `ka40004`
 Example:
 
 ```sh
-kiwoom etfs list --tax-type all --nav-compare all --manager 0000 --taxable all --tracking-index 0 --exchange KRX --format json
+kiwoomcli domestic etfs list --tax-type all --nav-compare all --manager 0000 --taxable all --tracking-index 0 --exchange KRX --format json
 ```
 
-### `kiwoom etfs intraday-trend`
+### `kiwoomcli domestic etfs intraday-trend`
 
 Status: Implemented
 
@@ -2708,7 +2708,7 @@ Purpose: Query ETF intraday trend.
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom etfs intraday-fills`
+### `kiwoomcli domestic etfs intraday-fills`
 
 Status: Implemented
 
@@ -2725,7 +2725,7 @@ Purpose: Query ETF intraday fills.
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom etfs daily-fills`
+### `kiwoomcli domestic etfs daily-fills`
 
 Status: Implemented
 
@@ -2742,7 +2742,7 @@ Purpose: Query ETF daily fills.
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom etfs nav`
+### `kiwoomcli domestic etfs nav`
 
 Status: Implemented
 
@@ -2759,7 +2759,7 @@ Purpose: Query ETF NAV related information.
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom etfs foreign-trend`
+### `kiwoomcli domestic etfs foreign-trend`
 
 Status: Implemented
 
@@ -2776,7 +2776,7 @@ Purpose: Query ETF foreign investor trend.
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom elws daily`
+### `kiwoomcli domestic elws daily`
 
 Status: Implemented
 
@@ -2798,10 +2798,10 @@ the command mapping is correct.
 Example:
 
 ```sh
-kiwoom elws daily --code 57M747 --format json
+kiwoomcli domestic elws daily --code 57M747 --format json
 ```
 
-### `kiwoom elws balance`
+### `kiwoomcli domestic elws balance`
 
 Status: Implemented
 
@@ -2824,10 +2824,10 @@ are not useful evidence for this endpoint.
 Example:
 
 ```sh
-kiwoom elws balance --code 57M747 --date 20260616 --format json
+kiwoomcli domestic elws balance --code 57M747 --date 20260616 --format json
 ```
 
-### `kiwoom elws conditions`
+### `kiwoomcli domestic elws conditions`
 
 Status: Implemented
 
@@ -2854,10 +2854,10 @@ evidence.
 Example:
 
 ```sh
-kiwoom elws conditions --issuer-code 000000000017 --underlying-code 201 --right-type call --lp-code 000000000000 --sort none --format json
+kiwoomcli domestic elws conditions --issuer-code 000000000017 --underlying-code 201 --right-type call --lp-code 000000000000 --sort none --format json
 ```
 
-### `kiwoom elws sensitivity`
+### `kiwoomcli domestic elws sensitivity`
 
 Status: Implemented
 
@@ -2879,10 +2879,10 @@ the command mapping is correct.
 Example:
 
 ```sh
-kiwoom elws sensitivity --code 57M747 --format json
+kiwoomcli domestic elws sensitivity --code 57M747 --format json
 ```
 
-### `kiwoom elws price-move`
+### `kiwoomcli domestic elws price-move`
 
 Status: Implemented
 
@@ -2905,7 +2905,7 @@ Candidate API: `ka30001`
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom elws broker-net`
+### `kiwoomcli domestic elws broker-net`
 
 Status: Implemented
 
@@ -2930,10 +2930,10 @@ period `60d`, and include-ended `yes`, returning 100 rows.
 Example:
 
 ```sh
-kiwoom elws broker-net --issuer-code 003 --volume all --side net-sell --period 60d --include-ended yes --format json
+kiwoomcli domestic elws broker-net --issuer-code 003 --volume all --side net-sell --period 60d --include-ended yes --format json
 ```
 
-### `kiwoom elws divergence`
+### `kiwoomcli domestic elws divergence`
 
 Status: Implemented
 
@@ -2959,10 +2959,10 @@ codes (`000000000000`) with right type `all` and include-ended `yes`, returning
 Example:
 
 ```sh
-kiwoom elws divergence --issuer-code 000000000000 --underlying-code 000000000000 --right-type all --lp-code 000000000000 --include-ended yes --format json
+kiwoomcli domestic elws divergence --issuer-code 000000000000 --underlying-code 000000000000 --right-type all --lp-code 000000000000 --include-ended yes --format json
 ```
 
-### `kiwoom elws change-rank`
+### `kiwoomcli domestic elws change-rank`
 
 Status: Implemented
 
@@ -2979,7 +2979,7 @@ Candidate API: `ka30009`
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom elws balance-rank`
+### `kiwoomcli domestic elws balance-rank`
 
 Status: Implemented
 
@@ -2996,7 +2996,7 @@ Candidate API: `ka30010`
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom elws proximity`
+### `kiwoomcli domestic elws proximity`
 
 Status: Implemented
 
@@ -3018,10 +3018,10 @@ the command mapping is correct.
 Example:
 
 ```sh
-kiwoom elws proximity --code 57M747 --format json
+kiwoomcli domestic elws proximity --code 57M747 --format json
 ```
 
-### `kiwoom elws details`
+### `kiwoomcli domestic elws details`
 
 Status: Implemented
 
@@ -3036,7 +3036,7 @@ Candidate API: `ka30012`
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom investors by-stock`
+### `kiwoomcli domestic investors by-stock`
 
 Status: Implemented
 
@@ -3054,10 +3054,10 @@ Candidate API: `ka10008`
 Example:
 
 ```sh
-kiwoom investors by-stock --code 005930 --format json
+kiwoomcli domestic investors by-stock --code 005930 --format json
 ```
 
-### `kiwoom investors lookup`
+### `kiwoomcli domestic investors lookup`
 
 Status: Implemented
 
@@ -3075,10 +3075,10 @@ Candidate API: `ka10009`
 Example:
 
 ```sh
-kiwoom investors lookup --code 005930 --format json
+kiwoomcli domestic investors lookup --code 005930 --format json
 ```
 
-### `kiwoom investors trend`
+### `kiwoomcli domestic investors trend`
 
 Status: Implemented
 
@@ -3102,7 +3102,7 @@ Purpose: Query continuous institutional/foreign investor trading status.
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom investors gold-status`
+### `kiwoomcli domestic investors gold-status`
 
 Status: Implemented
 
@@ -3118,7 +3118,7 @@ Purpose: Query gold spot investor status.
 | `--profile` | No | runtime | `account_alias` | | Profile alias. |
 | `--mode` | No | runtime | `mode` | `demo`, `real` | Runtime mode. |
 
-### `kiwoom short-selling trend`
+### `kiwoomcli domestic short-selling trend`
 
 Status: Implemented
 
@@ -3138,10 +3138,10 @@ Candidate API: `ka10014`
 Example:
 
 ```sh
-kiwoom short-selling trend --code 005930 --from 20250101 --to 20250131 --format json
+kiwoomcli domestic short-selling trend --code 005930 --from 20250101 --to 20250131 --format json
 ```
 
-### `kiwoom securities-lending by-stock`
+### `kiwoomcli domestic securities-lending by-stock`
 
 Status: Implemented
 
@@ -3159,10 +3159,10 @@ Candidate API: `ka20068`
 Example:
 
 ```sh
-kiwoom securities-lending by-stock --code 005930 --format json
+kiwoomcli domestic securities-lending by-stock --code 005930 --format json
 ```
 
-### `kiwoom securities-lending trend`
+### `kiwoomcli domestic securities-lending trend`
 
 Status: Implemented
 
@@ -3182,10 +3182,10 @@ Candidate API: `ka10068`
 Example:
 
 ```sh
-kiwoom securities-lending trend --from 20250401 --to 20250430 --format json
+kiwoomcli domestic securities-lending trend --from 20250401 --to 20250430 --format json
 ```
 
-### `kiwoom securities-lending list`
+### `kiwoomcli domestic securities-lending list`
 
 Status: Implemented
 
@@ -3205,10 +3205,10 @@ Candidate API: `ka10069`
 Example:
 
 ```sh
-kiwoom securities-lending list --from 20250401 --to 20250430 --market kospi --format json
+kiwoomcli domestic securities-lending list --from 20250401 --to 20250430 --market kospi --format json
 ```
 
-### `kiwoom securities-lending lookup`
+### `kiwoomcli domestic securities-lending lookup`
 
 Status: Implemented
 
@@ -3227,10 +3227,10 @@ Candidate API: `ka90012`
 Example:
 
 ```sh
-kiwoom securities-lending lookup --date 20250430 --market kospi --format json
+kiwoomcli domestic securities-lending lookup --date 20250430 --market kospi --format json
 ```
 
-### `kiwoom themes lookup`
+### `kiwoomcli domestic themes lookup`
 
 Status: Implemented
 
@@ -3253,10 +3253,10 @@ Candidate API: `ka90001`
 Example:
 
 ```sh
-kiwoom themes lookup --kind all --days 10 --sort profit-top --exchange KRX --format json
+kiwoomcli domestic themes lookup --kind all --days 10 --sort profit-top --exchange KRX --format json
 ```
 
-### `kiwoom themes by-stock`
+### `kiwoomcli domestic themes by-stock`
 
 Status: Implemented
 
@@ -3276,7 +3276,7 @@ Candidate API: `ka90002`
 Example:
 
 ```sh
-kiwoom themes by-stock --code 100 --exchange KRX --days 2 --format json
+kiwoomcli domestic themes by-stock --code 100 --exchange KRX --days 2 --format json
 ```
 
 ## Overseas TODO
@@ -3289,7 +3289,7 @@ then add explicit `arguments.csv` rows and implemented command contracts.
 
 ## Accounts
 
-### `kiwoom accounts balance`
+### `kiwoomcli domestic accounts balance`
 
 Status: Planned
 
@@ -3301,7 +3301,7 @@ Feature: 체결잔고. Output should support table and JSON modes. Stock code,
 stock name, quantity, purchase amount, current value, PnL, and withdrawable-like
 fields should be reviewed from response metadata before table columns are fixed.
 
-### `kiwoom accounts withdrawable`
+### `kiwoomcli domestic accounts withdrawable`
 
 Status: Planned
 
@@ -3313,7 +3313,7 @@ Feature: inquiry only. This is not a withdrawal execution command.
 
 ## Orders
 
-### `kiwoom accounts list`
+### `kiwoomcli domestic accounts list`
 
 Status: Implemented
 
@@ -3330,10 +3330,10 @@ Candidate API: `ka00001`
 Example:
 
 ```sh
-kiwoom accounts list --format json
+kiwoomcli domestic accounts list --format json
 ```
 
-### `kiwoom accounts daily-balance-return`
+### `kiwoomcli domestic accounts daily-balance-return`
 
 Status: Implemented
 
@@ -3351,10 +3351,10 @@ Candidate API: `ka01690`
 Example:
 
 ```sh
-kiwoom accounts daily-balance-return --date 20260529 --format json
+kiwoomcli domestic accounts daily-balance-return --date 20260529 --format json
 ```
 
-### `kiwoom accounts realized-profit-stock-daily`
+### `kiwoomcli domestic accounts realized-profit-stock-daily`
 
 Status: Implemented
 
@@ -3377,10 +3377,10 @@ normal Kiwoom return code is a zero-row account state, not a mapping failure.
 Example:
 
 ```sh
-kiwoom accounts realized-profit-stock-daily --date 20260522 --format json
+kiwoomcli domestic accounts realized-profit-stock-daily --date 20260522 --format json
 ```
 
-### `kiwoom accounts realized-profit-period-stock`
+### `kiwoomcli domestic accounts realized-profit-period-stock`
 
 Status: Implemented
 
@@ -3405,10 +3405,10 @@ mapping failure.
 Example:
 
 ```sh
-kiwoom accounts realized-profit-period-stock --from 20260522 --to 20260522 --format json
+kiwoomcli domestic accounts realized-profit-period-stock --from 20260522 --to 20260522 --format json
 ```
 
-### `kiwoom accounts realized-profit-daily`
+### `kiwoomcli domestic accounts realized-profit-daily`
 
 Status: Implemented
 
@@ -3427,10 +3427,10 @@ Candidate API: `ka10074`
 Example:
 
 ```sh
-kiwoom accounts realized-profit-daily --from 20260529 --to 20260529 --format json
+kiwoomcli domestic accounts realized-profit-daily --from 20260529 --to 20260529 --format json
 ```
 
-### `kiwoom accounts realized-profit-today-detail`
+### `kiwoomcli domestic accounts realized-profit-today-detail`
 
 Status: Implemented
 
@@ -3448,10 +3448,10 @@ Candidate API: `ka10077`
 Example:
 
 ```sh
-kiwoom accounts realized-profit-today-detail --code 005930 --format json
+kiwoomcli domestic accounts realized-profit-today-detail --code 005930 --format json
 ```
 
-### `kiwoom accounts return-rate`
+### `kiwoomcli domestic accounts return-rate`
 
 Status: Implemented
 
@@ -3474,10 +3474,10 @@ state, not a mapping failure.
 Example:
 
 ```sh
-kiwoom accounts return-rate --exchange ALL --format json
+kiwoomcli domestic accounts return-rate --exchange ALL --format json
 ```
 
-### `kiwoom accounts day-trading-log`
+### `kiwoomcli domestic accounts day-trading-log`
 
 Status: Implemented
 
@@ -3497,10 +3497,10 @@ Candidate API: `ka10170`
 Example:
 
 ```sh
-kiwoom accounts day-trading-log --sell-scope same-day-buy-sell --cash-credit all --format json
+kiwoomcli domestic accounts day-trading-log --sell-scope same-day-buy-sell --cash-credit all --format json
 ```
 
-### `kiwoom accounts cash`
+### `kiwoomcli domestic accounts cash`
 
 Status: Implemented
 
@@ -3518,10 +3518,10 @@ Candidate API: `kt00001`
 Example:
 
 ```sh
-kiwoom accounts cash --cash-basis estimated --format json
+kiwoomcli domestic accounts cash --cash-basis estimated --format json
 ```
 
-### `kiwoom accounts estimated-assets-daily`
+### `kiwoomcli domestic accounts estimated-assets-daily`
 
 Status: Implemented
 
@@ -3540,10 +3540,10 @@ Candidate API: `kt00002`
 Example:
 
 ```sh
-kiwoom accounts estimated-assets-daily --from 20260529 --to 20260529 --format json
+kiwoomcli domestic accounts estimated-assets-daily --from 20260529 --to 20260529 --format json
 ```
 
-### `kiwoom accounts assets`
+### `kiwoomcli domestic accounts assets`
 
 Status: Implemented
 
@@ -3561,10 +3561,10 @@ Candidate API: `kt00003`
 Example:
 
 ```sh
-kiwoom accounts assets --include-delisted yes --format json
+kiwoomcli domestic accounts assets --include-delisted yes --format json
 ```
 
-### `kiwoom accounts valuation`
+### `kiwoomcli domestic accounts valuation`
 
 Status: Implemented
 
@@ -3583,10 +3583,10 @@ Candidate API: `kt00004`
 Example:
 
 ```sh
-kiwoom accounts valuation --include-delisted yes --exchange KRX --format json
+kiwoomcli domestic accounts valuation --include-delisted yes --exchange KRX --format json
 ```
 
-### `kiwoom accounts fill-balance`
+### `kiwoomcli domestic accounts fill-balance`
 
 Status: Implemented
 
@@ -3604,10 +3604,10 @@ Candidate API: `kt00005`
 Example:
 
 ```sh
-kiwoom accounts fill-balance --exchange KRX --format json
+kiwoomcli domestic accounts fill-balance --exchange KRX --format json
 ```
 
-### `kiwoom accounts order-fill-detail`
+### `kiwoomcli domestic accounts order-fill-detail`
 
 Status: Implemented
 
@@ -3637,10 +3637,10 @@ failure.
 Example:
 
 ```sh
-kiwoom accounts order-fill-detail --date 20260522 --order order --asset-kind all --side all --exchange ALL --format json
+kiwoomcli domestic accounts order-fill-detail --date 20260522 --order order --asset-kind all --side all --exchange ALL --format json
 ```
 
-### `kiwoom accounts next-settlement`
+### `kiwoomcli domestic accounts next-settlement`
 
 Status: Implemented
 
@@ -3658,10 +3658,10 @@ Candidate API: `kt00008`
 Example:
 
 ```sh
-kiwoom accounts next-settlement --format json
+kiwoomcli domestic accounts next-settlement --format json
 ```
 
-### `kiwoom accounts order-fill-status`
+### `kiwoomcli domestic accounts order-fill-status`
 
 Status: Implemented
 
@@ -3692,10 +3692,10 @@ responses when the account/date combination is not queryable.
 Example:
 
 ```sh
-kiwoom accounts order-fill-status --date 20260522 --asset-kind all --market all --side all --fill-status all --exchange ALL --format json
+kiwoomcli domestic accounts order-fill-status --date 20260522 --asset-kind all --market all --side all --fill-status all --exchange ALL --format json
 ```
 
-### `kiwoom accounts credit-margin`
+### `kiwoomcli domestic accounts credit-margin`
 
 Status: Implemented
 
@@ -3714,10 +3714,10 @@ Candidate API: `kt00012`
 Example:
 
 ```sh
-kiwoom accounts credit-margin --code 005930 --format json
+kiwoomcli domestic accounts credit-margin --code 005930 --format json
 ```
 
-### `kiwoom accounts margin-details`
+### `kiwoomcli domestic accounts margin-details`
 
 Status: Implemented
 
@@ -3734,10 +3734,10 @@ Candidate API: `kt00013`
 Example:
 
 ```sh
-kiwoom accounts margin-details --format json
+kiwoomcli domestic accounts margin-details --format json
 ```
 
-### `kiwoom accounts transaction-history`
+### `kiwoomcli domestic accounts transaction-history`
 
 Status: Implemented
 
@@ -3762,10 +3762,10 @@ Candidate API: `kt00015`
 Example:
 
 ```sh
-kiwoom accounts transaction-history --from 20260529 --to 20260529 --kind value --product all --exchange ALL --format json
+kiwoomcli domestic accounts transaction-history --from 20260529 --to 20260529 --kind value --product all --exchange ALL --format json
 ```
 
-### `kiwoom accounts daily-return-detail`
+### `kiwoomcli domestic accounts daily-return-detail`
 
 Status: Implemented
 
@@ -3784,10 +3784,10 @@ Candidate API: `kt00016`
 Example:
 
 ```sh
-kiwoom accounts daily-return-detail --from 20260529 --to 20260529 --format json
+kiwoomcli domestic accounts daily-return-detail --from 20260529 --to 20260529 --format json
 ```
 
-### `kiwoom accounts today-status`
+### `kiwoomcli domestic accounts today-status`
 
 Status: Implemented
 
@@ -3804,10 +3804,10 @@ Candidate API: `kt00017`
 Example:
 
 ```sh
-kiwoom accounts today-status --format json
+kiwoomcli domestic accounts today-status --format json
 ```
 
-### `kiwoom accounts holdings`
+### `kiwoomcli domestic accounts holdings`
 
 Status: Implemented
 
@@ -3826,10 +3826,10 @@ Candidate API: `kt00018`
 Example:
 
 ```sh
-kiwoom accounts holdings --basis total --exchange KRX --format json
+kiwoomcli domestic accounts holdings --basis total --exchange KRX --format json
 ```
 
-### `kiwoom accounts gold-balance`
+### `kiwoomcli domestic accounts gold-balance`
 
 Status: Implemented
 
@@ -3846,10 +3846,10 @@ Candidate API: `kt50020`
 Example:
 
 ```sh
-kiwoom accounts gold-balance --format json
+kiwoomcli domestic accounts gold-balance --format json
 ```
 
-### `kiwoom accounts gold-cash`
+### `kiwoomcli domestic accounts gold-cash`
 
 Status: Implemented
 
@@ -3866,10 +3866,10 @@ Candidate API: `kt50021`
 Example:
 
 ```sh
-kiwoom accounts gold-cash --format json
+kiwoomcli domestic accounts gold-cash --format json
 ```
 
-### `kiwoom accounts gold-all-order-fills`
+### `kiwoomcli domestic accounts gold-all-order-fills`
 
 Status: Implemented
 
@@ -3899,10 +3899,10 @@ state, not a mapping failure.
 Example:
 
 ```sh
-kiwoom accounts gold-all-order-fills --date 20260522 --market-deal 1 --asset-kind all --side all --format json
+kiwoomcli domestic accounts gold-all-order-fills --date 20260522 --market-deal 1 --asset-kind all --side all --format json
 ```
 
-### `kiwoom accounts gold-order-fills`
+### `kiwoomcli domestic accounts gold-order-fills`
 
 Status: Implemented
 
@@ -3932,10 +3932,10 @@ mapping failure.
 Example:
 
 ```sh
-kiwoom accounts gold-order-fills --date 20260522 --order order --asset-kind all --side all --exchange ALL --format json
+kiwoomcli domestic accounts gold-order-fills --date 20260522 --order order --asset-kind all --side all --exchange ALL --format json
 ```
 
-### `kiwoom accounts gold-transactions`
+### `kiwoomcli domestic accounts gold-transactions`
 
 Status: Implemented
 
@@ -3956,10 +3956,10 @@ Candidate API: `kt50032`
 Example:
 
 ```sh
-kiwoom accounts gold-transactions --format json
+kiwoomcli domestic accounts gold-transactions --format json
 ```
 
-### `kiwoom accounts gold-open-orders`
+### `kiwoomcli domestic accounts gold-open-orders`
 
 Status: Implemented
 
@@ -3989,9 +3989,9 @@ state, not a mapping failure.
 Example:
 
 ```sh
-kiwoom accounts gold-open-orders --date 20260522 --market-deal 1 --asset-kind all --side all --format json
+kiwoomcli domestic accounts gold-open-orders --date 20260522 --market-deal 1 --asset-kind all --side all --format json
 ```
-### `kiwoom orders chance`
+### `kiwoomcli domestic orders chance`
 
 Status: Implemented
 
@@ -4015,10 +4015,10 @@ Output rule: apply account identifier redaction in CLI output.
 Example:
 
 ```sh
-kiwoom orders chance --code 005930 --side buy --price 70000
+kiwoomcli domestic orders chance --code 005930 --side buy --price 70000
 ```
 
-### `kiwoom orders margin`
+### `kiwoomcli domestic orders margin`
 
 Status: Implemented
 
@@ -4041,10 +4041,10 @@ Output rule: apply account identifier redaction in CLI output.
 Example:
 
 ```sh
-kiwoom orders margin --code 005930 --price 70000
+kiwoomcli domestic orders margin --code 005930 --price 70000
 ```
 
-### `kiwoom orders list-open`
+### `kiwoomcli domestic orders list-open`
 
 Status: Implemented
 
@@ -4070,7 +4070,7 @@ normal Kiwoom return code is a zero-row account state, not a mapping failure.
 
 Output rule: redact account identifiers in CLI output; order numbers are shown.
 
-### `kiwoom orders list-fills`
+### `kiwoomcli domestic orders list-fills`
 
 Status: Implemented
 
@@ -4097,7 +4097,7 @@ Kiwoom return code is a zero-row account state, not a mapping failure.
 
 Output rule: redact account identifiers in CLI output; order numbers are shown.
 
-### `kiwoom orders open-detail`
+### `kiwoomcli domestic orders open-detail`
 
 Status: Implemented
 
@@ -4131,7 +4131,7 @@ Account identifiers are redacted in every formatted output mode, including
 `json`, `pretty`, `yaml`, `jsonl`, and `raw`. Order numbers are not redacted so
 they can be read from a buy/list response and passed to `orders modify`/`cancel`.
 
-### `kiwoom orders buy`
+### `kiwoomcli domestic orders buy`
 
 Status: Implemented
 
@@ -4152,13 +4152,13 @@ Candidate API: `kt10000`
 Example:
 
 ```sh
-kiwoom orders buy --code 005930 --qty 1 --order-type limit --price 70000 --format json
-kiwoom orders buy --code 005930 --qty 1 --order-type limit --price 70000 --format json --confirm
+kiwoomcli domestic orders buy --code 005930 --qty 1 --order-type limit --price 70000 --format json
+kiwoomcli domestic orders buy --code 005930 --qty 1 --order-type limit --price 70000 --format json --confirm
 ```
 
 Without `--confirm`, the command exits before network submission; with `--confirm`, it submits to the real endpoint.
 
-### `kiwoom orders sell`
+### `kiwoomcli domestic orders sell`
 
 Status: Implemented
 
@@ -4179,13 +4179,13 @@ Candidate API: `kt10001`
 Example:
 
 ```sh
-kiwoom orders sell --code 005930 --qty 1 --order-type limit --price 70000 --format json
-kiwoom orders sell --code 005930 --qty 1 --order-type limit --price 70000 --format json --confirm
+kiwoomcli domestic orders sell --code 005930 --qty 1 --order-type limit --price 70000 --format json
+kiwoomcli domestic orders sell --code 005930 --qty 1 --order-type limit --price 70000 --format json --confirm
 ```
 
 Without `--confirm`, the command exits before network submission; with `--confirm`, it submits to the real endpoint.
 
-### `kiwoom orders modify`
+### `kiwoomcli domestic orders modify`
 
 Status: Implemented
 
@@ -4206,13 +4206,13 @@ Candidate API: `kt10002`
 Example:
 
 ```sh
-kiwoom orders modify --order-id 0000140 --code 005930 --qty 1 --price 70000 --format json
-kiwoom orders modify --order-id 0000140 --code 005930 --qty 1 --price 70000 --format json --confirm
+kiwoomcli domestic orders modify --order-id 0000140 --code 005930 --qty 1 --price 70000 --format json
+kiwoomcli domestic orders modify --order-id 0000140 --code 005930 --qty 1 --price 70000 --format json --confirm
 ```
 
 Without `--confirm`, the command exits before network submission; with `--confirm`, it submits to the real endpoint.
 
-### `kiwoom orders cancel`
+### `kiwoomcli domestic orders cancel`
 
 Status: Implemented
 
@@ -4232,13 +4232,13 @@ Candidate API: `kt10003`
 Example:
 
 ```sh
-kiwoom orders cancel --order-id 0000140 --code 005930 --qty 1 --format json
-kiwoom orders cancel --order-id 0000140 --code 005930 --qty 1 --format json --confirm
+kiwoomcli domestic orders cancel --order-id 0000140 --code 005930 --qty 1 --format json
+kiwoomcli domestic orders cancel --order-id 0000140 --code 005930 --qty 1 --format json --confirm
 ```
 
 Without `--confirm`, the command exits before network submission; with `--confirm`, it submits to the real endpoint.
 
-### `kiwoom orders credit-buy`
+### `kiwoomcli domestic orders credit-buy`
 
 Status: Implemented
 
@@ -4260,13 +4260,13 @@ Candidate API: `kt10006`
 Example:
 
 ```sh
-kiwoom orders credit-buy --exchange KRX --code 005930 --qty 1 --order-type limit --price 70000 --format json
-kiwoom orders credit-buy --exchange KRX --code 005930 --qty 1 --order-type limit --price 70000 --format json --confirm
+kiwoomcli domestic orders credit-buy --exchange KRX --code 005930 --qty 1 --order-type limit --price 70000 --format json
+kiwoomcli domestic orders credit-buy --exchange KRX --code 005930 --qty 1 --order-type limit --price 70000 --format json --confirm
 ```
 
 Without `--confirm`, the command exits before network submission; with `--confirm`, it submits to the real endpoint.
 
-### `kiwoom orders credit-sell`
+### `kiwoomcli domestic orders credit-sell`
 
 Status: Implemented
 
@@ -4290,13 +4290,13 @@ Candidate API: `kt10007`
 Example:
 
 ```sh
-kiwoom orders credit-sell --exchange KRX --code 005930 --qty 1 --order-type limit --price 70000 --credit-deal financing --format json
-kiwoom orders credit-sell --exchange KRX --code 005930 --qty 1 --order-type limit --price 70000 --credit-deal financing --format json --confirm
+kiwoomcli domestic orders credit-sell --exchange KRX --code 005930 --qty 1 --order-type limit --price 70000 --credit-deal financing --format json
+kiwoomcli domestic orders credit-sell --exchange KRX --code 005930 --qty 1 --order-type limit --price 70000 --credit-deal financing --format json --confirm
 ```
 
 Without `--confirm`, the command exits before network submission; with `--confirm`, it submits to the real endpoint.
 
-### `kiwoom orders credit-modify`
+### `kiwoomcli domestic orders credit-modify`
 
 Status: Implemented
 
@@ -4318,13 +4318,13 @@ Candidate API: `kt10008`
 Example:
 
 ```sh
-kiwoom orders credit-modify --exchange KRX --order-id 0000140 --code 005930 --qty 1 --price 70000 --format json
-kiwoom orders credit-modify --exchange KRX --order-id 0000140 --code 005930 --qty 1 --price 70000 --format json --confirm
+kiwoomcli domestic orders credit-modify --exchange KRX --order-id 0000140 --code 005930 --qty 1 --price 70000 --format json
+kiwoomcli domestic orders credit-modify --exchange KRX --order-id 0000140 --code 005930 --qty 1 --price 70000 --format json --confirm
 ```
 
 Without `--confirm`, the command exits before network submission; with `--confirm`, it submits to the real endpoint.
 
-### `kiwoom orders credit-cancel`
+### `kiwoomcli domestic orders credit-cancel`
 
 Status: Implemented
 
@@ -4344,13 +4344,13 @@ Candidate API: `kt10009`
 Example:
 
 ```sh
-kiwoom orders credit-cancel --exchange KRX --order-id 0000140 --code 005930 --qty 0 --format json
-kiwoom orders credit-cancel --exchange KRX --order-id 0000140 --code 005930 --qty 0 --format json --confirm
+kiwoomcli domestic orders credit-cancel --exchange KRX --order-id 0000140 --code 005930 --qty 0 --format json
+kiwoomcli domestic orders credit-cancel --exchange KRX --order-id 0000140 --code 005930 --qty 0 --format json --confirm
 ```
 
 Without `--confirm`, the command exits before network submission; with `--confirm`, it submits to the real endpoint.
 
-### `kiwoom orders gold-buy`
+### `kiwoomcli domestic orders gold-buy`
 
 Status: Implemented
 
@@ -4370,13 +4370,13 @@ Candidate API: `kt50000`
 Example:
 
 ```sh
-kiwoom orders gold-buy --code M04020000 --qty 1 --order-type limit --price 70000 --format json
-kiwoom orders gold-buy --code M04020000 --qty 1 --order-type limit --price 70000 --format json --confirm
+kiwoomcli domestic orders gold-buy --code M04020000 --qty 1 --order-type limit --price 70000 --format json
+kiwoomcli domestic orders gold-buy --code M04020000 --qty 1 --order-type limit --price 70000 --format json --confirm
 ```
 
 Without `--confirm`, the command exits before network submission; with `--confirm`, it submits to the real endpoint.
 
-### `kiwoom orders gold-sell`
+### `kiwoomcli domestic orders gold-sell`
 
 Status: Implemented
 
@@ -4396,13 +4396,13 @@ Candidate API: `kt50001`
 Example:
 
 ```sh
-kiwoom orders gold-sell --code M04020000 --qty 1 --order-type limit --price 70000 --format json
-kiwoom orders gold-sell --code M04020000 --qty 1 --order-type limit --price 70000 --format json --confirm
+kiwoomcli domestic orders gold-sell --code M04020000 --qty 1 --order-type limit --price 70000 --format json
+kiwoomcli domestic orders gold-sell --code M04020000 --qty 1 --order-type limit --price 70000 --format json --confirm
 ```
 
 Without `--confirm`, the command exits before network submission; with `--confirm`, it submits to the real endpoint.
 
-### `kiwoom orders gold-modify`
+### `kiwoomcli domestic orders gold-modify`
 
 Status: Implemented
 
@@ -4422,13 +4422,13 @@ Candidate API: `kt50002`
 Example:
 
 ```sh
-kiwoom orders gold-modify --code M04020000 --order-id 0000140 --qty 1 --price 70000 --format json
-kiwoom orders gold-modify --code M04020000 --order-id 0000140 --qty 1 --price 70000 --format json --confirm
+kiwoomcli domestic orders gold-modify --code M04020000 --order-id 0000140 --qty 1 --price 70000 --format json
+kiwoomcli domestic orders gold-modify --code M04020000 --order-id 0000140 --qty 1 --price 70000 --format json --confirm
 ```
 
 Without `--confirm`, the command exits before network submission; with `--confirm`, it submits to the real endpoint.
 
-### `kiwoom orders gold-cancel`
+### `kiwoomcli domestic orders gold-cancel`
 
 Status: Implemented
 
@@ -4447,8 +4447,8 @@ Candidate API: `kt50003`
 Example:
 
 ```sh
-kiwoom orders gold-cancel --order-id 0000140 --code M04020000 --qty 0 --format json
-kiwoom orders gold-cancel --order-id 0000140 --code M04020000 --qty 0 --format json --confirm
+kiwoomcli domestic orders gold-cancel --order-id 0000140 --code M04020000 --qty 0 --format json
+kiwoomcli domestic orders gold-cancel --order-id 0000140 --code M04020000 --qty 0 --format json --confirm
 ```
 
 Without `--confirm`, the command exits before network submission; with `--confirm`, it submits to the real endpoint.
@@ -4472,7 +4472,7 @@ Kiwoom spec. Control frames remain raw, unknown FIDs are preserved under
 `unknown`, and values stay strings.
 
 ```sh
-kiwoom streams trades --code 005930 --count 1 --named --format json
+kiwoomcli domestic streams trades --code 005930 --count 1 --named --format json
 ```
 
 ### Long-running stream capture (OS backgrounding)
@@ -4495,7 +4495,7 @@ Deferred (would require a supervised worker, not a thin pid layer): reconnect
 policy, `--until`, `--max-runtime`, daemon/supervisor mode, database/message-queue
 sinks, and alert hooks.
 
-### `kiwoom streams conditions-list`
+### `kiwoomcli domestic streams conditions-list`
 
 Status: Implemented
 
@@ -4516,10 +4516,10 @@ Condition search formulas are created and changed in Kiwoom Hero Moon HTS
 Example:
 
 ```sh
-kiwoom streams conditions-list --format json
+kiwoomcli domestic streams conditions-list --format json
 ```
 
-### `kiwoom streams conditions-search`
+### `kiwoomcli domestic streams conditions-search`
 
 Status: Implemented
 
@@ -4550,10 +4550,10 @@ in HTS.
 Example:
 
 ```sh
-kiwoom streams conditions-search --exchange KRX --format json
+kiwoomcli domestic streams conditions-search --exchange KRX --format json
 ```
 
-### `kiwoom streams conditions-subscribe`
+### `kiwoomcli domestic streams conditions-subscribe`
 
 Status: Implemented
 
@@ -4585,10 +4585,10 @@ saved in HTS.
 Example:
 
 ```sh
-kiwoom streams conditions-subscribe --exchange KRX --check --format json
+kiwoomcli domestic streams conditions-subscribe --exchange KRX --check --format json
 ```
 
-### `kiwoom streams conditions-unsubscribe`
+### `kiwoomcli domestic streams conditions-unsubscribe`
 
 Status: Implemented
 
@@ -4616,10 +4616,10 @@ subscription for a formula already saved in HTS.
 Example:
 
 ```sh
-kiwoom streams conditions-unsubscribe --exchange KRX --format json
+kiwoomcli domestic streams conditions-unsubscribe --exchange KRX --format json
 ```
 
-### `kiwoom streams order-fills`
+### `kiwoomcli domestic streams order-fills`
 
 Status: Implemented
 
@@ -4641,12 +4641,12 @@ Candidate API: `00`
 Example:
 
 ```sh
-kiwoom streams order-fills --check --format json
+kiwoomcli domestic streams order-fills --check --format json
 ```
 
 Account identifiers must be redacted in formatted output; order numbers are shown.
 
-### `kiwoom streams balance`
+### `kiwoomcli domestic streams balance`
 
 Status: Implemented
 
@@ -4668,12 +4668,12 @@ Candidate API: `04`
 Example:
 
 ```sh
-kiwoom streams balance --check --format json
+kiwoomcli domestic streams balance --check --format json
 ```
 
 Account identifiers must be redacted in formatted output; order numbers are shown.
 
-### `kiwoom streams momentum`
+### `kiwoomcli domestic streams momentum`
 
 Status: Implemented
 
@@ -4695,10 +4695,10 @@ Candidate API: `0A`
 Example:
 
 ```sh
-kiwoom streams momentum --code 005930 --check --format json
+kiwoomcli domestic streams momentum --code 005930 --check --format json
 ```
 
-### `kiwoom streams trades`
+### `kiwoomcli domestic streams trades`
 
 Status: Implemented
 
@@ -4720,10 +4720,10 @@ Candidate API: `0B`
 Example:
 
 ```sh
-kiwoom streams trades --code 005930 --check --format json
+kiwoomcli domestic streams trades --code 005930 --check --format json
 ```
 
-### `kiwoom streams best-quotes`
+### `kiwoomcli domestic streams best-quotes`
 
 Status: Implemented
 
@@ -4745,10 +4745,10 @@ Candidate API: `0C`
 Example:
 
 ```sh
-kiwoom streams best-quotes --code 005930 --check --format json
+kiwoomcli domestic streams best-quotes --code 005930 --check --format json
 ```
 
-### `kiwoom streams orderbook`
+### `kiwoomcli domestic streams orderbook`
 
 Status: Implemented
 
@@ -4770,10 +4770,10 @@ Candidate API: `0D`
 Example:
 
 ```sh
-kiwoom streams orderbook --code 005930 --check --format json
+kiwoomcli domestic streams orderbook --code 005930 --check --format json
 ```
 
-### `kiwoom streams after-hours-orderbook`
+### `kiwoomcli domestic streams after-hours-orderbook`
 
 Status: Implemented
 
@@ -4795,10 +4795,10 @@ Candidate API: `0E`
 Example:
 
 ```sh
-kiwoom streams after-hours-orderbook --code 005930 --check --format json
+kiwoomcli domestic streams after-hours-orderbook --code 005930 --check --format json
 ```
 
-### `kiwoom streams brokers`
+### `kiwoomcli domestic streams brokers`
 
 Status: Implemented
 
@@ -4820,10 +4820,10 @@ Candidate API: `0F`
 Example:
 
 ```sh
-kiwoom streams brokers --code 005930 --check --format json
+kiwoomcli domestic streams brokers --code 005930 --check --format json
 ```
 
-### `kiwoom streams etf-nav`
+### `kiwoomcli domestic streams etf-nav`
 
 Status: Implemented
 
@@ -4845,10 +4845,10 @@ Candidate API: `0G`
 Example:
 
 ```sh
-kiwoom streams etf-nav --code 069500 --check --format json
+kiwoomcli domestic streams etf-nav --code 069500 --check --format json
 ```
 
-### `kiwoom streams expected-fills`
+### `kiwoomcli domestic streams expected-fills`
 
 Status: Implemented
 
@@ -4870,10 +4870,10 @@ Candidate API: `0H`
 Example:
 
 ```sh
-kiwoom streams expected-fills --code 005930 --check --format json
+kiwoomcli domestic streams expected-fills --code 005930 --check --format json
 ```
 
-### `kiwoom streams gold-conversion`
+### `kiwoomcli domestic streams gold-conversion`
 
 Status: Implemented
 
@@ -4895,10 +4895,10 @@ Candidate API: `0I`
 Example:
 
 ```sh
-kiwoom streams gold-conversion --code MGD --check --format json
+kiwoomcli domestic streams gold-conversion --code MGD --check --format json
 ```
 
-### `kiwoom streams sector-index`
+### `kiwoomcli domestic streams sector-index`
 
 Status: Implemented
 
@@ -4920,10 +4920,10 @@ Candidate API: `0J`
 Example:
 
 ```sh
-kiwoom streams sector-index --code 001 --check --format json
+kiwoomcli domestic streams sector-index --code 001 --check --format json
 ```
 
-### `kiwoom streams sector-change`
+### `kiwoomcli domestic streams sector-change`
 
 Status: Implemented
 
@@ -4945,10 +4945,10 @@ Candidate API: `0U`
 Example:
 
 ```sh
-kiwoom streams sector-change --code 001 --check --format json
+kiwoomcli domestic streams sector-change --code 001 --check --format json
 ```
 
-### `kiwoom streams stock-info`
+### `kiwoomcli domestic streams stock-info`
 
 Status: Implemented
 
@@ -4970,10 +4970,10 @@ Candidate API: `0g`
 Example:
 
 ```sh
-kiwoom streams stock-info --code 005930 --check --format json
+kiwoomcli domestic streams stock-info --code 005930 --check --format json
 ```
 
-### `kiwoom streams elw-theory`
+### `kiwoomcli domestic streams elw-theory`
 
 Status: Implemented
 
@@ -4995,10 +4995,10 @@ Candidate API: `0m`
 Example:
 
 ```sh
-kiwoom streams elw-theory --code 57JBHH --check --format json
+kiwoomcli domestic streams elw-theory --code 57JBHH --check --format json
 ```
 
-### `kiwoom streams market-open`
+### `kiwoomcli domestic streams market-open`
 
 Status: Implemented
 
@@ -5020,10 +5020,10 @@ Candidate API: `0s`
 Example:
 
 ```sh
-kiwoom streams market-open --check --format json
+kiwoomcli domestic streams market-open --check --format json
 ```
 
-### `kiwoom streams elw-indicator`
+### `kiwoomcli domestic streams elw-indicator`
 
 Status: Implemented
 
@@ -5045,10 +5045,10 @@ Candidate API: `0u`
 Example:
 
 ```sh
-kiwoom streams elw-indicator --code 57JBHH --check --format json
+kiwoomcli domestic streams elw-indicator --code 57JBHH --check --format json
 ```
 
-### `kiwoom streams program-trades`
+### `kiwoomcli domestic streams program-trades`
 
 Status: Implemented
 
@@ -5070,10 +5070,10 @@ Candidate API: `0w`
 Example:
 
 ```sh
-kiwoom streams program-trades --code 005930 --check --format json
+kiwoomcli domestic streams program-trades --code 005930 --check --format json
 ```
 
-### `kiwoom streams vi`
+### `kiwoomcli domestic streams vi`
 
 Status: Implemented
 
@@ -5095,7 +5095,7 @@ Candidate API: `1h`
 Example:
 
 ```sh
-kiwoom streams vi --check --format json
+kiwoomcli domestic streams vi --check --format json
 ```
 
 ## Policy-Design APIs

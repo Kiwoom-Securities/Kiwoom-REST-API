@@ -57,12 +57,12 @@ mapping table instead of hardcoding it in a parser, formatter, or document.
 The primary human and agent flow is:
 
 ```sh
-kiwoom spec search "<term>"
+kiwoomcli spec search "<term>"
 kiwoom <group> <command> -h
 kiwoom <group> <command> [options]
 ```
 
-`kiwoom spec search` is the raw OpenAPI discovery tool. It should help users find
+`kiwoomcli spec search` is the raw OpenAPI discovery tool. It should help users find
 the curated command and then point them to command help. It should not be
 replaced by a second `find` command.
 

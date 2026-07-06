@@ -11,19 +11,19 @@ from kiwoom_cli.registry import CommandDefinition, load_command_definitions
 
 
 FOUNDATION_COMMANDS = (
-    "kiwoom setup",
-    "kiwoom auth login [--alias NAME] [--mode demo|real]",
-    "kiwoom auth list",
-    "kiwoom auth switch <alias>",
-    "kiwoom auth status [--profile NAME | --mode demo|real]",
-    "kiwoom auth refresh [--profile NAME | --mode demo|real]",
-    "kiwoom auth revoke [--profile NAME | --mode demo|real]",
-    "kiwoom auth clear [--profile NAME | --mode demo|real] [--all]",
-    "kiwoom auth remove <alias>",
-    "kiwoom spec search <query> [--limit N]",
-    "kiwoom spec show <api-id> [--format pretty|json|yaml]",
-    "kiwoom spec groups [--format pretty|json|yaml]",
-    "kiwoom spec apis [--group <text>] [--limit N] [--format pretty|json|yaml]",
+    "kiwoomcli setup",
+    "kiwoomcli auth login [--alias NAME] [--mode demo|real]",
+    "kiwoomcli auth list",
+    "kiwoomcli auth switch <alias>",
+    "kiwoomcli auth status [--profile NAME | --mode demo|real]",
+    "kiwoomcli auth refresh [--profile NAME | --mode demo|real]",
+    "kiwoomcli auth revoke [--profile NAME | --mode demo|real]",
+    "kiwoomcli auth clear [--profile NAME | --mode demo|real] [--all]",
+    "kiwoomcli auth remove <alias>",
+    "kiwoomcli spec search <query> [--limit N]",
+    "kiwoomcli spec show <api-id> [--format pretty|json|yaml]",
+    "kiwoomcli spec groups [--format pretty|json|yaml]",
+    "kiwoomcli spec apis [--group <text>] [--limit N] [--format pretty|json|yaml]",
 )
 
 STATIC_REFERENCE_NAMES = (
@@ -40,11 +40,11 @@ CONDITION_HTS_NOTE = (
     "CLI는 HTS에 저장된 조건식을 목록 조회, 선택, 조회, 구독, 해제만 합니다."
 )
 WATCHLIST_CODES_NOTE = (
-    "`kiwoom stocks watchlist-info --codes` uses pipe-delimited codes such as "
+    "`kiwoomcli domestic stocks watchlist-info --codes` uses pipe-delimited codes such as "
     "`005930|000660`; comma-delimited input is not the documented API shape."
 )
 CREDIT_LOANABLE_NOTE = (
-    "`kiwoom stocks credit-loanable-check` preserves `crd_alow_yn` and adds "
+    "`kiwoomcli domestic stocks credit-loanable-check` preserves `crd_alow_yn` and adds "
     "`loanable` as `true`, `false`, or `null`."
 )
 GOLD_CODE_NOTE = (
@@ -70,17 +70,17 @@ PROGRAM_EMPTY_NOTE = (
     "`P001_AL01`/`P101_AL02` variants for NXT/integrated markets."
 )
 ACCOUNT_STATE_DEPENDENT_COMMANDS = {
-    "kiwoom accounts realized-profit-stock-daily",
-    "kiwoom accounts realized-profit-period-stock",
-    "kiwoom accounts return-rate",
-    "kiwoom accounts order-fill-detail",
-    "kiwoom accounts order-fill-status",
-    "kiwoom accounts gold-all-order-fills",
-    "kiwoom accounts gold-order-fills",
-    "kiwoom accounts gold-open-orders",
-    "kiwoom orders list-open",
-    "kiwoom orders list-fills",
-    "kiwoom orders open-detail",
+    "kiwoomcli domestic accounts realized-profit-stock-daily",
+    "kiwoomcli domestic accounts realized-profit-period-stock",
+    "kiwoomcli domestic accounts return-rate",
+    "kiwoomcli domestic accounts order-fill-detail",
+    "kiwoomcli domestic accounts order-fill-status",
+    "kiwoomcli domestic accounts gold-all-order-fills",
+    "kiwoomcli domestic accounts gold-order-fills",
+    "kiwoomcli domestic accounts gold-open-orders",
+    "kiwoomcli domestic orders list-open",
+    "kiwoomcli domestic orders list-fills",
+    "kiwoomcli domestic orders open-detail",
 }
 
 
@@ -130,11 +130,11 @@ def render_skill(definitions: list[CommandDefinition] | None = None) -> str:
         "",
         "## Rules",
         "",
-        "- Use the installed command name `kiwoom`.",
+        "- Use the installed command name `kiwoomcli`.",
         "- Do not use a development runner as the customer-facing invocation.",
         "- Treat `kiwoom_api_spec.json`, `api_list.csv`, and `kiwoom_cli/maps/*.csv` as",
         "  the source of truth.",
-        "- Use `kiwoom spec search/show/groups/apis` for discovery and debugging, not as",
+        "- Use `kiwoomcli spec search/show/groups/apis` for discovery and debugging, not as",
         "  the primary trading surface.",
         "- Prefer implemented resource commands listed in the generated references over",
         "  raw API IDs.",
@@ -193,7 +193,7 @@ def render_setup_reference(definitions: list[CommandDefinition] | None = None) -
             "",
             "## Spec Discovery",
             "",
-            "`kiwoom spec` reads the packaged local spec. It is a discovery fallback;",
+            "`kiwoomcli spec` reads the packaged local spec. It is a discovery fallback;",
             "prefer mapped resource commands when an implemented command exists.",
         ]
     )
@@ -271,7 +271,7 @@ def render_implemented_commands(
     lines = [
         "# Implemented Commands",
         "",
-        "This file lists the currently implemented customer-facing `kiwoom` commands",
+        "This file lists the currently implemented customer-facing `kiwoomcli` commands",
         "that the agent reference may use.",
         "",
         "<!-- generated from kiwoom_cli/maps/api_commands.csv; do not edit by hand -->",
@@ -608,7 +608,7 @@ def _group_domain_notes(definitions: list[CommandDefinition]) -> list[str]:
             ]
         )
     if any(
-        definition.command_path == "kiwoom stocks watchlist-info"
+        definition.command_path == "kiwoomcli domestic stocks watchlist-info"
         for definition in definitions
     ):
         notes.extend(
@@ -618,7 +618,7 @@ def _group_domain_notes(definitions: list[CommandDefinition]) -> list[str]:
             ]
         )
     if any(
-        definition.command_path == "kiwoom stocks credit-loanable-check"
+        definition.command_path == "kiwoomcli domestic stocks credit-loanable-check"
         for definition in definitions
     ):
         notes.extend(
@@ -685,14 +685,14 @@ def _command_domain_notes(definition: CommandDefinition) -> list[str]:
                 "",
             ]
         )
-    if definition.command_path == "kiwoom stocks watchlist-info":
+    if definition.command_path == "kiwoomcli domestic stocks watchlist-info":
         notes.extend(
             [
                 "Note: " + WATCHLIST_CODES_NOTE,
                 "",
             ]
         )
-    if definition.command_path == "kiwoom stocks credit-loanable-check":
+    if definition.command_path == "kiwoomcli domestic stocks credit-loanable-check":
         notes.extend(
             [
                 "Note: " + CREDIT_LOANABLE_NOTE,
@@ -735,18 +735,18 @@ def _is_foreground_stream_command(definition: CommandDefinition) -> bool:
     return definition.cli_group == "streams" and not definition.cli_command.startswith("conditions-")
 
 def _is_condition_command(definition: CommandDefinition) -> bool:
-    return definition.command_path.startswith("kiwoom streams conditions-")
+    return definition.command_path.startswith("kiwoomcli domestic streams conditions-")
 
 
 def _is_condition_subscribe_command(definition: CommandDefinition) -> bool:
-    return definition.command_path == "kiwoom streams conditions-subscribe"
+    return definition.command_path == "kiwoomcli domestic streams conditions-subscribe"
 
 
 def _is_program_trading_command(definition: CommandDefinition) -> bool:
     return definition.command_path in {
-        "kiwoom stocks program-net-top",
-        "kiwoom quotes program-time",
-        "kiwoom quotes program-daily",
+        "kiwoomcli domestic stocks program-net-top",
+        "kiwoomcli domestic quotes program-time",
+        "kiwoomcli domestic quotes program-daily",
     }
 
 

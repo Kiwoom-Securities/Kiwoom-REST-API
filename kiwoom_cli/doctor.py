@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import platform
 import shlex
 import shutil
 import stat
@@ -27,6 +28,36 @@ def add_doctor_parser(subparsers: argparse._SubParsersAction) -> None:
 
 def handle_doctor(args: argparse.Namespace) -> None:
     print_doctor()
+
+
+# 설치된 kiwoom은 자체 격리 런타임에서 돌기 때문에 이 도구들은 실행 필수가 아니라
+# 설치/업데이트나 부가 기능(예: auth export의 .gitignore 등록)용 온보딩 항목이다.
+# 따라서 Windows에서만 존재 여부를 경고성으로 안내한다.
+WINDOWS_ONBOARDING_TOOLS = ("git", "python", "uv")
+
+
+def os_label() -> str:
+    system = platform.system()
+    if system == "Darwin":
+        return f"macOS {platform.mac_ver()[0] or platform.release()}".strip()
+    if system == "Windows":
+        return f"Windows {platform.release()}".strip()
+    if system == "Linux":
+        return f"Linux {platform.release()}".strip()
+    return system or "알 수 없음"
+
+
+def _tool_found(tool: str) -> bool:
+    # Windows에서 python은 python/python3 외에 py 런처로도 제공된다.
+    candidates = {"python": ("python", "python3", "py")}.get(tool, (tool,))
+    return any(shutil.which(candidate) for candidate in candidates)
+
+
+def onboarding_tool_report() -> list[tuple[str, bool]]:
+    """Windows에서만 (도구, 발견여부) 목록을 돌려준다. 다른 OS에서는 빈 목록."""
+    if os.name != "nt":
+        return []
+    return [(tool, _tool_found(tool)) for tool in WINDOWS_ONBOARDING_TOOLS]
 
 
 def command_path() -> str:
@@ -136,7 +167,7 @@ def _diagnose_target(findings: list[_Finding]) -> tuple[str, bool | None, str | 
     try:
         selection = describe_selection()
     except ModeNotConfiguredError:
-        findings.append(_Finding("기본 실행 대상이 설정되지 않았습니다.", ["kiwoom setup"]))
+        findings.append(_Finding("기본 실행 대상이 설정되지 않았습니다.", ["kiwoomcli setup"]))
         return ("없음", None, "설정된 계좌 별칭 또는 모드가 없습니다")
     except ValueError as exc:
         # KIWOOM_PROFILE + KIWOOM_MODE point at conflicting modes.
@@ -149,7 +180,7 @@ def _diagnose_target(findings: list[_Finding]) -> tuple[str, bool | None, str | 
         return ("알 수 없음", None, "KIWOOM_PROFILE 과 KIWOOM_MODE 가 충돌합니다")
     except KiwoomError as exc:
         # e.g. KIWOOM_PROFILE names a missing profile, or settings unreadable.
-        findings.append(_Finding(f"실행 대상을 해석할 수 없습니다: {exc}", ["kiwoom setup", "또는 KIWOOM_PROFILE 값 확인"]))
+        findings.append(_Finding(f"실행 대상을 해석할 수 없습니다: {exc}", ["kiwoomcli setup", "또는 KIWOOM_PROFILE 값 확인"]))
         return ("알 수 없음", None, str(exc))
 
     _append_override_finding(findings, current, selection)
@@ -167,8 +198,8 @@ def _diagnose_target(findings: list[_Finding]) -> tuple[str, bool | None, str | 
     if selection.uses_profile:
         alias_arg = shlex.quote(str(selection.profile))
         fixes = [
-            f"kiwoom auth login --alias {alias_arg} --mode {selection.mode}",
-            f"kiwoom auth status --profile {alias_arg}",
+            f"kiwoomcli auth login --alias {alias_arg} --mode {selection.mode}",
+            f"kiwoomcli auth status --profile {alias_arg}",
         ]
         if status.has_token and not status.token_reusable and not status.has_credentials:
             symptom = (
@@ -188,7 +219,7 @@ def _diagnose_target(findings: list[_Finding]) -> tuple[str, bool | None, str | 
         findings.append(
             _Finding(
                 f"유효 대상 {selection.mode} mode 로 지금 호출할 수 없습니다 (키/시크릿 없음).",
-                ["kiwoom setup", f"{appkey_var} / {secretkey_var} 환경변수 설정"],
+                ["kiwoomcli setup", f"{appkey_var} / {secretkey_var} 환경변수 설정"],
             )
         )
     return (selection.target_label, False, cause)
@@ -212,7 +243,7 @@ def _append_override_finding(findings: list[_Finding], current, selection) -> No
             f" 보다 우선 적용되어 유효 대상이 {selection.target_label} 입니다.",
             [
                 f"unset {selection.selection_source}  (current_profile {current.alias} 사용)",
-                f"kiwoom auth switch {current.alias}  (현재 유효 대상을 기본값으로 굳히기)",
+                f"kiwoomcli auth switch {current.alias}  (현재 유효 대상을 기본값으로 굳히기)",
             ],
         )
     )
@@ -263,6 +294,13 @@ def _print_detail() -> None:
 
 def _print_environment_summary() -> None:
     print("실행 환경")
+    print(f"  운영체제: {os_label()}")
+    tools = onboarding_tool_report()
+    if tools:
+        rendered = " · ".join(
+            f"{tool} {'있음' if found else '없음'}" for tool, found in tools
+        )
+        print(f"  도구: {rendered}")
     print(f"  실행 대상: {resolved_current_executable()}")
     print(f"  설정 파일: {settings_path()}")
     print(f"  토큰 캐시: {cache_dir()}")
@@ -281,6 +319,6 @@ def _safe_current_profile(findings: list[_Finding] | None):
     except KiwoomError as exc:
         if findings is not None:
             findings.append(
-                _Finding(f"current_profile 을 읽을 수 없습니다: {exc}", ["settings.json 확인 또는 kiwoom setup"])
+                _Finding(f"current_profile 을 읽을 수 없습니다: {exc}", ["settings.json 확인 또는 kiwoomcli setup"])
             )
         return None

@@ -17,10 +17,10 @@ rename solely from this file unless the target change is approved in
 ## 1. 조사 범위
 | 항목 | 수량 | 출처 |
 | --- | --- | --- |
-| 전체 spec API | 352 | kiwoom_api_spec.json |
-| spec request body 필드 발생 수 | 1482 | apis.*.request.body |
-| spec request body 고유 필드 수 | 252 | element 기준 |
-| CLI command 매핑 수 | 352 | kiwoom_cli/maps/api_commands.csv |
+| 전체 spec API | 207 | kiwoom_api_spec.json (국내주식 205 + OAuth 인증 2; 해외주식 제외) |
+| spec request body 필드 발생 수 | 766 | apis.*.request.body |
+| spec request body 고유 필드 수 | 143 | element 기준 |
+| CLI command 매핑 수 | 207 | kiwoom_cli/maps/api_commands.csv |
 | CLI argument 매핑 수 | 731 | kiwoom_cli/maps/arguments.csv |
 | 1차 rename 근거 | 적용 완료 | Section 3의 과거 옵션 근거 표 |
 | 2차 rename/condition 보강 후보 | 적용 완료 | `command-system.md` Applied Argument Reform Scope |
@@ -44,27 +44,27 @@ rename solely from this file unless the target change is approved in
 표면이 아니며, legacy alias로 유지하지 않는다.
 | API ID | API명 | 명령어 | 이전 옵션 | 키움 원 파라미터 | 원래 이름 | 원 설명 | 이전 값 | 적용 옵션 | 이유 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| ka30005 | ELW조건검색요청 | kiwoom elws conditions | --asset | bsis_aset_cd | 기초자산코드 | 전체일때만 12자리입력(전체:000000000000, KOSPI200:201, KOSDAQ150:150, 삼정전자:005930, KT:030200,,) |  | --underlying-code | `bsis_aset_cd`는 자산종류가 아니라 기초자산코드다. |
-| ka30005 | ELW조건검색요청 | kiwoom elws conditions | --right | rght_tp | 권리구분 | 0:전체, 1:콜, 2:풋, 3:DC, 4:DP, 5:EX, 6:조기종료콜, 7:조기종료풋 | all\|call\|put\|dc\|dp\|ex\|early-call\|early-put / all=0;call=1;put=2;dc=3;dp=4;ex=5;early-call=6;early-put=7 | --right-type | `rght_tp`는 권리구분이며 `right` 단독은 모호하다. |
-| ka30001 | ELW가격급등락요청 | kiwoom elws price-move | --asset | bsis_aset_cd | 기초자산코드 | 전체:000000000000, KOSPI200:201, KOSDAQ150:150, 삼성전자:005930, KT:030200.. |  | --underlying-code | `bsis_aset_cd`는 자산종류가 아니라 기초자산코드다. |
-| ka30001 | ELW가격급등락요청 | kiwoom elws price-move | --right | rght_tp | 권리구분 | 000:전체, 001:콜, 002:풋, 003:DC, 004:DP, 005:EX, 006:조기종료콜, 007:조기종료풋 | all\|call\|put\|dc\|dp\|ex\|early-call\|early-put / all=000;call=001;put=002;dc=003;dp=004;ex=005;early-call=006;early-put=007 | --right-type | `rght_tp`는 권리구분이며 `right` 단독은 모호하다. |
-| ka30001 | ELW가격급등락요청 | kiwoom elws price-move | --ended | trde_end_elwskip | 거래종료ELW제외 | 0:포함, 1:제외 | include\|exclude / include=0;exclude=1 | --include-ended | 거래종료/만기 ELW 포함 여부로 표현하는 편이 명확하다. 값 매핑은 `yes=0`, `no=1`. |
-| ka30002 | 거래원별ELW순매매상위요청 | kiwoom elws broker-net | --ended | trde_end_elwskip | 거래종료ELW제외 | 0:포함, 1:제외 | include\|exclude / include=0;exclude=1 | --include-ended | 거래종료/만기 ELW 포함 여부로 표현하는 편이 명확하다. 값 매핑은 `yes=0`, `no=1`. |
-| ka30004 | ELW괴리율요청 | kiwoom elws divergence | --asset | bsis_aset_cd | 기초자산코드 | 전체:000000000000, KOSPI200:201, KOSDAQ150:150, 삼성전자:005930, KT:030200.. |  | --underlying-code | `bsis_aset_cd`는 자산종류가 아니라 기초자산코드다. |
-| ka30004 | ELW괴리율요청 | kiwoom elws divergence | --right | rght_tp | 권리구분 | 000: 전체, 001: 콜, 002: 풋, 003: DC, 004: DP, 005: EX, 006: 조기종료콜, 007: 조기종료풋 | all\|call\|put\|dc\|dp\|ex\|early-call\|early-put / all=000;call=001;put=002;dc=003;dp=004;ex=005;early-call=006;early-put=007 | --right-type | `rght_tp`는 권리구분이며 `right` 단독은 모호하다. |
-| ka30004 | ELW괴리율요청 | kiwoom elws divergence | --ended | trde_end_elwskip | 거래종료ELW제외 | 1:거래종료ELW제외, 0:거래종료ELW포함 | include\|exclude / include=0;exclude=1 | --include-ended | 거래종료/만기 ELW 포함 여부로 표현하는 편이 명확하다. 값 매핑은 `yes=0`, `no=1`. |
-| ka30009 | ELW등락율순위요청 | kiwoom elws change-rank | --right | rght_tp | 권리구분 | 000:전체, 001:콜, 002:풋, 003:DC, 004:DP, 006:조기종료콜, 007:조기종료풋 | all\|call\|put\|dc\|dp\|early-call\|early-put / all=000;call=001;put=002;dc=003;dp=004;early-call=006;early-put=007 | --right-type | `rght_tp`는 권리구분이며 `right` 단독은 모호하다. |
-| ka30009 | ELW등락율순위요청 | kiwoom elws change-rank | --ended | trde_end_skip | 거래종료제외 | 1:거래종료제외, 0:거래종료포함 | include\|exclude / include=0;exclude=1 | --include-ended | 거래종료/만기 ELW 포함 여부로 표현하는 편이 명확하다. 값 매핑은 `yes=0`, `no=1`. |
-| ka30010 | ELW잔량순위요청 | kiwoom elws balance-rank | --right | rght_tp | 권리구분 | 000: 전체, 001: 콜, 002: 풋, 003: DC, 004: DP, 006: 조기종료콜, 007: 조기종료풋 | all\|call\|put\|dc\|dp\|early-call\|early-put / all=000;call=001;put=002;dc=003;dp=004;early-call=006;early-put=007 | --right-type | `rght_tp`는 권리구분이며 `right` 단독은 모호하다. |
-| ka30010 | ELW잔량순위요청 | kiwoom elws balance-rank | --ended | trde_end_skip | 거래종료제외 | 1:거래종료제외, 0:거래종료포함 | include\|exclude / include=0;exclude=1 | --include-ended | 거래종료/만기 ELW 포함 여부로 표현하는 편이 명확하다. 값 매핑은 `yes=0`, `no=1`. |
-| kt00001 | 예수금상세현황요청 | kiwoom accounts cash | --query | qry_tp | 조회구분 | 3:추정조회, 2:일반조회 | estimated\|normal / estimated=3;normal=2 | --cash-basis | `query`는 검색어처럼 보이나 원 파라미터 `qry_tp`는 예수금 조회구분이다. |
-| kt00003 | 추정자산조회요청 | kiwoom accounts assets | --delisted | qry_tp | 상장폐지조회구분 | 0:전체, 1:상장폐지종목제외 | all\|exclude / all=0;exclude=1 | --include-delisted | 상장폐지조회구분은 포함 여부로 표현하는 편이 명확하다. 값 매핑은 `yes=0`, `no=1`. |
-| kt00004 | 계좌평가현황요청 | kiwoom accounts valuation | --delisted | qry_tp | 상장폐지조회구분 | 0:전체, 1:상장폐지종목제외 | all\|exclude / all=0;exclude=1 | --include-delisted | 상장폐지조회구분은 포함 여부로 표현하는 편이 명확하다. 값 매핑은 `yes=0`, `no=1`. |
-| kt00007 | 계좌별주문체결내역상세요청 | kiwoom accounts order-fill-detail | --asset | stk_bond_tp | 주식채권구분 | 0:전체, 1:주식, 2:채권 | all\|stock\|bond / all=0;stock=1;bond=2 | --asset-kind | `stk_bond_tp`는 주식/채권 자산 종류다. ELW `--asset`과 의미 충돌을 줄인다. |
-| kt00009 | 계좌별주문체결현황요청 | kiwoom accounts order-fill-status | --asset | stk_bond_tp | 주식채권구분 | 0:전체, 1:주식, 2:채권 | all\|stock\|bond / all=0;stock=1;bond=2 | --asset-kind | `stk_bond_tp`는 주식/채권 자산 종류다. ELW `--asset`과 의미 충돌을 줄인다. |
-| kt50030 | 금현물 주문체결전체조회 | kiwoom accounts gold-all-order-fills | --asset | stk_bond_tp | 주식채권구분 | 0:전체, 1:주식, 2:채권 | all\|stock\|bond / all=0;stock=1;bond=2 | --asset-kind | `stk_bond_tp`는 주식/채권 자산 종류다. ELW `--asset`과 의미 충돌을 줄인다. |
-| kt50031 | 금현물 주문체결조회 | kiwoom accounts gold-order-fills | --asset | stk_bond_tp | 주식채권구분 | 0:전체, 1:주식, 2:채권 | all\|stock\|bond / all=0;stock=1;bond=2 | --asset-kind | `stk_bond_tp`는 주식/채권 자산 종류다. ELW `--asset`과 의미 충돌을 줄인다. |
-| kt50075 | 금현물 미체결조회 | kiwoom accounts gold-open-orders | --asset | stk_bond_tp | 주식채권구분 | 0:전체, 1:주식, 2:채권 | all\|stock\|bond / all=0;stock=1;bond=2 | --asset-kind | `stk_bond_tp`는 주식/채권 자산 종류다. ELW `--asset`과 의미 충돌을 줄인다. |
+| ka30005 | ELW조건검색요청 | kiwoomcli domestic elws conditions | --asset | bsis_aset_cd | 기초자산코드 | 전체일때만 12자리입력(전체:000000000000, KOSPI200:201, KOSDAQ150:150, 삼정전자:005930, KT:030200,,) |  | --underlying-code | `bsis_aset_cd`는 자산종류가 아니라 기초자산코드다. |
+| ka30005 | ELW조건검색요청 | kiwoomcli domestic elws conditions | --right | rght_tp | 권리구분 | 0:전체, 1:콜, 2:풋, 3:DC, 4:DP, 5:EX, 6:조기종료콜, 7:조기종료풋 | all\|call\|put\|dc\|dp\|ex\|early-call\|early-put / all=0;call=1;put=2;dc=3;dp=4;ex=5;early-call=6;early-put=7 | --right-type | `rght_tp`는 권리구분이며 `right` 단독은 모호하다. |
+| ka30001 | ELW가격급등락요청 | kiwoomcli domestic elws price-move | --asset | bsis_aset_cd | 기초자산코드 | 전체:000000000000, KOSPI200:201, KOSDAQ150:150, 삼성전자:005930, KT:030200.. |  | --underlying-code | `bsis_aset_cd`는 자산종류가 아니라 기초자산코드다. |
+| ka30001 | ELW가격급등락요청 | kiwoomcli domestic elws price-move | --right | rght_tp | 권리구분 | 000:전체, 001:콜, 002:풋, 003:DC, 004:DP, 005:EX, 006:조기종료콜, 007:조기종료풋 | all\|call\|put\|dc\|dp\|ex\|early-call\|early-put / all=000;call=001;put=002;dc=003;dp=004;ex=005;early-call=006;early-put=007 | --right-type | `rght_tp`는 권리구분이며 `right` 단독은 모호하다. |
+| ka30001 | ELW가격급등락요청 | kiwoomcli domestic elws price-move | --ended | trde_end_elwskip | 거래종료ELW제외 | 0:포함, 1:제외 | include\|exclude / include=0;exclude=1 | --include-ended | 거래종료/만기 ELW 포함 여부로 표현하는 편이 명확하다. 값 매핑은 `yes=0`, `no=1`. |
+| ka30002 | 거래원별ELW순매매상위요청 | kiwoomcli domestic elws broker-net | --ended | trde_end_elwskip | 거래종료ELW제외 | 0:포함, 1:제외 | include\|exclude / include=0;exclude=1 | --include-ended | 거래종료/만기 ELW 포함 여부로 표현하는 편이 명확하다. 값 매핑은 `yes=0`, `no=1`. |
+| ka30004 | ELW괴리율요청 | kiwoomcli domestic elws divergence | --asset | bsis_aset_cd | 기초자산코드 | 전체:000000000000, KOSPI200:201, KOSDAQ150:150, 삼성전자:005930, KT:030200.. |  | --underlying-code | `bsis_aset_cd`는 자산종류가 아니라 기초자산코드다. |
+| ka30004 | ELW괴리율요청 | kiwoomcli domestic elws divergence | --right | rght_tp | 권리구분 | 000: 전체, 001: 콜, 002: 풋, 003: DC, 004: DP, 005: EX, 006: 조기종료콜, 007: 조기종료풋 | all\|call\|put\|dc\|dp\|ex\|early-call\|early-put / all=000;call=001;put=002;dc=003;dp=004;ex=005;early-call=006;early-put=007 | --right-type | `rght_tp`는 권리구분이며 `right` 단독은 모호하다. |
+| ka30004 | ELW괴리율요청 | kiwoomcli domestic elws divergence | --ended | trde_end_elwskip | 거래종료ELW제외 | 1:거래종료ELW제외, 0:거래종료ELW포함 | include\|exclude / include=0;exclude=1 | --include-ended | 거래종료/만기 ELW 포함 여부로 표현하는 편이 명확하다. 값 매핑은 `yes=0`, `no=1`. |
+| ka30009 | ELW등락율순위요청 | kiwoomcli domestic elws change-rank | --right | rght_tp | 권리구분 | 000:전체, 001:콜, 002:풋, 003:DC, 004:DP, 006:조기종료콜, 007:조기종료풋 | all\|call\|put\|dc\|dp\|early-call\|early-put / all=000;call=001;put=002;dc=003;dp=004;early-call=006;early-put=007 | --right-type | `rght_tp`는 권리구분이며 `right` 단독은 모호하다. |
+| ka30009 | ELW등락율순위요청 | kiwoomcli domestic elws change-rank | --ended | trde_end_skip | 거래종료제외 | 1:거래종료제외, 0:거래종료포함 | include\|exclude / include=0;exclude=1 | --include-ended | 거래종료/만기 ELW 포함 여부로 표현하는 편이 명확하다. 값 매핑은 `yes=0`, `no=1`. |
+| ka30010 | ELW잔량순위요청 | kiwoomcli domestic elws balance-rank | --right | rght_tp | 권리구분 | 000: 전체, 001: 콜, 002: 풋, 003: DC, 004: DP, 006: 조기종료콜, 007: 조기종료풋 | all\|call\|put\|dc\|dp\|early-call\|early-put / all=000;call=001;put=002;dc=003;dp=004;early-call=006;early-put=007 | --right-type | `rght_tp`는 권리구분이며 `right` 단독은 모호하다. |
+| ka30010 | ELW잔량순위요청 | kiwoomcli domestic elws balance-rank | --ended | trde_end_skip | 거래종료제외 | 1:거래종료제외, 0:거래종료포함 | include\|exclude / include=0;exclude=1 | --include-ended | 거래종료/만기 ELW 포함 여부로 표현하는 편이 명확하다. 값 매핑은 `yes=0`, `no=1`. |
+| kt00001 | 예수금상세현황요청 | kiwoomcli domestic accounts cash | --query | qry_tp | 조회구분 | 3:추정조회, 2:일반조회 | estimated\|normal / estimated=3;normal=2 | --cash-basis | `query`는 검색어처럼 보이나 원 파라미터 `qry_tp`는 예수금 조회구분이다. |
+| kt00003 | 추정자산조회요청 | kiwoomcli domestic accounts assets | --delisted | qry_tp | 상장폐지조회구분 | 0:전체, 1:상장폐지종목제외 | all\|exclude / all=0;exclude=1 | --include-delisted | 상장폐지조회구분은 포함 여부로 표현하는 편이 명확하다. 값 매핑은 `yes=0`, `no=1`. |
+| kt00004 | 계좌평가현황요청 | kiwoomcli domestic accounts valuation | --delisted | qry_tp | 상장폐지조회구분 | 0:전체, 1:상장폐지종목제외 | all\|exclude / all=0;exclude=1 | --include-delisted | 상장폐지조회구분은 포함 여부로 표현하는 편이 명확하다. 값 매핑은 `yes=0`, `no=1`. |
+| kt00007 | 계좌별주문체결내역상세요청 | kiwoomcli domestic accounts order-fill-detail | --asset | stk_bond_tp | 주식채권구분 | 0:전체, 1:주식, 2:채권 | all\|stock\|bond / all=0;stock=1;bond=2 | --asset-kind | `stk_bond_tp`는 주식/채권 자산 종류다. ELW `--asset`과 의미 충돌을 줄인다. |
+| kt00009 | 계좌별주문체결현황요청 | kiwoomcli domestic accounts order-fill-status | --asset | stk_bond_tp | 주식채권구분 | 0:전체, 1:주식, 2:채권 | all\|stock\|bond / all=0;stock=1;bond=2 | --asset-kind | `stk_bond_tp`는 주식/채권 자산 종류다. ELW `--asset`과 의미 충돌을 줄인다. |
+| kt50030 | 금현물 주문체결전체조회 | kiwoomcli domestic accounts gold-all-order-fills | --asset | stk_bond_tp | 주식채권구분 | 0:전체, 1:주식, 2:채권 | all\|stock\|bond / all=0;stock=1;bond=2 | --asset-kind | `stk_bond_tp`는 주식/채권 자산 종류다. ELW `--asset`과 의미 충돌을 줄인다. |
+| kt50031 | 금현물 주문체결조회 | kiwoomcli domestic accounts gold-order-fills | --asset | stk_bond_tp | 주식채권구분 | 0:전체, 1:주식, 2:채권 | all\|stock\|bond / all=0;stock=1;bond=2 | --asset-kind | `stk_bond_tp`는 주식/채권 자산 종류다. ELW `--asset`과 의미 충돌을 줄인다. |
+| kt50075 | 금현물 미체결조회 | kiwoomcli domestic accounts gold-open-orders | --asset | stk_bond_tp | 주식채권구분 | 0:전체, 1:주식, 2:채권 | all\|stock\|bond / all=0;stock=1;bond=2 | --asset-kind | `stk_bond_tp`는 주식/채권 자산 종류다. ELW `--asset`과 의미 충돌을 줄인다. |
 
 ## 4. 2차/condition 검토 결과
 
@@ -88,26 +88,26 @@ rename solely from this file unless the target change is approved in
 ## 5. `*_tp`를 전부 type으로 통일하지 않는 예
 | API ID | API명 | 명령어 | 현재 옵션 | 키움 원 파라미터 | 원래 이름 | 원 설명 | 판단 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| ka10081 | 주식일봉차트조회요청 | kiwoom candles daily | --adjusted | upd_stkpc_tp | 수정주가구분 | 0 or 1 | 현재 이름 유지 가능 |
-| ka10060 | 종목별투자자기관별차트요청 | kiwoom candles by-stock | --basis | amt_qty_tp | 금액수량구분 | 1:금액, 2:수량 | 현재 이름 유지 가능 |
-| ka10060 | 종목별투자자기관별차트요청 | kiwoom candles by-stock | --side | trde_tp | 매매구분 | 0:순매수, 1:매수, 2:매도 | 현재 이름 유지 가능 |
-| ka10060 | 종목별투자자기관별차트요청 | kiwoom candles by-stock | --unit | unit_tp | 단위구분 | 1000:천주, 1:단주 | 현재 이름 유지 가능 |
-| ka10064 | 장중투자자별매매차트요청 | kiwoom candles lookup | --market | mrkt_tp | 시장구분 | 000:전체, 001:코스피, 101:코스닥 | 현재 이름 유지 가능 |
-| ka10064 | 장중투자자별매매차트요청 | kiwoom candles lookup | --basis | amt_qty_tp | 금액수량구분 | 1:금액, 2:수량 | 현재 이름 유지 가능 |
-| ka10064 | 장중투자자별매매차트요청 | kiwoom candles lookup | --side | trde_tp | 매매구분 | 0:순매수, 1:매수, 2:매도 | 현재 이름 유지 가능 |
-| ka40004 | ETF전체시세요청 | kiwoom etfs list | --exchange | stex_tp | 거래소구분 | 1:KRX, 2:NXT, 3:통합 | 현재 이름 유지 가능 |
-| ka30001 | ELW가격급등락요청 | kiwoom elws price-move | --direction | flu_tp | 등락구분 | 1:급등, 2:급락 | 현재 이름 유지 가능 |
-| ka30001 | ELW가격급등락요청 | kiwoom elws price-move | --time-unit | tm_tp | 시간구분 | 1:분전, 2:일전 | 현재 이름 유지 가능 |
-| ka30001 | ELW가격급등락요청 | kiwoom elws price-move | --volume | trde_qty_tp | 거래량구분 | 0:전체, 10:만주이상, 50:5만주이상, 100:10만주이상, 300:30만주이상, 500:50만주이상, 1000:백만주이상 | 현재 이름 유지 가능 |
-| ka30002 | 거래원별ELW순매매상위요청 | kiwoom elws broker-net | --volume | trde_qty_tp | 거래량구분 | 0:전체, 5:5천주, 10:만주, 50:5만주, 100:10만주, 500:50만주, 1000:백만주 | 현재 이름 유지 가능 |
-| ka30002 | 거래원별ELW순매매상위요청 | kiwoom elws broker-net | --side | trde_tp | 매매구분 | 1:순매수, 2:순매도 | 현재 이름 유지 가능 |
-| ka10131 | 기관외국인연속매매현황요청 | kiwoom investors trend | --market | mrkt_tp | 장구분 | 001:코스피, 101:코스닥 | 현재 이름 유지 가능 |
-| ka10131 | 기관외국인연속매매현황요청 | kiwoom investors trend | --side | netslmt_tp | 순매도수구분 | 2:순매수(고정값) | 현재 이름 유지 가능 |
-| ka10131 | 기관외국인연속매매현황요청 | kiwoom investors trend | --target | stk_inds_tp | 종목업종구분 | 0:종목(주식),1:업종 | 현재 이름 유지 가능 |
-| ka10131 | 기관외국인연속매매현황요청 | kiwoom investors trend | --basis | amt_qty_tp | 금액수량구분 | 0:금액, 1:수량 | 현재 이름 유지 가능 |
-| ka10131 | 기관외국인연속매매현황요청 | kiwoom investors trend | --exchange | stex_tp | 거래소구분 | 1:KRX, 2:NXT, 3:통합 | 현재 이름 유지 가능 |
-| ka10069 | 대차거래상위10종목요청 | kiwoom securities-lending list | --market | mrkt_tp | 시장구분 | 001:코스피, 101:코스닥 | 현재 이름 유지 가능 |
-| ka90012 | 대차거래내역요청 | kiwoom securities-lending lookup | --market | mrkt_tp | 시장구분 | 001:코스피, 101:코스닥 | 현재 이름 유지 가능 |
+| ka10081 | 주식일봉차트조회요청 | kiwoomcli domestic candles daily | --adjusted | upd_stkpc_tp | 수정주가구분 | 0 or 1 | 현재 이름 유지 가능 |
+| ka10060 | 종목별투자자기관별차트요청 | kiwoomcli domestic candles by-stock | --basis | amt_qty_tp | 금액수량구분 | 1:금액, 2:수량 | 현재 이름 유지 가능 |
+| ka10060 | 종목별투자자기관별차트요청 | kiwoomcli domestic candles by-stock | --side | trde_tp | 매매구분 | 0:순매수, 1:매수, 2:매도 | 현재 이름 유지 가능 |
+| ka10060 | 종목별투자자기관별차트요청 | kiwoomcli domestic candles by-stock | --unit | unit_tp | 단위구분 | 1000:천주, 1:단주 | 현재 이름 유지 가능 |
+| ka10064 | 장중투자자별매매차트요청 | kiwoomcli domestic candles lookup | --market | mrkt_tp | 시장구분 | 000:전체, 001:코스피, 101:코스닥 | 현재 이름 유지 가능 |
+| ka10064 | 장중투자자별매매차트요청 | kiwoomcli domestic candles lookup | --basis | amt_qty_tp | 금액수량구분 | 1:금액, 2:수량 | 현재 이름 유지 가능 |
+| ka10064 | 장중투자자별매매차트요청 | kiwoomcli domestic candles lookup | --side | trde_tp | 매매구분 | 0:순매수, 1:매수, 2:매도 | 현재 이름 유지 가능 |
+| ka40004 | ETF전체시세요청 | kiwoomcli domestic etfs list | --exchange | stex_tp | 거래소구분 | 1:KRX, 2:NXT, 3:통합 | 현재 이름 유지 가능 |
+| ka30001 | ELW가격급등락요청 | kiwoomcli domestic elws price-move | --direction | flu_tp | 등락구분 | 1:급등, 2:급락 | 현재 이름 유지 가능 |
+| ka30001 | ELW가격급등락요청 | kiwoomcli domestic elws price-move | --time-unit | tm_tp | 시간구분 | 1:분전, 2:일전 | 현재 이름 유지 가능 |
+| ka30001 | ELW가격급등락요청 | kiwoomcli domestic elws price-move | --volume | trde_qty_tp | 거래량구분 | 0:전체, 10:만주이상, 50:5만주이상, 100:10만주이상, 300:30만주이상, 500:50만주이상, 1000:백만주이상 | 현재 이름 유지 가능 |
+| ka30002 | 거래원별ELW순매매상위요청 | kiwoomcli domestic elws broker-net | --volume | trde_qty_tp | 거래량구분 | 0:전체, 5:5천주, 10:만주, 50:5만주, 100:10만주, 500:50만주, 1000:백만주 | 현재 이름 유지 가능 |
+| ka30002 | 거래원별ELW순매매상위요청 | kiwoomcli domestic elws broker-net | --side | trde_tp | 매매구분 | 1:순매수, 2:순매도 | 현재 이름 유지 가능 |
+| ka10131 | 기관외국인연속매매현황요청 | kiwoomcli domestic investors trend | --market | mrkt_tp | 장구분 | 001:코스피, 101:코스닥 | 현재 이름 유지 가능 |
+| ka10131 | 기관외국인연속매매현황요청 | kiwoomcli domestic investors trend | --side | netslmt_tp | 순매도수구분 | 2:순매수(고정값) | 현재 이름 유지 가능 |
+| ka10131 | 기관외국인연속매매현황요청 | kiwoomcli domestic investors trend | --target | stk_inds_tp | 종목업종구분 | 0:종목(주식),1:업종 | 현재 이름 유지 가능 |
+| ka10131 | 기관외국인연속매매현황요청 | kiwoomcli domestic investors trend | --basis | amt_qty_tp | 금액수량구분 | 0:금액, 1:수량 | 현재 이름 유지 가능 |
+| ka10131 | 기관외국인연속매매현황요청 | kiwoomcli domestic investors trend | --exchange | stex_tp | 거래소구분 | 1:KRX, 2:NXT, 3:통합 | 현재 이름 유지 가능 |
+| ka10069 | 대차거래상위10종목요청 | kiwoomcli domestic securities-lending list | --market | mrkt_tp | 시장구분 | 001:코스피, 101:코스닥 | 현재 이름 유지 가능 |
+| ka90012 | 대차거래내역요청 | kiwoomcli domestic securities-lending lookup | --market | mrkt_tp | 시장구분 | 001:코스피, 101:코스닥 | 현재 이름 유지 가능 |
 
 ## 6. 중복 옵션 관찰 결과
 

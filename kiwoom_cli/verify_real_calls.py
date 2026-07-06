@@ -16,7 +16,7 @@ from kiwoom_cli.executor import execute_rest_command
 from kiwoom_cli.registry import get_implemented_command
 
 
-SAFE_READ_COMMAND = "kiwoom stocks info"
+SAFE_READ_COMMAND = "kiwoomcli domestic stocks info"
 SAFE_READ_API_GROUP = "stocks"
 SAFE_READ_API_COMMAND = "info"
 SAFE_READ_CODE = "005930"
@@ -97,11 +97,11 @@ def _single_credentialed_profile_for_mode(mode: str) -> str | None:
     """Pick a saved profile for mode when it has credentials.
 
     `--mode demo` uses mode-level environment/keyring credentials in the runtime.
-    Users who configured aliases through `kiwoom auth login` usually have
+    Users who configured aliases through `kiwoomcli auth login` usually have
     profile-scoped keyring entries instead. For the reusable real-call checker,
     selecting the current matching profile, or the single matching credentialed
     profile, avoids reporting a false "credentials missing" result when
-    `kiwoom auth list` clearly shows a saved demo alias.
+    `kiwoomcli auth list` clearly shows a saved demo alias.
     """
 
     candidates: list[str] = []

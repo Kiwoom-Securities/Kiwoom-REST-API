@@ -26,8 +26,8 @@ class ModeNotConfiguredError(KiwoomError):
     def __init__(self):
         super().__init__(
             "사용할 계좌가 설정되어 있지 않습니다. "
-            "`kiwoom setup`으로 계좌를 등록하거나, 이미 등록한 계좌가 있으면 "
-            "`kiwoom auth switch <별칭>`으로 선택해 주세요."
+            "`kiwoomcli setup`으로 계좌를 등록하거나, 이미 등록한 계좌가 있으면 "
+            "`kiwoomcli auth switch <별칭>`으로 선택해 주세요."
         )
 
 
@@ -36,7 +36,7 @@ class CredentialsNotFoundError(KiwoomError):
         super().__init__(
             f"{mode!r} 모드 자격 증명을 찾을 수 없습니다. "
             "다음 명령으로 초기 설정을 진행하거나, 환경변수를 설정해 주세요: "
-            "kiwoom setup"
+            "kiwoomcli setup"
         )
         self.mode = mode
 
