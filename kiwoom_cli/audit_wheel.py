@@ -55,7 +55,7 @@ REQUIRED_WHEEL_MEMBERS = {
     "api_list.csv",
 }
 
-REQUIRED_ENTRY_POINT = "kiwoom = kiwoom_cli.main:main"
+REQUIRED_ENTRY_POINT = "kiwoomcli = kiwoom_cli.main:main"
 
 
 def audit() -> None:
@@ -88,7 +88,7 @@ def audit() -> None:
     print(
         "wheel audit passed: "
         f"{wheel.name} includes {len(REQUIRED_WHEEL_MEMBERS)} required CLI resources "
-        "and the kiwoom console script"
+        "and the kiwoomcli console script"
     )
 
 

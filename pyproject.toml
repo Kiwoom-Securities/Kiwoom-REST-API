@@ -1,5 +1,5 @@
 [project]
-name = "kiwoom-upload"
+name = "kiwoomcli"
 version = "0.1.0"
 description = "Kiwoom OpenAPI toolkit"
 readme = "README.md"
@@ -13,7 +13,7 @@ dependencies = [
 ]
 
 [project.scripts]
-kiwoom = "kiwoom_cli.main:main"
+kiwoomcli = "kiwoom_cli.main:main"
 
 [build-system]
 requires = ["hatchling"]

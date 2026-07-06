@@ -97,10 +97,10 @@ OVERSEAS_PLACEHOLDERS = (
 )
 
 STATIC_IMPLEMENTED_COMMANDS = (
-    "kiwoom spec search",
-    "kiwoom spec show",
-    "kiwoom spec groups",
-    "kiwoom spec apis",
+    "kiwoomcli spec search",
+    "kiwoomcli spec show",
+    "kiwoomcli spec groups",
+    "kiwoomcli spec apis",
 )
 
 CONTRACT_GROUPS = {
@@ -129,64 +129,64 @@ REQUIRED_MAPPED_HELP_SECTIONS = (
 )
 
 REMOVED_OPTION_REPLACEMENTS_BY_COMMAND = {
-    "kiwoom accounts cash": {"--query": "--cash-basis"},
-    "kiwoom accounts assets": {"--delisted": "--include-delisted"},
-    "kiwoom accounts valuation": {"--delisted": "--include-delisted"},
-    "kiwoom accounts order-fill-detail": {
+    "kiwoomcli domestic accounts cash": {"--query": "--cash-basis"},
+    "kiwoomcli domestic accounts assets": {"--delisted": "--include-delisted"},
+    "kiwoomcli domestic accounts valuation": {"--delisted": "--include-delisted"},
+    "kiwoomcli domestic accounts order-fill-detail": {
         "--asset": "--asset-kind",
         "--sort": "--order/--fill-status",
     },
-    "kiwoom accounts order-fill-status": {
+    "kiwoomcli domestic accounts order-fill-status": {
         "--asset": "--asset-kind",
         "--scope": "--fill-status",
     },
-    "kiwoom accounts gold-all-order-fills": {
+    "kiwoomcli domestic accounts gold-all-order-fills": {
         "--asset": "--asset-kind",
         "--sort": "--order",
     },
-    "kiwoom accounts gold-order-fills": {
+    "kiwoomcli domestic accounts gold-order-fills": {
         "--asset": "--asset-kind",
         "--sort": "--order/--fill-status",
     },
-    "kiwoom accounts gold-open-orders": {
+    "kiwoomcli domestic accounts gold-open-orders": {
         "--asset": "--asset-kind",
         "--sort": "--order",
     },
-    "kiwoom elws balance-rank": {
+    "kiwoomcli domestic elws balance-rank": {
         "--ended": "--include-ended",
         "--right": "--right-type",
     },
-    "kiwoom elws broker-net": {
+    "kiwoomcli domestic elws broker-net": {
         "--ended": "--include-ended",
         "--issuer": "--issuer-code",
     },
-    "kiwoom elws change-rank": {
+    "kiwoomcli domestic elws change-rank": {
         "--ended": "--include-ended",
         "--right": "--right-type",
     },
-    "kiwoom elws conditions": {
+    "kiwoomcli domestic elws conditions": {
         "--asset": "--underlying-code",
         "--issuer": "--issuer-code",
         "--lp": "--lp-code",
         "--right": "--right-type",
     },
-    "kiwoom elws divergence": {
-        "--asset": "--underlying-code",
-        "--ended": "--include-ended",
-        "--issuer": "--issuer-code",
-        "--lp": "--lp-code",
-        "--right": "--right-type",
-    },
-    "kiwoom elws price-move": {
+    "kiwoomcli domestic elws divergence": {
         "--asset": "--underlying-code",
         "--ended": "--include-ended",
         "--issuer": "--issuer-code",
         "--lp": "--lp-code",
         "--right": "--right-type",
     },
-    "kiwoom orders list-fills": {"--scope": "--stock-scope"},
-    "kiwoom orders list-open": {"--scope": "--stock-scope"},
-    "kiwoom rankings today-volume": {"--credit": "--credit-type"},
+    "kiwoomcli domestic elws price-move": {
+        "--asset": "--underlying-code",
+        "--ended": "--include-ended",
+        "--issuer": "--issuer-code",
+        "--lp": "--lp-code",
+        "--right": "--right-type",
+    },
+    "kiwoomcli domestic orders list-fills": {"--scope": "--stock-scope"},
+    "kiwoomcli domestic orders list-open": {"--scope": "--stock-scope"},
+    "kiwoomcli domestic rankings today-volume": {"--credit": "--credit-type"},
 }
 
 
@@ -263,9 +263,9 @@ def _audit_verification_command_docs(errors: list[str]) -> None:
 def _audit_pyproject(errors: list[str]) -> None:
     pyproject = tomllib.loads(PYPROJECT.read_text(encoding="utf-8"))
     scripts = pyproject.get("project", {}).get("scripts", {})
-    if scripts.get("kiwoom") != "kiwoom_cli.main:main":
+    if scripts.get("kiwoomcli") != "kiwoom_cli.main:main":
         errors.append(
-            "pyproject.toml missing project script: kiwoom = kiwoom_cli.main:main"
+            "pyproject.toml missing project script: kiwoomcli = kiwoom_cli.main:main"
         )
 
     wheel = (
@@ -345,7 +345,7 @@ def _audit_no_customer_uv_run_invocation(errors: list[str]) -> None:
         ):
             if command_pattern.search(line):
                 errors.append(
-                    "customer-facing docs must use `kiwoom`, not `uv run kiwoom`: "
+                    "customer-facing docs must use `kiwoomcli`, not `uv run kiwoom`: "
                     f"{path}:{line_number}"
                 )
 
@@ -552,7 +552,7 @@ def _audit_agent_reference(
             errors.append(
                 f"agent implemented command inventory missing: {command_path}"
             )
-    for command_path in ("kiwoom setup", "kiwoom auth list", "kiwoom auth switch"):
+    for command_path in ("kiwoomcli setup", "kiwoomcli auth list", "kiwoomcli auth switch"):
         if command_path not in command_inventory:
             errors.append(
                 f"agent implemented command inventory missing: {command_path}"
@@ -1000,8 +1000,8 @@ def _subparser_action(
 
 def _command_tokens(command_path: str) -> list[str]:
     tokens = command_path.split()
-    if not tokens or tokens[0] != "kiwoom":
-        raise ValueError(f"command_path must start with kiwoom: {command_path}")
+    if not tokens or tokens[0] != "kiwoomcli":
+        raise ValueError(f"command_path must start with kiwoomcli: {command_path}")
     return tokens[1:]
 
 

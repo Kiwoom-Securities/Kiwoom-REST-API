@@ -26,11 +26,46 @@ from kiwoom.core.types import Mode, VALID_MODES, normalize_mode
 from kiwoom_cli.arguments import resolve_optional_alias
 from kiwoom_cli.auth_context import build_auth_context
 from kiwoom_cli.banner import print_banner
-from kiwoom_cli.doctor import path_kiwoom_entries
+from kiwoom_cli.doctor import onboarding_tool_report, os_label, path_kiwoom_entries
 
 
 KST = timezone(timedelta(hours=9))
 TEST_STOCK_CODE = "005930"  # 조회 테스트용, 삼성전자
+
+_WIZARD_RULE = "─" * 52
+
+
+class _SetupWizard:
+    """설치 마법사 단계 표시기.
+
+    setup에서는 enabled=True로 `[n/총]` 진행 표시를 찍고, 공유되는 run_login이
+    `auth login`에서 호출될 때는 enabled=False로 `▸` 헤더만 찍는다.
+    """
+
+    def __init__(self, *, enabled: bool, total: int = 0) -> None:
+        self.enabled = enabled
+        self.total = total
+        self._n = 0
+
+    def step(self, title: str) -> None:
+        self._n += 1
+        print()
+        if self.enabled:
+            print(f"[{self._n}/{self.total}] {title}")
+        else:
+            print(f"▸ {title}")
+
+
+def _wz_ok(message: str) -> None:
+    print(f"      ✓ {message}")
+
+
+def _wz_warn(message: str) -> None:
+    print(f"      ⚠ {message}")
+
+
+def _wz_note(message: str) -> None:
+    print(f"      {message}")
 
 
 def add_setup_parser(subparsers: argparse._SubParsersAction) -> None:
@@ -67,35 +102,45 @@ class _EphemeralSecretProvider:
 
 def run_setup(*, alias: str | None = None, mode: str | None = None) -> None:
     print_banner()
-    print("Kiwoom CLI 초기 설정을 시작합니다.")
-    print("이 과정에서:")
-    print("  1) 실행 환경을 점검하고")
-    print("  2) 계좌 별칭을 만들고")
-    print("  3) demo/real 서버를 선택하고")
-    print("  4) App Key / Secret을 운영체제 자격 증명 저장소에 저장하고")
-    print("  5) 안전한 조회 API로 연결을 검증합니다.")
     print()
-    _run_preflight()
-    run_login(alias=alias, mode=mode)
+    print("  Kiwoom CLI · 초기 설정 마법사")
+    print(f"  {_WIZARD_RULE}")
+    print("  계좌를 인증하면 바로 시세 조회를 시작할 수 있습니다. (5단계)")
+    wizard = _SetupWizard(enabled=True, total=5)
+    _run_preflight(wizard)
+    run_login(alias=alias, mode=mode, wizard=wizard)
     _print_readiness_summary()
 
 
-def _run_preflight() -> None:
-    print("환경 점검")
+# Windows 온보딩 도구가 없을 때의 안내. 실행 필수는 아니므로 경고만 한다.
+_ONBOARDING_TOOL_HINTS = {
+    "git": "auth export의 .gitignore 등록 등에 쓰입니다: https://git-scm.com/download/win",
+    "python": "설치/업데이트에 필요할 수 있습니다: https://www.python.org/downloads/windows/",
+    "uv": "설치/업데이트에 필요할 수 있습니다: https://docs.astral.sh/uv/",
+}
+
+
+def _run_preflight(wizard: _SetupWizard) -> None:
+    wizard.step("환경 점검")
+    _wz_ok(f"운영체제: {os_label()}")
     available, detail = _credential_store_status()
     if available:
-        print(f"  운영체제 자격 증명 저장소: 사용 가능 ({detail})")
+        _wz_ok(f"자격 증명 저장소 사용 가능 ({detail})")
     else:
-        print(f"  운영체제 자격 증명 저장소: 사용 불가 - {detail}")
-        print("    App Key/Secret은 이 저장소에 저장됩니다. 저장 단계에서 실패할 수 있습니다.")
-        print("    지원되는 keyring 백엔드를 설치하거나 환경변수(APP_KEY/APP_SECRET)를 사용하세요.")
+        _wz_warn(f"자격 증명 저장소 사용 불가 - {detail}")
+        _wz_note("App Key/Secret은 이 저장소에 저장됩니다. 저장 단계에서 실패할 수 있습니다.")
+        _wz_note("지원되는 keyring 백엔드를 설치하거나 환경변수(APP_KEY/APP_SECRET)를 사용하세요.")
+    for tool, found in onboarding_tool_report():
+        if found:
+            _wz_ok(f"{tool} 감지됨")
+        else:
+            _wz_warn(f"{tool} 미감지 — {_ONBOARDING_TOOL_HINTS[tool]}")
     entries = path_kiwoom_entries()
     if len(entries) > 1:
-        print(
-            f"  주의: PATH에 kiwoom 실행 파일이 {len(entries)}개 있습니다. "
+        _wz_warn(
+            f"PATH에 kiwoom 실행 파일이 {len(entries)}개 있습니다. "
             "`which -a kiwoom`로 우선순위를 확인하세요."
         )
-    print()
 
 
 def _credential_store_status() -> tuple[bool, str]:
@@ -120,22 +165,38 @@ def _print_readiness_summary() -> None:
     except KiwoomError:
         return
     print()
-    print("준비 상태")
-    print(f"  현재 계좌: {current.alias} ({current.mode})")
-    print(f"  지금 호출 가능: {'예' if context.can_call_now else '아니오'}")
+    print("  준비 상태")
+    print(f"   현재 계좌   {current.alias} ({current.mode})")
+    print(f"   지금 호출   {'가능' if context.can_call_now else '불가'}")
 
 
-def run_login(*, alias: str | None = None, mode: str | None = None) -> None:
+def run_login(
+    *,
+    alias: str | None = None,
+    mode: str | None = None,
+    wizard: _SetupWizard | None = None,
+) -> None:
+    if wizard is None:
+        wizard = _SetupWizard(enabled=False)
+
     if alias is None:
+        wizard.step("서버 선택")
         selected_mode = normalize_mode(mode) if mode is not None else _select_mode()
+        _wz_ok(_server_label(selected_mode))
+        wizard.step("계좌 별칭")
         profile_alias = _select_profile_alias(alias, mode=selected_mode)
+        _wz_ok(f"계좌 별칭: {profile_alias}")
         existing_profile = _maybe_get_profile(profile_alias)
         if existing_profile is not None and existing_profile.mode != selected_mode:
             raise SetupError("같은 계좌 별칭이 이미 다른 모드로 등록되어 있습니다. 다른 별칭을 입력해 주세요.")
     else:
+        wizard.step("계좌 별칭")
         profile_alias = _select_profile_alias(alias, mode=normalize_mode(mode) if mode is not None else None)
+        _wz_ok(f"계좌 별칭: {profile_alias}")
         existing_profile = _maybe_get_profile(profile_alias)
+        wizard.step("서버 선택")
         selected_mode = _resolve_login_mode(mode=mode, existing_profile=existing_profile)
+        _wz_ok(_server_label(selected_mode))
 
     if existing_profile is not None:
         status = get_auth(profile=profile_alias).status()
@@ -144,8 +205,8 @@ def run_login(*, alias: str | None = None, mode: str | None = None) -> None:
         if action == "keep":
             set_current_profile(profile_alias)
             print()
-            print("기존 계좌 별칭을 현재 계좌로 선택했습니다.")
-            print(f"다음 단계: kiwoom auth status --profile {profile_alias}")
+            _wz_ok("기존 계좌 별칭을 현재 계좌로 선택했습니다.")
+            _wz_note(f"다음: kiwoomcli auth status --profile {profile_alias}")
             return
         if action == "refresh":
             _refresh_token_only(profile_alias, selected_mode)
@@ -154,15 +215,15 @@ def run_login(*, alias: str | None = None, mode: str | None = None) -> None:
             _reset_profile(profile_alias, selected_mode)
         # reconfigure/reset both continue to credential collection.
 
-    print()
-    print(f"{profile_alias} ({_mode_label(selected_mode)}) 계좌 인증을 설정합니다.")
+    wizard.step("App Key / Secret 입력·검증")
     appkey, secretkey, token_record, stock_name = _collect_and_validate(selected_mode)
+    wizard.step("저장 및 마무리")
     _persist_setup_result(profile_alias, selected_mode, appkey, secretkey, token_record)
     _print_success_message(
         profile_alias,
         selected_mode,
         stock_name,
-        summary="계좌 인증 설정이 완료되었습니다.",
+        summary="설정 완료",
     )
 
 
@@ -177,17 +238,15 @@ def _select_profile_alias(alias: str | None = None, *, mode: Mode | None = None)
     if not sys.stdin.isatty():
         return default_alias
 
-    print("계좌 별칭을 입력해 주세요.")
-    print("예: 모의계좌, 실전계좌, 가족계좌-demo")
-    print(f"그냥 Enter를 누르면 '{default_alias}'로 저장합니다.")
+    _wz_note("예: 모의계좌, 실전계좌, 가족계좌-demo (Enter=기본값)")
     while True:
-        value = input(f"계좌 별칭 [{default_alias}]: ").strip()
+        value = input(f"      계좌 별칭 [{default_alias}] > ").strip()
         if not value:
             return default_alias
         try:
             return validate_profile_alias(value)
         except ValueError as exc:
-            print(str(exc))
+            _wz_note(str(exc))
 
 
 def _resolve_login_mode(*, mode: str | None, existing_profile: AuthProfile | None) -> Mode:
@@ -219,38 +278,36 @@ def _select_mode(default: Mode | None = None) -> Mode:
         if default is not None:
             return default
         raise SetupError("비대화형 환경에서는 --mode demo|real 을 지정해 주세요.")
+    print("      [1] demo  (모의투자)")
+    print("      [2] real  (실전투자)")
     while True:
-        print("사용할 서버를 선택해 주세요.")
-        print("[1] demo  (모의투자)")
-        print("[2] real  (실전투자)")
-        print(f"Enter: {_mode_label(enter_default)}")
-        choice = input("> ").strip()
+        choice = input(f"      선택 [{_mode_label(enter_default)}] > ").strip()
         if choice == "":
             return enter_default
         if choice == "1":
             return "demo"
         if choice == "2":
             return "real"
-        print("1 또는 2를 입력해 주세요.")
+        _wz_note("1 또는 2를 입력해 주세요.")
 
 
 def _collect_and_validate(mode: Mode) -> tuple[str, str, TokenRecord, str]:
     env_credentials = EnvSecretProvider().get_credentials(mode)
     if env_credentials is not None:
-        print(f"환경변수에서 {_mode_label(mode)} App Key와 Secret Key를 읽었습니다.")
+        _wz_note(f"환경변수에서 {_mode_label(mode)} App Key/Secret을 읽었습니다.")
         token_record, stock_name = _validate_credentials(
             mode, env_credentials.appkey, env_credentials.secretkey
         )
         return env_credentials.appkey, env_credentials.secretkey, token_record, stock_name
 
-    print(f"키움에서 발급받은 {_mode_label(mode)} App Key와 Secret Key를 붙여넣어 주세요.")
+    _wz_note(f"키움에서 발급받은 {_mode_label(mode)} App Key와 Secret Key를 붙여넣어 주세요.")
     while True:
         appkey, secretkey = _collect_from_prompt()
         try:
             token_record, stock_name = _validate_credentials(mode, appkey, secretkey)
         except KiwoomError as exc:
-            print(f"검증 실패: {exc}", file=sys.stderr)
-            print("App Key/Secret Key를 다시 확인해 주세요. (취소: Ctrl-C)")
+            print(f"      ✗ 검증 실패: {exc}", file=sys.stderr)
+            _wz_note("App Key/Secret Key를 다시 확인해 주세요. (취소: Ctrl-C)")
             continue
         return appkey, secretkey, token_record, stock_name
 
@@ -258,16 +315,16 @@ def _collect_and_validate(mode: Mode) -> tuple[str, str, TokenRecord, str]:
 def _collect_from_prompt() -> tuple[str, str]:
     if not sys.stdin.isatty():
         raise SetupError("setup에서 자격 증명 입력은 대화형 터미널에서만 지원합니다.")
-    print("입력한 값은 화면에 표시되지 않습니다.")
-    appkey = getpass("App Key: ").strip()
-    secretkey = getpass("Secret Key: ").strip()
+    _wz_note("입력한 값은 화면에 표시되지 않습니다.")
+    appkey = getpass("      App Key: ").strip()
+    secretkey = getpass("      Secret Key: ").strip()
     if not appkey or not secretkey:
         raise SetupError("App Key와 Secret Key를 모두 입력해 주세요.")
     return appkey, secretkey
 
 
 def _validate_credentials(mode: Mode, appkey: str, secretkey: str) -> tuple[TokenRecord, str]:
-    print("입력한 자격 증명을 확인하는 중입니다...")
+    _wz_note("입력한 자격 증명을 확인하는 중입니다…")
     auth = get_auth(
         mode=mode,
         secret_provider=_EphemeralSecretProvider(appkey=appkey, secretkey=secretkey),
@@ -282,7 +339,9 @@ def _validate_credentials(mode: Mode, appkey: str, secretkey: str) -> tuple[Toke
     if token_record is None:
         raise SetupError("검증은 성공했지만 토큰이 저장되지 않았습니다.")
     payload = response.body
-    return token_record, str(payload.get("stk_nm", TEST_STOCK_CODE))
+    stock_name = str(payload.get("stk_nm", TEST_STOCK_CODE))
+    _wz_ok(f"연결 검증 성공 · {stock_name}({TEST_STOCK_CODE}) 조회")
+    return token_record, stock_name
 
 
 def _refresh_token_only(alias: str, mode: Mode) -> None:
@@ -291,7 +350,7 @@ def _refresh_token_only(alias: str, mode: Mode) -> None:
         raise SetupError(f"{alias} 계좌 별칭의 자격 증명이 없어 토큰을 다시 발급할 수 없습니다.")
 
     print()
-    print("저장된 자격 증명으로 토큰을 다시 발급합니다.")
+    _wz_note("저장된 자격 증명으로 토큰을 다시 발급합니다.")
     token_record, stock_name = _validate_credentials(mode, credentials.appkey, credentials.secretkey)
     _persist_token_result(alias, mode, token_record)
     _print_success_message(
@@ -307,63 +366,64 @@ def _reset_profile(alias: str, mode: Mode) -> None:
     credentials = provider.get_credentials(mode)
     get_auth(profile=alias).clear_token()
     print()
-    print(f"{alias} 계좌 별칭의 토큰 캐시를 삭제했습니다.")
+    _wz_ok(f"{alias} 계좌 별칭의 토큰 캐시를 삭제했습니다.")
     if credentials is None:
-        print("삭제할 자격 증명이 없습니다.")
+        _wz_note("삭제할 자격 증명이 없습니다.")
         return
 
     provider.clear_credentials(mode)
-    print("운영체제 자격 증명 저장소의 값도 삭제했습니다.")
+    _wz_ok("운영체제 자격 증명 저장소의 값도 삭제했습니다.")
 
 
 def _print_existing_setup_summary(alias: str, mode: Mode, status: AuthStatus) -> None:
     print()
-    print("이미 저장된 계좌 별칭을 찾았습니다.")
-    print(f"계좌 별칭: {alias}")
-    print(f"모드: {mode}")
-    print(f"자격 증명 존재 여부: {'예' if status.has_credentials else '아니오'}")
-    print(f"자격 증명 출처: {_credential_source_label(status.credential_source)}")
-    print(f"토큰 존재 여부: {'예' if status.has_token else '아니오'}")
-    print(f"토큰 유효 여부: {'예' if status.token_valid else '아니오'}")
-    print(f"토큰 재사용 가능 여부: {'예' if status.token_reusable else '아니오'}")
-    print(f"토큰 저장 시각: {_format_token_saved_at(status)}")
-    print(f"토큰 만료 시각: {_format_token_expires_at(status)}")
-    print(f"다음 API 호출 인증 동작: {_next_auth_action_label(status.next_auth_action)}")
+    print("  이미 설정된 계좌 별칭을 찾았습니다.")
+    print(f"  {_WIZARD_RULE}")
+    print(f"   계좌 별칭   {alias}")
+    print(f"   모드        {mode}")
+    print(f"   자격 증명   {'있음' if status.has_credentials else '없음'} "
+          f"({_credential_source_label(status.credential_source)})")
+    print(f"   토큰        존재 {'예' if status.has_token else '아니오'} · "
+          f"유효 {'예' if status.token_valid else '아니오'} · "
+          f"재사용 {'예' if status.token_reusable else '아니오'}")
+    print(f"   토큰 저장   {_format_token_saved_at(status)}")
+    print(f"   토큰 만료   {_format_token_expires_at(status)}")
+    print(f"   다음 인증   {_next_auth_action_label(status.next_auth_action)}")
     if status.token_warning:
-        print(f"토큰 경고: {status.token_warning}")
+        _wz_warn(f"토큰 경고: {status.token_warning}")
 
 
 def _prompt_existing_state_action(status: AuthStatus) -> str:
     if not sys.stdin.isatty():
         raise SetupError(
             "비대화형 환경에서는 기존 계좌 처리를 선택할 수 없습니다. "
-            "대화형 터미널에서 실행하거나 kiwoom auth 하위 명령을 사용하세요."
+            "대화형 터미널에서 실행하거나 kiwoomcli auth 하위 명령을 사용하세요."
         )
     print()
-    print("어떻게 할까요?")
-    print("[1] 이 계좌 별칭으로 전환")
+    print("  어떻게 할까요?")
+    print("   [1] 이 계좌 별칭으로 전환")
     if status.has_credentials:
-        print("[2] 토큰만 다시 발급")
+        print("   [2] 토큰만 다시 발급")
     else:
         # Refresh needs stored credentials; show it disabled instead of letting
         # the user pick an action that can only fail in _refresh_token_only.
-        print("[2] 토큰만 다시 발급 - 사용할 수 없음: 키/시크릿이 없습니다.")
-    print("[3] App Key / Secret Key 다시 입력")
-    print("[4] 자격 증명과 토큰 삭제 후 다시 설정")
+        print("   [2] 토큰만 다시 발급 - 사용할 수 없음: 키/시크릿이 없습니다.")
+    print("   [3] App Key / Secret Key 다시 입력")
+    print("   [4] 자격 증명과 토큰 삭제 후 다시 설정")
     while True:
-        choice = input("> ").strip()
+        choice = input("   > ").strip()
         if choice == "1":
             return "keep"
         if choice == "2":
             if not status.has_credentials:
-                print("키/시크릿이 없어 토큰만 재발급할 수 없습니다. [3]으로 키/시크릿을 다시 입력해 주세요.")
+                _wz_note("키/시크릿이 없어 토큰만 재발급할 수 없습니다. [3]으로 키/시크릿을 다시 입력해 주세요.")
                 continue
             return "refresh"
         if choice == "3":
             return "reconfigure"
         if choice == "4":
             return "reset"
-        print("1, 2, 3, 4 중 하나를 입력해 주세요.")
+        _wz_note("1, 2, 3, 4 중 하나를 입력해 주세요.")
 
 
 def _mode_label(mode: Mode) -> str:
@@ -408,15 +468,17 @@ def _next_auth_action_label(action: str) -> str:
 
 def _print_success_message(alias: str, mode: Mode, stock_name: str, *, summary: str) -> None:
     print()
-    print(summary)
-    print(f"  계좌 별칭: {alias}")
-    print(f"  서버: {_server_label(mode)}")
-    print("  키/시크릿: 저장됨")
-    print("  토큰: 발급됨")
-    print(f"  API 검증: 성공 ({stock_name} {TEST_STOCK_CODE} 조회)")
-    print("다음 명령:")
-    print(f"  kiwoom auth status --profile {alias}")
-    print(f"  kiwoom stocks info --code {TEST_STOCK_CODE} --profile {alias}")
+    print(f"  ✓ {summary}")
+    print(f"  {_WIZARD_RULE}")
+    print(f"   계좌 별칭   {alias}")
+    print(f"   서버        {_server_label(mode)}")
+    print("   키/시크릿   저장됨")
+    print("   토큰        발급됨")
+    print(f"   API 검증    성공 ({stock_name} {TEST_STOCK_CODE} 조회)")
+    print()
+    print("  다음 명령")
+    print(f"    kiwoomcli auth status --profile {alias}")
+    print(f"    kiwoomcli domestic stocks info --code {TEST_STOCK_CODE} --profile {alias}")
 
 
 def _persist_token_result(alias: str, mode: Mode, token_record: TokenRecord) -> None:
@@ -446,7 +508,7 @@ def _persist_setup_result(alias: str, mode: Mode, appkey: str, secretkey: str, t
 
     try:
         provider.set_credentials(mode, appkey, secretkey)
-        print("자격 증명을 운영체제 자격 증명 저장소에 저장했습니다.")
+        _wz_ok("운영체제 자격 증명 저장소에 저장 완료")
         token_store.save(replace(token_record, mode=mode, profile=alias))
         set_current_profile(alias)
     except Exception:

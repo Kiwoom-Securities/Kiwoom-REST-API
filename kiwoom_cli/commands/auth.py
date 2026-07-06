@@ -125,7 +125,7 @@ def handle_auth_list(args: argparse.Namespace) -> None:
 def handle_auth_switch(args: argparse.Namespace) -> None:
     profile = set_current_profile(args.alias)
     print(f"현재 계좌 별칭: {profile.alias} ({profile.mode})")
-    print(f"다음 단계: kiwoom auth status --profile {profile.alias}")
+    print(f"다음 단계: kiwoomcli auth status --profile {profile.alias}")
 
 
 def handle_auth_remove(args: argparse.Namespace) -> None:
@@ -148,7 +148,7 @@ def handle_auth_export(args: argparse.Namespace) -> None:
     credentials = auth.secret_provider.get_credentials(auth.mode)
     if credentials is None:
         raise CliInputError(
-            f"{auth_label}: 내보낼 App Key/Secret이 없습니다. 먼저 kiwoom setup으로 저장하세요."
+            f"{auth_label}: 내보낼 App Key/Secret이 없습니다. 먼저 kiwoomcli setup으로 저장하세요."
         )
 
     target = auth.profile or auth.mode
@@ -200,7 +200,7 @@ def _write_credentials_file(
     appkey_var, secretkey_var = env_var_names(mode)
     content = "\n".join(
         [
-            f"# kiwoom-cli App Key/Secret export - {auth_label}",
+            f"# kiwoomcli App Key/Secret export - {auth_label}",
             "# 평문 자격증명입니다. 절대 공유/커밋하지 마세요.",
             f"{appkey_var}={credentials.appkey}",
             f"{secretkey_var}={credentials.secretkey}",
@@ -238,7 +238,7 @@ def _register_gitignore(file_path: Path) -> str:
     with gitignore.open("a", encoding="utf-8") as file:
         if existing and existing[-1].strip() != "":
             file.write("\n")
-        file.write("# kiwoom-cli exported credentials (do not commit)\n")
+        file.write("# kiwoomcli exported credentials (do not commit)\n")
         file.write(f"{entry}\n")
     return f"{entry} 등록됨 ({gitignore})"
 
@@ -265,7 +265,7 @@ def handle_auth_refresh(args: argparse.Namespace) -> None:
     print(f"{auth_label} 새 접근 토큰을 발급했습니다.")
     print(f"토큰 저장 시각: {_format_kst_datetime(status.token_saved_at, none_label='알 수 없음')}")
     print(f"토큰 만료 시각: {_format_kst_datetime(status.token_expires_at, none_label='알 수 없음')}")
-    print(f"다음 단계: kiwoom auth status{_auth_target_hint(auth)}")
+    print(f"다음 단계: kiwoomcli auth status{_auth_target_hint(auth)}")
 
 
 def handle_auth_revoke(args: argparse.Namespace) -> None:
@@ -320,7 +320,7 @@ def _print_profile_list() -> None:
     current = get_current_profile()
     if not profiles:
         print("저장된 계좌 별칭이 없습니다.")
-        print("다음 단계: kiwoom auth login")
+        print("다음 단계: kiwoomcli auth login")
         return
 
     print("계좌 별칭 목록:")

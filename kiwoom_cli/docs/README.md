@@ -1,6 +1,6 @@
 # Kiwoom CLI Docs
 
-These docs describe the intended customer-facing `kiwoom` command surface and
+These docs describe the intended customer-facing `kiwoomcli` command surface and
 the agent-facing command contracts that should be generated from curated command
 maps plus `kiwoom_api_spec.json`.
 
@@ -33,7 +33,7 @@ the implementation, maps, help output, and docs must agree.
 
 ## Documentation Rules
 
-- Public docs describe the installed command as `kiwoom`.
+- Public docs describe the installed command as `kiwoomcli`.
 - Do not document `uv run kiwoom` as a customer-facing invocation.
 - Do not document generated examples as stable public imports.
 - Do not document commands that bypass package runtime facades.

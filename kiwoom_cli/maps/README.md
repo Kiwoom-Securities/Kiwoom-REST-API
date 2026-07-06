@@ -1,6 +1,6 @@
 # Kiwoom CLI Maps
 
-This folder contains editable, spec-driven mapping tables for the installed `kiwoom` CLI.
+This folder contains editable, spec-driven mapping tables for the installed `kiwoomcli` CLI.
 
 ## Files
 
@@ -21,20 +21,9 @@ The table is intentionally explicit. Full CLI coverage means every API ID appear
 | `candles` | `implemented` | `public` | 21 |
 | `elws` | `implemented` | `public` | 11 |
 | `etfs` | `implemented` | `public` | 9 |
-| `investment-info` | `planned` | `public` | 12 |
 | `investors` | `implemented` | `public` | 4 |
 | `orderbooks` | `implemented` | `public` | 2 |
 | `orders` | `implemented` | `guarded` | 17 |
-| `overseas accounts` | `planned` | `guarded` | 38 |
-| `overseas candles` | `planned` | `public` | 15 |
-| `overseas orderbooks` | `planned` | `public` | 1 |
-| `overseas orders` | `planned` | `preview-only` | 10 |
-| `overseas quotes` | `planned` | `public` | 4 |
-| `overseas rankings` | `planned` | `public` | 21 |
-| `overseas sectors` | `planned` | `public` | 5 |
-| `overseas stocks` | `planned` | `public` | 23 |
-| `overseas-review` | `review` | `planned` | 5 |
-| `overseas-review` | `review` | `preview-only` | 11 |
 | `quotes` | `implemented` | `public` | 23 |
 | `rankings` | `implemented` | `public` | 23 |
 | `sectors` | `implemented` | `public` | 6 |

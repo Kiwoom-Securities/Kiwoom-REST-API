@@ -50,13 +50,13 @@ ALLOWED_SAFETY_POLICIES = {
 ALLOWED_POSITIONAL_STATUSES = {"allow", "candidate", "defer", "reject"}
 ALLOWED_ORDER_PRICE_POLICIES = {"required", "optional", "forbidden"}
 STATIC_COMMAND_OPTIONS = {
-    "kiwoom setup": {"--alias", "--mode"},
-    "kiwoom auth login": {"--alias", "--mode"},
-    "kiwoom auth status": {"--profile", "--mode"},
-    "kiwoom auth refresh": {"--profile", "--mode"},
-    "kiwoom auth revoke": {"--profile", "--mode"},
-    "kiwoom auth clear": {"--profile", "--mode", "--all", "--credentials"},
-    "kiwoom auth switch": set(),
+    "kiwoomcli setup": {"--alias", "--mode"},
+    "kiwoomcli auth login": {"--alias", "--mode"},
+    "kiwoomcli auth status": {"--profile", "--mode"},
+    "kiwoomcli auth refresh": {"--profile", "--mode"},
+    "kiwoomcli auth revoke": {"--profile", "--mode"},
+    "kiwoomcli auth clear": {"--profile", "--mode", "--all", "--credentials"},
+    "kiwoomcli auth switch": set(),
 }
 
 
@@ -196,7 +196,7 @@ def validate() -> None:
             errors.append(f"{prefix} missing command_path")
         if row.get("status") in {"implemented", "planned"} and row.get(
             "command_path", ""
-        ).startswith("kiwoom spec "):
+        ).startswith("kiwoomcli spec "):
             errors.append(f"{prefix} command_path must not use raw spec commands")
         if row.get("status") == "implemented":
             key = (row.get("cli_group", ""), row.get("cli_command", ""))
@@ -283,7 +283,7 @@ def validate() -> None:
     for (group, command), api_ids in sorted(implemented_commands.items()):
         if len(api_ids) > 1:
             errors.append(
-                f"implemented command must be unique: kiwoom {group} {command} "
+                f"implemented command must be unique: kiwoomcli {group} {command} "
                 f"api_ids={api_ids}"
             )
 
@@ -664,8 +664,14 @@ def _validate_positional_arguments(
         option = row.get("option", "")
         prefix = f"positional_arguments.csv:{index} command_path={command_path!r}"
 
-        if not command_path.startswith("kiwoom "):
-            errors.append(f"{prefix} command_path must start with 'kiwoom '")
+        _global_ok = command_path == "kiwoomcli setup" or command_path.startswith(
+            "kiwoomcli auth "
+        )
+        if not (command_path.startswith("kiwoomcli domestic ") or _global_ok):
+            errors.append(
+                f"{prefix} command_path must start with 'kiwoomcli domestic ' "
+                "(or global 'kiwoomcli setup'/'kiwoomcli auth ')"
+            )
         if row.get("status") not in ALLOWED_POSITIONAL_STATUSES:
             errors.append(f"{prefix} invalid status={row.get('status', '')!r}")
         try:

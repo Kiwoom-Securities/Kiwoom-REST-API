@@ -49,7 +49,7 @@
      CLI 관련 설정을 제거해 "kiwoom 런타임 + examples" 기준으로 맞춥니다.
      (정리하지 않으면 kiwoom_cli 참조 때문에 `uv sync`/빌드가 실패합니다.)
    - 제거/수정 항목:
-     - [project.scripts] 의 `kiwoom = "kiwoom_cli.main:main"` 항목 삭제
+     - [project.scripts] 의 `kiwoomcli = "kiwoom_cli.main:main"` 항목 삭제
        (해당 섹션에 다른 항목이 없으면 [project.scripts] 블록 자체를 삭제)
      - [tool.hatch.build.targets.wheel] 의 packages 에서 "kiwoom_cli" 제거 → `["kiwoom"]`
      - 같은 섹션 artifacts 에서 `kiwoom_cli/*` 항목 삭제 (`kiwoom/_data/*.json` 만 유지)
@@ -95,7 +95,7 @@ Kiwoom-OpenAPI/
 
 - **`pyproject.toml` 정리(위 2번 5)항)**: 복사한 `pyproject.toml`에서 `kiwoom_cli`(CLI)
   관련 설정을 제거해 "kiwoom 런타임 + examples" 기준으로 맞춘다.
-  - `[project.scripts]` 의 `kiwoom = "kiwoom_cli.main:main"` 삭제(빈 블록이면 블록 삭제)
+  - `[project.scripts]` 의 `kiwoomcli = "kiwoom_cli.main:main"` 삭제(빈 블록이면 블록 삭제)
   - `packages` 에서 `"kiwoom_cli"` 제거 → `["kiwoom"]`
   - `artifacts` 에서 `kiwoom_cli/*` 삭제(`kiwoom/_data/*.json` 만 유지)
 

@@ -237,7 +237,7 @@ wheels = [
 ]
 
 [[package]]
-name = "kiwoom-upload"
+name = "kiwoomcli"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

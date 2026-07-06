@@ -231,9 +231,9 @@ def _behavior_text(command_path: str, safety_policy: str, coverage_status: str) 
 
 
 def _is_stream_subscription_command(command_path: str) -> bool:
-    if not command_path.startswith("kiwoom streams "):
+    if not command_path.startswith("kiwoomcli domestic streams "):
         return False
-    command = command_path.removeprefix("kiwoom streams ")
+    command = command_path.removeprefix("kiwoomcli domestic streams ")
     return not command.startswith("conditions-")
 
 

@@ -82,32 +82,39 @@ def _translate_argparse_error(message: str) -> str:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = KiwoomArgumentParser(prog="kiwoom", description="키움 REST API 도우미 CLI")
+    parser = KiwoomArgumentParser(prog="kiwoomcli", description="키움 REST API 도우미 CLI")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
+    # 전역(시장 무관) 명령
     add_setup_parser(subparsers)
     add_auth_parser(subparsers)
     add_doctor_parser(subparsers)
     add_spec_parser(subparsers)
-    add_stocks_parser(subparsers)
-    add_quotes_parser(subparsers)
-    add_orderbooks_parser(subparsers)
-    add_candles_parser(subparsers)
-    add_etfs_parser(subparsers)
-    add_elws_parser(subparsers)
-    add_investors_parser(subparsers)
+
+    # 국내 시장(OpenAPI) 명령: `kiwoomcli domestic <group> <command>`
+    domestic_parser = subparsers.add_parser(
+        "domestic", help="국내 시장(OpenAPI) 명령입니다."
+    )
+    domestic = domestic_parser.add_subparsers(dest="domestic_command", required=True)
+    add_stocks_parser(domestic)
+    add_quotes_parser(domestic)
+    add_orderbooks_parser(domestic)
+    add_candles_parser(domestic)
+    add_etfs_parser(domestic)
+    add_elws_parser(domestic)
+    add_investors_parser(domestic)
     # TODO(overseas): planned only; do not expose until runtime is verified.
-    # add_investment_info_parser(subparsers)
-    add_rankings_parser(subparsers)
-    add_sectors_parser(subparsers)
-    add_short_selling_parser(subparsers)
-    add_securities_lending_parser(subparsers)
-    add_themes_parser(subparsers)
-    add_streams_parser(subparsers)
-    # TODO(overseas): planned only; do not expose until runtime is verified.
+    # add_investment_info_parser(domestic)
+    add_rankings_parser(domestic)
+    add_sectors_parser(domestic)
+    add_short_selling_parser(domestic)
+    add_securities_lending_parser(domestic)
+    add_themes_parser(domestic)
+    add_streams_parser(domestic)
+    # TODO(overseas): planned only; 향후 `kiwoomcli overseas ...`로 노출.
     # add_overseas_parser(subparsers)
-    add_accounts_parser(subparsers)
-    add_orders_parser(subparsers)
+    add_accounts_parser(domestic)
+    add_orders_parser(domestic)
 
     return parser
 
@@ -183,7 +190,7 @@ def _format_credentials_error(args: argparse.Namespace, exc: CredentialsNotFound
                 f"계좌 별칭 '{selection.profile}'의 키/시크릿을 찾을 수 없습니다.",
                 "",
                 "해결:",
-                f"  kiwoom setup {selection.profile}",
+                f"  kiwoomcli setup {selection.profile}",
             ]
         )
 
@@ -202,7 +209,7 @@ def _format_credentials_error(args: argparse.Namespace, exc: CredentialsNotFound
             "  mode 방식은 APP_KEY / APP_SECRET 환경변수 또는 mode용 자격 증명이 필요합니다.",
             "",
             "해결:",
-            "  저장된 별칭을 쓰려면:  kiwoom <명령> --profile <별칭>",
+            "  저장된 별칭을 쓰려면:  kiwoomcli <명령> --profile <별칭>",
             f"  환경변수 방식으로 쓰려면:  {appkey_var} / {secretkey_var} 를 설정하세요.",
         ]
     )
