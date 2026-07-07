@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: transparent; display: flex; justify-content: center; padding: 32px; }
+  .window {
+    background: #282a36;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    min-width: 480px;
+    max-width: 960px;
+    overflow: hidden;
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .titlebar {
+    background: #21222c;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+  .title {
+    flex: 1;
+    text-align: center;
+    color: #bd93f9;
+    font-size: 12px;
+    margin-right: 36px;
+  }
+  .body { padding: 20px 24px; }
+  .meta { color: #6272a4; margin-bottom: 12px; }
+  .meta span { color: #50fa7b; }
+  pre {
+    color: #f8f8f2;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+    <div class="title">kiwoom accounts margin-details</div>
+  </div>
+  <div class="body">
+    <div class="meta"><span>$</span> kiwoom accounts margin-details --format json</div>
+    <div class="meta">mode=account_read · exit=0 · elapsed=0.45s</div>
+    <pre>{&quot;tdy_reu_objt_amt&quot;:&quot;000000000000000&quot;,&quot;tdy_reu_use_amt&quot;:&quot;000000000000000&quot;,&quot;tdy_reu_alowa&quot;:&quot;000000000000000&quot;,&quot;tdy_reu_lmtt_amt&quot;:&quot;000000000000000&quot;,&quot;tdy_reu_alowa_fin&quot;:&quot;000000000000000&quot;,&quot;pred_reu_objt_amt&quot;:&quot;000000000000000&quot;,&quot;pred_reu_use_amt&quot;:&quot;000000000000000&quot;,&quot;pred_reu_alowa&quot;:&quot;000000000000000&quot;,&quot;pred_reu_lmtt_amt&quot;:&quot;000000000000000&quot;,&quot;pred_reu_alowa_fin&quot;:&quot;000000000000000&quot;,&quot;ch_amt&quot;:&quot;000099930778842&quot;,&quot;ch_profa&quot;:&quot;000000000000000&quot;,&quot;use_pos_ch&quot;:&quot;000099930778842&quot;,&quot;ch_use_lmtt_amt&quot;:&quot;000000000000000&quot;,&quot;use_pos_ch_fin&quot;:&quot;000099930778842&quot;,&quot;repl_amt_amt&quot;:&quot;000000439430330&quot;,&quot;repl_profa&quot;:&quot;000000000000000&quot;,&quot;use_pos_repl&quot;:&quot;000000439430330&quot;,&quot;repl_use_lmtt_amt&quot;:&quot;000000000000000&quot;,&quot;use_pos_repl_fin&quot;:&quot;000000439430330&quot;,&quot;crd_grnta_ch&quot;:&quot;000000000000000&quot;,&quot;crd_grnta_repl&quot;:&quot;000000000000000&quot;,&quot;crd_grnt_ch&quot;:&quot;000000000000000&quot;,&quot;crd_grnt_repl&quot;:&quot;000000000000000&quot;,&quot;uncla&quot;:&quot;000000000000&quot;,&quot;ls_grnt_reu_gold&quot;:&quot;000000000000000&quot;,&quot;20ord_alow_amt&quot;:&quot;000501851045860&quot;,&quot;30ord_alow_amt&quot;:&quot;000334567363906&quot;,&quot;40ord_alow_amt&quot;:&quot;000250925522930&quot;,&quot;50ord_alow_amt&quot;:&quot;000200740418344&quot;,&quot;60ord_alow_amt&quot;:&quot;000167283681953&quot;,&quot;100ord_alow_amt&quot;:&quot;000099930778842&quot;,&quot;tdy_crd_rpya_loss_amt&quot;:&quot;000000000000000&quot;,&quot;pred_crd_rpya_loss_amt&quot;:&quot;000000000000000&quot;,&quot;tdy_ls_rpya_loss_repl_profa&quot;:&quot;000000000000000&quot;,&quot;pred_ls_rpya_loss_repl_profa&quot;:&quot;000000000000000&quot;,&quot;evlt_repl_amt_spg_use_skip&quot;:&quot;000000550829585&quot;,&quot;evlt_repl_rt&quot;:&quot;0.7977609&quot;,&quot;crd_repl_profa&quot;:&quot;000000000000000&quot;,&quot;ch_ord_repl_profa&quot;:&quot;000000000000000&quot;,&quot;crd_ord_repl_profa&quot;:&quot;000000000000000&quot;,&quot;crd_repl_conv_gold&quot;:&quot;000000000000000&quot;,&quot;repl_alowa&quot;:&quot;000000439430330&quot;,&quot;repl_alowa_2&quot;:&quot;000000439430330&quot;,&quot;ch_repl_lck_gold&quot;:&quot;000000000000000&quot;,&quot;crd_repl_lck_gold&quot;:&quot;000000000000000&quot;,&quot;ch_ord_alow_repla&quot;:&quot;000000439430330&quot;,&quot;crd_ord_alow_repla&quot;:&quot;000000550829585&quot;,&quot;d2vexct_entr&quot;:&quot;000099930778842&quot;,&quot;d2ch_ord_alow_amt&quot;:&quot;000099930778842&quot;,&quot;return_code&quot;:0,&quot;return_msg&quot;:&quot;조회가 완료되었습니다.&quot;}</pre>
+  </div>
+</div>
+</body>
+</html>

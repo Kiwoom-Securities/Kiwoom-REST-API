@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: transparent; display: flex; justify-content: center; padding: 32px; }
+  .window {
+    background: #282a36;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    min-width: 480px;
+    max-width: 960px;
+    overflow: hidden;
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .titlebar {
+    background: #21222c;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+  .title {
+    flex: 1;
+    text-align: center;
+    color: #bd93f9;
+    font-size: 12px;
+    margin-right: 36px;
+  }
+  .body { padding: 20px 24px; }
+  .meta { color: #6272a4; margin-bottom: 12px; }
+  .meta span { color: #50fa7b; }
+  pre {
+    color: #f8f8f2;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+    <div class="title">kiwoom quotes list</div>
+  </div>
+  <div class="body">
+    <div class="meta"><span>$</span> kiwoom quotes list --kind all --format json</div>
+    <div class="meta">mode=read · exit=0 · elapsed=0.44s</div>
+    <pre>{&quot;newstk_recvrht_mrpr&quot;:[{&quot;stk_cd&quot;:&quot;J0036221D&quot;,&quot;stk_nm&quot;:&quot;KG모빌리티 122WR&quot;,&quot;cur_prc&quot;:&quot;-866&quot;,&quot;pred_pre_sig&quot;:&quot;5&quot;,&quot;pred_pre&quot;:&quot;-43&quot;,&quot;flu_rt&quot;:&quot;-4.73&quot;,&quot;fpr_sel_bid&quot;:&quot;-894&quot;,&quot;fpr_buy_bid&quot;:&quot;-866&quot;,&quot;acc_trde_qty&quot;:&quot;3336&quot;,&quot;open_pric&quot;:&quot;+910&quot;,&quot;high_pric&quot;:&quot;+910&quot;,&quot;low_pric&quot;:&quot;-850&quot;},{&quot;stk_cd&quot;:&quot;J0047101G&quot;,&quot;stk_nm&quot;:&quot;한솔테크닉스 39R&quot;,&quot;cur_prc&quot;:&quot;+1887&quot;,&quot;pred_pre_sig&quot;:&quot;2&quot;,&quot;pred_pre&quot;:&quot;+37&quot;,&quot;flu_rt&quot;:&quot;+2.00&quot;,&quot;fpr_sel_bid&quot;:&quot;+1887&quot;,&quot;fpr_buy_bid&quot;:&quot;+1866&quot;,&quot;acc_trde_qty&quot;:&quot;191864&quot;,&quot;open_pric&quot;:&quot;-1849&quot;,&quot;high_pric&quot;:&quot;+1919&quot;,&quot;low_pric&quot;:&quot;-1690&quot;},{&quot;stk_cd&quot;:&quot;J0110801G&quot;,&quot;stk_nm&quot;:&quot;형지I&amp;C 18R&quot;,&quot;cur_prc&quot;:&quot;-0&quot;,&quot;pred_pre_sig&quot;:&quot;3&quot;,&quot;pred_pre&quot;:&quot;0&quot;,&quot;flu_rt&quot;:&quot;0.00&quot;,&quot;fpr_sel_bid&quot;:&quot;-0&quot;,&quot;fpr_buy_bid&quot;:&quot;-0&quot;,&quot;acc_trde_qty&quot;:&quot;0&quot;,&quot;open_pric&quot;:&quot;-0&quot;,&quot;high_pric&quot;:&quot;-0&quot;,&quot;low_pric&quot;:&quot;-0&quot;},{&quot;stk_cd&quot;:&quot;J0113321F&quot;,&quot;stk_nm&quot;:&quot;유니켐 41WR&quot;,&quot;cur_prc&quot;:&quot;100&quot;,&quot;pred_pre_sig&quot;:&quot;3&quot;,&quot;pred_pre&quot;:&quot;0&quot;,&quot;flu_rt&quot;:&quot;0.00&quot;,&quot;fpr_sel_bid&quot;:&quot;-99&quot;,&quot;fpr_buy_bid&quot;:&quot;-87&quot;,&quot;acc_trde_qty&quot;:&quot;39376&quot;,&quot;open_pric&quot;:&quot;+101&quot;,&quot;high_pric&quot;:&quot;+102&quot;,&quot;low_pric&quot;:&quot;-85&quot;},{&quot;stk_cd&quot;:&quot;J0669721F&quot;,&quot;stk_nm&quot;:&quot;엘앤에프 7WR&quot;,&quot;cur_prc&quot;:&quot;-73000&quot;,&quot;pred_pre_sig&quot;:&quot;5&quot;,&quot;pred_pre&quot;:&quot;-1400&quot;,&quot;flu_rt&quot;:&quot;-1.88&quot;,&quot;fpr_sel_bid&quot;:&quot;-73700&quot;,&quot;fpr_buy_bid&quot;:&quot;-72000&quot;,&quot;acc_trde_qty&quot;:&quot;2238&quot;,&quot;open_pric&quot;:&quot;-72500&quot;,&quot;high_pric&quot;:&quot;+79500&quot;,&quot;low_pric&quot;:&quot;-71800&quot;},{&quot;stk_cd&quot;:&quot;J0671721G&quot;,&quot;stk_nm&quot;:&quot;오텍 13WR&quot;,&quot;cur_prc&quot;:&quot;-1017&quot;,&quot;pred_pre_sig&quot;:&quot;5&quot;,&quot;pred_pre&quot;:&quot;-63&quot;,&quot;flu_rt&quot;:&quot;-5.83&quot;,&quot;fpr_sel_bid&quot;:&quot;-1017&quot;,&quot;fpr_buy_bid&quot;:&quot;-1015&quot;,&quot;acc_trde_qty&quot;:&quot;22991&quot;,&quot;open_pric&quot;:&quot;-1001&quot;,&quot;high_pric&quot;:&quot;+1140&quot;,&quot;low_pric&quot;:&quot;-981&quot;},{&quot;stk_cd&quot;:&quot;J1099621D&quot;,&quot;stk_nm&quot;:&quot;앱토크롬 6WR&quot;,&quot;cur_prc&quot;:&quot;0&quot;,&quot;pred_pre_sig&quot;:&quot;3&quot;,&quot;pred_pre&quot;:&quot;0&quot;,&quot;flu_rt&quot;:&quot;0.00&quot;,&quot;fpr_sel_bid&quot;:&quot;0&quot;,&quot;fpr_buy_bid&quot;:&quot;0&quot;,&quot;acc_trde_qty&quot;:&quot;0&quot;,&quot;open_pric&quot;:&quot;0&quot;,&quot;high_pric&quot;:&quot;0&quot;,&quot;low_pric&quot;:&quot;0&quot;},{&quot;stk_cd&quot;:&quot;J3568601G&quot;,&quot;stk_nm&quot;:&quot;티엘비 4R&quot;,&quot;cur_prc&quot;:&quot;0&quot;,&quot;pred_pre_sig&quot;:&quot;3&quot;,&quot;pred_pre&quot;:&quot;0&quot;,&quot;flu_rt&quot;:&quot;0.00&quot;,&quot;fpr_sel_bid&quot;:&quot;0&quot;,&quot;fpr_buy_bid&quot;:&quot;0&quot;,&quot;acc_trde_qty&quot;:&quot;0&quot;,&quot;open_pric&quot;:&quot;0&quot;,&quot;high_pric&quot;:&quot;0&quot;,&quot;low_pric&quot;:&quot;0&quot;}],&quot;return_code&quot;:0,&quot;return_msg&quot;:&quot;정상적으로 처리되었습니다&quot;}</pre>
+  </div>
+</div>
+</body>
+</html>

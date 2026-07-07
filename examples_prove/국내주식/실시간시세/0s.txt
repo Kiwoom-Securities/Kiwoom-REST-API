@@ -1,0 +1,3 @@
+[REG] {'trnm': 'REG', 'return_code': 0, 'return_msg': ''}
+system [{'trnm': 'REG', 'return_code': 0, 'return_msg': ''}]
+data [{'item': '', 'type': '0s', '장운영구분': '0', '체결시간': '085910', '장시작예상잔여시간': '000050'}]

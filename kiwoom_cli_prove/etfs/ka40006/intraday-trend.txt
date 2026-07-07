@@ -1,0 +1,1 @@
+{"stk_nm":"삼성전자","etfobjt_idex_nm":"","wonju_pric":"0","etftxon_type":"","etntxon_type":"외국","etftisl_trnsn":[{"tm":"","close_pric":"","pre_sig":"","pred_pre":"","flu_rt":"","trde_qty":"","nav":"","trde_prica":"","navidex":"","navetf":"","trace":"","trace_idex":"","trace_idex_pred_pre":"","trace_idex_pred_pre_sig":""}],"return_code":0,"return_msg":"정상적으로 처리되었습니다"}

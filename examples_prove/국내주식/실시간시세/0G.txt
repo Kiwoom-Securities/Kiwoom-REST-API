@@ -1,0 +1,3 @@
+[REG] {'trnm': 'REG', 'return_code': 0, 'return_msg': ''}
+
+[exit code 124]

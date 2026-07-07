@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: transparent; display: flex; justify-content: center; padding: 32px; }
+  .window {
+    background: #282a36;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    min-width: 480px;
+    max-width: 960px;
+    overflow: hidden;
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .titlebar {
+    background: #21222c;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+  .title {
+    flex: 1;
+    text-align: center;
+    color: #bd93f9;
+    font-size: 12px;
+    margin-right: 36px;
+  }
+  .body { padding: 20px 24px; }
+  .meta { color: #6272a4; margin-bottom: 12px; }
+  .meta span { color: #50fa7b; }
+  pre {
+    color: #f8f8f2;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+    <div class="title">kiwoom candles stock-yearly</div>
+  </div>
+  <div class="body">
+    <div class="meta"><span>$</span> kiwoom candles stock-yearly --code 005930 --date 20260528 --adjusted 1 --format json</div>
+    <div class="meta">mode=read · exit=0 · elapsed=0.37s</div>
+    <pre>{&quot;stk_cd&quot;:&quot;005930&quot;,&quot;stk_yr_pole_chart_qry&quot;:[{&quot;cur_prc&quot;:&quot;294500&quot;,&quot;trde_qty&quot;:&quot;30426507&quot;,&quot;trde_prica&quot;:&quot;6389883242050&quot;,&quot;dt&quot;:&quot;20260102&quot;,&quot;open_pric&quot;:&quot;93500&quot;,&quot;high_pric&quot;:&quot;770000&quot;,&quot;low_pric&quot;:&quot;91000&quot;},{&quot;cur_prc&quot;:&quot;133500&quot;,&quot;trde_qty&quot;:&quot;5853187&quot;,&quot;trde_prica&quot;:&quot;605468700575&quot;,&quot;dt&quot;:&quot;20250929&quot;,&quot;open_pric&quot;:&quot;65000&quot;,&quot;high_pric&quot;:&quot;520000&quot;,&quot;low_pric&quot;:&quot;26950&quot;}],&quot;return_code&quot;:0,&quot;return_msg&quot;:&quot;정상적으로 처리되었습니다&quot;}</pre>
+  </div>
+</div>
+</body>
+</html>

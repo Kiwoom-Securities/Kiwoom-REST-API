@@ -1,0 +1,1 @@
+{"stk_invsr_orgn_tot":[{"ind_invsr":"+2778773","frgnr_invsr":"--5097486","orgn":"+2318419","fnnc_invt":"+1613083","insrnc":"--152619","invtrt":"+636001","etc_fnnc":"--27912","bank":"--16693","penfnd_etc":"--33859","samo_fund":"+300418","natn":"0","etc_corp":"--11393","natfor":"+11688"}],"return_code":0,"return_msg":"정상적으로 처리되었습니다"}

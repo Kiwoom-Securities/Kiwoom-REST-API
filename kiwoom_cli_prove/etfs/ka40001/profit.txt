@@ -1,0 +1,1 @@
+{"etfprft_rt_lst":[{"etfprft_rt":"-12.48","cntr_prft_rt":"0.00","for_netprps_qty":"0","orgn_netprps_qty":""}],"return_code":0,"return_msg":"정상적으로 처리되었습니다"}

@@ -1,0 +1,1444 @@
+{
+  "delay_seconds": 0.5,
+  "total_run": 205,
+  "success": 205,
+  "failed": 0,
+  "skipped": [],
+  "results": [
+    {
+      "api_id": "ka00001",
+      "command_path": "kiwoom accounts list",
+      "command": "kiwoom accounts list --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.616
+    },
+    {
+      "api_id": "ka00198",
+      "command_path": "kiwoom stocks realtime-rank",
+      "command": "kiwoom stocks realtime-rank --window 1m --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.427
+    },
+    {
+      "api_id": "ka01690",
+      "command_path": "kiwoom accounts daily-balance-return",
+      "command": "kiwoom accounts daily-balance-return --date 20260528 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.442
+    },
+    {
+      "api_id": "ka10001",
+      "command_path": "kiwoom stocks info",
+      "command": "kiwoom stocks info --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.469
+    },
+    {
+      "api_id": "ka10002",
+      "command_path": "kiwoom stocks brokers",
+      "command": "kiwoom stocks brokers --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.411
+    },
+    {
+      "api_id": "ka10003",
+      "command_path": "kiwoom stocks fills",
+      "command": "kiwoom stocks fills --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.419
+    },
+    {
+      "api_id": "ka10004",
+      "command_path": "kiwoom orderbooks list",
+      "command": "kiwoom orderbooks list --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.438
+    },
+    {
+      "api_id": "ka10005",
+      "command_path": "kiwoom quotes multi-period",
+      "command": "kiwoom quotes multi-period --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.457
+    },
+    {
+      "api_id": "ka10006",
+      "command_path": "kiwoom quotes intraday-minute",
+      "command": "kiwoom quotes intraday-minute --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.439
+    },
+    {
+      "api_id": "ka10007",
+      "command_path": "kiwoom quotes price",
+      "command": "kiwoom quotes price --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.383
+    },
+    {
+      "api_id": "ka10008",
+      "command_path": "kiwoom investors by-stock",
+      "command": "kiwoom investors by-stock --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.436
+    },
+    {
+      "api_id": "ka10009",
+      "command_path": "kiwoom investors lookup",
+      "command": "kiwoom investors lookup --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.447
+    },
+    {
+      "api_id": "ka10010",
+      "command_path": "kiwoom sectors program",
+      "command": "kiwoom sectors program --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.434
+    },
+    {
+      "api_id": "ka10011",
+      "command_path": "kiwoom quotes list",
+      "command": "kiwoom quotes list --kind all --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.436
+    },
+    {
+      "api_id": "ka10013",
+      "command_path": "kiwoom stocks trend",
+      "command": "kiwoom stocks trend --code 005930 --date 20260528 --kind financing --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.437
+    },
+    {
+      "api_id": "ka10014",
+      "command_path": "kiwoom short-selling trend",
+      "command": "kiwoom short-selling trend --code 005930 --from 20260501 --to 20260528 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.406
+    },
+    {
+      "api_id": "ka10015",
+      "command_path": "kiwoom stocks daily-trades",
+      "command": "kiwoom stocks daily-trades --code 005930 --from 20260501 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.434
+    },
+    {
+      "api_id": "ka10016",
+      "command_path": "kiwoom stocks new-high-low",
+      "command": "kiwoom stocks new-high-low --market all --kind new-high --price-basis high-low --stock-condition all --volume-condition all --credit-condition all --include-limit no --period-days 5 --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.584
+    },
+    {
+      "api_id": "ka10017",
+      "command_path": "kiwoom stocks limit-move",
+      "command": "kiwoom stocks limit-move --market all --direction upper --sort code --stock-condition all --volume-condition all --credit-condition all --price-condition all --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.479
+    },
+    {
+      "api_id": "ka10018",
+      "command_path": "kiwoom stocks high-low-near",
+      "command": "kiwoom stocks high-low-near --kind high --near-rate 5 --market all --volume-condition all --stock-condition all --credit-condition all --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.634
+    },
+    {
+      "api_id": "ka10019",
+      "command_path": "kiwoom stocks price-spike",
+      "command": "kiwoom stocks price-spike --market all --direction rise --time-unit minute --time 1 --volume-condition all --stock-condition all --credit-condition all --price-condition all --include-limit no --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.947
+    },
+    {
+      "api_id": "ka10020",
+      "command_path": "kiwoom rankings orderbook-balance",
+      "command": "kiwoom rankings orderbook-balance --market kospi --sort net-buy-balance --volume 10k --stock-condition all --credit-condition all --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.589
+    },
+    {
+      "api_id": "ka10021",
+      "command_path": "kiwoom rankings orderbook-balance-spike",
+      "command": "kiwoom rankings orderbook-balance-spike --market kospi --side buy-balance --sort spike-quantity --interval 1 --volume 10k --stock-condition all --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.544
+    },
+    {
+      "api_id": "ka10022",
+      "command_path": "kiwoom rankings balance-rate-spike",
+      "command": "kiwoom rankings balance-rate-spike --market kospi --ratio buy-to-sell --interval 1 --volume 10k --stock-condition all --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.565
+    },
+    {
+      "api_id": "ka10023",
+      "command_path": "kiwoom rankings volume-spike",
+      "command": "kiwoom rankings volume-spike --market all --sort spike-quantity --time-unit minute --volume-condition 5k --stock-condition all --price-condition all --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.486
+    },
+    {
+      "api_id": "ka10024",
+      "command_path": "kiwoom stocks volume-renewal",
+      "command": "kiwoom stocks volume-renewal --market all --period-days 5 --volume-condition 5k --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.492
+    },
+    {
+      "api_id": "ka10025",
+      "command_path": "kiwoom stocks volume-zone",
+      "command": "kiwoom stocks volume-zone --market all --concentration-rate 50 --include-current yes --zone-count 5 --period-days 50 --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.846
+    },
+    {
+      "api_id": "ka10026",
+      "command_path": "kiwoom stocks valuation-rank",
+      "command": "kiwoom stocks valuation-rank --kind low-pbr --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.652
+    },
+    {
+      "api_id": "ka10027",
+      "command_path": "kiwoom rankings previous-change-rate",
+      "command": "kiwoom rankings previous-change-rate --market all --sort rise-rate --volume all --stock-condition all --credit-condition all --include-limit no --price-condition all --amount-condition all --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 1.655
+    },
+    {
+      "api_id": "ka10028",
+      "command_path": "kiwoom stocks open-change",
+      "command": "kiwoom stocks open-change --basis open --volume-condition all --market all --include-limit no --stock-condition all --credit-condition all --amount-condition all --direction top --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.699
+    },
+    {
+      "api_id": "ka10029",
+      "command_path": "kiwoom rankings list-fills",
+      "command": "kiwoom rankings list-fills --market all --sort rise-rate --volume all --stock-condition all --credit-condition all --price-condition all --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.576
+    },
+    {
+      "api_id": "ka10030",
+      "command_path": "kiwoom rankings today-volume",
+      "command": "kiwoom rankings today-volume --market all --sort volume --stock-condition include-managed --credit-type all --volume-condition all --price-condition all --amount-condition all --session all --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.456
+    },
+    {
+      "api_id": "ka10031",
+      "command_path": "kiwoom rankings previous-volume",
+      "command": "kiwoom rankings previous-volume --market all --kind volume --rank-from 1 --rank-to 20 --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.567
+    },
+    {
+      "api_id": "ka10032",
+      "command_path": "kiwoom rankings amount",
+      "command": "kiwoom rankings amount --market all --include-managed no --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.649
+    },
+    {
+      "api_id": "ka10033",
+      "command_path": "kiwoom rankings credit-ratio",
+      "command": "kiwoom rankings credit-ratio --market all --volume-condition all --stock-condition all --include-limit no --credit-condition all --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.504
+    },
+    {
+      "api_id": "ka10034",
+      "command_path": "kiwoom rankings foreign-period-trades",
+      "command": "kiwoom rankings foreign-period-trades --market all --side net-buy --period 5d --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.591
+    },
+    {
+      "api_id": "ka10035",
+      "command_path": "kiwoom rankings foreign-continuous-net",
+      "command": "kiwoom rankings foreign-continuous-net --market all --side net-buy --base-date today --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.52
+    },
+    {
+      "api_id": "ka10036",
+      "command_path": "kiwoom rankings foreign-limit-usage",
+      "command": "kiwoom rankings foreign-limit-usage --market all --period 5d --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.538
+    },
+    {
+      "api_id": "ka10037",
+      "command_path": "kiwoom rankings foreign-broker-trades",
+      "command": "kiwoom rankings foreign-broker-trades --market all --period 5d --side net-buy --sort amount --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 2.524
+    },
+    {
+      "api_id": "ka10038",
+      "command_path": "kiwoom rankings broker-by-stock",
+      "command": "kiwoom rankings broker-by-stock --code 005930 --from 20260501 --to 20260528 --side net-buy --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.442
+    },
+    {
+      "api_id": "ka10039",
+      "command_path": "kiwoom rankings broker-trades",
+      "command": "kiwoom rankings broker-trades --broker-code 001 --volume-condition all --side net-buy --period 5d --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.371
+    },
+    {
+      "api_id": "ka10040",
+      "command_path": "kiwoom rankings stock-main-brokers",
+      "command": "kiwoom rankings stock-main-brokers --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.371
+    },
+    {
+      "api_id": "ka10042",
+      "command_path": "kiwoom rankings net-buy-brokers",
+      "command": "kiwoom rankings net-buy-brokers --code 005930 --date-mode period --point today --sort close --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.375
+    },
+    {
+      "api_id": "ka10043",
+      "command_path": "kiwoom stocks broker-volume-zone",
+      "command": "kiwoom stocks broker-volume-zone --code 005930 --from 20260501 --to 20260528 --date-mode period --position today --period-days 5 --sort close --broker-code 001 --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.384
+    },
+    {
+      "api_id": "ka10044",
+      "command_path": "kiwoom quotes institution-daily",
+      "command": "kiwoom quotes institution-daily --from 20260501 --to 20260528 --side net-buy --market kospi --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.561
+    },
+    {
+      "api_id": "ka10045",
+      "command_path": "kiwoom quotes by-stock",
+      "command": "kiwoom quotes by-stock --code 005930 --from 20260501 --to 20260528 --institution-price buy --foreign-price buy --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.372
+    },
+    {
+      "api_id": "ka10046",
+      "command_path": "kiwoom quotes strength-time",
+      "command": "kiwoom quotes strength-time --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.495
+    },
+    {
+      "api_id": "ka10047",
+      "command_path": "kiwoom quotes strength-daily",
+      "command": "kiwoom quotes strength-daily --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.392
+    },
+    {
+      "api_id": "ka10048",
+      "command_path": "kiwoom elws daily",
+      "command": "kiwoom elws daily --code 57M747 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 1.147
+    },
+    {
+      "api_id": "ka10050",
+      "command_path": "kiwoom elws sensitivity",
+      "command": "kiwoom elws sensitivity --code 57M747 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.45
+    },
+    {
+      "api_id": "ka10051",
+      "command_path": "kiwoom sectors investor-flows",
+      "command": "kiwoom sectors investor-flows --market kospi --basis amount --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.657
+    },
+    {
+      "api_id": "ka10052",
+      "command_path": "kiwoom stocks broker-instant-volume",
+      "command": "kiwoom stocks broker-instant-volume --broker-code 001 --market all --quantity-condition 0 --price-condition all --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 1.131
+    },
+    {
+      "api_id": "ka10053",
+      "command_path": "kiwoom rankings top-exit-brokers",
+      "command": "kiwoom rankings top-exit-brokers --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.429
+    },
+    {
+      "api_id": "ka10054",
+      "command_path": "kiwoom stocks vi-triggered",
+      "command": "kiwoom stocks vi-triggered --market all --session all --vi-type all --skip-stocks 000000000 --use-volume yes --min-volume 0 --max-volume 999999999 --use-amount yes --min-amount 0 --max-amount 999999999 --direction all --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.422
+    },
+    {
+      "api_id": "ka10055",
+      "command_path": "kiwoom stocks today-previous-fills",
+      "command": "kiwoom stocks today-previous-fills --code 005930 --day today --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.442
+    },
+    {
+      "api_id": "ka10058",
+      "command_path": "kiwoom stocks investor-daily",
+      "command": "kiwoom stocks investor-daily --from 20260501 --to 20260528 --side net-buy --market kospi --investor foreign --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.523
+    },
+    {
+      "api_id": "ka10059",
+      "command_path": "kiwoom stocks investor-by-stock",
+      "command": "kiwoom stocks investor-by-stock --date 20260528 --code 005930 --basis amount --side net-buy --unit share --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.425
+    },
+    {
+      "api_id": "ka10060",
+      "command_path": "kiwoom candles by-stock",
+      "command": "kiwoom candles by-stock --date 20260528 --code 005930 --basis amount --side net-buy --unit share --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.599
+    },
+    {
+      "api_id": "ka10061",
+      "command_path": "kiwoom stocks investor-by-stock-total",
+      "command": "kiwoom stocks investor-by-stock-total --code 005930 --from 20260501 --to 20260528 --basis amount --side net-buy --unit share --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 1.706
+    },
+    {
+      "api_id": "ka10062",
+      "command_path": "kiwoom rankings same-net-trades",
+      "command": "kiwoom rankings same-net-trades --from 20260501 --market all --side net-buy --basis amount --unit share --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.642
+    },
+    {
+      "api_id": "ka10063",
+      "command_path": "kiwoom quotes investor-intraday",
+      "command": "kiwoom quotes investor-intraday --market all --basis combined --investor foreign --foreign-all yes --same-net-buy yes --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.454
+    },
+    {
+      "api_id": "ka10064",
+      "command_path": "kiwoom candles lookup",
+      "command": "kiwoom candles lookup --market all --basis amount --side net-buy --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.777
+    },
+    {
+      "api_id": "ka10065",
+      "command_path": "kiwoom rankings investor-intraday",
+      "command": "kiwoom rankings investor-intraday --side net-buy --market all --investor foreign --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.438
+    },
+    {
+      "api_id": "ka10066",
+      "command_path": "kiwoom quotes investor-after-close",
+      "command": "kiwoom quotes investor-after-close --market all --basis amount --side net-buy --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.935
+    },
+    {
+      "api_id": "ka10068",
+      "command_path": "kiwoom securities-lending trend",
+      "command": "kiwoom securities-lending trend --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.43
+    },
+    {
+      "api_id": "ka10069",
+      "command_path": "kiwoom securities-lending list",
+      "command": "kiwoom securities-lending list --from 20260501 --market kospi --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.549
+    },
+    {
+      "api_id": "ka10072",
+      "command_path": "kiwoom accounts realized-profit-stock-daily",
+      "command": "kiwoom accounts realized-profit-stock-daily --date 20260522 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.464
+    },
+    {
+      "api_id": "ka10073",
+      "command_path": "kiwoom accounts realized-profit-period-stock",
+      "command": "kiwoom accounts realized-profit-period-stock --from 20260522 --to 20260522 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.446
+    },
+    {
+      "api_id": "ka10074",
+      "command_path": "kiwoom accounts realized-profit-daily",
+      "command": "kiwoom accounts realized-profit-daily --from 20260501 --to 20260528 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.418
+    },
+    {
+      "api_id": "ka10075",
+      "command_path": "kiwoom orders list-open",
+      "command": "kiwoom orders list-open --stock-scope all --side all --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.422
+    },
+    {
+      "api_id": "ka10076",
+      "command_path": "kiwoom orders list-fills",
+      "command": "kiwoom orders list-fills --stock-scope all --side all --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.473
+    },
+    {
+      "api_id": "ka10077",
+      "command_path": "kiwoom accounts realized-profit-today-detail",
+      "command": "kiwoom accounts realized-profit-today-detail --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 1.419
+    },
+    {
+      "api_id": "ka10078",
+      "command_path": "kiwoom quotes broker-trend",
+      "command": "kiwoom quotes broker-trend --broker-code 001 --code 005930 --from 20260501 --to 20260528 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.418
+    },
+    {
+      "api_id": "ka10079",
+      "command_path": "kiwoom candles stock-tick",
+      "command": "kiwoom candles stock-tick --code 005930 --interval 0 --adjusted 1 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.426
+    },
+    {
+      "api_id": "ka10080",
+      "command_path": "kiwoom candles stock-minute",
+      "command": "kiwoom candles stock-minute --code 005930 --interval 0 --adjusted 1 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.537
+    },
+    {
+      "api_id": "ka10081",
+      "command_path": "kiwoom candles daily",
+      "command": "kiwoom candles daily --code 005930 --date 20260528 --adjusted 1 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.545
+    },
+    {
+      "api_id": "ka10082",
+      "command_path": "kiwoom candles stock-weekly",
+      "command": "kiwoom candles stock-weekly --code 005930 --date 20260528 --adjusted 1 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.474
+    },
+    {
+      "api_id": "ka10083",
+      "command_path": "kiwoom candles stock-monthly",
+      "command": "kiwoom candles stock-monthly --code 005930 --date 20260528 --adjusted 1 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.428
+    },
+    {
+      "api_id": "ka10084",
+      "command_path": "kiwoom stocks today-previous-trades",
+      "command": "kiwoom stocks today-previous-trades --code 005930 --day today --interval-type tick --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.416
+    },
+    {
+      "api_id": "ka10085",
+      "command_path": "kiwoom accounts return-rate",
+      "command": "kiwoom accounts return-rate --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.379
+    },
+    {
+      "api_id": "ka10086",
+      "command_path": "kiwoom quotes daily-price",
+      "command": "kiwoom quotes daily-price --code 005930 --date 20260528 --basis amount --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.544
+    },
+    {
+      "api_id": "ka10087",
+      "command_path": "kiwoom quotes after-hours",
+      "command": "kiwoom quotes after-hours --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.429
+    },
+    {
+      "api_id": "ka10088",
+      "command_path": "kiwoom orders open-detail",
+      "command": "kiwoom orders open-detail --order-id 0000000 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.37
+    },
+    {
+      "api_id": "ka10094",
+      "command_path": "kiwoom candles stock-yearly",
+      "command": "kiwoom candles stock-yearly --code 005930 --date 20260528 --adjusted 1 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.369
+    },
+    {
+      "api_id": "ka10095",
+      "command_path": "kiwoom stocks watchlist-info",
+      "command": "kiwoom stocks watchlist-info --codes '005930|000660' --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.378
+    },
+    {
+      "api_id": "ka10098",
+      "command_path": "kiwoom rankings after-hours-change-rate",
+      "command": "kiwoom rankings after-hours-change-rate --market all --sort rise-rate --stock-condition all --volume all --credit-condition all --amount-condition all --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.439
+    },
+    {
+      "api_id": "ka10099",
+      "command_path": "kiwoom stocks info-list",
+      "command": "kiwoom stocks info-list --market-type kospi --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.476
+    },
+    {
+      "api_id": "ka10100",
+      "command_path": "kiwoom stocks info-detail",
+      "command": "kiwoom stocks info-detail --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.454
+    },
+    {
+      "api_id": "ka10101",
+      "command_path": "kiwoom stocks sector-codes",
+      "command": "kiwoom stocks sector-codes --market kospi --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.447
+    },
+    {
+      "api_id": "ka10102",
+      "command_path": "kiwoom stocks member-firms",
+      "command": "kiwoom stocks member-firms --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.421
+    },
+    {
+      "api_id": "ka10131",
+      "command_path": "kiwoom investors trend",
+      "command": "kiwoom investors trend --period 5d --market kospi --side net-buy --target stock --basis amount --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.915
+    },
+    {
+      "api_id": "ka10170",
+      "command_path": "kiwoom accounts day-trading-log",
+      "command": "kiwoom accounts day-trading-log --sell-scope all-sells --cash-credit all --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.479
+    },
+    {
+      "api_id": "ka10171",
+      "command_path": "kiwoom streams conditions-list",
+      "command": "kiwoom streams conditions-list --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.537
+    },
+    {
+      "api_id": "ka10172",
+      "command_path": "kiwoom streams conditions-search",
+      "command": "kiwoom streams conditions-search --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 1.708
+    },
+    {
+      "api_id": "ka10173",
+      "command_path": "kiwoom streams conditions-subscribe",
+      "command": "kiwoom streams conditions-subscribe --exchange KRX --check --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 2.644
+    },
+    {
+      "api_id": "ka10174",
+      "command_path": "kiwoom streams conditions-unsubscribe",
+      "command": "kiwoom streams conditions-unsubscribe --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.637
+    },
+    {
+      "api_id": "ka20001",
+      "command_path": "kiwoom sectors price",
+      "command": "kiwoom sectors price --market kospi --code 001 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.484
+    },
+    {
+      "api_id": "ka20002",
+      "command_path": "kiwoom sectors stocks",
+      "command": "kiwoom sectors stocks --market kospi --code 001 --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.388
+    },
+    {
+      "api_id": "ka20003",
+      "command_path": "kiwoom sectors indices",
+      "command": "kiwoom sectors indices --code 001 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.382
+    },
+    {
+      "api_id": "ka20004",
+      "command_path": "kiwoom candles sector-tick",
+      "command": "kiwoom candles sector-tick --code 001 --interval 0 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.502
+    },
+    {
+      "api_id": "ka20005",
+      "command_path": "kiwoom candles sector-minute",
+      "command": "kiwoom candles sector-minute --code 001 --interval 0 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.508
+    },
+    {
+      "api_id": "ka20006",
+      "command_path": "kiwoom candles sector-daily",
+      "command": "kiwoom candles sector-daily --code 001 --date 20260528 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.426
+    },
+    {
+      "api_id": "ka20007",
+      "command_path": "kiwoom candles sector-weekly",
+      "command": "kiwoom candles sector-weekly --code 001 --date 20260528 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.491
+    },
+    {
+      "api_id": "ka20008",
+      "command_path": "kiwoom candles sector-monthly",
+      "command": "kiwoom candles sector-monthly --code 001 --date 20260528 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.341
+    },
+    {
+      "api_id": "ka20009",
+      "command_path": "kiwoom sectors daily",
+      "command": "kiwoom sectors daily --market kospi --code 001 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.386
+    },
+    {
+      "api_id": "ka20019",
+      "command_path": "kiwoom candles sector-yearly",
+      "command": "kiwoom candles sector-yearly --code 001 --date 20260528 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.427
+    },
+    {
+      "api_id": "ka20068",
+      "command_path": "kiwoom securities-lending by-stock",
+      "command": "kiwoom securities-lending by-stock --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.413
+    },
+    {
+      "api_id": "ka30001",
+      "command_path": "kiwoom elws price-move",
+      "command": "kiwoom elws price-move --direction rise --time-unit minute --time 1 --volume all --issuer-code 000000000000 --underlying-code 000000000000 --right-type all --lp-code 000000000000 --include-ended yes --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.471
+    },
+    {
+      "api_id": "ka30002",
+      "command_path": "kiwoom elws broker-net",
+      "command": "kiwoom elws broker-net --issuer-code 003 --volume all --side net-sell --period 60d --include-ended yes --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.405
+    },
+    {
+      "api_id": "ka30003",
+      "command_path": "kiwoom elws balance",
+      "command": "kiwoom elws balance --code 57M747 --date 20260616 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.478
+    },
+    {
+      "api_id": "ka30004",
+      "command_path": "kiwoom elws divergence",
+      "command": "kiwoom elws divergence --issuer-code 000000000000 --underlying-code 000000000000 --right-type all --lp-code 000000000000 --include-ended yes --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.441
+    },
+    {
+      "api_id": "ka30005",
+      "command_path": "kiwoom elws conditions",
+      "command": "kiwoom elws conditions --issuer-code 000000000017 --underlying-code 201 --right-type call --lp-code 000000000000 --sort none --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.425
+    },
+    {
+      "api_id": "ka30009",
+      "command_path": "kiwoom elws change-rank",
+      "command": "kiwoom elws change-rank --sort rise-rate --right-type all --include-ended no --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.375
+    },
+    {
+      "api_id": "ka30010",
+      "command_path": "kiwoom elws balance-rank",
+      "command": "kiwoom elws balance-rank --sort buy-balance --right-type all --include-ended no --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.446
+    },
+    {
+      "api_id": "ka30011",
+      "command_path": "kiwoom elws proximity",
+      "command": "kiwoom elws proximity --code 57M747 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.378
+    },
+    {
+      "api_id": "ka30012",
+      "command_path": "kiwoom elws details",
+      "command": "kiwoom elws details --code 57M747 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.542
+    },
+    {
+      "api_id": "ka40001",
+      "command_path": "kiwoom etfs profit",
+      "command": "kiwoom etfs profit --code 005930 --index-code 001 --period month --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.4
+    },
+    {
+      "api_id": "ka40002",
+      "command_path": "kiwoom etfs info",
+      "command": "kiwoom etfs info --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 1.57
+    },
+    {
+      "api_id": "ka40003",
+      "command_path": "kiwoom etfs daily",
+      "command": "kiwoom etfs daily --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.434
+    },
+    {
+      "api_id": "ka40004",
+      "command_path": "kiwoom etfs list",
+      "command": "kiwoom etfs list --tax-type all --nav-compare all --manager 000 --taxable all --tracking-index 000 --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.408
+    },
+    {
+      "api_id": "ka40006",
+      "command_path": "kiwoom etfs intraday-trend",
+      "command": "kiwoom etfs intraday-trend --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.575
+    },
+    {
+      "api_id": "ka40007",
+      "command_path": "kiwoom etfs intraday-fills",
+      "command": "kiwoom etfs intraday-fills --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.408
+    },
+    {
+      "api_id": "ka40008",
+      "command_path": "kiwoom etfs daily-fills",
+      "command": "kiwoom etfs daily-fills --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.412
+    },
+    {
+      "api_id": "ka40009",
+      "command_path": "kiwoom etfs nav",
+      "command": "kiwoom etfs nav --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.446
+    },
+    {
+      "api_id": "ka40010",
+      "command_path": "kiwoom etfs foreign-trend",
+      "command": "kiwoom etfs foreign-trend --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.454
+    },
+    {
+      "api_id": "ka50010",
+      "command_path": "kiwoom quotes gold-fills",
+      "command": "kiwoom quotes gold-fills --code M04020000 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.483
+    },
+    {
+      "api_id": "ka50012",
+      "command_path": "kiwoom quotes gold-daily",
+      "command": "kiwoom quotes gold-daily --code M04020000 --date 20260528 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.489
+    },
+    {
+      "api_id": "ka50079",
+      "command_path": "kiwoom candles gold-tick",
+      "command": "kiwoom candles gold-tick --code M04020000 --interval 0 --adjusted 1 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 1.735
+    },
+    {
+      "api_id": "ka50080",
+      "command_path": "kiwoom candles gold-minute",
+      "command": "kiwoom candles gold-minute --code M04020000 --interval 0 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.404
+    },
+    {
+      "api_id": "ka50081",
+      "command_path": "kiwoom candles gold-daily",
+      "command": "kiwoom candles gold-daily --code M04020000 --date 20260528 --adjusted 1 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.417
+    },
+    {
+      "api_id": "ka50082",
+      "command_path": "kiwoom candles gold-weekly",
+      "command": "kiwoom candles gold-weekly --code M04020000 --date 20260528 --adjusted 1 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.503
+    },
+    {
+      "api_id": "ka50083",
+      "command_path": "kiwoom candles gold-monthly",
+      "command": "kiwoom candles gold-monthly --code M04020000 --date 20260528 --adjusted 1 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.373
+    },
+    {
+      "api_id": "ka50087",
+      "command_path": "kiwoom quotes gold-expected",
+      "command": "kiwoom quotes gold-expected --code M04020000 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.39
+    },
+    {
+      "api_id": "ka50091",
+      "command_path": "kiwoom candles gold-today-tick",
+      "command": "kiwoom candles gold-today-tick --code M04020000 --interval 0 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.366
+    },
+    {
+      "api_id": "ka50092",
+      "command_path": "kiwoom candles gold-today-minute",
+      "command": "kiwoom candles gold-today-minute --code M04020000 --interval 0 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.475
+    },
+    {
+      "api_id": "ka50100",
+      "command_path": "kiwoom quotes gold-price",
+      "command": "kiwoom quotes gold-price --code M04020000 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 1.413
+    },
+    {
+      "api_id": "ka50101",
+      "command_path": "kiwoom orderbooks gold",
+      "command": "kiwoom orderbooks gold --code M04020000 --tick 1 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.377
+    },
+    {
+      "api_id": "ka52301",
+      "command_path": "kiwoom investors gold-status",
+      "command": "kiwoom investors gold-status --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.377
+    },
+    {
+      "api_id": "ka90001",
+      "command_path": "kiwoom themes lookup",
+      "command": "kiwoom themes lookup --kind all --days 0 --sort profit-top --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.518
+    },
+    {
+      "api_id": "ka90002",
+      "command_path": "kiwoom themes by-stock",
+      "command": "kiwoom themes by-stock --code 001 --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.481
+    },
+    {
+      "api_id": "ka90003",
+      "command_path": "kiwoom stocks program-net-top",
+      "command": "kiwoom stocks program-net-top --side net-sell --basis amount --market-code P00101 --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 1.407
+    },
+    {
+      "api_id": "ka90004",
+      "command_path": "kiwoom stocks program-by-stock",
+      "command": "kiwoom stocks program-by-stock --date 20260528 --market-code 000 --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.383
+    },
+    {
+      "api_id": "ka90005",
+      "command_path": "kiwoom quotes program-time",
+      "command": "kiwoom quotes program-time --date 20241101 --basis amount --market-code P00101 --interval-type minute --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.416
+    },
+    {
+      "api_id": "ka90006",
+      "command_path": "kiwoom quotes balance",
+      "command": "kiwoom quotes balance --date 20260528 --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 2.112
+    },
+    {
+      "api_id": "ka90007",
+      "command_path": "kiwoom quotes program-cumulative",
+      "command": "kiwoom quotes program-cumulative --date 20260528 --basis amount --market kospi --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.379
+    },
+    {
+      "api_id": "ka90008",
+      "command_path": "kiwoom quotes program-by-stock",
+      "command": "kiwoom quotes program-by-stock --basis amount --code 005930 --date 20260528 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.45
+    },
+    {
+      "api_id": "ka90009",
+      "command_path": "kiwoom rankings foreign-institution-trades",
+      "command": "kiwoom rankings foreign-institution-trades --market all --basis amount --include-date yes --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 1.25
+    },
+    {
+      "api_id": "ka90010",
+      "command_path": "kiwoom quotes program-daily",
+      "command": "kiwoom quotes program-daily --date 20241125 --basis amount --market-code P00101 --interval-type tick --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.425
+    },
+    {
+      "api_id": "ka90012",
+      "command_path": "kiwoom securities-lending lookup",
+      "command": "kiwoom securities-lending lookup --date 20260528 --market kospi --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.698
+    },
+    {
+      "api_id": "ka90013",
+      "command_path": "kiwoom quotes stock-program-daily",
+      "command": "kiwoom quotes stock-program-daily --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.396
+    },
+    {
+      "api_id": "kt00001",
+      "command_path": "kiwoom accounts cash",
+      "command": "kiwoom accounts cash --cash-basis estimated --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.416
+    },
+    {
+      "api_id": "kt00002",
+      "command_path": "kiwoom accounts estimated-assets-daily",
+      "command": "kiwoom accounts estimated-assets-daily --from 20260501 --to 20260528 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.396
+    },
+    {
+      "api_id": "kt00003",
+      "command_path": "kiwoom accounts assets",
+      "command": "kiwoom accounts assets --include-delisted no --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.422
+    },
+    {
+      "api_id": "kt00004",
+      "command_path": "kiwoom accounts valuation",
+      "command": "kiwoom accounts valuation --include-delisted no --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.372
+    },
+    {
+      "api_id": "kt00005",
+      "command_path": "kiwoom accounts fill-balance",
+      "command": "kiwoom accounts fill-balance --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.388
+    },
+    {
+      "api_id": "kt00007",
+      "command_path": "kiwoom accounts order-fill-detail",
+      "command": "kiwoom accounts order-fill-detail --date 20260522 --order order --asset-kind all --side all --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.396
+    },
+    {
+      "api_id": "kt00008",
+      "command_path": "kiwoom accounts next-settlement",
+      "command": "kiwoom accounts next-settlement --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.389
+    },
+    {
+      "api_id": "kt00009",
+      "command_path": "kiwoom accounts order-fill-status",
+      "command": "kiwoom accounts order-fill-status --date 20260522 --asset-kind all --market all --side all --fill-status all --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.496
+    },
+    {
+      "api_id": "kt00010",
+      "command_path": "kiwoom orders chance",
+      "command": "kiwoom orders chance --code 005930 --side buy --price 350500 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.436
+    },
+    {
+      "api_id": "kt00011",
+      "command_path": "kiwoom orders margin",
+      "command": "kiwoom orders margin --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.484
+    },
+    {
+      "api_id": "kt00012",
+      "command_path": "kiwoom accounts credit-margin",
+      "command": "kiwoom accounts credit-margin --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.458
+    },
+    {
+      "api_id": "kt00013",
+      "command_path": "kiwoom accounts margin-details",
+      "command": "kiwoom accounts margin-details --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.446
+    },
+    {
+      "api_id": "kt00015",
+      "command_path": "kiwoom accounts transaction-history",
+      "command": "kiwoom accounts transaction-history --from 20260501 --to 20260528 --kind 0 --product all --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.386
+    },
+    {
+      "api_id": "kt00016",
+      "command_path": "kiwoom accounts daily-return-detail",
+      "command": "kiwoom accounts daily-return-detail --from 20260501 --to 20260528 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.639
+    },
+    {
+      "api_id": "kt00017",
+      "command_path": "kiwoom accounts today-status",
+      "command": "kiwoom accounts today-status --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.616
+    },
+    {
+      "api_id": "kt00018",
+      "command_path": "kiwoom accounts holdings",
+      "command": "kiwoom accounts holdings --basis total --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.431
+    },
+    {
+      "api_id": "kt10000",
+      "command_path": "kiwoom orders buy",
+      "command": "kiwoom orders buy --exchange KRX --code 005930 --qty 1 --order-type limit --price 70000 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.334
+    },
+    {
+      "api_id": "kt10001",
+      "command_path": "kiwoom orders sell",
+      "command": "kiwoom orders sell --exchange KRX --code 005930 --qty 1 --order-type limit --price 70000 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.318
+    },
+    {
+      "api_id": "kt10002",
+      "command_path": "kiwoom orders modify",
+      "command": "kiwoom orders modify --exchange KRX --order-id 0000000 --code 005930 --qty 1 --price 90000 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.305
+    },
+    {
+      "api_id": "kt10003",
+      "command_path": "kiwoom orders cancel",
+      "command": "kiwoom orders cancel --exchange KRX --order-id 0000000 --code 005930 --qty 1 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.348
+    },
+    {
+      "api_id": "kt10006",
+      "command_path": "kiwoom orders credit-buy",
+      "command": "kiwoom orders credit-buy --exchange KRX --code 005930 --qty 1 --order-type limit --price 70000 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.306
+    },
+    {
+      "api_id": "kt10007",
+      "command_path": "kiwoom orders credit-sell",
+      "command": "kiwoom orders credit-sell --exchange KRX --code 005930 --qty 1 --order-type limit --price 70000 --credit-deal financing --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.31
+    },
+    {
+      "api_id": "kt10008",
+      "command_path": "kiwoom orders credit-modify",
+      "command": "kiwoom orders credit-modify --exchange KRX --order-id 0000000 --code 005930 --qty 1 --price 90000 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.312
+    },
+    {
+      "api_id": "kt10009",
+      "command_path": "kiwoom orders credit-cancel",
+      "command": "kiwoom orders credit-cancel --exchange KRX --order-id 0000000 --code 005930 --qty 0 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.318
+    },
+    {
+      "api_id": "kt20016",
+      "command_path": "kiwoom stocks credit-loanable",
+      "command": "kiwoom stocks credit-loanable --market all --credit-grade all --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.404
+    },
+    {
+      "api_id": "kt20017",
+      "command_path": "kiwoom stocks credit-loanable-check",
+      "command": "kiwoom stocks credit-loanable-check --code 005930 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.392
+    },
+    {
+      "api_id": "kt50000",
+      "command_path": "kiwoom orders gold-buy",
+      "command": "kiwoom orders gold-buy --code M04020000 --qty 1 --order-type limit --price 70000 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.315
+    },
+    {
+      "api_id": "kt50001",
+      "command_path": "kiwoom orders gold-sell",
+      "command": "kiwoom orders gold-sell --code M04020000 --qty 1 --order-type limit --price 70000 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.318
+    },
+    {
+      "api_id": "kt50002",
+      "command_path": "kiwoom orders gold-modify",
+      "command": "kiwoom orders gold-modify --code M04020000 --order-id 0000000 --qty 1 --price 90000 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.314
+    },
+    {
+      "api_id": "kt50003",
+      "command_path": "kiwoom orders gold-cancel",
+      "command": "kiwoom orders gold-cancel --order-id 0000000 --code M04020000 --qty 0 --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.32
+    },
+    {
+      "api_id": "kt50020",
+      "command_path": "kiwoom accounts gold-balance",
+      "command": "kiwoom accounts gold-balance --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.374
+    },
+    {
+      "api_id": "kt50021",
+      "command_path": "kiwoom accounts gold-cash",
+      "command": "kiwoom accounts gold-cash --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.419
+    },
+    {
+      "api_id": "kt50030",
+      "command_path": "kiwoom accounts gold-all-order-fills",
+      "command": "kiwoom accounts gold-all-order-fills --date 20260522 --order order --market-deal 1 --asset-kind all --side all --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.399
+    },
+    {
+      "api_id": "kt50031",
+      "command_path": "kiwoom accounts gold-order-fills",
+      "command": "kiwoom accounts gold-order-fills --date 20260522 --order order --asset-kind all --side all --exchange KRX --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.429
+    },
+    {
+      "api_id": "kt50032",
+      "command_path": "kiwoom accounts gold-transactions",
+      "command": "kiwoom accounts gold-transactions --from 20200101 --to 20260602 --kind all --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 0.612
+    },
+    {
+      "api_id": "kt50075",
+      "command_path": "kiwoom accounts gold-open-orders",
+      "command": "kiwoom accounts gold-open-orders --date 20260522 --market-deal 1 --asset-kind all --side all --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 1.446
+    },
+    {
+      "api_id": "00",
+      "command_path": "kiwoom streams order-fills",
+      "command": "kiwoom streams order-fills --action subscribe --group 1 --refresh yes --check --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 2.435
+    },
+    {
+      "api_id": "04",
+      "command_path": "kiwoom streams balance",
+      "command": "kiwoom streams balance --action subscribe --group 1 --refresh yes --check --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 2.357
+    },
+    {
+      "api_id": "0A",
+      "command_path": "kiwoom streams momentum",
+      "command": "kiwoom streams momentum --action subscribe --group 1 --refresh yes --code 005930 --check --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 2.336
+    },
+    {
+      "api_id": "0B",
+      "command_path": "kiwoom streams trades",
+      "command": "kiwoom streams trades --action subscribe --group 1 --refresh yes --code 005930 --check --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 2.377
+    },
+    {
+      "api_id": "0C",
+      "command_path": "kiwoom streams best-quotes",
+      "command": "kiwoom streams best-quotes --action subscribe --group 1 --refresh yes --code 005930 --check --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 2.346
+    },
+    {
+      "api_id": "0D",
+      "command_path": "kiwoom streams orderbook",
+      "command": "kiwoom streams orderbook --action subscribe --group 1 --refresh yes --code 005930 --check --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 2.374
+    },
+    {
+      "api_id": "0E",
+      "command_path": "kiwoom streams after-hours-orderbook",
+      "command": "kiwoom streams after-hours-orderbook --action subscribe --group 1 --refresh yes --code 005930 --check --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 2.333
+    },
+    {
+      "api_id": "0F",
+      "command_path": "kiwoom streams brokers",
+      "command": "kiwoom streams brokers --action subscribe --group 1 --refresh yes --code 005930 --check --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 2.35
+    },
+    {
+      "api_id": "0G",
+      "command_path": "kiwoom streams etf-nav",
+      "command": "kiwoom streams etf-nav --action subscribe --group 1 --refresh yes --code 069500 --check --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 2.375
+    },
+    {
+      "api_id": "0H",
+      "command_path": "kiwoom streams expected-fills",
+      "command": "kiwoom streams expected-fills --action subscribe --group 1 --refresh yes --code 005930 --check --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 2.4
+    },
+    {
+      "api_id": "0I",
+      "command_path": "kiwoom streams gold-conversion",
+      "command": "kiwoom streams gold-conversion --action subscribe --group 1 --refresh yes --code MGD --check --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 2.335
+    },
+    {
+      "api_id": "0J",
+      "command_path": "kiwoom streams sector-index",
+      "command": "kiwoom streams sector-index --action subscribe --group 1 --refresh yes --code 001 --check --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 2.407
+    },
+    {
+      "api_id": "0U",
+      "command_path": "kiwoom streams sector-change",
+      "command": "kiwoom streams sector-change --action subscribe --group 1 --refresh yes --code 001 --check --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 2.383
+    },
+    {
+      "api_id": "0g",
+      "command_path": "kiwoom streams stock-info",
+      "command": "kiwoom streams stock-info --action subscribe --group 1 --refresh yes --code 005930 --check --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 2.343
+    },
+    {
+      "api_id": "0m",
+      "command_path": "kiwoom streams elw-theory",
+      "command": "kiwoom streams elw-theory --action subscribe --group 1 --refresh yes --code 57JBHH --check --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 2.367
+    },
+    {
+      "api_id": "0s",
+      "command_path": "kiwoom streams market-open",
+      "command": "kiwoom streams market-open --action subscribe --group 1 --refresh yes --check --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 2.402
+    },
+    {
+      "api_id": "0u",
+      "command_path": "kiwoom streams elw-indicator",
+      "command": "kiwoom streams elw-indicator --action subscribe --group 1 --refresh yes --code 57JBHH --check --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 2.398
+    },
+    {
+      "api_id": "0w",
+      "command_path": "kiwoom streams program-trades",
+      "command": "kiwoom streams program-trades --action subscribe --group 1 --refresh yes --code 005930 --check --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 2.389
+    },
+    {
+      "api_id": "1h",
+      "command_path": "kiwoom streams vi",
+      "command": "kiwoom streams vi --action subscribe --group 1 --refresh yes --check --format json",
+      "exit_code": 0,
+      "elapsed_seconds": 2.387
+    }
+  ]
+}
