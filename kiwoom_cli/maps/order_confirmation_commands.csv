@@ -1,0 +1,13 @@
+command_path,kind,message
+kiwoomcli domestic orders buy,주식 매수,주문은 아직 전송되지 않았습니다. 실제 전송하려면 같은 명령에 --confirm을 붙여 다시 실행하세요.
+kiwoomcli domestic orders sell,주식 매도,주문은 아직 전송되지 않았습니다. 실제 전송하려면 같은 명령에 --confirm을 붙여 다시 실행하세요.
+kiwoomcli domestic orders modify,주식 정정,정정주문은 아직 전송되지 않았습니다. 실제 전송하려면 같은 명령에 --confirm을 붙여 다시 실행하세요.
+kiwoomcli domestic orders cancel,주식 취소,취소주문은 아직 전송되지 않았습니다. 실제 전송하려면 같은 명령에 --confirm을 붙여 다시 실행하세요.
+kiwoomcli domestic orders credit-buy,신용 매수,주문은 아직 전송되지 않았습니다. 실제 전송하려면 같은 명령에 --confirm을 붙여 다시 실행하세요.
+kiwoomcli domestic orders credit-sell,신용 매도,주문은 아직 전송되지 않았습니다. 실제 전송하려면 같은 명령에 --confirm을 붙여 다시 실행하세요.
+kiwoomcli domestic orders credit-modify,신용 정정,정정주문은 아직 전송되지 않았습니다. 실제 전송하려면 같은 명령에 --confirm을 붙여 다시 실행하세요.
+kiwoomcli domestic orders credit-cancel,신용 취소,취소주문은 아직 전송되지 않았습니다. 실제 전송하려면 같은 명령에 --confirm을 붙여 다시 실행하세요.
+kiwoomcli domestic orders gold-buy,금현물 매수,금현물 주문은 아직 전송되지 않았습니다. 실제 전송하려면 같은 명령에 --confirm을 붙여 다시 실행하세요.
+kiwoomcli domestic orders gold-sell,금현물 매도,금현물 주문은 아직 전송되지 않았습니다. 실제 전송하려면 같은 명령에 --confirm을 붙여 다시 실행하세요.
+kiwoomcli domestic orders gold-modify,금현물 정정,금현물 정정주문은 아직 전송되지 않았습니다. 실제 전송하려면 같은 명령에 --confirm을 붙여 다시 실행하세요.
+kiwoomcli domestic orders gold-cancel,금현물 취소,금현물 취소주문은 아직 전송되지 않았습니다. 실제 전송하려면 같은 명령에 --confirm을 붙여 다시 실행하세요.

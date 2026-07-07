@@ -1,0 +1,1 @@
+{"code":"005930","name":"삼성전자","listCount":"0000005919637922","auditInfo":"정상","regDay":"19750611","lastPrice":"00326500","state":"증거금20%|담보대출|신용가능","marketCode":"0","marketName":"거래소","upName":"전기/전자","upSizeName":"대형주","companyClassName":"","orderWarning":"0","nxtEnable":"Y","kind":"A","return_code":0,"return_msg":"정상적으로 처리되었습니다"}

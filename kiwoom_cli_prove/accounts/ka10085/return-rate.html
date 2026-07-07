@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: transparent; display: flex; justify-content: center; padding: 32px; }
+  .window {
+    background: #282a36;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    min-width: 480px;
+    max-width: 960px;
+    overflow: hidden;
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .titlebar {
+    background: #21222c;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+  .title {
+    flex: 1;
+    text-align: center;
+    color: #bd93f9;
+    font-size: 12px;
+    margin-right: 36px;
+  }
+  .body { padding: 20px 24px; }
+  .meta { color: #6272a4; margin-bottom: 12px; }
+  .meta span { color: #50fa7b; }
+  pre {
+    color: #f8f8f2;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+    <div class="title">kiwoom accounts return-rate</div>
+  </div>
+  <div class="body">
+    <div class="meta"><span>$</span> kiwoom accounts return-rate --exchange KRX --format json</div>
+    <div class="meta">mode=account_read · exit=0 · elapsed=0.38s</div>
+    <pre>{&quot;acnt_prft_rt&quot;:[{&quot;dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;005930&quot;,&quot;stk_nm&quot;:&quot;삼성전자&quot;,&quot;cur_prc&quot;:&quot;+374000&quot;,&quot;pur_pric&quot;:&quot;67592&quot;,&quot;pur_amt&quot;:&quot;115042364&quot;,&quot;rmnd_qty&quot;:&quot;1702&quot;,&quot;tdy_sel_pl&quot;:&quot;0&quot;,&quot;tdy_trde_cmsn&quot;:&quot;0&quot;,&quot;tdy_trde_tax&quot;:&quot;0&quot;,&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;00000000&quot;,&quot;setl_remn&quot;:&quot;1702&quot;,&quot;clrn_alow_qty&quot;:&quot;1702&quot;,&quot;crd_amt&quot;:&quot;0&quot;,&quot;crd_int&quot;:&quot;0&quot;,&quot;expr_dt&quot;:&quot;00000000&quot;},{&quot;dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;010140&quot;,&quot;stk_nm&quot;:&quot;삼성중공업&quot;,&quot;cur_prc&quot;:&quot;+24600&quot;,&quot;pur_pric&quot;:&quot;7764&quot;,&quot;pur_amt&quot;:&quot;5519860&quot;,&quot;rmnd_qty&quot;:&quot;711&quot;,&quot;tdy_sel_pl&quot;:&quot;0&quot;,&quot;tdy_trde_cmsn&quot;:&quot;0&quot;,&quot;tdy_trde_tax&quot;:&quot;0&quot;,&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;00000000&quot;,&quot;setl_remn&quot;:&quot;711&quot;,&quot;clrn_alow_qty&quot;:&quot;711&quot;,&quot;crd_amt&quot;:&quot;0&quot;,&quot;crd_int&quot;:&quot;0&quot;,&quot;expr_dt&quot;:&quot;00000000&quot;},{&quot;dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;0106J0&quot;,&quot;stk_nm&quot;:&quot;대신 KOSPI200인덱스 X클래스&quot;,&quot;cur_prc&quot;:&quot;24915&quot;,&quot;pur_pric&quot;:&quot;22866&quot;,&quot;pur_amt&quot;:&quot;228658&quot;,&quot;rmnd_qty&quot;:&quot;10&quot;,&quot;tdy_sel_pl&quot;:&quot;0&quot;,&quot;tdy_trde_cmsn&quot;:&quot;0&quot;,&quot;tdy_trde_tax&quot;:&quot;0&quot;,&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;00000000&quot;,&quot;setl_remn&quot;:&quot;10&quot;,&quot;clrn_alow_qty&quot;:&quot;10&quot;,&quot;crd_amt&quot;:&quot;0&quot;,&quot;crd_int&quot;:&quot;0&quot;,&quot;expr_dt&quot;:&quot;00000000&quot;},{&quot;dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;030000&quot;,&quot;stk_nm&quot;:&quot;제일기획&quot;,&quot;cur_prc&quot;:&quot;19480&quot;,&quot;pur_pric&quot;:&quot;19259&quot;,&quot;pur_amt&quot;:&quot;308150&quot;,&quot;rmnd_qty&quot;:&quot;16&quot;,&quot;tdy_sel_pl&quot;:&quot;0&quot;,&quot;tdy_trde_cmsn&quot;:&quot;0&quot;,&quot;tdy_trde_tax&quot;:&quot;0&quot;,&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;00000000&quot;,&quot;setl_remn&quot;:&quot;16&quot;,&quot;clrn_alow_qty&quot;:&quot;16&quot;,&quot;crd_amt&quot;:&quot;0&quot;,&quot;crd_int&quot;:&quot;0&quot;,&quot;expr_dt&quot;:&quot;00000000&quot;},{&quot;dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;030200&quot;,&quot;stk_nm&quot;:&quot;KT&quot;,&quot;cur_prc&quot;:&quot;+53900&quot;,&quot;pur_pric&quot;:&quot;68636&quot;,&quot;pur_amt&quot;:&quot;755000&quot;,&quot;rmnd_qty&quot;:&quot;11&quot;,&quot;tdy_sel_pl&quot;:&quot;0&quot;,&quot;tdy_trde_cmsn&quot;:&quot;0&quot;,&quot;tdy_trde_tax&quot;:&quot;0&quot;,&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;00000000&quot;,&quot;setl_remn&quot;:&quot;11&quot;,&quot;clrn_alow_qty&quot;:&quot;11&quot;,&quot;crd_amt&quot;:&quot;0&quot;,&quot;crd_int&quot;:&quot;0&quot;,&quot;expr_dt&quot;:&quot;00000000&quot;},{&quot;dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;039490&quot;,&quot;stk_nm&quot;:&quot;키움증권&quot;,&quot;cur_prc&quot;:&quot;306500&quot;,&quot;pur_pric&quot;:&quot;233058&quot;,&quot;pur_amt&quot;:&quot;1398350&quot;,&quot;rmnd_qty&quot;:&quot;6&quot;,&quot;tdy_sel_pl&quot;:&quot;0&quot;,&quot;tdy_trde_cmsn&quot;:&quot;0&quot;,&quot;tdy_trde_tax&quot;:&quot;0&quot;,&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;00000000&quot;,&quot;setl_remn&quot;:&quot;6&quot;,&quot;clrn_alow_qty&quot;:&quot;6&quot;,&quot;crd_amt&quot;:&quot;0&quot;,&quot;crd_int&quot;:&quot;0&quot;,&quot;expr_dt&quot;:&quot;00000000&quot;},{&quot;dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;088980&quot;,&quot;stk_nm&quot;:&quot;맥쿼리인프라&quot;,&quot;cur_prc&quot;:&quot;11220&quot;,&quot;pur_pric&quot;:&quot;12944&quot;,&quot;pur_amt&quot;:&quot;207106&quot;,&quot;rmnd_qty&quot;:&quot;16&quot;,&quot;tdy_sel_pl&quot;:&quot;0&quot;,&quot;tdy_trde_cmsn&quot;:&quot;0&quot;,&quot;tdy_trde_tax&quot;:&quot;0&quot;,&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;00000000&quot;,&quot;setl_remn&quot;:&quot;16&quot;,&quot;clrn_alow_qty&quot;:&quot;16&quot;,&quot;crd_amt&quot;:&quot;0&quot;,&quot;crd_int&quot;:&quot;0&quot;,&quot;expr_dt&quot;:&quot;00000000&quot;},{&quot;dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;094800&quot;,&quot;stk_nm&quot;:&quot;맵스리얼티&quot;,&quot;cur_prc&quot;:&quot;5740&quot;,&quot;pur_pric&quot;:&quot;4470&quot;,&quot;pur_amt&quot;:&quot;134100&quot;,&quot;rmnd_qty&quot;:&quot;30&quot;,&quot;tdy_sel_pl&quot;:&quot;0&quot;,&quot;tdy_trde_cmsn&quot;:&quot;0&quot;,&quot;tdy_trde_tax&quot;:&quot;0&quot;,&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;00000000&quot;,&quot;setl_remn&quot;:&quot;30&quot;,&quot;clrn_alow_qty&quot;:&quot;30&quot;,&quot;crd_amt&quot;:&quot;0&quot;,&quot;crd_int&quot;:&quot;0&quot;,&quot;expr_dt&quot;:&quot;00000000&quot;},{&quot;dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;102110&quot;,&quot;stk_nm&quot;:&quot;TIGER 200&quot;,&quot;cur_prc&quot;:&quot;+139520&quot;,&quot;pur_pric&quot;:&quot;40964&quot;,&quot;pur_amt&quot;:&quot;4096435&quot;,&quot;rmnd_qty&quot;:&quot;100&quot;,&quot;tdy_sel_pl&quot;:&quot;0&quot;,&quot;tdy_trde_cmsn&quot;:&quot;0&quot;,&quot;tdy_trde_tax&quot;:&quot;0&quot;,&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;00000000&quot;,&quot;setl_remn&quot;:&quot;100&quot;,&quot;clrn_alow_qty&quot;:&quot;100&quot;,&quot;crd_amt&quot;:&quot;0&quot;,&quot;crd_int&quot;:&quot;0&quot;,&quot;expr_dt&quot;:&quot;00000000&quot;},{&quot;dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;215000&quot;,&quot;stk_nm&quot;:&quot;골프존&quot;,&quot;cur_prc&quot;:&quot;+42050&quot;,&quot;pur_pric&quot;:&quot;59800&quot;,&quot;pur_amt&quot;:&quot;299000&quot;,&quot;rmnd_qty&quot;:&quot;5&quot;,&quot;tdy_sel_pl&quot;:&quot;0&quot;,&quot;tdy_trde_cmsn&quot;:&quot;0&quot;,&quot;tdy_trde_tax&quot;:&quot;0&quot;,&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;00000000&quot;,&quot;setl_remn&quot;:&quot;5&quot;,&quot;clrn_alow_qty&quot;:&quot;5&quot;,&quot;crd_amt&quot;:&quot;0&quot;,&quot;crd_int&quot;:&quot;0&quot;,&quot;expr_dt&quot;:&quot;00000000&quot;},{&quot;dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;330590&quot;,&quot;stk_nm&quot;:&quot;롯데리츠&quot;,&quot;cur_prc&quot;:&quot;-3660&quot;,&quot;pur_pric&quot;:&quot;3973&quot;,&quot;pur_amt&quot;:&quot;242360&quot;,&quot;rmnd_qty&quot;:&quot;61&quot;,&quot;tdy_sel_pl&quot;:&quot;0&quot;,&quot;tdy_trde_cmsn&quot;:&quot;0&quot;,&quot;tdy_trde_tax&quot;:&quot;0&quot;,&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;00000000&quot;,&quot;setl_remn&quot;:&quot;61&quot;,&quot;clrn_alow_qty&quot;:&quot;61&quot;,&quot;crd_amt&quot;:&quot;0&quot;,&quot;crd_int&quot;:&quot;0&quot;,&quot;expr_dt&quot;:&quot;00000000&quot;},{&quot;dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;459580&quot;,&quot;stk_nm&quot;:&quot;KODEX CD금리액티브(합성)&quot;,&quot;cur_prc&quot;:&quot;+1105730&quot;,&quot;pur_pric&quot;:&quot;1066700&quot;,&quot;pur_amt&quot;:&quot;2133400&quot;,&quot;rmnd_qty&quot;:&quot;2&quot;,&quot;tdy_sel_pl&quot;:&quot;0&quot;,&quot;tdy_trde_cmsn&quot;:&quot;0&quot;,&quot;tdy_trde_tax&quot;:&quot;0&quot;,&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;00000000&quot;,&quot;setl_remn&quot;:&quot;2&quot;,&quot;clrn_alow_qty&quot;:&quot;2&quot;,&quot;crd_amt&quot;:&quot;0&quot;,&quot;crd_int&quot;:&quot;0&quot;,&quot;expr_dt&quot;:&quot;00000000&quot;},{&quot;dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;520078&quot;,&quot;stk_nm&quot;:&quot;미래에셋 미국 제약 TOP3 ETN&quot;,&quot;cur_prc&quot;:&quot;14940&quot;,&quot;pur_pric&quot;:&quot;10245&quot;,&quot;pur_amt&quot;:&quot;10245&quot;,&quot;rmnd_qty&quot;:&quot;1&quot;,&quot;tdy_sel_pl&quot;:&quot;0&quot;,&quot;tdy_trde_cmsn&quot;:&quot;0&quot;,&quot;tdy_trde_tax&quot;:&quot;0&quot;,&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;00000000&quot;,&quot;setl_remn&quot;:&quot;1&quot;,&quot;clrn_alow_qty&quot;:&quot;1&quot;,&quot;crd_amt&quot;:&quot;0&quot;,&quot;crd_int&quot;:&quot;0&quot;,&quot;expr_dt&quot;:&quot;00000000&quot;},{&quot;dt&quot;:&quot;&quot;,&quot;stk_cd&quot;:&quot;580058&quot;,&quot;stk_nm&quot;:&quot;KB KIS CD금리투자 ETN&quot;,&quot;cur_prc&quot;:&quot;53540&quot;,&quot;pur_pric&quot;:&quot;36835&quot;,&quot;pur_amt&quot;:&quot;3683500&quot;,&quot;rmnd_qty&quot;:&quot;100&quot;,&quot;tdy_sel_pl&quot;:&quot;0&quot;,&quot;tdy_trde_cmsn&quot;:&quot;0&quot;,&quot;tdy_trde_tax&quot;:&quot;0&quot;,&quot;crd_tp&quot;:&quot;00&quot;,&quot;loan_dt&quot;:&quot;00000000&quot;,&quot;setl_remn&quot;:&quot;100&quot;,&quot;clrn_alow_qty&quot;:&quot;100&quot;,&quot;crd_amt&quot;:&quot;0&quot;,&quot;crd_int&quot;:&quot;0&quot;,&quot;expr_dt&quot;:&quot;00000000&quot;}],&quot;return_code&quot;:0,&quot;return_msg&quot;:&quot; 조회가 완료되었습니다.&quot;}</pre>
+  </div>
+</div>
+</body>
+</html>

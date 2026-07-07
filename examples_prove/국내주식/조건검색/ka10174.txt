@@ -1,0 +1,16 @@
+INFO:kiwoom.core.ws_client:websocket connecting: wss://api.kiwoom.com:10000/api/dostk/websocket
+INFO:kiwoom.core.ws_client:websocket connected
+INFO:kiwoom.core.ws_client:websocket sending LOGIN packet
+INFO:kiwoom.core.ws_client:websocket login acknowledged
+INFO:kiwoom.core.ws_client:websocket received message
+INFO:kiwoom.core.ws_client:websocket received message
+INFO:kiwoom.core.ws_client:websocket received message
+INFO:kiwoom.core.ws_client:websocket closed
+
+[해제응답]
+   서비스명 조건검색식 일련번호  응답코드 응답메시지
+CNSRCLR          2     0      
+
+[선행등록요약]
+조건검색식 일련번호      조건검색식 명  등록응답코드 등록응답메시지  초기조회건수
+         2 testtesttest       0    None      63

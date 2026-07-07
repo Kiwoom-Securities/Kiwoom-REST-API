@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: transparent; display: flex; justify-content: center; padding: 32px; }
+  .window {
+    background: #282a36;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    min-width: 480px;
+    max-width: 960px;
+    overflow: hidden;
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .titlebar {
+    background: #21222c;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+  .title {
+    flex: 1;
+    text-align: center;
+    color: #bd93f9;
+    font-size: 12px;
+    margin-right: 36px;
+  }
+  .body { padding: 20px 24px; }
+  .meta { color: #6272a4; margin-bottom: 12px; }
+  .meta span { color: #50fa7b; }
+  pre {
+    color: #f8f8f2;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+    <div class="title">kiwoom elws daily</div>
+  </div>
+  <div class="body">
+    <div class="meta"><span>$</span> kiwoom elws daily --code 57M747 --format json</div>
+    <div class="meta">mode=read · exit=0 · elapsed=1.15s</div>
+    <pre>{&quot;elwdaly_snst_ix&quot;:[{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;6766&quot;,&quot;delta&quot;:&quot;294746&quot;,&quot;gam&quot;:&quot;6&quot;,&quot;theta&quot;:&quot;-393836&quot;,&quot;vega&quot;:&quot;556517&quot;,&quot;law&quot;:&quot;176301&quot;,&quot;lp&quot;:&quot;6771&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;7161&quot;,&quot;delta&quot;:&quot;312660&quot;,&quot;gam&quot;:&quot;6&quot;,&quot;theta&quot;:&quot;-422911&quot;,&quot;vega&quot;:&quot;576318&quot;,&quot;law&quot;:&quot;187573&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;6427&quot;,&quot;delta&quot;:&quot;324719&quot;,&quot;gam&quot;:&quot;6&quot;,&quot;theta&quot;:&quot;-396444&quot;,&quot;vega&quot;:&quot;611530&quot;,&quot;law&quot;:&quot;208485&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;6921&quot;,&quot;delta&quot;:&quot;261877&quot;,&quot;gam&quot;:&quot;6&quot;,&quot;theta&quot;:&quot;-352577&quot;,&quot;vega&quot;:&quot;517295&quot;,&quot;law&quot;:&quot;158570&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;6972&quot;,&quot;delta&quot;:&quot;312435&quot;,&quot;gam&quot;:&quot;6&quot;,&quot;theta&quot;:&quot;-399887&quot;,&quot;vega&quot;:&quot;592486&quot;,&quot;law&quot;:&quot;198375&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;6950&quot;,&quot;delta&quot;:&quot;311762&quot;,&quot;gam&quot;:&quot;6&quot;,&quot;theta&quot;:&quot;-393705&quot;,&quot;vega&quot;:&quot;596112&quot;,&quot;law&quot;:&quot;201024&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;6248&quot;,&quot;delta&quot;:&quot;205538&quot;,&quot;gam&quot;:&quot;6&quot;,&quot;theta&quot;:&quot;-261988&quot;,&quot;vega&quot;:&quot;449876&quot;,&quot;law&quot;:&quot;130409&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;6398&quot;,&quot;delta&quot;:&quot;265991&quot;,&quot;gam&quot;:&quot;6&quot;,&quot;theta&quot;:&quot;-322560&quot;,&quot;vega&quot;:&quot;549585&quot;,&quot;law&quot;:&quot;177231&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;7017&quot;,&quot;delta&quot;:&quot;307780&quot;,&quot;gam&quot;:&quot;6&quot;,&quot;theta&quot;:&quot;-379438&quot;,&quot;vega&quot;:&quot;600559&quot;,&quot;law&quot;:&quot;205362&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;7391&quot;,&quot;delta&quot;:&quot;345278&quot;,&quot;gam&quot;:&quot;5&quot;,&quot;theta&quot;:&quot;-423277&quot;,&quot;vega&quot;:&quot;647156&quot;,&quot;law&quot;:&quot;234029&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;7215&quot;,&quot;delta&quot;:&quot;347122&quot;,&quot;gam&quot;:&quot;6&quot;,&quot;theta&quot;:&quot;-413323&quot;,&quot;vega&quot;:&quot;657769&quot;,&quot;law&quot;:&quot;241370&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;7163&quot;,&quot;delta&quot;:&quot;347001&quot;,&quot;gam&quot;:&quot;6&quot;,&quot;theta&quot;:&quot;-406865&quot;,&quot;vega&quot;:&quot;662856&quot;,&quot;law&quot;:&quot;245181&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;7048&quot;,&quot;delta&quot;:&quot;347967&quot;,&quot;gam&quot;:&quot;6&quot;,&quot;theta&quot;:&quot;-398884&quot;,&quot;vega&quot;:&quot;670959&quot;,&quot;law&quot;:&quot;251022&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;7205&quot;,&quot;delta&quot;:&quot;344475&quot;,&quot;gam&quot;:&quot;5&quot;,&quot;theta&quot;:&quot;-398154&quot;,&quot;vega&quot;:&quot;666207&quot;,&quot;law&quot;:&quot;248367&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;7086&quot;,&quot;delta&quot;:&quot;301771&quot;,&quot;gam&quot;:&quot;5&quot;,&quot;theta&quot;:&quot;-352901&quot;,&quot;vega&quot;:&quot;610800&quot;,&quot;law&quot;:&quot;215017&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;6090&quot;,&quot;delta&quot;:&quot;264373&quot;,&quot;gam&quot;:&quot;6&quot;,&quot;theta&quot;:&quot;-284918&quot;,&quot;vega&quot;:&quot;581542&quot;,&quot;law&quot;:&quot;199379&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;5787&quot;,&quot;delta&quot;:&quot;268768&quot;,&quot;gam&quot;:&quot;6&quot;,&quot;theta&quot;:&quot;-275866&quot;,&quot;vega&quot;:&quot;600512&quot;,&quot;law&quot;:&quot;210470&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;5789&quot;,&quot;delta&quot;:&quot;204556&quot;,&quot;gam&quot;:&quot;5&quot;,&quot;theta&quot;:&quot;-220195&quot;,&quot;vega&quot;:&quot;488046&quot;,&quot;law&quot;:&quot;154369&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;6351&quot;,&quot;delta&quot;:&quot;310005&quot;,&quot;gam&quot;:&quot;6&quot;,&quot;theta&quot;:&quot;-321222&quot;,&quot;vega&quot;:&quot;657387&quot;,&quot;law&quot;:&quot;245443&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;5804&quot;,&quot;delta&quot;:&quot;319712&quot;,&quot;gam&quot;:&quot;6&quot;,&quot;theta&quot;:&quot;-305304&quot;,&quot;vega&quot;:&quot;691028&quot;,&quot;law&quot;:&quot;267923&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;6203&quot;,&quot;delta&quot;:&quot;356556&quot;,&quot;gam&quot;:&quot;6&quot;,&quot;theta&quot;:&quot;-342380&quot;,&quot;vega&quot;:&quot;736149&quot;,&quot;law&quot;:&quot;300823&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;7078&quot;,&quot;delta&quot;:&quot;412671&quot;,&quot;gam&quot;:&quot;5&quot;,&quot;theta&quot;:&quot;-412336&quot;,&quot;vega&quot;:&quot;789889&quot;,&quot;law&quot;:&quot;345010&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;6274&quot;,&quot;delta&quot;:&quot;393273&quot;,&quot;gam&quot;:&quot;5&quot;,&quot;theta&quot;:&quot;-362196&quot;,&quot;vega&quot;:&quot;790692&quot;,&quot;law&quot;:&quot;345698&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;5869&quot;,&quot;delta&quot;:&quot;361202&quot;,&quot;gam&quot;:&quot;6&quot;,&quot;theta&quot;:&quot;-323131&quot;,&quot;vega&quot;:&quot;763810&quot;,&quot;law&quot;:&quot;323299&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;6027&quot;,&quot;delta&quot;:&quot;397160&quot;,&quot;gam&quot;:&quot;6&quot;,&quot;theta&quot;:&quot;-347791&quot;,&quot;vega&quot;:&quot;810573&quot;,&quot;law&quot;:&quot;363526&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;6542&quot;,&quot;delta&quot;:&quot;419934&quot;,&quot;gam&quot;:&quot;5&quot;,&quot;theta&quot;:&quot;-380259&quot;,&quot;vega&quot;:&quot;829382&quot;,&quot;law&quot;:&quot;381172&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;6125&quot;,&quot;delta&quot;:&quot;428924&quot;,&quot;gam&quot;:&quot;5&quot;,&quot;theta&quot;:&quot;-363285&quot;,&quot;vega&quot;:&quot;854539&quot;,&quot;law&quot;:&quot;406364&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;5742&quot;,&quot;delta&quot;:&quot;360590&quot;,&quot;gam&quot;:&quot;6&quot;,&quot;theta&quot;:&quot;-307531&quot;,&quot;vega&quot;:&quot;782633&quot;,&quot;law&quot;:&quot;339677&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;5949&quot;,&quot;delta&quot;:&quot;309912&quot;,&quot;gam&quot;:&quot;5&quot;,&quot;theta&quot;:&quot;-281037&quot;,&quot;vega&quot;:&quot;702416&quot;,&quot;law&quot;:&quot;280885&quot;,&quot;lp&quot;:&quot;0&quot;},{&quot;dt&quot;:&quot;142324&quot;,&quot;iv&quot;:&quot;0&quot;,&quot;delta&quot;:&quot;0&quot;,&quot;gam&quot;:&quot;0&quot;,&quot;theta&quot;:&quot;0&quot;,&quot;vega&quot;:&quot;0&quot;,&quot;law&quot;:&quot;0&quot;,&quot;lp&quot;:&quot;5256&quot;}],&quot;return_code&quot;:0,&quot;return_msg&quot;:&quot;정상적으로 처리되었습니다&quot;}</pre>
+  </div>
+</div>
+</body>
+</html>

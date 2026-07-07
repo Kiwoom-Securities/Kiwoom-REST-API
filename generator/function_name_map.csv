@@ -1,0 +1,353 @@
+api_id,api_name,function_name,template_kind,category,sub_category,url,enabled
+au10001,접근토큰 발급,create_access_token,oauth,OAuth 인증,접근토큰발급,/oauth2/token,Y
+au10002,접근토큰폐기,delete_access_token,oauth,OAuth 인증,접근토큰폐기,/oauth2/revoke,Y
+ka00001,계좌번호조회,list_domestic_accounts,rest,국내주식,계좌,/api/dostk/acnt,Y
+ka00198,실시간종목조회순위,get_domestic_realtime_stock_rank,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka01690,일별잔고수익률,get_domestic_daily_balance_return_rate,rest,국내주식,계좌,/api/dostk/acnt,Y
+ka10001,주식기본정보요청,get_domestic_stock_info,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10002,주식거래원요청,get_domestic_stock_brokers,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10003,체결정보요청,get_domestic_stock_execution_info,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10004,주식호가요청,get_domestic_stock_quote,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka10005,주식일주월시분요청,get_domestic_stock_ohlcv_by_period,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka10006,주식시분요청,get_domestic_stock_intraday_minute_data,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka10007,시세표성정보요청,get_domestic_stock_market_condition_info,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka10008,주식외국인종목별매매동향,get_domestic_stock_foreign_investor_trade_trend,rest,국내주식,기관/외국인,/api/dostk/frgnistt,Y
+ka10009,주식기관요청,get_domestic_stock_institution_trade,rest,국내주식,기관/외국인,/api/dostk/frgnistt,Y
+ka10010,업종프로그램요청,get_domestic_sector_program,rest,국내주식,업종,/api/dostk/sect,Y
+ka10011,신주인수권전체시세요청,get_domestic_subscription_rights_all_quotes,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka10013,신용매매동향요청,get_domestic_credit_trade_trend,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10014,공매도추이요청,get_domestic_short_sale_trend,rest,국내주식,공매도,/api/dostk/shsa,Y
+ka10015,일별거래상세요청,get_domestic_daily_trade_detail,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10016,신고저가요청,get_domestic_stock_new_high_low_price,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10017,상하한가요청,get_domestic_upper_lower_limit_stocks,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10018,고저가근접요청,get_domestic_near_high_low_stocks,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10019,가격급등락요청,get_domestic_price_surge_drop_stocks,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10020,호가잔량상위요청,get_domestic_order_book_depth_top,rest,국내주식,순위정보,/api/dostk/rkinfo,Y
+ka10021,호가잔량급증요청,get_domestic_order_book_depth_surge,rest,국내주식,순위정보,/api/dostk/rkinfo,Y
+ka10022,잔량율급증요청,get_domestic_order_balance_ratio_surge,rest,국내주식,순위정보,/api/dostk/rkinfo,Y
+ka10023,거래량급증요청,get_domestic_volume_surge,rest,국내주식,순위정보,/api/dostk/rkinfo,Y
+ka10024,거래량갱신요청,get_domestic_volume_record_update,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10025,매물대집중요청,get_domestic_volume_profile_cluster,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10026,고저PER요청,get_domestic_high_low_per_stocks,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10027,전일대비등락률상위요청,get_domestic_prev_day_change_rate_top,rest,국내주식,순위정보,/api/dostk/rkinfo,Y
+ka10028,시가대비등락률요청,get_domestic_open_price_change_rate,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10029,예상체결등락률상위요청,get_domestic_expected_execution_change_rate_top,rest,국내주식,순위정보,/api/dostk/rkinfo,Y
+ka10030,당일거래량상위요청,get_domestic_today_volume_top,rest,국내주식,순위정보,/api/dostk/rkinfo,Y
+ka10031,전일거래량상위요청,get_domestic_prev_volume_top,rest,국내주식,순위정보,/api/dostk/rkinfo,Y
+ka10032,거래대금상위요청,get_domestic_trading_value_top,rest,국내주식,순위정보,/api/dostk/rkinfo,Y
+ka10033,신용비율상위요청,get_domestic_credit_ratio_top,rest,국내주식,순위정보,/api/dostk/rkinfo,Y
+ka10034,외인기간별매매상위요청,get_domestic_foreign_investor_period_trade_top,rest,국내주식,순위정보,/api/dostk/rkinfo,Y
+ka10035,외인연속순매매상위요청,get_domestic_foreign_investor_net_buy_streak_top,rest,국내주식,순위정보,/api/dostk/rkinfo,Y
+ka10036,외인한도소진율증가상위,get_domestic_foreign_investor_limit_exhaustion_rate_increase_top,rest,국내주식,순위정보,/api/dostk/rkinfo,Y
+ka10037,외국계창구매매상위요청,get_domestic_foreign_broker_trade_top,rest,국내주식,순위정보,/api/dostk/rkinfo,Y
+ka10038,종목별증권사순위요청,get_domestic_stock_broker_rank,rest,국내주식,순위정보,/api/dostk/rkinfo,Y
+ka10039,증권사별매매상위요청,get_domestic_broker_trade_top,rest,국내주식,순위정보,/api/dostk/rkinfo,Y
+ka10040,당일주요거래원요청,get_domestic_today_major_brokers,rest,국내주식,순위정보,/api/dostk/rkinfo,Y
+ka10042,순매수거래원순위요청,get_domestic_net_buy_broker_rank,rest,국내주식,순위정보,/api/dostk/rkinfo,Y
+ka10043,거래원매물대분석요청,get_domestic_broker_volume_profile_analysis,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10044,일별기관매매종목요청,get_domestic_daily_institution_stock_trade,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka10045,종목별기관매매추이요청,get_domestic_stock_institution_trade_trend,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka10046,체결강도추이시간별요청,get_domestic_trade_strength_time_trend,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka10047,체결강도추이일별요청,get_domestic_trade_strength_daily_trend,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka10048,ELW일별민감도지표요청,get_domestic_elw_daily_sensitivity_indicator,rest,국내주식,ELW,/api/dostk/elw,Y
+ka10050,ELW민감도지표요청,get_domestic_elw_sensitivity_indicator,rest,국내주식,ELW,/api/dostk/elw,Y
+ka10051,업종별투자자순매수요청,get_domestic_sector_investor_net_buy,rest,국내주식,업종,/api/dostk/sect,Y
+ka10052,거래원순간거래량요청,get_domestic_broker_instant_volume,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10053,당일상위이탈원요청,get_domestic_today_top_exit_brokers,rest,국내주식,순위정보,/api/dostk/rkinfo,Y
+ka10054,변동성완화장치발동종목요청,get_domestic_vi_triggered_stocks,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10055,당일전일체결량요청,get_domestic_today_prev_trade_volume,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10058,투자자별일별매매종목요청,get_domestic_investor_daily_trade_stocks,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10059,종목별투자자기관별요청,get_domestic_stock_investor_by_institution,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10060,종목별투자자기관별차트요청,get_domestic_stock_investor_by_institution_chart,rest,국내주식,차트,/api/dostk/chart,Y
+ka10061,종목별투자자기관별합계요청,get_domestic_stock_investor_by_institution_total,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10062,동일순매매순위요청,get_domestic_same_direction_net_trade_rank,rest,국내주식,순위정보,/api/dostk/rkinfo,Y
+ka10063,장중투자자별매매요청,get_domestic_intraday_investor_trade,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka10064,장중투자자별매매차트요청,get_domestic_intraday_investor_trade_chart,rest,국내주식,차트,/api/dostk/chart,Y
+ka10065,장중투자자별매매상위요청,get_domestic_intraday_investor_trade_top,rest,국내주식,순위정보,/api/dostk/rkinfo,Y
+ka10066,장마감후투자자별매매요청,get_domestic_after_close_investor_trade,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka10068,대차거래추이요청,get_domestic_stock_lending_trade_trend,rest,국내주식,대차거래,/api/dostk/slb,Y
+ka10069,대차거래상위10종목요청,get_domestic_stock_lending_top_10_stocks,rest,국내주식,대차거래,/api/dostk/slb,Y
+ka10072,일자별종목별실현손익요청_일자,get_domestic_realized_pnl_by_date_and_stock,rest,국내주식,계좌,/api/dostk/acnt,Y
+ka10073,일자별종목별실현손익요청_기간,get_domestic_realized_pnl_by_period_and_stock,rest,국내주식,계좌,/api/dostk/acnt,Y
+ka10074,일자별실현손익요청,get_domestic_daily_realized_pnl,rest,국내주식,계좌,/api/dostk/acnt,Y
+ka10075,미체결요청,get_domestic_unfilled_orders,rest,국내주식,계좌,/api/dostk/acnt,Y
+ka10076,체결요청,get_domestic_filled_orders,rest,국내주식,계좌,/api/dostk/acnt,Y
+ka10077,당일실현손익상세요청,get_domestic_today_realized_pnl_detail,rest,국내주식,계좌,/api/dostk/acnt,Y
+ka10078,증권사별종목매매동향요청,get_domestic_broker_stock_trade_trend,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka10079,주식틱차트조회요청,get_domestic_stock_tick_chart,rest,국내주식,차트,/api/dostk/chart,Y
+ka10080,주식분봉차트조회요청,get_domestic_stock_minute_chart,rest,국내주식,차트,/api/dostk/chart,Y
+ka10081,주식일봉차트조회요청,get_domestic_stock_daily_chart,rest,국내주식,차트,/api/dostk/chart,Y
+ka10082,주식주봉차트조회요청,get_domestic_stock_weekly_chart,rest,국내주식,차트,/api/dostk/chart,Y
+ka10083,주식월봉차트조회요청,get_domestic_stock_monthly_chart,rest,국내주식,차트,/api/dostk/chart,Y
+ka10084,당일전일체결요청,get_domestic_today_prev_trades,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10085,계좌수익률요청,get_domestic_account_return_rate,rest,국내주식,계좌,/api/dostk/acnt,Y
+ka10086,일별주가요청,get_domestic_daily_stock_price,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka10087,시간외단일가요청,get_domestic_after_hours_single_price,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka10088,미체결 분할주문 상세,get_domestic_unfilled_split_order_detail,rest,국내주식,계좌,/api/dostk/acnt,Y
+ka10094,주식년봉차트조회요청,get_domestic_stock_yearly_chart,rest,국내주식,차트,/api/dostk/chart,Y
+ka10095,관심종목정보요청,get_domestic_watchlist_stock_info,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10098,시간외단일가등락율순위요청,get_domestic_after_hours_single_price_change_rate_rank,rest,국내주식,순위정보,/api/dostk/rkinfo,Y
+ka10099,종목정보 리스트,list_domestic_stocks,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10100,종목정보 조회,get_domestic_stock_detail,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10101,업종코드 리스트,list_domestic_sector_codes,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10102,회원사 리스트,list_domestic_brokers,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka10131,기관외국인연속매매현황요청,get_domestic_institution_foreign_investor_trade_streak,rest,국내주식,기관/외국인,/api/dostk/frgnistt,Y
+ka10170,당일매매일지요청,get_domestic_today_trade_journal,rest,국내주식,계좌,/api/dostk/acnt,Y
+ka10171,조건검색 목록조회,list_domestic_condition_searches,websocket_request_once,국내주식,조건검색,/api/dostk/websocket,Y
+ka10172,조건검색 요청 일반,request_domestic_condition_search,websocket_request_once,국내주식,조건검색,/api/dostk/websocket,Y
+ka10173,조건검색 요청 실시간,request_domestic_realtime_condition_search,websocket_realtime,국내주식,조건검색,/api/dostk/websocket,Y
+ka10174,조건검색 실시간 해제,stop_domestic_realtime_condition_search,websocket_request_once,국내주식,조건검색,/api/dostk/websocket,Y
+ka20001,업종현재가요청,get_domestic_sector_price,rest,국내주식,업종,/api/dostk/sect,Y
+ka20002,업종별주가요청,get_domestic_sector_stock_price,rest,국내주식,업종,/api/dostk/sect,Y
+ka20003,전업종지수요청,get_domestic_all_sector_indices,rest,국내주식,업종,/api/dostk/sect,Y
+ka20004,업종틱차트조회요청,get_domestic_sector_tick_chart,rest,국내주식,차트,/api/dostk/chart,Y
+ka20005,업종분봉조회요청,get_domestic_sector_minute_chart,rest,국내주식,차트,/api/dostk/chart,Y
+ka20006,업종일봉조회요청,get_domestic_sector_daily_chart,rest,국내주식,차트,/api/dostk/chart,Y
+ka20007,업종주봉조회요청,get_domestic_sector_weekly_chart,rest,국내주식,차트,/api/dostk/chart,Y
+ka20008,업종월봉조회요청,get_domestic_sector_monthly_chart,rest,국내주식,차트,/api/dostk/chart,Y
+ka20009,업종현재가일별요청,get_domestic_sector_daily_price,rest,국내주식,업종,/api/dostk/sect,Y
+ka20019,업종년봉조회요청,get_domestic_sector_yearly_chart,rest,국내주식,차트,/api/dostk/chart,Y
+ka20068,대차거래추이요청(종목별),get_domestic_stock_lending_trade_trend_by_stock,rest,국내주식,대차거래,/api/dostk/slb,Y
+ka30001,ELW가격급등락요청,get_domestic_elw_price_surge_drop,rest,국내주식,ELW,/api/dostk/elw,Y
+ka30002,거래원별ELW순매매상위요청,get_domestic_broker_elw_net_buy_top,rest,국내주식,ELW,/api/dostk/elw,Y
+ka30003,ELWLP보유일별추이요청,get_domestic_elw_lp_daily_holding_trend,rest,국내주식,ELW,/api/dostk/elw,Y
+ka30004,ELW괴리율요청,get_domestic_elw_disparity_rate,rest,국내주식,ELW,/api/dostk/elw,Y
+ka30005,ELW조건검색요청,search_domestic_elw_by_condition,rest,국내주식,ELW,/api/dostk/elw,Y
+ka30009,ELW등락율순위요청,get_domestic_elw_change_rate_rank,rest,국내주식,ELW,/api/dostk/elw,Y
+ka30010,ELW잔량순위요청,get_domestic_elw_remaining_order_rank,rest,국내주식,ELW,/api/dostk/elw,Y
+ka30011,ELW근접율요청,get_domestic_elw_proximity_rate,rest,국내주식,ELW,/api/dostk/elw,Y
+ka30012,ELW종목상세정보요청,get_domestic_elw_detail,rest,국내주식,ELW,/api/dostk/elw,Y
+ka40001,ETF수익율요청,get_domestic_etf_return_rate,rest,국내주식,ETF,/api/dostk/etf,Y
+ka40002,ETF종목정보요청,get_domestic_etf_info,rest,국내주식,ETF,/api/dostk/etf,Y
+ka40003,ETF일별추이요청,get_domestic_etf_daily_trend,rest,국내주식,ETF,/api/dostk/etf,Y
+ka40004,ETF전체시세요청,get_domestic_etf_all_quotes,rest,국내주식,ETF,/api/dostk/etf,Y
+ka40006,ETF시간대별추이요청,get_domestic_etf_intraday_trend,rest,국내주식,ETF,/api/dostk/etf,Y
+ka40007,ETF시간대별체결요청,get_domestic_etf_intraday_trades,rest,국내주식,ETF,/api/dostk/etf,Y
+ka40008,ETF일자별체결요청,get_domestic_etf_trades_by_date,rest,국내주식,ETF,/api/dostk/etf,Y
+ka40009,ETF시간대별체결요청,get_domestic_etf_intraday_nav_status,rest,국내주식,ETF,/api/dostk/etf,Y
+ka40010,ETF시간대별추이요청,get_domestic_etf_intraday_supply_demand_status,rest,국내주식,ETF,/api/dostk/etf,Y
+ka50010,금현물체결추이,get_domestic_gold_spot_trade_trend,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka50012,금현물일별추이,get_domestic_gold_spot_daily_trend,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka50079,금현물틱차트조회요청,get_domestic_gold_spot_tick_chart,rest,국내주식,차트,/api/dostk/chart,Y
+ka50080,금현물분봉차트조회요청,get_domestic_gold_spot_minute_chart,rest,국내주식,차트,/api/dostk/chart,Y
+ka50081,금현물일봉차트조회요청,get_domestic_gold_spot_daily_chart,rest,국내주식,차트,/api/dostk/chart,Y
+ka50082,금현물주봉차트조회요청,get_domestic_gold_spot_weekly_chart,rest,국내주식,차트,/api/dostk/chart,Y
+ka50083,금현물월봉차트조회요청,get_domestic_gold_spot_monthly_chart,rest,국내주식,차트,/api/dostk/chart,Y
+ka50087,금현물예상체결,get_domestic_gold_spot_expected_execution,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka50091,금현물당일틱차트조회요청,get_domestic_gold_spot_today_tick_chart,rest,국내주식,차트,/api/dostk/chart,Y
+ka50092,금현물당일분봉차트조회요청,get_domestic_gold_spot_today_minute_chart,rest,국내주식,차트,/api/dostk/chart,Y
+ka50100,금현물 시세정보,get_domestic_gold_spot_quote_info,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka50101,금현물 호가,get_domestic_gold_spot_quote,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka52301,금현물투자자현황,get_domestic_gold_spot_investor_status,rest,국내주식,기관/외국인,/api/dostk/frgnistt,Y
+ka90001,테마그룹별요청,get_domestic_theme_groups,rest,국내주식,테마,/api/dostk/thme,Y
+ka90002,테마구성종목요청,get_domestic_theme_stocks,rest,국내주식,테마,/api/dostk/thme,Y
+ka90003,프로그램순매수상위50요청,get_domestic_program_net_buy_top_50,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka90004,종목별프로그램매매현황요청,get_domestic_stock_program_trade_status,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+ka90005,프로그램매매추이요청 시간대별,get_domestic_program_trade_intraday_trend,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka90006,프로그램매매차익잔고추이요청,get_domestic_program_arbitrage_balance_trend,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka90007,프로그램매매누적추이요청,get_domestic_program_trade_accumulated_trend,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka90008,종목시간별프로그램매매추이요청,get_domestic_stock_program_intraday_trend,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka90009,외국인기관매매상위요청,get_domestic_foreign_institution_trade_top,rest,국내주식,순위정보,/api/dostk/rkinfo,Y
+ka90010,프로그램매매추이요청 일자별,get_domestic_program_trade_daily_trend,rest,국내주식,시세,/api/dostk/mrkcond,Y
+ka90012,대차거래내역요청,get_domestic_stock_lending_trade_history,rest,국내주식,대차거래,/api/dostk/slb,Y
+ka90013,종목일별프로그램매매추이요청,get_domestic_stock_program_daily_trend,rest,국내주식,시세,/api/dostk/mrkcond,Y
+kt00001,예수금상세현황요청,get_domestic_deposit_detail,rest,국내주식,계좌,/api/dostk/acnt,Y
+kt00002,일별추정예탁자산현황요청,get_domestic_daily_estimated_deposit_asset,rest,국내주식,계좌,/api/dostk/acnt,Y
+kt00003,추정자산조회요청,get_domestic_estimated_asset,rest,국내주식,계좌,/api/dostk/acnt,Y
+kt00004,계좌평가현황요청,get_domestic_account_evaluation_status,rest,국내주식,계좌,/api/dostk/acnt,Y
+kt00005,체결잔고요청,get_domestic_order_fill_balance,rest,국내주식,계좌,/api/dostk/acnt,Y
+kt00007,계좌별주문체결내역상세요청,get_domestic_account_order_fill_detail,rest,국내주식,계좌,/api/dostk/acnt,Y
+kt00008,계좌별익일결제예정내역요청,get_domestic_account_next_day_settlement,rest,국내주식,계좌,/api/dostk/acnt,Y
+kt00009,계좌별주문체결현황요청,get_domestic_account_order_fill_status,rest,국내주식,계좌,/api/dostk/acnt,Y
+kt00010,주문인출가능금액요청,get_domestic_order_withdrawable_amount,rest,국내주식,계좌,/api/dostk/acnt,Y
+kt00011,증거금율별주문가능수량조회요청,get_domestic_orderable_quantity_by_margin_rate,rest,국내주식,계좌,/api/dostk/acnt,Y
+kt00012,신용보증금율별주문가능수량조회요청,get_domestic_orderable_quantity_by_credit_margin_rate,rest,국내주식,계좌,/api/dostk/acnt,Y
+kt00013,증거금세부내역조회요청,get_domestic_margin_detail,rest,국내주식,계좌,/api/dostk/acnt,Y
+kt00015,위탁종합거래내역요청,get_domestic_brokerage_account_transaction_history,rest,국내주식,계좌,/api/dostk/acnt,Y
+kt00016,일별계좌수익률상세현황요청,get_domestic_daily_account_return_rate_detail,rest,국내주식,계좌,/api/dostk/acnt,Y
+kt00017,계좌별당일현황요청,get_domestic_account_today_status,rest,국내주식,계좌,/api/dostk/acnt,Y
+kt00018,계좌평가잔고내역요청,get_domestic_account_evaluation_balance,rest,국내주식,계좌,/api/dostk/acnt,Y
+kt10000,주식 매수주문,buy_domestic_stock,rest,국내주식,주문,/api/dostk/ordr,Y
+kt10001,주식 매도주문,sell_domestic_stock,rest,국내주식,주문,/api/dostk/ordr,Y
+kt10002,주식 정정주문,modify_domestic_stock_order,rest,국내주식,주문,/api/dostk/ordr,Y
+kt10003,주식 취소주문,cancel_domestic_stock_order,rest,국내주식,주문,/api/dostk/ordr,Y
+kt10006,신용 매수주문,buy_domestic_credit_stock,rest,국내주식,신용주문,/api/dostk/crdordr,Y
+kt10007,신용 매도주문,sell_domestic_credit_stock,rest,국내주식,신용주문,/api/dostk/crdordr,Y
+kt10008,신용 정정주문,modify_domestic_credit_stock_order,rest,국내주식,신용주문,/api/dostk/crdordr,Y
+kt10009,신용 취소주문,cancel_domestic_credit_stock_order,rest,국내주식,신용주문,/api/dostk/crdordr,Y
+kt20016,신용융자 가능종목요청,get_domestic_credit_loanable_stocks,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+kt20017,신용융자 가능문의,check_domestic_credit_loanable,rest,국내주식,종목정보,/api/dostk/stkinfo,Y
+kt50000,금현물 매수주문,buy_domestic_gold_spot,rest,국내주식,주문,/api/dostk/ordr,Y
+kt50001,금현물 매도주문,sell_domestic_gold_spot,rest,국내주식,주문,/api/dostk/ordr,Y
+kt50002,금현물 정정주문,modify_domestic_gold_spot_order,rest,국내주식,주문,/api/dostk/ordr,Y
+kt50003,금현물 취소주문,cancel_domestic_gold_spot_order,rest,국내주식,주문,/api/dostk/ordr,Y
+kt50020,금현물 잔고확인,get_domestic_gold_spot_balance,rest,국내주식,계좌,/api/dostk/acnt,Y
+kt50021,금현물 예수금,get_domestic_gold_spot_deposit,rest,국내주식,계좌,/api/dostk/acnt,Y
+kt50030,금현물 주문체결전체조회,get_domestic_all_gold_spot_order_fills,rest,국내주식,계좌,/api/dostk/acnt,Y
+kt50031,금현물 주문체결조회,get_domestic_gold_spot_order_fills,rest,국내주식,계좌,/api/dostk/acnt,Y
+kt50032,금현물 거래내역조회,get_domestic_gold_spot_transaction_history,rest,국내주식,계좌,/api/dostk/acnt,Y
+kt50075,금현물 미체결조회,get_domestic_gold_spot_unfilled_orders,rest,국내주식,계좌,/api/dostk/acnt,Y
+usa01980,실시간 종목 조회 순위,usa01980,rest,해외주식,순위정보,/api/us/rkinfo,Y
+usa01990,관심종목 등록 상위,usa01990,rest,해외주식,순위정보,/api/us/rkinfo,Y
+usa06010,미국주식 틱 차트,usa06010,rest,해외주식,차트,/api/us/chart,Y
+usa06011,미국주식 분 차트,usa06011,rest,해외주식,차트,/api/us/chart,Y
+usa06012,미국주식 일 차트,usa06012,rest,해외주식,차트,/api/us/chart,Y
+usa06013,미국주식 주 차트,usa06013,rest,해외주식,차트,/api/us/chart,Y
+usa06014,미국주식 월 차트,usa06014,rest,해외주식,차트,/api/us/chart,Y
+usa06015,미국주식 년 차트,usa06015,rest,해외주식,차트,/api/us/chart,Y
+usa06016,미국주식 분기 차트,usa06016,rest,해외주식,차트,/api/us/chart,Y
+usa06021,미국주식 업종 틱 차트,usa06021,rest,해외주식,차트,/api/us/chart,Y
+usa06022,미국주식 업종 분 차트,usa06022,rest,해외주식,차트,/api/us/chart,Y
+usa06023,미국주식 업종 일 차트,usa06023,rest,해외주식,차트,/api/us/chart,Y
+usa06024,미국주식 업종 주 차트,usa06024,rest,해외주식,차트,/api/us/chart,Y
+usa06025,미국주식 업종 월 차트,usa06025,rest,해외주식,차트,/api/us/chart,Y
+usa06026,미국주식 업종 년 차트,usa06026,rest,해외주식,차트,/api/us/chart,Y
+usa06060,미국주식 재무차트-연간,usa06060,rest,해외주식,차트,/api/us/chart,Y
+usa06061,미국주식 재무차트-분기,usa06061,rest,해외주식,차트,/api/us/chart,Y
+usa10099,미국주식 종목리스트,usa10099,rest,해외주식,종목정보,/api/us/stkinfo,Y
+usa10100,미국주식 종목 조회,usa10100,rest,해외주식,종목정보,/api/us/stkinfo,Y
+usa10101,미국주식 업종리스트,usa10101,rest,해외주식,종목정보,/api/us/stkinfo,Y
+usa20100,미국주식 현재가 종목정보,usa20100,rest,해외주식,시세,/api/us/mrkcond,Y
+usa20101,미국주식 현재가 10호가,usa20101,rest,해외주식,시세,/api/us/mrkcond,Y
+usa20150,미국주식 일별 상세체결내역,usa20150,rest,해외주식,시세,/api/us/mrkcond,Y
+usa20151,미국주식 일별 상세체결내역,usa20151,rest,해외주식,시세,/api/us/mrkcond,Y
+usa20200,관심종목 그룹 리스트 조회,usa20200,rest,해외주식,종목정보,/api/us/stkinfo,Y
+usa20201,관심종목 그룹 상세 조회,usa20201,rest,해외주식,종목정보,/api/us/stkinfo,Y
+usa20510,미국주식 기간별 등락률상위,usa20510,rest,해외주식,순위정보,/api/us/rkinfo,Y
+usa20511,미국주식 기간별 등락률상위,usa20511,rest,해외주식,순위정보,/api/us/rkinfo,Y
+usa20520,미국주식 거래량급등락,usa20520,rest,해외주식,종목정보,/api/us/stkinfo,Y
+usa20530,미국주식 당일 거래량 상위,usa20530,rest,해외주식,순위정보,/api/us/rkinfo,Y
+usa20540,미국주식 당일 거래대금 상위,usa20540,rest,해외주식,순위정보,/api/us/rkinfo,Y
+usa20550,미국주식 시가총액상위,usa20550,rest,해외주식,순위정보,/api/us/rkinfo,Y
+usa20570,미국주식 가격대별주가,usa20570,rest,해외주식,종목정보,/api/us/stkinfo,Y
+usa20580,미국주식 업종현재가,usa20580,rest,해외주식,업종,/api/us/sect,Y
+usa20581,미국주식 업종현재가,usa20581,rest,해외주식,업종,/api/us/sect,Y
+usa20590,미국주식 일별주가,usa20590,rest,해외주식,시세,/api/us/mrkcond,Y
+usa20880,키움 거래 상위 종목(주식/ETF),usa20880,rest,해외주식,순위정보,/api/us/rkinfo,Y
+usa20910,미국주식 전일대비 등락률상위,usa20910,rest,해외주식,순위정보,/api/us/rkinfo,Y
+usa20920,미국주식 시가대비 등락률상위,usa20920,rest,해외주식,순위정보,/api/us/rkinfo,Y
+usa20921,미국주식 시가대비 등락률상위,usa20921,rest,해외주식,순위정보,/api/us/rkinfo,Y
+usa20930,미국주식 가격급등락,usa20930,rest,해외주식,종목정보,/api/us/stkinfo,Y
+usa20931,미국주식 가격급등락,usa20931,rest,해외주식,종목정보,/api/us/stkinfo,Y
+usa20940,미국주식 누적 등락률 상위,usa20940,rest,해외주식,순위정보,/api/us/rkinfo,Y
+usa20960,미국주식 전일 거래상위(거래량/거래대금),usa20960,rest,해외주식,순위정보,/api/us/rkinfo,Y
+usa20970,미국주식 고가/저가 접근,usa20970,rest,해외주식,종목정보,/api/us/stkinfo,Y
+usa20971,미국주식 고가/저가 접근,usa20971,rest,해외주식,종목정보,/api/us/stkinfo,Y
+usa20980,미국주식 PER/PBR 순위,usa20980,rest,해외주식,순위정보,/api/us/rkinfo,Y
+usa21500,미국주식 실시간 잔고,usa21500,rest,해외주식,계좌,/api/us/acnt,Y
+usa21520,미국주식 실시간 미체결,usa21520,rest,해외주식,계좌,/api/us/acnt,Y
+usa21670,일별계좌수익률현황,usa21670,rest,해외주식,계좌,/api/us/acnt,Y
+usa21680,월별계좌수익률현황,usa21680,rest,해외주식,계좌,/api/us/acnt,Y
+usa21690,연도별계좌수수익률현황,usa21690,rest,해외주식,계좌,/api/us/acnt,Y
+usa21730,일별종목수익률현황,usa21730,rest,해외주식,계좌,/api/us/acnt,Y
+usa21731,월별종목수익률현황,usa21731,rest,해외주식,계좌,/api/us/acnt,Y
+usa21732,연도별종목수익률현황,usa21732,rest,해외주식,계좌,/api/us/acnt,Y
+usa23000,미국주식 업종종합,usa23000,rest,해외주식,업종,/api/us/sect,Y
+usa23001,미국주식 업종종합,usa23001,rest,해외주식,업종,/api/us/sect,Y
+usa23100,미국주식 업종별주가,usa23100,rest,해외주식,업종,/api/us/sect,Y
+usa23400,미국주식 거래량갱신,usa23400,rest,해외주식,종목정보,/api/us/stkinfo,Y
+usa23401,미국주식 거래량갱신,usa23401,rest,해외주식,종목정보,/api/us/stkinfo,Y
+usa24100,미국주식 신고가/신저가,usa24100,rest,해외주식,종목정보,/api/us/stkinfo,Y
+usa24110,미국주식 최고최저가대비 상승하,usa24110,rest,해외주식,순위정보,/api/us/rkinfo,Y
+usa24120,미국주식 특정일자 상승/하락,usa24120,rest,해외주식,순위정보,/api/us/rkinfo,Y
+usa24140,미국주식 갭상승/갭하락,usa24140,rest,해외주식,종목정보,/api/us/stkinfo,Y
+usa24150,미국주식 회전율 상위,usa24150,rest,해외주식,순위정보,/api/us/rkinfo,Y
+usa24160,미국주식 연속상승/하락 순위,usa24160,rest,해외주식,순위정보,/api/us/rkinfo,Y
+usa24161,미국주식 연속상승/하락 순위,usa24161,rest,해외주식,순위정보,/api/us/rkinfo,Y
+usa24200,미국주식 호가잔량상위,usa24200,rest,해외주식,순위정보,/api/us/rkinfo,Y
+usa24210,미국주식 잔량률급증,usa24210,rest,해외주식,종목정보,/api/us/stkinfo,Y
+usa24220,미국주식 매물대집중,usa24220,rest,해외주식,종목정보,/api/us/stkinfo,Y
+usa24260,미국주식 주요종목,usa24260,rest,해외주식,종목정보,/api/us/stkinfo,Y
+usa24290,미국주식 주간거래 괴리율 상위,usa24290,rest,해외주식,순위정보,/api/us/rkinfo,Y
+usa24300,미국주식 리서치(미국주식/ETF),usa24300,rest,해외주식,투자정보,/api/us/invtinfo,Y
+usa26330,미국주식 평가변동,usa26330,rest,해외주식,투자정보,/api/us/invtinfo,Y
+usa26410,미국주식 연도별 등락률,usa26410,rest,해외주식,종목정보,/api/us/stkinfo,Y
+usa26411,미국주식 연도별 등락률,usa26411,rest,해외주식,종목정보,/api/us/stkinfo,Y
+usa26412,미국주식 연도별 등락률,usa26412,rest,해외주식,종목정보,/api/us/stkinfo,Y
+usa26500,미국주식 배당주 검색,usa26500,rest,해외주식,투자정보,/api/us/invtinfo,Y
+usa26501,미국주식 배당주 검색,usa26501,rest,해외주식,투자정보,/api/us/invtinfo,Y
+usa26510,미국주식 배당주 순위,usa26510,rest,해외주식,투자정보,/api/us/invtinfo,Y
+usa26511,미국주식 배당주 순위,usa26511,rest,해외주식,투자정보,/api/us/invtinfo,Y
+usa26520,미국주식 BEST 배당주,usa26520,rest,해외주식,투자정보,/api/us/invtinfo,Y
+usa26530,미국주식 종목별 배당,usa26530,rest,해외주식,투자정보,/api/us/invtinfo,Y
+usa26531,미국주식 종목별 배당,usa26531,rest,해외주식,투자정보,/api/us/invtinfo,Y
+usa26532,미국주식 종목별 배당,usa26532,rest,해외주식,투자정보,/api/us/invtinfo,Y
+usa26533,미국주식 종목별 배당,usa26533,rest,해외주식,투자정보,/api/us/invtinfo,Y
+usa26534,미국주식 종목별 배당,usa26534,rest,해외주식,투자정보,/api/us/invtinfo,Y
+usa26760,미국주식 종목별 공매도 추이,usa26760,rest,해외주식,종목정보,/api/us/stkinfo,Y
+usa26770,미국주식 종목별 미상환 잔고,usa26770,rest,해외주식,종목정보,/api/us/stkinfo,Y
+ust20000,미국주식 매수 주문,ust20000,rest,해외주식,주문,/api/us/ordr,Y
+ust20001,미국주식 매도 주문,ust20001,rest,해외주식,주문,/api/us/ordr,Y
+ust20002,미국주식 정정 주문,ust20002,rest,해외주식,주문,/api/us/ordr,Y
+ust20003,미국주식 취소 주문,ust20003,rest,해외주식,주문,/api/us/ordr,Y
+ust21050,미국주식 원장 미체결,ust21050,rest,해외주식,계좌,/api/us/acnt,Y
+ust21070,미국주식 원장잔고확인,ust21070,rest,해외주식,계좌,/api/us/acnt,Y
+ust21100,미국주식 거래내역,ust21100,rest,해외주식,계좌,/api/us/acnt,Y
+ust21110,미국주식 예수금,ust21110,rest,해외주식,계좌,/api/us/acnt,Y
+ust21111,해외주식 인출가능금액,ust21111,rest,해외주식,계좌,/api/us/acnt,Y
+ust21120,미국주식 원장 잔고현황,ust21120,rest,해외주식,계좌,/api/us/acnt,Y
+ust21121,미국주식 원장 잔고현황,ust21121,rest,해외주식,계좌,/api/us/acnt,Y
+ust21122,해외증권 계좌 잔고평가현황,ust21122,rest,해외주식,계좌,/api/us/acnt,Y
+ust21130,미국주식 특정일 잔고,ust21130,rest,해외주식,계좌,/api/us/acnt,Y
+ust21131,미국주식 특정일 잔고,ust21131,rest,해외주식,계좌,/api/us/acnt,Y
+ust21132,미국주식 특정일 잔고,ust21132,rest,해외주식,계좌,/api/us/acnt,Y
+ust21150,미국주식 일별 주문체결내역,ust21150,rest,해외주식,계좌,/api/us/acnt,Y
+ust21160,미국주식 예수금 상세,ust21160,rest,해외주식,계좌,/api/us/acnt,Y
+ust21170,미국주식 당일 종목별 실현손익,ust21170,rest,해외주식,계좌,/api/us/acnt,Y
+ust21180,미국주식 기간별 주문체결내역,ust21180,rest,해외주식,계좌,/api/us/acnt,Y
+ust21200,미국주식 기간별 예약주문,ust21200,rest,해외주식,주문,/api/us/ordr,Y
+ust21201,미국주식 예약주문 내역조회,ust21201,rest,해외주식,주문,/api/us/ordr,Y
+ust21202,미국주식 예약주문 취소,ust21202,rest,해외주식,주문,/api/us/ordr,Y
+ust21203,미국주식 예약주문 정정,ust21203,rest,해외주식,주문,/api/us/ordr,Y
+ust21204,미국주식 계좌별 일자별 예약내역 조회,ust21204,rest,해외주식,주문,/api/us/ordr,Y
+ust21380,미국주식 권리내역,ust21380,rest,해외주식,계좌,/api/us/acnt,Y
+ust21510,미국주식 주문체결 확인,ust21510,rest,해외주식,계좌,/api/us/acnt,Y
+ust21530,미국주식 실현손익,ust21530,rest,해외주식,계좌,/api/us/acnt,Y
+ust21531,미국주식 실현손익,ust21531,rest,해외주식,계좌,/api/us/acnt,Y
+ust21610,미국주식 당일매매,ust21610,rest,해외주식,계좌,/api/us/acnt,Y
+ust21620,미국주식 당일매매정리,ust21620,rest,해외주식,계좌,/api/us/acnt,Y
+ust21630,미국주식 당일 실현손익,ust21630,rest,해외주식,계좌,/api/us/acnt,Y
+ust21640,미국주식 일별 종목별 실현손익,ust21640,rest,해외주식,계좌,/api/us/acnt,Y
+ust21650,미국주식 기간별 수익률 현황,ust21650,rest,해외주식,계좌,/api/us/acnt,Y
+ust21660,미국주식 일별 실현손익,ust21660,rest,해외주식,계좌,/api/us/acnt,Y
+ust21661,미국주식 일별 실현손익,ust21661,rest,해외주식,계좌,/api/us/acnt,Y
+ust30130,미국주식 원화주문 가능금액,ust30130,rest,해외주식,기타,/api/us/etc,Y
+ust30131,미국주식 원화주문 가능금액,ust30131,rest,해외주식,기타,/api/us/etc,Y
+ust30132,미국주식 원화주문 가능금액,ust30132,rest,해외주식,기타,/api/us/etc,Y
+ust30133,미국주식 원화주문 가능금액,ust30133,rest,해외주식,기타,/api/us/etc,Y
+ust30140,미국주식 원화주문설정금 환전,ust30140,rest,해외주식,기타,/api/us/etc,Y
+ust30141,미국주식 원화주문설정금 환전,ust30141,rest,해외주식,기타,/api/us/etc,Y
+ust30142,미국주식 원화주문설정금 환전,ust30142,rest,해외주식,기타,/api/us/etc,Y
+ust31280,자동환전조회취소,ust31280,rest,해외주식,기타,/api/us/etc,Y
+ust31281,자동환전조회취소,ust31281,rest,해외주식,기타,/api/us/etc,Y
+ust31290,목표환율 자동환전 신청,ust31290,rest,해외주식,기타,/api/us/etc,Y
+ust31291,목표환율 자동환전 신청,ust31291,rest,해외주식,기타,/api/us/etc,Y
+ust31292,목표환율 자동환전 신청,ust31292,rest,해외주식,기타,/api/us/etc,Y
+ust31300,외화환전신청,ust31300,rest,해외주식,기타,/api/us/etc,Y
+ust31301,외화환전신청,ust31301,rest,해외주식,기타,/api/us/etc,Y
+ust31302,외화환전신청,ust31302,rest,해외주식,기타,/api/us/etc,Y
+ust31490,미국주식 주문가능수량(종목/증거금률별),ust31490,rest,해외주식,주문,/api/us/ordr,Y
+ust31500,미국주식 반대매매 예정내역,ust31500,rest,해외주식,계좌,/api/us/acnt,Y
+ust31510,미국주식 미수금 내역조회,ust31510,rest,해외주식,계좌,/api/us/acnt,Y
+ust31520,미국주식 배당금 입금 내역,ust31520,rest,해외주식,계좌,/api/us/acnt,Y
+ust31521,미국주식 배당금 입금 내역,ust31521,rest,해외주식,계좌,/api/us/acnt,Y
+ust71920,해외주식 통합증거금 상세조회,ust71920,rest,해외주식,기타,/api/us/etc,Y
+00,주문체결,subscribe_domestic_order_fill,websocket_realtime,국내주식,실시간시세,/api/dostk/websocket,Y
+04,잔고,subscribe_domestic_balance,websocket_realtime,국내주식,실시간시세,/api/dostk/websocket,Y
+0A,주식기세,subscribe_domestic_stock_surge,websocket_realtime,국내주식,실시간시세,/api/dostk/websocket,Y
+0B,주식체결,subscribe_domestic_stock_trade,websocket_realtime,국내주식,실시간시세,/api/dostk/websocket,Y
+0C,주식우선호가,subscribe_domestic_stock_best_quote,websocket_realtime,국내주식,실시간시세,/api/dostk/websocket,Y
+0D,주식호가잔량,subscribe_domestic_stock_order_book_depth,websocket_realtime,국내주식,실시간시세,/api/dostk/websocket,Y
+0E,주식시간외호가,subscribe_domestic_stock_after_hours_quote,websocket_realtime,국내주식,실시간시세,/api/dostk/websocket,Y
+0F,주식당일거래원,subscribe_domestic_stock_today_brokers,websocket_realtime,국내주식,실시간시세,/api/dostk/websocket,Y
+0G,ETF NAV,subscribe_domestic_etf_nav,websocket_realtime,국내주식,실시간시세,/api/dostk/websocket,Y
+0H,주식예상체결,subscribe_domestic_stock_expected_execution,websocket_realtime,국내주식,실시간시세,/api/dostk/websocket,Y
+0I,국제금환산가격,subscribe_domestic_international_gold_converted_price,websocket_realtime,국내주식,실시간시세,/api/dostk/websocket,Y
+0J,업종지수,subscribe_domestic_sector_index,websocket_realtime,국내주식,실시간시세,/api/dostk/websocket,Y
+0U,업종등락,subscribe_domestic_sector_change,websocket_realtime,국내주식,실시간시세,/api/dostk/websocket,Y
+0g,주식종목정보,subscribe_domestic_stock_info,websocket_realtime,국내주식,실시간시세,/api/dostk/websocket,Y
+0m,ELW 이론가,subscribe_domestic_elw_theoretical_price,websocket_realtime,국내주식,실시간시세,/api/dostk/websocket,Y
+0s,장시작시간,subscribe_domestic_market_open_time,websocket_realtime,국내주식,실시간시세,/api/dostk/websocket,Y
+0u,ELW 지표,subscribe_domestic_elw_indicator,websocket_realtime,국내주식,실시간시세,/api/dostk/websocket,Y
+0w,종목프로그램매매,subscribe_domestic_stock_program_trade,websocket_realtime,국내주식,실시간시세,/api/dostk/websocket,Y
+1h,VI발동/해제,subscribe_domestic_vi_event,websocket_realtime,국내주식,실시간시세,/api/dostk/websocket,Y

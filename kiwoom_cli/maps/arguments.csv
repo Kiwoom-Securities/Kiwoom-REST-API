@@ -1,0 +1,732 @@
+command_path,option,dest,kiwoom_field,required,type,choices,value_map,default,description
+kiwoomcli domestic stocks info,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic quotes price,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic orderbooks list,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic candles daily,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic candles daily,--date,date,base_dt,Y,date_yyyymmdd,,,,기준일자 YYYYMMDD
+kiwoomcli domestic candles daily,--adjusted,adjusted,upd_stkpc_tp,N,adjusted_price_flag,0|1|true|false|adjusted|raw,,1,수정주가 구분
+kiwoomcli domestic candles by-stock,--date,date,dt,Y,date_yyyymmdd,,,,조회일자 YYYYMMDD
+kiwoomcli domestic candles by-stock,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic candles by-stock,--basis,basis,amt_qty_tp,Y,market,amount|quantity,amount=1;quantity=2,,금액/수량 구분
+kiwoomcli domestic candles by-stock,--side,side,trde_tp,Y,market,net-buy|buy|sell,net-buy=0;buy=1;sell=2,,매매구분
+kiwoomcli domestic candles by-stock,--unit,unit,unit_tp,Y,market,thousand|share,thousand=1000;share=1,,단위구분
+kiwoomcli domestic candles lookup,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic candles lookup,--basis,basis,amt_qty_tp,Y,market,amount|quantity,amount=1;quantity=2,,금액/수량 구분
+kiwoomcli domestic candles lookup,--side,side,trde_tp,Y,market,net-buy|buy|sell,net-buy=0;buy=1;sell=2,,매매구분
+kiwoomcli domestic candles lookup,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic etfs info,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 ETF 종목코드
+kiwoomcli domestic etfs daily,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 ETF 종목코드
+kiwoomcli domestic etfs profit,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 ETF 종목코드
+kiwoomcli domestic etfs profit,--index-code,index_code,etfobjt_idex_cd,Y,market,,,,ETF 대상지수코드
+kiwoomcli domestic etfs profit,--period,period,dt,Y,market,week|month|six-months|year,week=0;month=1;six-months=2;year=3,,기간
+kiwoomcli domestic etfs list,--tax-type,tax_type,txon_type,Y,market,all|tax-free|holding-tax|company|foreign|foreign-tax-free,all=0;tax-free=1;holding-tax=2;company=3;foreign=4;foreign-tax-free=5,,과세유형
+kiwoomcli domestic etfs list,--nav-compare,nav_compare,navpre,Y,market,all|nav-gt-close|nav-lt-close,all=0;nav-gt-close=1;nav-lt-close=2,,NAV 대비
+kiwoomcli domestic etfs list,--manager,manager,mngmcomp,Y,market,,,,운용사 코드
+kiwoomcli domestic etfs list,--taxable,taxable,txon_yn,Y,market,all|taxable|tax-free,all=0;taxable=1;tax-free=2,,과세여부
+kiwoomcli domestic etfs list,--tracking-index,tracking_index,trace_idex,Y,market,,,,추적지수 코드
+kiwoomcli domestic etfs list,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic etfs intraday-trend,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 ETF 종목코드
+kiwoomcli domestic etfs intraday-fills,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 ETF 종목코드
+kiwoomcli domestic etfs daily-fills,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 ETF 종목코드
+kiwoomcli domestic etfs nav,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 ETF 종목코드
+kiwoomcli domestic etfs foreign-trend,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 ETF 종목코드
+kiwoomcli domestic elws daily,--code,code,stk_cd,Y,instrument_code,,,,6자리 ELW 종목코드
+kiwoomcli domestic elws balance,--code,code,bsis_aset_cd,Y,market,,,,기초자산코드
+kiwoomcli domestic elws balance,--date,date,base_dt,Y,date_yyyymmdd,,,,기준일자 YYYYMMDD
+kiwoomcli domestic elws conditions,--issuer-code,issuer_code,isscomp_cd,Y,market,,,,발행사코드
+kiwoomcli domestic elws conditions,--underlying-code,underlying_code,bsis_aset_cd,Y,market,,,,기초자산코드
+kiwoomcli domestic elws conditions,--right-type,right_type,rght_tp,Y,market,all|call|put|dc|dp|ex|early-call|early-put,all=0;call=1;put=2;dc=3;dp=4;ex=5;early-call=6;early-put=7,,권리구분
+kiwoomcli domestic elws conditions,--lp-code,lp_code,lpcd,Y,market,,,,LP코드
+kiwoomcli domestic elws conditions,--sort,sort,sort_tp,Y,market,none|rise-rate|rise-price|fall-rate|fall-price|volume|amount|days-left,none=0;rise-rate=1;rise-price=2;fall-rate=3;fall-price=4;volume=5;amount=6;days-left=7,,정렬구분
+kiwoomcli domestic elws sensitivity,--code,code,stk_cd,Y,instrument_code,,,,6자리 ELW 종목코드
+kiwoomcli domestic elws price-move,--direction,direction,flu_tp,Y,market,rise|fall,rise=1;fall=2,,등락구분
+kiwoomcli domestic elws price-move,--time-unit,time_unit,tm_tp,Y,market,minute|day,minute=1;day=2,,시간구분
+kiwoomcli domestic elws price-move,--time,time,tm,Y,quantity,,,,시간 값
+kiwoomcli domestic elws price-move,--volume,volume,trde_qty_tp,Y,market,all|10k|50k|100k|300k|500k|1000k,all=0;10k=10;50k=50;100k=100;300k=300;500k=500;1000k=1000,,거래량구분
+kiwoomcli domestic elws price-move,--issuer-code,issuer_code,isscomp_cd,Y,market,,,,발행사코드
+kiwoomcli domestic elws price-move,--underlying-code,underlying_code,bsis_aset_cd,Y,market,,,,기초자산코드
+kiwoomcli domestic elws price-move,--right-type,right_type,rght_tp,Y,market,all|call|put|dc|dp|ex|early-call|early-put,all=000;call=001;put=002;dc=003;dp=004;ex=005;early-call=006;early-put=007,,권리구분
+kiwoomcli domestic elws price-move,--lp-code,lp_code,lpcd,Y,market,,,,LP코드
+kiwoomcli domestic elws price-move,--include-ended,include_ended,trde_end_elwskip,Y,market,yes|no,yes=0;no=1,,거래종료ELW 포함 여부
+kiwoomcli domestic elws broker-net,--issuer-code,issuer_code,isscomp_cd,Y,market,,,,발행사코드
+kiwoomcli domestic elws broker-net,--volume,volume,trde_qty_tp,Y,market,all|5k|10k|50k|100k|500k|1000k,all=0;5k=5;10k=10;50k=50;100k=100;500k=500;1000k=1000,,거래량구분
+kiwoomcli domestic elws broker-net,--side,side,trde_tp,Y,market,net-buy|net-sell,net-buy=1;net-sell=2,,매매구분
+kiwoomcli domestic elws broker-net,--period,period,dt,Y,market,previous|5d|10d|40d|60d,previous=1;5d=5;10d=10;40d=40;60d=60,,기간
+kiwoomcli domestic elws broker-net,--include-ended,include_ended,trde_end_elwskip,Y,market,yes|no,yes=0;no=1,,거래종료ELW 포함 여부
+kiwoomcli domestic elws divergence,--issuer-code,issuer_code,isscomp_cd,Y,market,,,,발행사코드
+kiwoomcli domestic elws divergence,--underlying-code,underlying_code,bsis_aset_cd,Y,market,,,,기초자산코드
+kiwoomcli domestic elws divergence,--right-type,right_type,rght_tp,Y,market,all|call|put|dc|dp|ex|early-call|early-put,all=000;call=001;put=002;dc=003;dp=004;ex=005;early-call=006;early-put=007,,권리구분
+kiwoomcli domestic elws divergence,--lp-code,lp_code,lpcd,Y,market,,,,LP코드
+kiwoomcli domestic elws divergence,--include-ended,include_ended,trde_end_elwskip,Y,market,yes|no,yes=0;no=1,,거래종료ELW 포함 여부
+kiwoomcli domestic elws change-rank,--sort,sort,sort_tp,Y,market,rise-rate|rise-price|fall-rate|fall-price,rise-rate=1;rise-price=2;fall-rate=3;fall-price=4,,정렬구분
+kiwoomcli domestic elws change-rank,--right-type,right_type,rght_tp,Y,market,all|call|put|dc|dp|early-call|early-put,all=000;call=001;put=002;dc=003;dp=004;early-call=006;early-put=007,,권리구분
+kiwoomcli domestic elws change-rank,--include-ended,include_ended,trde_end_skip,Y,market,yes|no,yes=0;no=1,,거래종료 포함 여부
+kiwoomcli domestic elws balance-rank,--sort,sort,sort_tp,Y,market,buy-balance|sell-balance,buy-balance=1;sell-balance=2,,정렬구분
+kiwoomcli domestic elws balance-rank,--right-type,right_type,rght_tp,Y,market,all|call|put|dc|dp|early-call|early-put,all=000;call=001;put=002;dc=003;dp=004;early-call=006;early-put=007,,권리구분
+kiwoomcli domestic elws balance-rank,--include-ended,include_ended,trde_end_skip,Y,market,yes|no,yes=0;no=1,,거래종료 포함 여부
+kiwoomcli domestic elws proximity,--code,code,stk_cd,Y,instrument_code,,,,6자리 ELW 종목코드
+kiwoomcli domestic elws details,--code,code,stk_cd,Y,instrument_code,,,,6자리 ELW 종목코드
+kiwoomcli domestic investors by-stock,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic investors lookup,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic investors trend,--period,period,dt,Y,market,recent|3d|5d|10d|20d|120d|range,recent=1;3d=3;5d=5;10d=10;20d=20;120d=120;range=0,,기간
+kiwoomcli domestic investors trend,--from,from_date,strt_dt,N,date_yyyymmdd,,,,시작일자 YYYYMMDD
+kiwoomcli domestic investors trend,--to,to_date,end_dt,N,date_yyyymmdd,,,,종료일자 YYYYMMDD
+kiwoomcli domestic investors trend,--market,market,mrkt_tp,Y,market,kospi|kosdaq,kospi=001;kosdaq=101,,장구분
+kiwoomcli domestic investors trend,--side,side,netslmt_tp,Y,market,net-buy,net-buy=2,,순매도수구분
+kiwoomcli domestic investors trend,--target,target,stk_inds_tp,Y,market,stock|sector,stock=0;sector=1,,종목업종구분
+kiwoomcli domestic investors trend,--basis,basis,amt_qty_tp,Y,market,amount|quantity,amount=0;quantity=1,,금액수량구분
+kiwoomcli domestic investors trend,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic short-selling trend,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic short-selling trend,--from,from_date,strt_dt,Y,date_yyyymmdd,,,,시작일자 YYYYMMDD
+kiwoomcli domestic short-selling trend,--to,to_date,end_dt,Y,date_yyyymmdd,,,,종료일자 YYYYMMDD
+kiwoomcli domestic securities-lending by-stock,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic securities-lending trend,--from,from_date,strt_dt,N,date_yyyymmdd,,,,시작일자 YYYYMMDD
+kiwoomcli domestic securities-lending trend,--to,to_date,end_dt,N,date_yyyymmdd,,,,종료일자 YYYYMMDD
+kiwoomcli domestic securities-lending trend,,,all_tp,Y,market,,,1,전체표시 고정값
+kiwoomcli domestic securities-lending list,--from,from_date,strt_dt,Y,date_yyyymmdd,,,,시작일자 YYYYMMDD
+kiwoomcli domestic securities-lending list,--to,to_date,end_dt,N,date_yyyymmdd,,,,종료일자 YYYYMMDD
+kiwoomcli domestic securities-lending list,--market,market,mrkt_tp,Y,market,kospi|kosdaq,kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic securities-lending lookup,--date,date,dt,Y,date_yyyymmdd,,,,조회일자 YYYYMMDD
+kiwoomcli domestic securities-lending lookup,--market,market,mrkt_tp,Y,market,kospi|kosdaq,kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic themes by-stock,--code,code,thema_grp_cd,Y,market,,,,테마그룹코드
+kiwoomcli domestic themes by-stock,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic themes by-stock,--days,days,date_tp,N,market,,,,기간 일수
+kiwoomcli domestic themes lookup,--kind,kind,qry_tp,Y,market,all|theme|stock,all=0;theme=1;stock=2,,검색구분
+kiwoomcli domestic themes lookup,--days,days,date_tp,Y,market,,,,기간 일수
+kiwoomcli domestic themes lookup,--sort,sort,flu_pl_amt_tp,Y,market,profit-top|profit-bottom|change-top|change-bottom,profit-top=1;profit-bottom=2;change-top=3;change-bottom=4,,정렬 기준
+kiwoomcli domestic themes lookup,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic themes lookup,--code,code,stk_cd,N,stock_code,,,,종목코드
+kiwoomcli domestic themes lookup,--name,name,thema_nm,N,market,,,,테마명
+kiwoomcli domestic sectors program,--code,code,stk_cd,Y,stock_code,,,,거래소별 종목코드
+kiwoomcli domestic sectors investor-flows,--market,market,mrkt_tp,Y,market,kospi|kosdaq,kospi=0;kosdaq=1,,시장구분
+kiwoomcli domestic sectors investor-flows,--basis,basis,amt_qty_tp,Y,market,amount|quantity,amount=0;quantity=1,,금액/수량 구분
+kiwoomcli domestic sectors investor-flows,--date,date,base_dt,N,date_yyyymmdd,,,,기준일자 YYYYMMDD
+kiwoomcli domestic sectors investor-flows,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic sectors price,--market,market,mrkt_tp,Y,market,kospi|kosdaq|kospi200,kospi=0;kosdaq=1;kospi200=2,,시장구분
+kiwoomcli domestic sectors price,--code,code,inds_cd,Y,sector_code,,,,3자리 업종코드
+kiwoomcli domestic sectors stocks,--market,market,mrkt_tp,Y,market,kospi|kosdaq|kospi200,kospi=0;kosdaq=1;kospi200=2,,시장구분
+kiwoomcli domestic sectors stocks,--code,code,inds_cd,Y,sector_code,,,,3자리 업종코드
+kiwoomcli domestic sectors stocks,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic sectors indices,--code,code,inds_cd,Y,sector_code,,,,3자리 업종코드
+kiwoomcli domestic sectors daily,--market,market,mrkt_tp,Y,market,kospi|kosdaq|kospi200,kospi=0;kosdaq=1;kospi200=2,,시장구분
+kiwoomcli domestic sectors daily,--code,code,inds_cd,Y,sector_code,,,,3자리 업종코드
+kiwoomcli domestic quotes balance,--date,date,date,Y,date_yyyymmdd,,,,조회일자 YYYYMMDD
+kiwoomcli domestic quotes balance,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic quotes by-stock,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic quotes by-stock,--from,from_date,strt_dt,Y,date_yyyymmdd,,,,시작일자 YYYYMMDD
+kiwoomcli domestic quotes by-stock,--to,to_date,end_dt,Y,date_yyyymmdd,,,,종료일자 YYYYMMDD
+kiwoomcli domestic quotes by-stock,--institution-price,institution_price,orgn_prsm_unp_tp,Y,market,buy|sell,buy=1;sell=2,,기관추정단가구분
+kiwoomcli domestic quotes by-stock,--foreign-price,foreign_price,for_prsm_unp_tp,Y,market,buy|sell,buy=1;sell=2,,외인추정단가구분
+kiwoomcli domestic quotes list,--kind,kind,newstk_recvrht_tp,Y,market,all|warrant-security|warrant-certificate,all=00;warrant-security=05;warrant-certificate=07,,신주인수권구분
+kiwoomcli domestic quotes gold-price,--code,code,stk_cd,Y,market,,,,금현물 종목코드(예: M04020000 금 99.99_1kg)
+kiwoomcli domestic quotes gold-fills,--code,code,stk_cd,Y,market,,,,금현물 종목코드(예: M04020000 금 99.99_1kg)
+kiwoomcli domestic quotes gold-daily,--code,code,stk_cd,Y,market,,,,금현물 종목코드(예: M04020000 금 99.99_1kg)
+kiwoomcli domestic quotes gold-daily,--date,date,base_dt,Y,date_yyyymmdd,,,,기준일자 YYYYMMDD
+kiwoomcli domestic quotes gold-expected,--code,code,stk_cd,Y,market,,,,금현물 종목코드(예: M04020000 금 99.99_1kg)
+kiwoomcli domestic orderbooks gold,--code,code,stk_cd,Y,market,,,,금현물 종목코드(예: M04020000 금 99.99_1kg)
+kiwoomcli domestic orderbooks gold,--tick,tick,tic_scope,Y,market,1|3|5|10|30,,,
+kiwoomcli domestic rankings list-fills,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic rankings list-fills,--sort,sort,sort_tp,Y,market,rise-rate|rise-price|flat|fall-rate|fall-price|volume|upper-limit|lower-limit,rise-rate=1;rise-price=2;flat=3;fall-rate=4;fall-price=5;volume=6;upper-limit=7;lower-limit=8,,정렬구분
+kiwoomcli domestic rankings list-fills,--volume,volume,trde_qty_cnd,Y,market,all|1k|3k|5k|10k|50k|100k,all=0;1k=1;3k=3;5k=5;10k=10;50k=50;100k=100,,거래량조건
+kiwoomcli domestic rankings list-fills,--stock-condition,stock_condition,stk_cnd,Y,market,all|exclude-managed|exclude-preferred|exclude-managed-preferred|exclude-margin-100|only-margin-100|only-margin-40|only-margin-30|only-margin-20|exclude-liquidation|only-margin-50|only-margin-60|exclude-etf|exclude-spac|exclude-etf-etn,all=0;exclude-managed=1;exclude-preferred=3;exclude-managed-preferred=4;exclude-margin-100=5;only-margin-100=6;only-margin-40=7;only-margin-30=8;only-margin-20=9;exclude-liquidation=11;only-margin-50=12;only-margin-60=13;exclude-etf=14;exclude-spac=15;exclude-etf-etn=16,,종목조건
+kiwoomcli domestic rankings list-fills,--credit-condition,credit_condition,crd_cnd,Y,market,all|a|b|c|d|exclude-overlimit|e|short|all-financing,all=0;a=1;b=2;c=3;d=4;exclude-overlimit=5;e=7;short=8;all-financing=9,,신용조건
+kiwoomcli domestic rankings list-fills,--price-condition,price_condition,pric_cnd,Y,market,all|under-1k|1k-2k|2k-5k|5k-10k|over-10k|over-1k|under-10k,all=0;under-1k=1;1k-2k=2;2k-5k=3;5k-10k=4;over-10k=5;over-1k=8;under-10k=10,,가격조건
+kiwoomcli domestic rankings list-fills,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic stocks trend,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic stocks trend,--date,date,dt,Y,date_yyyymmdd,,,,조회일자 YYYYMMDD
+kiwoomcli domestic stocks trend,--kind,kind,qry_tp,Y,market,financing|loan,financing=1;loan=2,,조회구분
+kiwoomcli domestic orders buy,--exchange,exchange,dmst_stex_tp,N,market,KRX|NXT|SOR,,KRX,국내거래소구분
+kiwoomcli domestic orders buy,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic orders buy,--qty,qty,ord_qty,Y,quantity,,,,주문수량
+kiwoomcli domestic orders buy,--price,price,ord_uv,N,price,,,,주문단가
+kiwoomcli domestic orders buy,--order-type,order_type,trde_tp,Y,order_type,limit|market,limit=0;market=3,,매매구분
+kiwoomcli domestic orders sell,--exchange,exchange,dmst_stex_tp,N,market,KRX|NXT|SOR,,KRX,국내거래소구분
+kiwoomcli domestic orders sell,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic orders sell,--qty,qty,ord_qty,Y,quantity,,,,주문수량
+kiwoomcli domestic orders sell,--price,price,ord_uv,N,price,,,,주문단가
+kiwoomcli domestic orders sell,--order-type,order_type,trde_tp,Y,order_type,limit|market,limit=0;market=3,,매매구분
+kiwoomcli domestic orders modify,--exchange,exchange,dmst_stex_tp,N,market,KRX|NXT|SOR,,KRX,국내거래소구분
+kiwoomcli domestic orders modify,--order-id,order_id,orig_ord_no,Y,preview_order_id,,,,원주문번호
+kiwoomcli domestic orders modify,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic orders modify,--qty,qty,mdfy_qty,Y,quantity,,,,정정수량
+kiwoomcli domestic orders modify,--price,price,mdfy_uv,Y,price,,,,정정단가
+kiwoomcli domestic orders cancel,--exchange,exchange,dmst_stex_tp,N,market,KRX|NXT|SOR,,KRX,국내거래소구분
+kiwoomcli domestic orders cancel,--order-id,order_id,orig_ord_no,Y,preview_order_id,,,,원주문번호
+kiwoomcli domestic orders cancel,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic orders cancel,--qty,qty,cncl_qty,Y,quantity,,,,취소수량
+kiwoomcli domestic orders chance,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic orders chance,--side,side,trde_tp,Y,market,sell|buy,sell=1;buy=2,,매매구분
+kiwoomcli domestic orders chance,--price,price,uv,Y,price,,,,매수가격
+kiwoomcli domestic orders margin,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic orders margin,--price,price,uv,N,price,,,,매수가격
+kiwoomcli domestic orders list-open,--stock-scope,stock_scope,all_stk_tp,Y,market,all|stock,all=0;stock=1,,전체종목구분
+kiwoomcli domestic orders list-open,--side,side,trde_tp,Y,market,all|sell|buy,all=0;sell=1;buy=2,,매매구분
+kiwoomcli domestic orders list-open,--code,code,stk_cd,N,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic orders list-open,--exchange,exchange,stex_tp,Y,market,ALL|KRX|NXT,ALL=0;KRX=1;NXT=2,,거래소구분
+kiwoomcli domestic orders list-fills,--stock-scope,stock_scope,qry_tp,Y,market,all|stock,all=0;stock=1,,조회 종목 범위
+kiwoomcli domestic orders list-fills,--side,side,sell_tp,Y,market,all|sell|buy,all=0;sell=1;buy=2,,매도수구분
+kiwoomcli domestic orders list-fills,--code,code,stk_cd,N,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic orders list-fills,--order-id,order_id,ord_no,N,market,,,,주문번호
+kiwoomcli domestic orders list-fills,--exchange,exchange,stex_tp,Y,market,ALL|KRX|NXT,ALL=0;KRX=1;NXT=2,,거래소구분
+kiwoomcli domestic orders open-detail,--order-id,order_id,ord_no,Y,market,,,,주문번호
+kiwoomcli domestic accounts cash,--cash-basis,cash_basis,qry_tp,Y,market,estimated|normal,estimated=3;normal=2,,조회구분
+kiwoomcli domestic accounts assets,--include-delisted,include_delisted,qry_tp,Y,market,yes|no,yes=0;no=1,,상장폐지조회구분
+kiwoomcli domestic accounts valuation,--include-delisted,include_delisted,qry_tp,Y,market,yes|no,yes=0;no=1,,상장폐지조회구분
+kiwoomcli domestic accounts valuation,--exchange,exchange,dmst_stex_tp,Y,market,KRX|NXT,,,국내거래소구분
+kiwoomcli domestic accounts holdings,--basis,basis,qry_tp,Y,market,total|individual,total=1;individual=2,,조회구분
+kiwoomcli domestic accounts holdings,--exchange,exchange,dmst_stex_tp,Y,market,KRX|NXT,,,국내거래소구분
+kiwoomcli domestic candles stock-tick,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic candles stock-tick,--interval,interval,tic_scope,Y,market,,,,틱/분 범위
+kiwoomcli domestic candles stock-tick,--adjusted,adjusted,upd_stkpc_tp,N,adjusted_price_flag,0|1|true|false|adjusted|raw,,1,수정주가 구분
+kiwoomcli domestic candles stock-minute,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic candles stock-minute,--interval,interval,tic_scope,Y,market,,,,틱/분 범위
+kiwoomcli domestic candles stock-minute,--adjusted,adjusted,upd_stkpc_tp,N,adjusted_price_flag,0|1|true|false|adjusted|raw,,1,수정주가 구분
+kiwoomcli domestic candles stock-weekly,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic candles stock-weekly,--date,date,base_dt,Y,date_yyyymmdd,,,,기준일자 YYYYMMDD
+kiwoomcli domestic candles stock-weekly,--adjusted,adjusted,upd_stkpc_tp,N,adjusted_price_flag,0|1|true|false|adjusted|raw,,1,수정주가 구분
+kiwoomcli domestic candles stock-monthly,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic candles stock-monthly,--date,date,base_dt,Y,date_yyyymmdd,,,,기준일자 YYYYMMDD
+kiwoomcli domestic candles stock-monthly,--adjusted,adjusted,upd_stkpc_tp,N,adjusted_price_flag,0|1|true|false|adjusted|raw,,1,수정주가 구분
+kiwoomcli domestic candles stock-yearly,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic candles stock-yearly,--date,date,base_dt,Y,date_yyyymmdd,,,,기준일자 YYYYMMDD
+kiwoomcli domestic candles stock-yearly,--adjusted,adjusted,upd_stkpc_tp,N,adjusted_price_flag,0|1|true|false|adjusted|raw,,1,수정주가 구분
+kiwoomcli domestic candles sector-tick,--code,code,inds_cd,Y,sector_code,,,,3자리 업종코드
+kiwoomcli domestic candles sector-tick,--interval,interval,tic_scope,Y,market,,,,틱/분 범위
+kiwoomcli domestic candles sector-minute,--code,code,inds_cd,Y,sector_code,,,,3자리 업종코드
+kiwoomcli domestic candles sector-minute,--interval,interval,tic_scope,Y,market,,,,틱/분 범위
+kiwoomcli domestic candles sector-daily,--code,code,inds_cd,Y,sector_code,,,,3자리 업종코드
+kiwoomcli domestic candles sector-daily,--date,date,base_dt,Y,date_yyyymmdd,,,,기준일자 YYYYMMDD
+kiwoomcli domestic candles sector-weekly,--code,code,inds_cd,Y,sector_code,,,,3자리 업종코드
+kiwoomcli domestic candles sector-weekly,--date,date,base_dt,Y,date_yyyymmdd,,,,기준일자 YYYYMMDD
+kiwoomcli domestic candles sector-monthly,--code,code,inds_cd,Y,sector_code,,,,3자리 업종코드
+kiwoomcli domestic candles sector-monthly,--date,date,base_dt,Y,date_yyyymmdd,,,,기준일자 YYYYMMDD
+kiwoomcli domestic candles sector-yearly,--code,code,inds_cd,Y,sector_code,,,,3자리 업종코드
+kiwoomcli domestic candles sector-yearly,--date,date,base_dt,Y,date_yyyymmdd,,,,기준일자 YYYYMMDD
+kiwoomcli domestic candles gold-tick,--code,code,stk_cd,Y,market,,,,금현물 종목코드(예: M04020000 금 99.99_1kg)
+kiwoomcli domestic candles gold-tick,--interval,interval,tic_scope,Y,market,,,,틱 범위
+kiwoomcli domestic candles gold-tick,--adjusted,adjusted,upd_stkpc_tp,N,adjusted_price_flag,0|1|true|false|adjusted|raw,,1,수정주가 구분
+kiwoomcli domestic candles gold-minute,--code,code,stk_cd,Y,market,,,,금현물 종목코드(예: M04020000 금 99.99_1kg)
+kiwoomcli domestic candles gold-minute,--interval,interval,tic_scope,Y,market,,,,분 범위
+kiwoomcli domestic candles gold-daily,--code,code,stk_cd,Y,market,,,,금현물 종목코드(예: M04020000 금 99.99_1kg)
+kiwoomcli domestic candles gold-daily,--date,date,base_dt,Y,date_yyyymmdd,,,,기준일자 YYYYMMDD
+kiwoomcli domestic candles gold-daily,--adjusted,adjusted,upd_stkpc_tp,N,adjusted_price_flag,0|1|true|false|adjusted|raw,,1,수정주가 구분
+kiwoomcli domestic candles gold-weekly,--code,code,stk_cd,Y,market,,,,금현물 종목코드(예: M04020000 금 99.99_1kg)
+kiwoomcli domestic candles gold-weekly,--date,date,base_dt,Y,date_yyyymmdd,,,,기준일자 YYYYMMDD
+kiwoomcli domestic candles gold-weekly,--adjusted,adjusted,upd_stkpc_tp,N,adjusted_price_flag,0|1|true|false|adjusted|raw,,1,수정주가 구분
+kiwoomcli domestic candles gold-monthly,--code,code,stk_cd,Y,market,,,,금현물 종목코드(예: M04020000 금 99.99_1kg)
+kiwoomcli domestic candles gold-monthly,--date,date,base_dt,Y,date_yyyymmdd,,,,기준일자 YYYYMMDD
+kiwoomcli domestic candles gold-monthly,--adjusted,adjusted,upd_stkpc_tp,N,adjusted_price_flag,0|1|true|false|adjusted|raw,,1,수정주가 구분
+kiwoomcli domestic candles gold-today-tick,--code,code,stk_cd,Y,market,,,,금현물 종목코드(예: M04020000 금 99.99_1kg)
+kiwoomcli domestic candles gold-today-tick,--interval,interval,tic_scope,Y,market,,,,틱/분 범위
+kiwoomcli domestic candles gold-today-minute,--code,code,stk_cd,Y,market,,,,금현물 종목코드(예: M04020000 금 99.99_1kg)
+kiwoomcli domestic candles gold-today-minute,--interval,interval,tic_scope,Y,market,,,,틱/분 범위
+kiwoomcli domestic quotes multi-period,--code,code,stk_cd,Y,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic quotes intraday-minute,--code,code,stk_cd,Y,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic quotes institution-daily,--from,from_date,strt_dt,Y,date_yyyymmdd,,,,시작일자 YYYYMMDD
+kiwoomcli domestic quotes institution-daily,--to,to_date,end_dt,Y,date_yyyymmdd,,,,종료일자 YYYYMMDD
+kiwoomcli domestic quotes institution-daily,--side,side,trde_tp,Y,market,net-sell|net-buy,net-sell=1;net-buy=2,,순매매구분
+kiwoomcli domestic quotes institution-daily,--market,market,mrkt_tp,Y,market,kospi|kosdaq,kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic quotes institution-daily,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic quotes strength-time,--code,code,stk_cd,Y,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic quotes strength-daily,--code,code,stk_cd,Y,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic quotes investor-intraday,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic quotes investor-intraday,--basis,basis,amt_qty_tp,Y,market,combined,combined=1,,금액/수량 동시 조회
+kiwoomcli domestic quotes investor-intraday,--investor,investor,invsr,Y,market,foreign|institution|investment-trust|insurance|bank|pension|state|other-corporate,foreign=6;institution=7;investment-trust=1;insurance=0;bank=2;pension=3;state=4;other-corporate=5,,투자자구분
+kiwoomcli domestic quotes investor-intraday,--foreign-all,foreign_all,frgn_all,Y,market,yes|no,yes=1;no=0,,외국인 전체 포함 여부
+kiwoomcli domestic quotes investor-intraday,--same-net-buy,same_net_buy,smtm_netprps_tp,Y,market,yes|no,yes=1;no=0,,동시 순매수 구분
+kiwoomcli domestic quotes investor-intraday,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic quotes investor-after-close,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic quotes investor-after-close,--basis,basis,amt_qty_tp,Y,market,amount|quantity,amount=1;quantity=2,,금액/수량 구분
+kiwoomcli domestic quotes investor-after-close,--side,side,trde_tp,Y,market,net-buy|buy|sell,net-buy=0;buy=1;sell=2,,매매구분
+kiwoomcli domestic quotes investor-after-close,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic quotes broker-trend,--broker-code,broker_code,mmcm_cd,Y,market,,,,회원사 코드
+kiwoomcli domestic quotes broker-trend,--code,code,stk_cd,Y,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic quotes broker-trend,--from,from_date,strt_dt,Y,date_yyyymmdd,,,,시작일자 YYYYMMDD
+kiwoomcli domestic quotes broker-trend,--to,to_date,end_dt,Y,date_yyyymmdd,,,,종료일자 YYYYMMDD
+kiwoomcli domestic quotes daily-price,--code,code,stk_cd,Y,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic quotes daily-price,--date,date,qry_dt,Y,date_yyyymmdd,,,,조회일자 YYYYMMDD
+kiwoomcli domestic quotes daily-price,--basis,basis,indc_tp,Y,market,quantity|amount,quantity=0;amount=1,,표시구분
+kiwoomcli domestic quotes after-hours,--code,code,stk_cd,Y,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic quotes program-time,--date,date,date,Y,date_yyyymmdd,,,,조회일자 YYYYMMDD
+kiwoomcli domestic quotes program-time,--basis,basis,amt_qty_tp,Y,market,amount|quantity,amount=1;quantity=2,,금액/수량 구분
+kiwoomcli domestic quotes program-time,--market-code,market_code,mrkt_tp,Y,market,,,,프로그램 시장코드
+kiwoomcli domestic quotes program-time,--interval-type,interval_type,min_tic_tp,Y,market,tick|minute,tick=0;minute=1,,틱/분 구분
+kiwoomcli domestic quotes program-time,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic quotes program-cumulative,--date,date,date,Y,date_yyyymmdd,,,,조회일자 YYYYMMDD
+kiwoomcli domestic quotes program-cumulative,--basis,basis,amt_qty_tp,Y,market,amount|quantity,amount=1;quantity=2,,금액/수량 구분
+kiwoomcli domestic quotes program-cumulative,--market,market,mrkt_tp,Y,market,kospi|kosdaq,kospi=0;kosdaq=1,,시장구분
+kiwoomcli domestic quotes program-cumulative,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic quotes program-by-stock,--basis,basis,amt_qty_tp,Y,market,amount|quantity,amount=1;quantity=2,,금액/수량 구분
+kiwoomcli domestic quotes program-by-stock,--code,code,stk_cd,Y,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic quotes program-by-stock,--date,date,date,Y,date_yyyymmdd,,,,조회일자 YYYYMMDD
+kiwoomcli domestic quotes program-daily,--date,date,date,Y,date_yyyymmdd,,,,조회일자 YYYYMMDD
+kiwoomcli domestic quotes program-daily,--basis,basis,amt_qty_tp,Y,market,amount|quantity,amount=1;quantity=2,,금액/수량 구분
+kiwoomcli domestic quotes program-daily,--market-code,market_code,mrkt_tp,Y,market,,,,프로그램 시장코드
+kiwoomcli domestic quotes program-daily,--interval-type,interval_type,min_tic_tp,Y,market,tick|minute,tick=0;minute=1,,틱/분 구분
+kiwoomcli domestic quotes program-daily,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic quotes stock-program-daily,--basis,basis,amt_qty_tp,N,market,amount|quantity,amount=1;quantity=2,,금액/수량 구분
+kiwoomcli domestic quotes stock-program-daily,--code,code,stk_cd,Y,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic quotes stock-program-daily,--date,date,date,N,date_yyyymmdd,,,,조회일자 YYYYMMDD
+kiwoomcli domestic stocks realtime-rank,--window,window,qry_tp,Y,market,1m|10m|1h|today|30s,1m=1;10m=2;1h=3;today=4;30s=5,,조회 기간
+kiwoomcli domestic stocks brokers,--code,code,stk_cd,Y,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic stocks fills,--code,code,stk_cd,Y,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic stocks daily-trades,--code,code,stk_cd,Y,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic stocks daily-trades,--from,from_date,strt_dt,Y,date_yyyymmdd,,,,시작일자 YYYYMMDD
+kiwoomcli domestic stocks new-high-low,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic stocks new-high-low,--kind,kind,ntl_tp,Y,market,new-high|new-low,new-high=1;new-low=2,,신고/신저 구분
+kiwoomcli domestic stocks new-high-low,--price-basis,price_basis,high_low_close_tp,Y,market,high-low|close,high-low=1;close=2,,고저/종가 기준
+kiwoomcli domestic stocks new-high-low,--stock-condition,stock_condition,stk_cnd,Y,market,all|exclude-managed|exclude-preferred|exclude-margin-100|only-margin-100|only-margin-40|only-margin-30,all=0;exclude-managed=1;exclude-preferred=3;exclude-margin-100=5;only-margin-100=6;only-margin-40=7;only-margin-30=8,,종목조건
+kiwoomcli domestic stocks new-high-low,--volume-condition,volume_condition,trde_qty_tp,Y,market,all|10k|50k|100k|150k|200k|300k|500k|1000k,all=00000;10k=00010;50k=00050;100k=00100;150k=00150;200k=00200;300k=00300;500k=00500;1000k=01000,,거래량조건
+kiwoomcli domestic stocks new-high-low,--credit-condition,credit_condition,crd_cnd,Y,market,all|a|b|c|d|e|all-financing,all=0;a=1;b=2;c=3;d=4;e=7;all-financing=9,,신용조건
+kiwoomcli domestic stocks new-high-low,--include-limit,include_limit,updown_incls,Y,market,yes|no,yes=1;no=0,,상하한 포함 여부
+kiwoomcli domestic stocks new-high-low,--period-days,period_days,dt,Y,market,5|10|20|60|250,,,기간
+kiwoomcli domestic stocks new-high-low,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic stocks limit-move,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic stocks limit-move,--direction,direction,updown_tp,Y,market,upper|rise|flat|lower|fall|prev-upper|prev-lower,upper=1;rise=2;flat=3;lower=4;fall=5;prev-upper=6;prev-lower=7,,상하한/등락 구분
+kiwoomcli domestic stocks limit-move,--sort,sort,sort_tp,Y,market,code|count|change-rate,code=1;count=2;change-rate=3,,정렬구분
+kiwoomcli domestic stocks limit-move,--stock-condition,stock_condition,stk_cnd,Y,market,all|exclude-managed|exclude-preferred|exclude-managed-preferred|exclude-margin-100|only-margin-100|only-margin-40|only-margin-30|only-margin-20|exclude-managed-preferred-alert,all=0;exclude-managed=1;exclude-preferred=3;exclude-managed-preferred=4;exclude-margin-100=5;only-margin-100=6;only-margin-40=7;only-margin-30=8;only-margin-20=9;exclude-managed-preferred-alert=10,,종목조건
+kiwoomcli domestic stocks limit-move,--volume-condition,volume_condition,trde_qty_tp,Y,market,all|10k|50k|100k|150k|200k|300k|500k|1000k,all=00000;10k=00010;50k=00050;100k=00100;150k=00150;200k=00200;300k=00300;500k=00500;1000k=01000,,거래량조건
+kiwoomcli domestic stocks limit-move,--credit-condition,credit_condition,crd_cnd,Y,market,all|a|b|c|d|e|all-financing,all=0;a=1;b=2;c=3;d=4;e=7;all-financing=9,,신용조건
+kiwoomcli domestic stocks limit-move,--price-condition,price_condition,trde_gold_tp,Y,market,all|under-1k|1k-2k|2k-3k|5k-10k|over-10k|over-1k,all=0;under-1k=1;1k-2k=2;2k-3k=3;5k-10k=4;over-10k=5;over-1k=8,,가격조건
+kiwoomcli domestic stocks limit-move,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic stocks high-low-near,--kind,kind,high_low_tp,Y,market,high|low,high=1;low=2,,고가/저가 구분
+kiwoomcli domestic stocks high-low-near,--near-rate,near_rate,alacc_rt,Y,market,,,,근접률 코드
+kiwoomcli domestic stocks high-low-near,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic stocks high-low-near,--volume-condition,volume_condition,trde_qty_tp,Y,market,all|10k|50k|100k|150k|200k|300k|500k|1000k,all=00000;10k=00010;50k=00050;100k=00100;150k=00150;200k=00200;300k=00300;500k=00500;1000k=01000,,거래량조건
+kiwoomcli domestic stocks high-low-near,--stock-condition,stock_condition,stk_cnd,Y,market,all|exclude-managed|exclude-preferred|exclude-margin-100|only-margin-100|only-margin-40|only-margin-30,all=0;exclude-managed=1;exclude-preferred=3;exclude-margin-100=5;only-margin-100=6;only-margin-40=7;only-margin-30=8,,종목조건
+kiwoomcli domestic stocks high-low-near,--credit-condition,credit_condition,crd_cnd,Y,market,all|a|b|c|d|e|all-financing,all=0;a=1;b=2;c=3;d=4;e=7;all-financing=9,,신용조건
+kiwoomcli domestic stocks high-low-near,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic stocks price-spike,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq|kospi200,all=000;kospi=001;kosdaq=101;kospi200=201,,시장구분
+kiwoomcli domestic stocks price-spike,--direction,direction,flu_tp,Y,market,rise|fall,rise=1;fall=2,,급등/급락 구분
+kiwoomcli domestic stocks price-spike,--time-unit,time_unit,tm_tp,Y,market,minute|day,minute=1;day=2,,분전/일전 구분
+kiwoomcli domestic stocks price-spike,--time,time,tm,Y,quantity,,,,분 또는 일 값
+kiwoomcli domestic stocks price-spike,--volume-condition,volume_condition,trde_qty_tp,Y,market,all|10k|50k|100k|150k|200k|300k|500k|1000k,all=00000;10k=00010;50k=00050;100k=00100;150k=00150;200k=00200;300k=00300;500k=00500;1000k=01000,,거래량조건
+kiwoomcli domestic stocks price-spike,--stock-condition,stock_condition,stk_cnd,Y,market,all|exclude-managed|exclude-preferred|exclude-margin-100|only-margin-100|only-margin-40|only-margin-30,all=0;exclude-managed=1;exclude-preferred=3;exclude-margin-100=5;only-margin-100=6;only-margin-40=7;only-margin-30=8,,종목조건
+kiwoomcli domestic stocks price-spike,--credit-condition,credit_condition,crd_cnd,Y,market,all|a|b|c|d|e|all-financing,all=0;a=1;b=2;c=3;d=4;e=7;all-financing=9,,신용조건
+kiwoomcli domestic stocks price-spike,--price-condition,price_condition,pric_cnd,Y,market,all|under-1k|1k-2k|2k-3k|5k-10k|over-10k|over-1k,all=0;under-1k=1;1k-2k=2;2k-3k=3;5k-10k=4;over-10k=5;over-1k=8,,가격조건
+kiwoomcli domestic stocks price-spike,--include-limit,include_limit,updown_incls,Y,market,yes|no,yes=1;no=0,,상하한 포함 여부
+kiwoomcli domestic stocks price-spike,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic stocks volume-renewal,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic stocks volume-renewal,--period-days,period_days,cycle_tp,Y,market,5|10|20|60|250,,,기간
+kiwoomcli domestic stocks volume-renewal,--volume-condition,volume_condition,trde_qty_tp,Y,market,5k|10k|50k|100k|200k|300k|500k|1000k,5k=5;10k=10;50k=50;100k=100;200k=200;300k=300;500k=500;1000k=1000,,거래량조건
+kiwoomcli domestic stocks volume-renewal,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic stocks volume-zone,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic stocks volume-zone,--concentration-rate,concentration_rate,prps_cnctr_rt,Y,market,,,,매물집중비율
+kiwoomcli domestic stocks volume-zone,--include-current,include_current,cur_prc_entry,Y,market,yes|no,yes=1;no=0,,현재가 매물대 포함 여부
+kiwoomcli domestic stocks volume-zone,--zone-count,zone_count,prpscnt,Y,quantity,,,,매물대 수
+kiwoomcli domestic stocks volume-zone,--period-days,period_days,cycle_tp,Y,market,50|100|150|200|250|300,,,기간
+kiwoomcli domestic stocks volume-zone,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic stocks valuation-rank,--kind,kind,pertp,Y,market,low-pbr|high-pbr|low-per|high-per|low-roe|high-roe,low-pbr=1;high-pbr=2;low-per=3;high-per=4;low-roe=5;high-roe=6,,지표구분
+kiwoomcli domestic stocks valuation-rank,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic stocks open-change,--basis,basis,sort_tp,Y,market,open|high|low|base,open=1;high=2;low=3;base=4,,기준가 구분
+kiwoomcli domestic stocks open-change,--volume-condition,volume_condition,trde_qty_cnd,Y,market,all|10k|50k|100k|500k|1000k,all=0000;10k=0010;50k=0050;100k=0100;500k=0500;1000k=1000,,거래량조건
+kiwoomcli domestic stocks open-change,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic stocks open-change,--include-limit,include_limit,updown_incls,Y,market,yes|no,yes=1;no=0,,상하한 포함 여부
+kiwoomcli domestic stocks open-change,--stock-condition,stock_condition,stk_cnd,Y,market,all|exclude-managed|exclude-preferred|exclude-managed-preferred|exclude-margin-100|only-margin-100|only-margin-40|only-margin-30|only-margin-20,all=0;exclude-managed=1;exclude-preferred=3;exclude-managed-preferred=4;exclude-margin-100=5;only-margin-100=6;only-margin-40=7;only-margin-30=8;only-margin-20=9,,종목조건
+kiwoomcli domestic stocks open-change,--credit-condition,credit_condition,crd_cnd,Y,market,all|a|b|c|d|e|all-financing,all=0;a=1;b=2;c=3;d=4;e=7;all-financing=9,,신용조건
+kiwoomcli domestic stocks open-change,--amount-condition,amount_condition,trde_prica_cnd,Y,market,all|30m|50m|100m|300m|500m|1b|3b|5b|10b|30b|50b,all=0;30m=3;50m=5;100m=10;300m=30;500m=50;1b=100;3b=300;5b=500;10b=1000;30b=3000;50b=5000,,거래대금조건
+kiwoomcli domestic stocks open-change,--direction,direction,flu_cnd,Y,market,top|bottom,top=1;bottom=2,,상위/하위 구분
+kiwoomcli domestic stocks open-change,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic stocks broker-volume-zone,--code,code,stk_cd,Y,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic stocks broker-volume-zone,--from,from_date,strt_dt,Y,date_yyyymmdd,,,,시작일자 YYYYMMDD
+kiwoomcli domestic stocks broker-volume-zone,--to,to_date,end_dt,Y,date_yyyymmdd,,,,종료일자 YYYYMMDD
+kiwoomcli domestic stocks broker-volume-zone,--date-mode,date_mode,qry_dt_tp,Y,market,period|start-end,period=0;start-end=1,,조회일자 구분
+kiwoomcli domestic stocks broker-volume-zone,--position,position,pot_tp,Y,market,today|previous,today=0;previous=1,,당일/전일 구분
+kiwoomcli domestic stocks broker-volume-zone,--period-days,period_days,dt,Y,market,5|10|20|40|60|120,,,기간
+kiwoomcli domestic stocks broker-volume-zone,--sort,sort,sort_base,Y,market,close|date,close=1;date=2,,정렬기준
+kiwoomcli domestic stocks broker-volume-zone,--broker-code,broker_code,mmcm_cd,Y,market,,,,회원사 코드
+kiwoomcli domestic stocks broker-volume-zone,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic stocks broker-instant-volume,--broker-code,broker_code,mmcm_cd,Y,market,,,,회원사 코드
+kiwoomcli domestic stocks broker-instant-volume,--code,code,stk_cd,N,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic stocks broker-instant-volume,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq|stock,all=0;kospi=1;kosdaq=2;stock=3,,시장구분
+kiwoomcli domestic stocks broker-instant-volume,--quantity-condition,quantity_condition,qty_tp,Y,market,,,,수량조건 코드
+kiwoomcli domestic stocks broker-instant-volume,--price-condition,price_condition,pric_tp,Y,market,all|under-1k|over-1k|1k-2k|2k-5k|5k-10k|over-10k,all=0;under-1k=1;over-1k=8;1k-2k=2;2k-5k=3;5k-10k=4;over-10k=5,,가격조건
+kiwoomcli domestic stocks broker-instant-volume,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic stocks vi-triggered,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic stocks vi-triggered,--session,session,bf_mkrt_tp,Y,market,all|regular|after-hours,all=0;regular=1;after-hours=2,,시장시간 구분
+kiwoomcli domestic stocks vi-triggered,--code,code,stk_cd,N,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic stocks vi-triggered,--vi-type,vi_type,motn_tp,Y,market,all|static|dynamic|both,all=0;static=1;dynamic=2;both=3,,VI 구분
+kiwoomcli domestic stocks vi-triggered,--skip-stocks,skip_stocks,skip_stk,Y,market,,,,9자리 종목 제외 플래그
+kiwoomcli domestic stocks vi-triggered,--use-volume,use_volume,trde_qty_tp,Y,market,yes|no,yes=1;no=0,,거래량 필터 사용 여부
+kiwoomcli domestic stocks vi-triggered,--min-volume,min_volume,min_trde_qty,Y,market,,,,최소 거래량
+kiwoomcli domestic stocks vi-triggered,--max-volume,max_volume,max_trde_qty,Y,market,,,,최대 거래량
+kiwoomcli domestic stocks vi-triggered,--use-amount,use_amount,trde_prica_tp,Y,market,yes|no,yes=1;no=0,,거래대금 필터 사용 여부
+kiwoomcli domestic stocks vi-triggered,--min-amount,min_amount,min_trde_prica,Y,market,,,,최소 거래대금
+kiwoomcli domestic stocks vi-triggered,--max-amount,max_amount,max_trde_prica,Y,market,,,,최대 거래대금
+kiwoomcli domestic stocks vi-triggered,--direction,direction,motn_drc,Y,market,all|rise|fall,all=0;rise=1;fall=2,,발동 방향
+kiwoomcli domestic stocks vi-triggered,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic stocks today-previous-fills,--code,code,stk_cd,Y,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic stocks today-previous-fills,--day,day,tdy_pred,Y,market,today|previous,today=1;previous=2,,당일/전일 구분
+kiwoomcli domestic stocks investor-daily,--from,from_date,strt_dt,Y,date_yyyymmdd,,,,시작일자 YYYYMMDD
+kiwoomcli domestic stocks investor-daily,--to,to_date,end_dt,Y,date_yyyymmdd,,,,종료일자 YYYYMMDD
+kiwoomcli domestic stocks investor-daily,--side,side,trde_tp,Y,market,net-sell|net-buy,net-sell=1;net-buy=2,,순매매구분
+kiwoomcli domestic stocks investor-daily,--market,market,mrkt_tp,Y,market,kospi|kosdaq,kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic stocks investor-daily,--investor,investor,invsr_tp,Y,market,individual|foreign|financial-investment|investment-trust|private-fund|other-financial|bank|insurance|pension|state|other-corporate|institution,individual=8000;foreign=9000;financial-investment=1000;investment-trust=3000;private-fund=3100;other-financial=5000;bank=4000;insurance=2000;pension=6000;state=7000;other-corporate=7100;institution=9999,,투자자구분
+kiwoomcli domestic stocks investor-daily,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic stocks investor-by-stock,--date,date,dt,Y,date_yyyymmdd,,,,조회일자 YYYYMMDD
+kiwoomcli domestic stocks investor-by-stock,--code,code,stk_cd,Y,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic stocks investor-by-stock,--basis,basis,amt_qty_tp,Y,market,amount|quantity,amount=1;quantity=2,,금액/수량 구분
+kiwoomcli domestic stocks investor-by-stock,--side,side,trde_tp,Y,market,net-buy|buy|sell,net-buy=0;buy=1;sell=2,,매매구분
+kiwoomcli domestic stocks investor-by-stock,--unit,unit,unit_tp,Y,market,thousand|share,thousand=1000;share=1,,단위구분
+kiwoomcli domestic stocks investor-by-stock-total,--code,code,stk_cd,Y,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic stocks investor-by-stock-total,--from,from_date,strt_dt,Y,date_yyyymmdd,,,,시작일자 YYYYMMDD
+kiwoomcli domestic stocks investor-by-stock-total,--to,to_date,end_dt,Y,date_yyyymmdd,,,,종료일자 YYYYMMDD
+kiwoomcli domestic stocks investor-by-stock-total,--basis,basis,amt_qty_tp,Y,market,amount|quantity,amount=1;quantity=2,,금액/수량 구분
+kiwoomcli domestic stocks investor-by-stock-total,--side,side,trde_tp,Y,market,net-buy,net-buy=0,,매매구분
+kiwoomcli domestic stocks investor-by-stock-total,--unit,unit,unit_tp,Y,market,thousand|share,thousand=1000;share=1,,단위구분
+kiwoomcli domestic stocks today-previous-trades,--code,code,stk_cd,Y,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic stocks today-previous-trades,--day,day,tdy_pred,Y,market,today|previous,today=1;previous=2,,당일/전일 구분
+kiwoomcli domestic stocks today-previous-trades,--interval-type,interval_type,tic_min,Y,market,tick|minute,tick=0;minute=1,,틱/분 구분
+kiwoomcli domestic stocks today-previous-trades,--time,time,tm,N,market,,,,조회시간 HHMM
+kiwoomcli domestic stocks watchlist-info,--codes,codes,stk_cd,Y,market,,,,파이프(|)로 구분한 거래소별 종목코드 목록
+kiwoomcli domestic stocks info-list,--market-type,market_type,mrkt_tp,Y,market,kospi|kosdaq|kotc|konex|etn|loss-limit-etn|gold|volatility-etn|infrastructure|elw|mutual-fund|warrant|reit|warrant-certificate|etf|high-yield-fund,kospi=0;kosdaq=10;kotc=30;konex=50;etn=60;loss-limit-etn=70;gold=80;volatility-etn=90;infrastructure=2;elw=3;mutual-fund=4;warrant=5;reit=6;warrant-certificate=7;etf=8;high-yield-fund=9,,종목정보 시장구분
+kiwoomcli domestic stocks info-detail,--code,code,stk_cd,Y,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic stocks sector-codes,--market,market,mrkt_tp,Y,market,kospi|kosdaq|kospi200|kospi100|krx100,kospi=0;kosdaq=1;kospi200=2;kospi100=4;krx100=7,,업종 시장구분
+kiwoomcli domestic stocks program-net-top,--side,side,trde_upper_tp,Y,market,net-sell|net-buy,net-sell=1;net-buy=2,,순매매 상위 구분
+kiwoomcli domestic stocks program-net-top,--basis,basis,amt_qty_tp,Y,market,amount|quantity,amount=1;quantity=2,,금액/수량 구분
+kiwoomcli domestic stocks program-net-top,--market-code,market_code,mrkt_tp,Y,market,,,,프로그램 시장코드
+kiwoomcli domestic stocks program-net-top,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic stocks program-by-stock,--date,date,dt,Y,date_yyyymmdd,,,,조회일자 YYYYMMDD
+kiwoomcli domestic stocks program-by-stock,--market-code,market_code,mrkt_tp,Y,market,,,,프로그램 시장코드
+kiwoomcli domestic stocks program-by-stock,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic stocks credit-loanable,--credit-grade,credit_grade,crd_stk_grde_tp,N,market,all|a|b|c|d|e,all=%;a=A;b=B;c=C;d=D;e=E,,신용융자 등급
+kiwoomcli domestic stocks credit-loanable,--market,market,mrkt_deal_tp,N,market,all|kospi|kosdaq,all=%;kospi=1;kosdaq=0,,시장구분
+kiwoomcli domestic stocks credit-loanable,--code,code,stk_cd,N,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic stocks credit-loanable-check,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic rankings orderbook-balance,--market,market,mrkt_tp,Y,market,kospi|kosdaq,kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic rankings orderbook-balance,--sort,sort,sort_tp,Y,market,net-buy-balance|net-sell-balance|buy-ratio|sell-ratio,net-buy-balance=1;net-sell-balance=2;buy-ratio=3;sell-ratio=4,,정렬구분
+kiwoomcli domestic rankings orderbook-balance,--volume,volume,trde_qty_tp,Y,market,preopen|10k|50k|100k,preopen=0000;10k=0010;50k=0050;100k=00100,,거래량구분
+kiwoomcli domestic rankings orderbook-balance,--stock-condition,stock_condition,stk_cnd,Y,market,all|exclude-managed|exclude-margin-100|only-margin-100|only-margin-40|only-margin-30|only-margin-20,all=0;exclude-managed=1;exclude-margin-100=5;only-margin-100=6;only-margin-40=7;only-margin-30=8;only-margin-20=9,,종목조건
+kiwoomcli domestic rankings orderbook-balance,--credit-condition,credit_condition,crd_cnd,Y,market,all|a|b|c|d|e|all-financing,all=0;a=1;b=2;c=3;d=4;e=7;all-financing=9,,신용조건
+kiwoomcli domestic rankings orderbook-balance,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic rankings orderbook-balance-spike,--market,market,mrkt_tp,Y,market,kospi|kosdaq,kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic rankings orderbook-balance-spike,--side,side,trde_tp,Y,market,buy-balance|sell-balance,buy-balance=1;sell-balance=2,,매매구분
+kiwoomcli domestic rankings orderbook-balance-spike,--sort,sort,sort_tp,Y,market,spike-quantity|spike-rate,spike-quantity=1;spike-rate=2,,정렬구분
+kiwoomcli domestic rankings orderbook-balance-spike,--interval,interval,tm_tp,Y,quantity,,,,분 입력
+kiwoomcli domestic rankings orderbook-balance-spike,--volume,volume,trde_qty_tp,Y,market,1k|5k|10k|50k|100k,1k=1;5k=5;10k=10;50k=50;100k=100,,거래량구분
+kiwoomcli domestic rankings orderbook-balance-spike,--stock-condition,stock_condition,stk_cnd,Y,market,all|exclude-managed|exclude-margin-100|only-margin-100|only-margin-40|only-margin-30|only-margin-20,all=0;exclude-managed=1;exclude-margin-100=5;only-margin-100=6;only-margin-40=7;only-margin-30=8;only-margin-20=9,,종목조건
+kiwoomcli domestic rankings orderbook-balance-spike,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic rankings balance-rate-spike,--market,market,mrkt_tp,Y,market,kospi|kosdaq,kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic rankings balance-rate-spike,--ratio,ratio,rt_tp,Y,market,buy-to-sell|sell-to-buy,buy-to-sell=1;sell-to-buy=2,,비율구분
+kiwoomcli domestic rankings balance-rate-spike,--interval,interval,tm_tp,Y,quantity,,,,분 입력
+kiwoomcli domestic rankings balance-rate-spike,--volume,volume,trde_qty_tp,Y,market,5k|10k|50k|100k,5k=5;10k=10;50k=50;100k=100,,거래량구분
+kiwoomcli domestic rankings balance-rate-spike,--stock-condition,stock_condition,stk_cnd,Y,market,all|exclude-managed|exclude-margin-100|only-margin-100|only-margin-40|only-margin-30|only-margin-20,all=0;exclude-managed=1;exclude-margin-100=5;only-margin-100=6;only-margin-40=7;only-margin-30=8;only-margin-20=9,,종목조건
+kiwoomcli domestic rankings balance-rate-spike,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic rankings volume-spike,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic rankings volume-spike,--sort,sort,sort_tp,Y,market,spike-quantity|spike-rate|drop-quantity|drop-rate,spike-quantity=1;spike-rate=2;drop-quantity=3;drop-rate=4,,정렬구분
+kiwoomcli domestic rankings volume-spike,--time-unit,time_unit,tm_tp,Y,market,minute|previous-day,minute=1;previous-day=2,,시간구분
+kiwoomcli domestic rankings volume-spike,--volume-condition,volume_condition,trde_qty_tp,Y,market,5k|10k|50k|100k|200k|300k|500k|1000k,5k=5;10k=10;50k=50;100k=100;200k=200;300k=300;500k=500;1000k=1000,,거래량조건
+kiwoomcli domestic rankings volume-spike,--time,time,tm,N,quantity,,,,분 입력
+kiwoomcli domestic rankings volume-spike,--stock-condition,stock_condition,stk_cnd,Y,market,all|exclude-managed|exclude-preferred|exclude-liquidation|exclude-managed-preferred|exclude-margin-100|only-margin-100|only-margin-60|only-margin-50|only-margin-40|only-margin-30|only-margin-20|exclude-etn|exclude-etf|exclude-etf-etn|exclude-spac|exclude-etf-etn-spac,all=0;exclude-managed=1;exclude-preferred=3;exclude-liquidation=11;exclude-managed-preferred=4;exclude-margin-100=5;only-margin-100=6;only-margin-60=13;only-margin-50=12;only-margin-40=7;only-margin-30=8;only-margin-20=9;exclude-etn=17;exclude-etf=14;exclude-etf-etn=18;exclude-spac=15;exclude-etf-etn-spac=20,,종목조건
+kiwoomcli domestic rankings volume-spike,--price-condition,price_condition,pric_tp,Y,market,all|over-50k|over-10k|over-5k|over-1k|over-100k,all=0;over-50k=2;over-10k=5;over-5k=6;over-1k=8;over-100k=9,,가격조건
+kiwoomcli domestic rankings volume-spike,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic rankings previous-change-rate,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic rankings previous-change-rate,--sort,sort,sort_tp,Y,market,rise-rate|rise-price|fall-rate|fall-price|flat,rise-rate=1;rise-price=2;fall-rate=3;fall-price=4;flat=5,,정렬구분
+kiwoomcli domestic rankings previous-change-rate,--volume,volume,trde_qty_cnd,Y,market,all|10k|50k|100k|150k|200k|300k|500k|1000k,all=0000;10k=0010;50k=0050;100k=0100;150k=0150;200k=0200;300k=0300;500k=0500;1000k=1000,,거래량조건
+kiwoomcli domestic rankings previous-change-rate,--stock-condition,stock_condition,stk_cnd,Y,market,all|exclude-managed|exclude-preferred|exclude-managed-preferred|exclude-margin-100|only-margin-100|only-margin-40|only-margin-30|only-margin-20|exclude-liquidation|only-margin-50|only-margin-60|exclude-etf|exclude-spac|exclude-etf-etn,all=0;exclude-managed=1;exclude-preferred=3;exclude-managed-preferred=4;exclude-margin-100=5;only-margin-100=6;only-margin-40=7;only-margin-30=8;only-margin-20=9;exclude-liquidation=11;only-margin-50=12;only-margin-60=13;exclude-etf=14;exclude-spac=15;exclude-etf-etn=16,,종목조건
+kiwoomcli domestic rankings previous-change-rate,--credit-condition,credit_condition,crd_cnd,Y,market,all|a|b|c|d|e|all-financing,all=0;a=1;b=2;c=3;d=4;e=7;all-financing=9,,신용조건
+kiwoomcli domestic rankings previous-change-rate,--include-limit,include_limit,updown_incls,Y,market,yes|no,yes=1;no=0,,상하한 포함 여부
+kiwoomcli domestic rankings previous-change-rate,--price-condition,price_condition,pric_cnd,Y,market,all|under-1k|1k-2k|2k-5k|5k-10k|over-10k|over-1k|under-10k,all=0;under-1k=1;1k-2k=2;2k-5k=3;5k-10k=4;over-10k=5;over-1k=8;under-10k=10,,가격조건
+kiwoomcli domestic rankings previous-change-rate,--amount-condition,amount_condition,trde_prica_cnd,Y,market,all|30m|50m|100m|300m|500m|1b|3b|5b|10b|30b|50b,all=0;30m=3;50m=5;100m=10;300m=30;500m=50;1b=100;3b=300;5b=500;10b=1000;30b=3000;50b=5000,,거래대금조건
+kiwoomcli domestic rankings previous-change-rate,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic rankings today-volume,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic rankings today-volume,--sort,sort,sort_tp,Y,market,volume|turnover|amount,volume=1;turnover=2;amount=3,,정렬구분
+kiwoomcli domestic rankings today-volume,--stock-condition,stock_condition,mang_stk_incls,Y,market,include-managed|exclude-managed|exclude-preferred|exclude-liquidation|exclude-managed-preferred|exclude-margin-100|only-margin-100|only-margin-60|only-margin-50|only-margin-40|only-margin-30|only-margin-20|exclude-etf|exclude-spac|exclude-etf-etn,include-managed=0;exclude-managed=1;exclude-preferred=3;exclude-liquidation=11;exclude-managed-preferred=4;exclude-margin-100=5;only-margin-100=6;only-margin-60=13;only-margin-50=12;only-margin-40=7;only-margin-30=8;only-margin-20=9;exclude-etf=14;exclude-spac=15;exclude-etf-etn=16,,종목조건
+kiwoomcli domestic rankings today-volume,--credit-type,credit_type,crd_tp,Y,market,all|all-financing|a|b|c|d|short,all=0;all-financing=9;a=1;b=2;c=3;d=4;short=8,,신용구분
+kiwoomcli domestic rankings today-volume,--volume-condition,volume_condition,trde_qty_tp,Y,market,all|5k|10k|50k|100k|200k|300k|500k|1000k,all=0;5k=5;10k=10;50k=50;100k=100;200k=200;300k=300;500k=500;1000k=1000,,거래량조건
+kiwoomcli domestic rankings today-volume,--price-condition,price_condition,pric_tp,Y,market,all|under-1k|over-1k|1k-2k|2k-5k|over-5k|5k-10k|under-10k|over-10k|over-50k|over-100k,all=0;under-1k=1;over-1k=2;1k-2k=3;2k-5k=4;over-5k=5;5k-10k=6;under-10k=10;over-10k=7;over-50k=8;over-100k=9,,가격조건
+kiwoomcli domestic rankings today-volume,--amount-condition,amount_condition,trde_prica_tp,Y,market,all|10m|30m|50m|100m|300m|500m|1b|3b|5b|10b|30b|50b,all=0;10m=1;30m=3;50m=4;100m=10;300m=30;500m=50;1b=100;3b=300;5b=500;10b=1000;30b=3000;50b=5000,,거래대금조건
+kiwoomcli domestic rankings today-volume,--session,session,mrkt_open_tp,Y,market,all|regular|pre-open|after-hours,all=0;regular=1;pre-open=2;after-hours=3,,장운영구분
+kiwoomcli domestic rankings today-volume,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic rankings previous-volume,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic rankings previous-volume,--kind,kind,qry_tp,Y,market,volume|amount,volume=1;amount=2,,조회구분
+kiwoomcli domestic rankings previous-volume,--rank-from,rank_from,rank_strt,Y,quantity,,,,순위시작
+kiwoomcli domestic rankings previous-volume,--rank-to,rank_to,rank_end,Y,quantity,,,,순위끝
+kiwoomcli domestic rankings previous-volume,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic rankings amount,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic rankings amount,--include-managed,include_managed,mang_stk_incls,Y,market,yes|no,yes=1;no=0,,관리종목 포함 여부
+kiwoomcli domestic rankings amount,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic rankings credit-ratio,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic rankings credit-ratio,--volume-condition,volume_condition,trde_qty_tp,Y,market,all|10k|50k|100k|200k|300k|500k|1000k,all=0;10k=10;50k=50;100k=100;200k=200;300k=300;500k=500;1000k=1000,,거래량조건
+kiwoomcli domestic rankings credit-ratio,--stock-condition,stock_condition,stk_cnd,Y,market,all|exclude-managed|exclude-margin-100|only-margin-100|only-margin-40|only-margin-30|only-margin-20,all=0;exclude-managed=1;exclude-margin-100=5;only-margin-100=6;only-margin-40=7;only-margin-30=8;only-margin-20=9,,종목조건
+kiwoomcli domestic rankings credit-ratio,--include-limit,include_limit,updown_incls,Y,market,yes|no,yes=1;no=0,,상하한 포함 여부
+kiwoomcli domestic rankings credit-ratio,--credit-condition,credit_condition,crd_cnd,Y,market,all|a|b|c|d|e|all-financing,all=0;a=1;b=2;c=3;d=4;e=7;all-financing=9,,신용조건
+kiwoomcli domestic rankings credit-ratio,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic rankings foreign-period-trades,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic rankings foreign-period-trades,--side,side,trde_tp,Y,market,net-sell|net-buy|net-trade,net-sell=1;net-buy=2;net-trade=3,,매매구분
+kiwoomcli domestic rankings foreign-period-trades,--period,period,dt,Y,market,today|previous|5d|10d|20d|60d,today=0;previous=1;5d=5;10d=10;20d=20;60d=60,,기간
+kiwoomcli domestic rankings foreign-period-trades,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic rankings foreign-continuous-net,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic rankings foreign-continuous-net,--side,side,trde_tp,Y,market,net-sell|net-buy,net-sell=1;net-buy=2,,매매구분
+kiwoomcli domestic rankings foreign-continuous-net,--base-date,base_date,base_dt_tp,Y,market,today|previous,today=0;previous=1,,기준일구분
+kiwoomcli domestic rankings foreign-continuous-net,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic rankings foreign-limit-usage,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic rankings foreign-limit-usage,--period,period,dt,Y,market,today|previous|5d|10d|20d|60d,today=0;previous=1;5d=5;10d=10;20d=20;60d=60,,기간
+kiwoomcli domestic rankings foreign-limit-usage,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic rankings foreign-broker-trades,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic rankings foreign-broker-trades,--period,period,dt,Y,market,today|previous|5d|10d|20d|60d,today=0;previous=1;5d=5;10d=10;20d=20;60d=60,,기간
+kiwoomcli domestic rankings foreign-broker-trades,--side,side,trde_tp,Y,market,net-buy|net-sell|buy|sell,net-buy=1;net-sell=2;buy=3;sell=4,,매매구분
+kiwoomcli domestic rankings foreign-broker-trades,--sort,sort,sort_tp,Y,market,amount|quantity,amount=1;quantity=2,,정렬구분
+kiwoomcli domestic rankings foreign-broker-trades,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic rankings broker-by-stock,--code,code,stk_cd,Y,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic rankings broker-by-stock,--from,from_date,strt_dt,Y,date_yyyymmdd,,,,시작일자 YYYYMMDD
+kiwoomcli domestic rankings broker-by-stock,--to,to_date,end_dt,Y,date_yyyymmdd,,,,종료일자 YYYYMMDD
+kiwoomcli domestic rankings broker-by-stock,--side,side,qry_tp,Y,market,net-sell|net-buy,net-sell=1;net-buy=2,,조회구분
+kiwoomcli domestic rankings broker-by-stock,--period,period,dt,N,market,previous|5d|10d|20d|40d|60d|120d,previous=1;5d=4;10d=9;20d=19;40d=39;60d=59;120d=119,,기간
+kiwoomcli domestic rankings broker-trades,--broker-code,broker_code,mmcm_cd,Y,market,,,,회원사코드
+kiwoomcli domestic rankings broker-trades,--volume-condition,volume_condition,trde_qty_tp,Y,market,all|5k|10k|50k|100k|500k|1000k,all=0;5k=5;10k=10;50k=50;100k=100;500k=500;1000k=1000,,거래량조건
+kiwoomcli domestic rankings broker-trades,--side,side,trde_tp,Y,market,net-buy|net-sell,net-buy=1;net-sell=2,,매매구분
+kiwoomcli domestic rankings broker-trades,--period,period,dt,Y,market,previous|5d|10d|60d,previous=1;5d=5;10d=10;60d=60,,기간
+kiwoomcli domestic rankings broker-trades,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic rankings stock-main-brokers,--code,code,stk_cd,Y,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic rankings net-buy-brokers,--code,code,stk_cd,Y,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic rankings net-buy-brokers,--from,from_date,strt_dt,N,date_yyyymmdd,,,,시작일자 YYYYMMDD
+kiwoomcli domestic rankings net-buy-brokers,--to,to_date,end_dt,N,date_yyyymmdd,,,,종료일자 YYYYMMDD
+kiwoomcli domestic rankings net-buy-brokers,--date-mode,date_mode,qry_dt_tp,Y,market,period|start-end,period=0;start-end=1,,조회기간구분
+kiwoomcli domestic rankings net-buy-brokers,--point,point,pot_tp,Y,market,today|previous,today=0;previous=1,,시점구분
+kiwoomcli domestic rankings net-buy-brokers,--period,period,dt,N,market,5d|10d|20d|40d|60d|120d,5d=5;10d=10;20d=20;40d=40;60d=60;120d=120,,기간
+kiwoomcli domestic rankings net-buy-brokers,--sort,sort,sort_base,Y,market,close|date,close=1;date=2,,정렬기준
+kiwoomcli domestic rankings top-exit-brokers,--code,code,stk_cd,Y,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic rankings same-net-trades,--from,from_date,strt_dt,Y,date_yyyymmdd,,,,시작일자 YYYYMMDD
+kiwoomcli domestic rankings same-net-trades,--to,to_date,end_dt,N,date_yyyymmdd,,,,종료일자 YYYYMMDD
+kiwoomcli domestic rankings same-net-trades,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic rankings same-net-trades,--side,side,trde_tp,Y,market,net-buy|net-sell,net-buy=1;net-sell=2,,매매구분
+kiwoomcli domestic rankings same-net-trades,--basis,basis,sort_cnd,Y,market,quantity|amount,quantity=1;amount=2,,정렬조건
+kiwoomcli domestic rankings same-net-trades,--unit,unit,unit_tp,Y,market,share|thousand,share=1;thousand=1000,,단위구분
+kiwoomcli domestic rankings same-net-trades,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic rankings investor-intraday,--side,side,trde_tp,Y,market,net-buy|net-sell,net-buy=1;net-sell=2,,매매구분
+kiwoomcli domestic rankings investor-intraday,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic rankings investor-intraday,--investor,investor,orgn_tp,Y,market,foreign|foreign-broker|financial-investment|investment-trust|other-financial|bank|insurance|pension|state|other-corporate|institution,foreign=9000;foreign-broker=9100;financial-investment=1000;investment-trust=3000;other-financial=5000;bank=4000;insurance=2000;pension=6000;state=7000;other-corporate=7100;institution=9999,,기관구분
+kiwoomcli domestic rankings investor-intraday,--basis,basis,amt_qty_tp,N,market,amount|quantity,amount=1;quantity=2,,금액수량구분
+kiwoomcli domestic rankings after-hours-change-rate,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic rankings after-hours-change-rate,--sort,sort,sort_base,Y,market,rise-rate|rise-price|fall-rate|fall-price|flat,rise-rate=1;rise-price=2;fall-rate=3;fall-price=4;flat=5,,정렬기준
+kiwoomcli domestic rankings after-hours-change-rate,--stock-condition,stock_condition,stk_cnd,Y,market,all|exclude-managed|exclude-liquidation|exclude-preferred|exclude-managed-preferred|exclude-margin-100|only-margin-100|only-margin-50|only-margin-60|only-margin-40|only-margin-30|only-margin-20|exclude-etf|exclude-spac|exclude-etf-etn|exclude-etn,all=0;exclude-managed=1;exclude-liquidation=2;exclude-preferred=3;exclude-managed-preferred=4;exclude-margin-100=5;only-margin-100=6;only-margin-50=12;only-margin-60=13;only-margin-40=7;only-margin-30=8;only-margin-20=9;exclude-etf=14;exclude-spac=15;exclude-etf-etn=16;exclude-etn=17,,종목조건
+kiwoomcli domestic rankings after-hours-change-rate,--volume,volume,trde_qty_cnd,Y,market,all|100|500|1000|5k|10k|50k|100k,all=0;100=10;500=50;1000=100;5k=500;10k=1000;50k=5000;100k=10000,,거래량조건
+kiwoomcli domestic rankings after-hours-change-rate,--credit-condition,credit_condition,crd_cnd,Y,market,all|a|b|c|d|exclude-overlimit|e|short|all-financing,all=0;a=1;b=2;c=3;d=4;exclude-overlimit=5;e=7;short=8;all-financing=9,,신용조건
+kiwoomcli domestic rankings after-hours-change-rate,--amount-condition,amount_condition,trde_prica,Y,market,all|5m|10m|30m|50m|100m|300m|500m|1b|3b|5b|10b,all=0;5m=5;10m=10;30m=30;50m=50;100m=100;300m=300;500m=500;1b=1000;3b=3000;5b=5000;10b=10000,,거래대금조건
+kiwoomcli domestic rankings foreign-institution-trades,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq,all=000;kospi=001;kosdaq=101,,시장구분
+kiwoomcli domestic rankings foreign-institution-trades,--basis,basis,amt_qty_tp,Y,market,amount|quantity,amount=1;quantity=2,,금액수량구분
+kiwoomcli domestic rankings foreign-institution-trades,--include-date,include_date,qry_dt_tp,Y,market,yes|no,yes=1;no=0,,조회일자 포함 여부
+kiwoomcli domestic rankings foreign-institution-trades,--date,date,date,N,date_yyyymmdd,,,,조회일자 YYYYMMDD
+kiwoomcli domestic rankings foreign-institution-trades,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=1;NXT=2;ALL=3,,거래소구분
+kiwoomcli domestic accounts daily-balance-return,--date,date,qry_dt,Y,date_yyyymmdd,,,,조회일자 YYYYMMDD
+kiwoomcli domestic accounts realized-profit-stock-daily,--code,code,stk_cd,N,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic accounts realized-profit-stock-daily,--date,date,strt_dt,Y,date_yyyymmdd,,,,조회일자 YYYYMMDD
+kiwoomcli domestic accounts realized-profit-period-stock,--code,code,stk_cd,N,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic accounts realized-profit-period-stock,--from,from_date,strt_dt,Y,date_yyyymmdd,,,,시작일자 YYYYMMDD
+kiwoomcli domestic accounts realized-profit-period-stock,--to,to_date,end_dt,Y,date_yyyymmdd,,,,종료일자 YYYYMMDD
+kiwoomcli domestic accounts realized-profit-daily,--from,from_date,strt_dt,Y,date_yyyymmdd,,,,시작일자 YYYYMMDD
+kiwoomcli domestic accounts realized-profit-daily,--to,to_date,end_dt,Y,date_yyyymmdd,,,,종료일자 YYYYMMDD
+kiwoomcli domestic accounts realized-profit-today-detail,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic accounts return-rate,--exchange,exchange,stex_tp,Y,market,ALL|KRX|NXT,ALL=0;KRX=1;NXT=2,,거래소구분
+kiwoomcli domestic accounts day-trading-log,--date,date,base_dt,N,date_yyyymmdd,,,,기준일자 YYYYMMDD
+kiwoomcli domestic accounts day-trading-log,--sell-scope,sell_scope,ottks_tp,Y,market,same-day-buy-sell|all-sells,same-day-buy-sell=1;all-sells=2,,단주구분
+kiwoomcli domestic accounts day-trading-log,--cash-credit,cash_credit,ch_crd_tp,Y,market,all|cash|credit,all=0;cash=1;credit=2,,현금신용구분
+kiwoomcli domestic accounts estimated-assets-daily,--from,from_date,start_dt,Y,date_yyyymmdd,,,,시작조회기간 YYYYMMDD
+kiwoomcli domestic accounts estimated-assets-daily,--to,to_date,end_dt,Y,date_yyyymmdd,,,,종료조회기간 YYYYMMDD
+kiwoomcli domestic accounts fill-balance,--exchange,exchange,dmst_stex_tp,Y,market,KRX|NXT,,,국내거래소구분
+kiwoomcli domestic accounts order-fill-detail,--date,date,ord_dt,N,date_yyyymmdd,,,,주문일자 YYYYMMDD
+kiwoomcli domestic accounts order-fill-detail,--order,order,qry_tp,Y,market,order|reverse,order=1;reverse=2,,조회 순서
+kiwoomcli domestic accounts order-fill-detail,--fill-status,fill_status,qry_tp,Y,market,open|filled,open=3;filled=4,,체결 상태 필터
+kiwoomcli domestic accounts order-fill-detail,--asset-kind,asset_kind,stk_bond_tp,Y,market,all|stock|bond,all=0;stock=1;bond=2,,주식채권구분
+kiwoomcli domestic accounts order-fill-detail,--side,side,sell_tp,Y,market,all|sell|buy,all=0;sell=1;buy=2,,매도수구분
+kiwoomcli domestic accounts order-fill-detail,--code,code,stk_cd,N,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic accounts order-fill-detail,--order-id,order_id,fr_ord_no,N,order_id,,,,시작주문번호
+kiwoomcli domestic accounts order-fill-detail,--exchange,exchange,dmst_stex_tp,Y,market,ALL|KRX|NXT|SOR,ALL=%;KRX=KRX;NXT=NXT;SOR=SOR,,국내거래소구분
+kiwoomcli domestic accounts next-settlement,--settlement-id,settlement_id,strt_dcd_seq,N,market,,,,시작결제번호
+kiwoomcli domestic accounts order-fill-status,--date,date,ord_dt,N,date_yyyymmdd,,,,주문일자 YYYYMMDD
+kiwoomcli domestic accounts order-fill-status,--asset-kind,asset_kind,stk_bond_tp,Y,market,all|stock|bond,all=0;stock=1;bond=2,,주식채권구분
+kiwoomcli domestic accounts order-fill-status,--market,market,mrkt_tp,Y,market,all|kospi|kosdaq|otcbb|ecn,all=0;kospi=1;kosdaq=2;otcbb=3;ecn=4,,시장구분
+kiwoomcli domestic accounts order-fill-status,--side,side,sell_tp,Y,market,all|sell|buy,all=0;sell=1;buy=2,,매도수구분
+kiwoomcli domestic accounts order-fill-status,--fill-status,fill_status,qry_tp,Y,market,all|filled,all=0;filled=1,,체결 상태 필터
+kiwoomcli domestic accounts order-fill-status,--code,code,stk_cd,N,exchange_stock_code,,,,거래소별 종목코드
+kiwoomcli domestic accounts order-fill-status,--order-id,order_id,fr_ord_no,N,order_id,,,,시작주문번호
+kiwoomcli domestic accounts order-fill-status,--exchange,exchange,dmst_stex_tp,Y,market,ALL|KRX|NXT|SOR,ALL=%;KRX=KRX;NXT=NXT;SOR=SOR,,국내거래소구분
+kiwoomcli domestic accounts credit-margin,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic accounts credit-margin,--price,price,uv,N,price,,,,매수가격
+kiwoomcli domestic accounts transaction-history,--from,from_date,strt_dt,Y,date_yyyymmdd,,,,시작일자 YYYYMMDD
+kiwoomcli domestic accounts transaction-history,--to,to_date,end_dt,Y,date_yyyymmdd,,,,종료일자 YYYYMMDD
+kiwoomcli domestic accounts transaction-history,--kind,kind,tp,Y,market,,,,거래내역 구분 코드
+kiwoomcli domestic accounts transaction-history,--code,code,stk_cd,N,market,,,,종목코드
+kiwoomcli domestic accounts transaction-history,--currency,currency,crnc_cd,N,market,,,,통화코드
+kiwoomcli domestic accounts transaction-history,--product,product,gds_tp,Y,market,all|domestic-stock|fund|overseas-stock|financial-product,all=0;domestic-stock=1;fund=2;overseas-stock=3;financial-product=4,,상품구분
+kiwoomcli domestic accounts transaction-history,--overseas-exchange,overseas_exchange,frgn_stex_code,N,market,,,,해외거래소코드
+kiwoomcli domestic accounts transaction-history,--exchange,exchange,dmst_stex_tp,Y,market,ALL|KRX|NXT,ALL=%;KRX=KRX;NXT=NXT,,국내거래소구분
+kiwoomcli domestic accounts daily-return-detail,--from,from_date,fr_dt,Y,date_yyyymmdd,,,,평가시작일 YYYYMMDD
+kiwoomcli domestic accounts daily-return-detail,--to,to_date,to_dt,Y,date_yyyymmdd,,,,평가종료일 YYYYMMDD
+kiwoomcli domestic accounts gold-all-order-fills,--date,date,ord_dt,Y,date_yyyymmdd,,,,주문일자 YYYYMMDD
+kiwoomcli domestic accounts gold-all-order-fills,--order,order,qry_tp,N,market,order|reverse,order=1;reverse=2,,조회 순서
+kiwoomcli domestic accounts gold-all-order-fills,--market-deal,market_deal,mrkt_deal_tp,Y,market,,,,시장구분 코드
+kiwoomcli domestic accounts gold-all-order-fills,--asset-kind,asset_kind,stk_bond_tp,Y,market,all|stock|bond,all=0;stock=1;bond=2,,주식채권구분
+kiwoomcli domestic accounts gold-all-order-fills,--side,side,slby_tp,Y,market,all|sell|buy,all=0;sell=1;buy=2,,매도수구분
+kiwoomcli domestic accounts gold-all-order-fills,--code,code,stk_cd,N,market,,,,금현물 종목코드(예: M04020000 금 99.99_1kg)
+kiwoomcli domestic accounts gold-all-order-fills,--order-id,order_id,fr_ord_no,N,order_id,,,,시작주문번호
+kiwoomcli domestic accounts gold-all-order-fills,--exchange,exchange,dmst_stex_tp,N,market,ALL|KRX|NXT|SOR,ALL=%;KRX=KRX;NXT=NXT;SOR=SOR,,국내거래소구분
+kiwoomcli domestic accounts gold-order-fills,--date,date,ord_dt,N,date_yyyymmdd,,,,주문일자 YYYYMMDD
+kiwoomcli domestic accounts gold-order-fills,--order,order,qry_tp,Y,market,order|reverse,order=1;reverse=2,,조회 순서
+kiwoomcli domestic accounts gold-order-fills,--fill-status,fill_status,qry_tp,Y,market,open|filled,open=3;filled=4,,체결 상태 필터
+kiwoomcli domestic accounts gold-order-fills,--asset-kind,asset_kind,stk_bond_tp,Y,market,all|stock|bond,all=0;stock=1;bond=2,,주식채권구분
+kiwoomcli domestic accounts gold-order-fills,--side,side,sell_tp,Y,market,all|sell|buy,all=0;sell=1;buy=2,,매도수구분
+kiwoomcli domestic accounts gold-order-fills,--code,code,stk_cd,N,market,,,,금현물 종목코드(예: M04020000 금 99.99_1kg)
+kiwoomcli domestic accounts gold-order-fills,--order-id,order_id,fr_ord_no,N,order_id,,,,시작주문번호
+kiwoomcli domestic accounts gold-order-fills,--exchange,exchange,dmst_stex_tp,Y,market,ALL|KRX|NXT|SOR,ALL=%;KRX=KRX;NXT=NXT;SOR=SOR,,국내거래소구분
+kiwoomcli domestic accounts gold-transactions,--from,from_date,strt_dt,N,date_yyyymmdd,,,,시작일자 YYYYMMDD
+kiwoomcli domestic accounts gold-transactions,--to,to_date,end_dt,N,date_yyyymmdd,,,,종료일자 YYYYMMDD
+kiwoomcli domestic accounts gold-transactions,--kind,kind,tp,N,market,all|deposit-withdrawal|release|trade|buy|sell|deposit|withdrawal,all=0;deposit-withdrawal=1;release=2;trade=3;buy=4;sell=5;deposit=6;withdrawal=7,,거래내역 구분
+kiwoomcli domestic accounts gold-transactions,--code,code,stk_cd,N,market,,,,금현물 종목코드(예: M04020000 금 99.99_1kg)
+kiwoomcli domestic accounts gold-open-orders,--date,date,ord_dt,Y,date_yyyymmdd,,,,주문일자 YYYYMMDD
+kiwoomcli domestic accounts gold-open-orders,--order,order,qry_tp,N,market,order|reverse,order=1;reverse=2,,조회 순서
+kiwoomcli domestic accounts gold-open-orders,--market-deal,market_deal,mrkt_deal_tp,Y,market,,,,시장구분 코드
+kiwoomcli domestic accounts gold-open-orders,--asset-kind,asset_kind,stk_bond_tp,Y,market,all|stock|bond,all=0;stock=1;bond=2,,주식채권구분
+kiwoomcli domestic accounts gold-open-orders,--side,side,sell_tp,Y,market,all|sell|buy,all=0;sell=1;buy=2,,매도수구분
+kiwoomcli domestic accounts gold-open-orders,--code,code,stk_cd,N,market,,,,금현물 종목코드(예: M04020000 금 99.99_1kg)
+kiwoomcli domestic accounts gold-open-orders,--order-id,order_id,fr_ord_no,N,order_id,,,,시작주문번호
+kiwoomcli domestic accounts gold-open-orders,--exchange,exchange,dmst_stex_tp,N,market,ALL|KRX|NXT|SOR,ALL=%;KRX=KRX;NXT=NXT;SOR=SOR,,국내거래소구분
+kiwoomcli domestic orders credit-buy,--exchange,exchange,dmst_stex_tp,Y,market,KRX|NXT|SOR,,,국내거래소구분
+kiwoomcli domestic orders credit-buy,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic orders credit-buy,--qty,qty,ord_qty,Y,quantity,,,,주문수량
+kiwoomcli domestic orders credit-buy,--price,price,ord_uv,N,price,,,,주문단가
+kiwoomcli domestic orders credit-buy,--order-type,order_type,trde_tp,Y,order_type,limit|market|conditional-limit|after-hours-close|pre-open|after-hours-single|best-limit|top-priority|limit-ioc|market-ioc|best-ioc|limit-fok|market-fok|best-fok|stop-limit|mid|mid-ioc|mid-fok,limit=0;market=3;conditional-limit=5;after-hours-close=81;pre-open=61;after-hours-single=62;best-limit=6;top-priority=7;limit-ioc=10;market-ioc=13;best-ioc=16;limit-fok=20;market-fok=23;best-fok=26;stop-limit=28;mid=29;mid-ioc=30;mid-fok=31,,매매구분
+kiwoomcli domestic orders credit-buy,--condition-price,condition_price,cond_uv,N,price,,,,조건단가
+kiwoomcli domestic orders credit-sell,--exchange,exchange,dmst_stex_tp,Y,market,KRX|NXT|SOR,,,국내거래소구분
+kiwoomcli domestic orders credit-sell,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic orders credit-sell,--qty,qty,ord_qty,Y,quantity,,,,주문수량
+kiwoomcli domestic orders credit-sell,--price,price,ord_uv,N,price,,,,주문단가
+kiwoomcli domestic orders credit-sell,--order-type,order_type,trde_tp,Y,order_type,limit|market|conditional-limit|after-hours-close|pre-open|after-hours-single|best-limit|top-priority|limit-ioc|market-ioc|best-ioc|limit-fok|market-fok|best-fok|stop-limit|mid|mid-ioc|mid-fok,limit=0;market=3;conditional-limit=5;after-hours-close=81;pre-open=61;after-hours-single=62;best-limit=6;top-priority=7;limit-ioc=10;market-ioc=13;best-ioc=16;limit-fok=20;market-fok=23;best-fok=26;stop-limit=28;mid=29;mid-ioc=30;mid-fok=31,,매매구분
+kiwoomcli domestic orders credit-sell,--credit-deal,credit_deal,crd_deal_tp,Y,market,financing|financing-all,financing=33;financing-all=99,,신용거래구분
+kiwoomcli domestic orders credit-sell,--loan-date,loan_date,crd_loan_dt,N,date_yyyymmdd,,,,대출일 YYYYMMDD
+kiwoomcli domestic orders credit-sell,--condition-price,condition_price,cond_uv,N,price,,,,조건단가
+kiwoomcli domestic orders credit-modify,--exchange,exchange,dmst_stex_tp,Y,market,KRX|NXT|SOR,,,국내거래소구분
+kiwoomcli domestic orders credit-modify,--order-id,order_id,orig_ord_no,Y,preview_order_id,,,,원주문번호
+kiwoomcli domestic orders credit-modify,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic orders credit-modify,--qty,qty,mdfy_qty,Y,quantity,,,,정정수량
+kiwoomcli domestic orders credit-modify,--price,price,mdfy_uv,Y,price,,,,정정단가
+kiwoomcli domestic orders credit-modify,--condition-price,condition_price,mdfy_cond_uv,N,price,,,,정정조건단가
+kiwoomcli domestic orders credit-cancel,--exchange,exchange,dmst_stex_tp,Y,market,KRX|NXT|SOR,,,국내거래소구분
+kiwoomcli domestic orders credit-cancel,--order-id,order_id,orig_ord_no,Y,preview_order_id,,,,원주문번호
+kiwoomcli domestic orders credit-cancel,--code,code,stk_cd,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic orders credit-cancel,--qty,qty,cncl_qty,Y,cancel_quantity,,,,취소수량; 0이면 잔량 전부 취소
+kiwoomcli domestic orders gold-buy,--code,code,stk_cd,Y,market,,,,금현물 종목코드(예: M04020000 금 99.99_1kg)
+kiwoomcli domestic orders gold-buy,--qty,qty,ord_qty,Y,quantity,,,,주문수량
+kiwoomcli domestic orders gold-buy,--price,price,ord_uv,N,price,,,,주문단가
+kiwoomcli domestic orders gold-buy,--order-type,order_type,trde_tp,Y,order_type,limit|limit-ioc|limit-fok,limit=00;limit-ioc=10;limit-fok=20,,매매구분
+kiwoomcli domestic orders gold-sell,--code,code,stk_cd,Y,market,,,,금현물 종목코드(예: M04020000 금 99.99_1kg)
+kiwoomcli domestic orders gold-sell,--qty,qty,ord_qty,Y,quantity,,,,주문수량
+kiwoomcli domestic orders gold-sell,--price,price,ord_uv,N,price,,,,주문단가
+kiwoomcli domestic orders gold-sell,--order-type,order_type,trde_tp,Y,order_type,limit|limit-ioc|limit-fok,limit=00;limit-ioc=10;limit-fok=20,,매매구분
+kiwoomcli domestic orders gold-modify,--code,code,stk_cd,Y,market,,,,금현물 종목코드(예: M04020000 금 99.99_1kg)
+kiwoomcli domestic orders gold-modify,--order-id,order_id,orig_ord_no,Y,preview_order_id,,,,원주문번호
+kiwoomcli domestic orders gold-modify,--qty,qty,mdfy_qty,Y,quantity,,,,정정수량
+kiwoomcli domestic orders gold-modify,--price,price,mdfy_uv,Y,price,,,,정정단가
+kiwoomcli domestic orders gold-cancel,--order-id,order_id,orig_ord_no,Y,preview_order_id,,,,원주문번호
+kiwoomcli domestic orders gold-cancel,--code,code,stk_cd,Y,market,,,,금현물 종목코드(예: M04020000 금 99.99_1kg)
+kiwoomcli domestic orders gold-cancel,--qty,qty,cncl_qty,Y,cancel_quantity,,,,취소수량; 0이면 잔량 전부 취소
+kiwoomcli domestic streams conditions-list,,,trnm,Y,market,,,CNSRLST,TR명
+kiwoomcli domestic streams conditions-search,,,trnm,Y,market,,,CNSRREQ,서비스명
+kiwoomcli domestic streams conditions-search,--seq,seq,seq,N,market,,,,조건검색식 일련번호; 생략 시 저장 조건검색식 목록의 첫 번째 조건식을 사용
+kiwoomcli domestic streams conditions-search,,,search_type,Y,market,,,0,조회타입
+kiwoomcli domestic streams conditions-search,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=K;NXT=N;ALL=A,,거래소구분
+kiwoomcli domestic streams conditions-search,--cont,cont,cont_yn,N,market,yes|no,yes=Y;no=N,no,연속조회 여부
+kiwoomcli domestic streams conditions-search,--next-key,next_key,next_key,N,market,,,,연속조회키
+kiwoomcli domestic streams conditions-subscribe,,,trnm,Y,market,,,CNSRREQ,서비스명
+kiwoomcli domestic streams conditions-subscribe,--seq,seq,seq,N,market,,,,조건검색식 일련번호; 생략 시 저장 조건검색식 목록의 첫 번째 조건식을 사용
+kiwoomcli domestic streams conditions-subscribe,,,search_type,Y,market,,,1,조회타입
+kiwoomcli domestic streams conditions-subscribe,--exchange,exchange,stex_tp,Y,market,KRX|NXT|ALL,KRX=K;NXT=N;ALL=A,,거래소구분
+kiwoomcli domestic streams conditions-unsubscribe,,,trnm,Y,market,,,CNSRCLR,서비스명
+kiwoomcli domestic streams conditions-unsubscribe,--seq,seq,seq,N,market,,,,조건검색식 일련번호; 생략 시 저장 조건검색식 목록의 첫 번째 조건식을 사용
+kiwoomcli domestic streams conditions-unsubscribe,--exchange,exchange,,N,market,KRX|NXT|ALL,,KRX,같은 세션 해제 증적을 위한 선행 실시간 조건검색 거래소구분
+kiwoomcli domestic streams order-fills,--action,action,trnm,N,market,subscribe|unsubscribe,subscribe=REG;unsubscribe=REMOVE,subscribe,등록 또는 해지
+kiwoomcli domestic streams order-fills,--group,group,grp_no,N,quantity,,,1,그룹번호
+kiwoomcli domestic streams order-fills,--refresh,refresh,refresh,N,market,yes|no,yes=1;no=0,yes,기존등록 유지 여부
+kiwoomcli domestic streams order-fills,--code,code,item,N,market,,,,주문체결 등록 요소; 보통 공백
+kiwoomcli domestic streams order-fills,,,type,Y,market,,,00,실시간 항목
+kiwoomcli domestic streams balance,--action,action,trnm,N,market,subscribe|unsubscribe,subscribe=REG;unsubscribe=REMOVE,subscribe,등록 또는 해지
+kiwoomcli domestic streams balance,--group,group,grp_no,N,quantity,,,1,그룹번호
+kiwoomcli domestic streams balance,--refresh,refresh,refresh,N,market,yes|no,yes=1;no=0,yes,기존등록 유지 여부
+kiwoomcli domestic streams balance,--code,code,item,N,market,,,,잔고 등록 요소; 보통 공백
+kiwoomcli domestic streams balance,,,type,Y,market,,,04,실시간 항목
+kiwoomcli domestic streams momentum,--action,action,trnm,N,market,subscribe|unsubscribe,subscribe=REG;unsubscribe=REMOVE,subscribe,등록 또는 해지
+kiwoomcli domestic streams momentum,--group,group,grp_no,N,quantity,,,1,그룹번호
+kiwoomcli domestic streams momentum,--refresh,refresh,refresh,N,market,yes|no,yes=1;no=0,yes,기존등록 유지 여부
+kiwoomcli domestic streams momentum,--code,code,item,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic streams momentum,,,type,Y,market,,,0A,실시간 항목
+kiwoomcli domestic streams trades,--action,action,trnm,N,market,subscribe|unsubscribe,subscribe=REG;unsubscribe=REMOVE,subscribe,등록 또는 해지
+kiwoomcli domestic streams trades,--group,group,grp_no,N,quantity,,,1,그룹번호
+kiwoomcli domestic streams trades,--refresh,refresh,refresh,N,market,yes|no,yes=1;no=0,yes,기존등록 유지 여부
+kiwoomcli domestic streams trades,--code,code,item,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic streams trades,,,type,Y,market,,,0B,실시간 항목
+kiwoomcli domestic streams best-quotes,--action,action,trnm,N,market,subscribe|unsubscribe,subscribe=REG;unsubscribe=REMOVE,subscribe,등록 또는 해지
+kiwoomcli domestic streams best-quotes,--group,group,grp_no,N,quantity,,,1,그룹번호
+kiwoomcli domestic streams best-quotes,--refresh,refresh,refresh,N,market,yes|no,yes=1;no=0,yes,기존등록 유지 여부
+kiwoomcli domestic streams best-quotes,--code,code,item,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic streams best-quotes,,,type,Y,market,,,0C,실시간 항목
+kiwoomcli domestic streams orderbook,--action,action,trnm,N,market,subscribe|unsubscribe,subscribe=REG;unsubscribe=REMOVE,subscribe,등록 또는 해지
+kiwoomcli domestic streams orderbook,--group,group,grp_no,N,quantity,,,1,그룹번호
+kiwoomcli domestic streams orderbook,--refresh,refresh,refresh,N,market,yes|no,yes=1;no=0,yes,기존등록 유지 여부
+kiwoomcli domestic streams orderbook,--code,code,item,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic streams orderbook,,,type,Y,market,,,0D,실시간 항목
+kiwoomcli domestic streams after-hours-orderbook,--action,action,trnm,N,market,subscribe|unsubscribe,subscribe=REG;unsubscribe=REMOVE,subscribe,등록 또는 해지
+kiwoomcli domestic streams after-hours-orderbook,--group,group,grp_no,N,quantity,,,1,그룹번호
+kiwoomcli domestic streams after-hours-orderbook,--refresh,refresh,refresh,N,market,yes|no,yes=1;no=0,yes,기존등록 유지 여부
+kiwoomcli domestic streams after-hours-orderbook,--code,code,item,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic streams after-hours-orderbook,,,type,Y,market,,,0E,실시간 항목
+kiwoomcli domestic streams brokers,--action,action,trnm,N,market,subscribe|unsubscribe,subscribe=REG;unsubscribe=REMOVE,subscribe,등록 또는 해지
+kiwoomcli domestic streams brokers,--group,group,grp_no,N,quantity,,,1,그룹번호
+kiwoomcli domestic streams brokers,--refresh,refresh,refresh,N,market,yes|no,yes=1;no=0,yes,기존등록 유지 여부
+kiwoomcli domestic streams brokers,--code,code,item,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic streams brokers,,,type,Y,market,,,0F,실시간 항목
+kiwoomcli domestic streams etf-nav,--action,action,trnm,N,market,subscribe|unsubscribe,subscribe=REG;unsubscribe=REMOVE,subscribe,등록 또는 해지
+kiwoomcli domestic streams etf-nav,--group,group,grp_no,N,quantity,,,1,그룹번호
+kiwoomcli domestic streams etf-nav,--refresh,refresh,refresh,N,market,yes|no,yes=1;no=0,yes,기존등록 유지 여부
+kiwoomcli domestic streams etf-nav,--code,code,item,Y,stock_code,,,,6자리 국내 ETF 종목코드
+kiwoomcli domestic streams etf-nav,,,type,Y,market,,,0G,실시간 항목
+kiwoomcli domestic streams expected-fills,--action,action,trnm,N,market,subscribe|unsubscribe,subscribe=REG;unsubscribe=REMOVE,subscribe,등록 또는 해지
+kiwoomcli domestic streams expected-fills,--group,group,grp_no,N,quantity,,,1,그룹번호
+kiwoomcli domestic streams expected-fills,--refresh,refresh,refresh,N,market,yes|no,yes=1;no=0,yes,기존등록 유지 여부
+kiwoomcli domestic streams expected-fills,--code,code,item,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic streams expected-fills,,,type,Y,market,,,0H,실시간 항목
+kiwoomcli domestic streams gold-conversion,--action,action,trnm,N,market,subscribe|unsubscribe,subscribe=REG;unsubscribe=REMOVE,subscribe,등록 또는 해지
+kiwoomcli domestic streams gold-conversion,--group,group,grp_no,N,quantity,,,1,그룹번호
+kiwoomcli domestic streams gold-conversion,--refresh,refresh,refresh,N,market,yes|no,yes=1;no=0,yes,기존등록 유지 여부
+kiwoomcli domestic streams gold-conversion,--code,code,item,Y,market,MGD|MGU,,,MGD 또는 MGU
+kiwoomcli domestic streams gold-conversion,,,type,Y,market,,,0I,실시간 항목
+kiwoomcli domestic streams sector-index,--action,action,trnm,N,market,subscribe|unsubscribe,subscribe=REG;unsubscribe=REMOVE,subscribe,등록 또는 해지
+kiwoomcli domestic streams sector-index,--group,group,grp_no,N,quantity,,,1,그룹번호
+kiwoomcli domestic streams sector-index,--refresh,refresh,refresh,N,market,yes|no,yes=1;no=0,yes,기존등록 유지 여부
+kiwoomcli domestic streams sector-index,--code,code,item,Y,sector_code,,,,3자리 업종코드
+kiwoomcli domestic streams sector-index,,,type,Y,market,,,0J,실시간 항목
+kiwoomcli domestic streams sector-change,--action,action,trnm,N,market,subscribe|unsubscribe,subscribe=REG;unsubscribe=REMOVE,subscribe,등록 또는 해지
+kiwoomcli domestic streams sector-change,--group,group,grp_no,N,quantity,,,1,그룹번호
+kiwoomcli domestic streams sector-change,--refresh,refresh,refresh,N,market,yes|no,yes=1;no=0,yes,기존등록 유지 여부
+kiwoomcli domestic streams sector-change,--code,code,item,Y,sector_code,,,,3자리 업종코드
+kiwoomcli domestic streams sector-change,,,type,Y,market,,,0U,실시간 항목
+kiwoomcli domestic streams stock-info,--action,action,trnm,N,market,subscribe|unsubscribe,subscribe=REG;unsubscribe=REMOVE,subscribe,등록 또는 해지
+kiwoomcli domestic streams stock-info,--group,group,grp_no,N,quantity,,,1,그룹번호
+kiwoomcli domestic streams stock-info,--refresh,refresh,refresh,N,market,yes|no,yes=1;no=0,yes,기존등록 유지 여부
+kiwoomcli domestic streams stock-info,--code,code,item,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic streams stock-info,,,type,Y,market,,,0g,실시간 항목
+kiwoomcli domestic streams elw-theory,--action,action,trnm,N,market,subscribe|unsubscribe,subscribe=REG;unsubscribe=REMOVE,subscribe,등록 또는 해지
+kiwoomcli domestic streams elw-theory,--group,group,grp_no,N,quantity,,,1,그룹번호
+kiwoomcli domestic streams elw-theory,--refresh,refresh,refresh,N,market,yes|no,yes=1;no=0,yes,기존등록 유지 여부
+kiwoomcli domestic streams elw-theory,--code,code,item,Y,instrument_code,,,,6자리 ELW 종목코드
+kiwoomcli domestic streams elw-theory,,,type,Y,market,,,0m,실시간 항목
+kiwoomcli domestic streams market-open,--action,action,trnm,N,market,subscribe|unsubscribe,subscribe=REG;unsubscribe=REMOVE,subscribe,등록 또는 해지
+kiwoomcli domestic streams market-open,--group,group,grp_no,N,quantity,,,1,그룹번호
+kiwoomcli domestic streams market-open,--refresh,refresh,refresh,N,market,yes|no,yes=1;no=0,yes,기존등록 유지 여부
+kiwoomcli domestic streams market-open,--code,code,item,N,market,,,,장시작시간 등록 요소; 보통 공백
+kiwoomcli domestic streams market-open,,,type,Y,market,,,0s,실시간 항목
+kiwoomcli domestic streams elw-indicator,--action,action,trnm,N,market,subscribe|unsubscribe,subscribe=REG;unsubscribe=REMOVE,subscribe,등록 또는 해지
+kiwoomcli domestic streams elw-indicator,--group,group,grp_no,N,quantity,,,1,그룹번호
+kiwoomcli domestic streams elw-indicator,--refresh,refresh,refresh,N,market,yes|no,yes=1;no=0,yes,기존등록 유지 여부
+kiwoomcli domestic streams elw-indicator,--code,code,item,Y,instrument_code,,,,6자리 ELW 종목코드
+kiwoomcli domestic streams elw-indicator,,,type,Y,market,,,0u,실시간 항목
+kiwoomcli domestic streams program-trades,--action,action,trnm,N,market,subscribe|unsubscribe,subscribe=REG;unsubscribe=REMOVE,subscribe,등록 또는 해지
+kiwoomcli domestic streams program-trades,--group,group,grp_no,N,quantity,,,1,그룹번호
+kiwoomcli domestic streams program-trades,--refresh,refresh,refresh,N,market,yes|no,yes=1;no=0,yes,기존등록 유지 여부
+kiwoomcli domestic streams program-trades,--code,code,item,Y,stock_code,,,,6자리 국내 종목코드
+kiwoomcli domestic streams program-trades,,,type,Y,market,,,0w,실시간 항목
+kiwoomcli domestic streams vi,--action,action,trnm,N,market,subscribe|unsubscribe,subscribe=REG;unsubscribe=REMOVE,subscribe,등록 또는 해지
+kiwoomcli domestic streams vi,--group,group,grp_no,N,quantity,,,1,그룹번호
+kiwoomcli domestic streams vi,--refresh,refresh,refresh,N,market,yes|no,yes=1;no=0,yes,기존등록 유지 여부
+kiwoomcli domestic streams vi,--code,code,item,N,market,,,,종목코드; 전체 수신은 공백
+kiwoomcli domestic streams vi,,,type,Y,market,,,1h,실시간 항목

@@ -1,0 +1,1 @@
+{"date":"20260701","close_pric":"-315000","pre":"-19000","orgn_dt_acc":"","orgn_daly_nettrde":"","frgnr_daly_nettrde":"","frgnr_qota_rt":"","return_code":0,"return_msg":"정상적으로 처리되었습니다"}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: transparent; display: flex; justify-content: center; padding: 32px; }
+  .window {
+    background: #282a36;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    min-width: 480px;
+    max-width: 960px;
+    overflow: hidden;
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .titlebar {
+    background: #21222c;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+  .title {
+    flex: 1;
+    text-align: center;
+    color: #bd93f9;
+    font-size: 12px;
+    margin-right: 36px;
+  }
+  .body { padding: 20px 24px; }
+  .meta { color: #6272a4; margin-bottom: 12px; }
+  .meta span { color: #50fa7b; }
+  pre {
+    color: #f8f8f2;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+    <div class="title">kiwoom sectors price</div>
+  </div>
+  <div class="body">
+    <div class="meta"><span>$</span> kiwoom sectors price --market kospi --code 001 --format json</div>
+    <div class="meta">mode=read · exit=0 · elapsed=0.48s</div>
+    <pre>{&quot;cur_prc&quot;:&quot;-8305.80&quot;,&quot;pred_pre_sig&quot;:&quot;5&quot;,&quot;pred_pre&quot;:&quot;-170.68&quot;,&quot;flu_rt&quot;:&quot;-2.01&quot;,&quot;trde_qty&quot;:&quot;427049&quot;,&quot;trde_prica&quot;:&quot;34431897&quot;,&quot;trde_frmatn_stk_num&quot;:&quot;917&quot;,&quot;trde_frmatn_rt&quot;:&quot;+97.04&quot;,&quot;open_pric&quot;:&quot;+8591.50&quot;,&quot;high_pric&quot;:&quot;+8620.15&quot;,&quot;low_pric&quot;:&quot;-8143.33&quot;,&quot;upl&quot;:&quot;11&quot;,&quot;rising&quot;:&quot;640&quot;,&quot;stdns&quot;:&quot;28&quot;,&quot;fall&quot;:&quot;249&quot;,&quot;lst&quot;:&quot;1&quot;,&quot;52wk_hgst_pric&quot;:&quot;+11360.52&quot;,&quot;52wk_hgst_pric_dt&quot;:&quot;20260508&quot;,&quot;52wk_hgst_pric_pre_rt&quot;:&quot;-26.89&quot;,&quot;52wk_lwst_pric&quot;:&quot;-1304.13&quot;,&quot;52wk_lwst_pric_dt&quot;:&quot;20250613&quot;,&quot;52wk_lwst_pric_pre_rt&quot;:&quot;+536.88&quot;,&quot;inds_cur_prc_tm&quot;:[{&quot;tm_n&quot;:&quot;145120&quot;,&quot;cur_prc_n&quot;:&quot;-8305.80&quot;,&quot;pred_pre_sig_n&quot;:&quot;5&quot;,&quot;pred_pre_n&quot;:&quot;-170.68&quot;,&quot;flu_rt_n&quot;:&quot;-2.01&quot;,&quot;trde_qty_n&quot;:&quot;101&quot;,&quot;acc_trde_qty_n&quot;:&quot;427049&quot;},{&quot;tm_n&quot;:&quot;145110&quot;,&quot;cur_prc_n&quot;:&quot;-8305.60&quot;,&quot;pred_pre_sig_n&quot;:&quot;5&quot;,&quot;pred_pre_n&quot;:&quot;-170.88&quot;,&quot;flu_rt_n&quot;:&quot;-2.02&quot;,&quot;trde_qty_n&quot;:&quot;200&quot;,&quot;acc_trde_qty_n&quot;:&quot;426948&quot;},{&quot;tm_n&quot;:&quot;145100&quot;,&quot;cur_prc_n&quot;:&quot;-8300.93&quot;,&quot;pred_pre_sig_n&quot;:&quot;5&quot;,&quot;pred_pre_n&quot;:&quot;-175.55&quot;,&quot;flu_rt_n&quot;:&quot;-2.07&quot;,&quot;trde_qty_n&quot;:&quot;167&quot;,&quot;acc_trde_qty_n&quot;:&quot;426748&quot;},{&quot;tm_n&quot;:&quot;145050&quot;,&quot;cur_prc_n&quot;:&quot;-8299.58&quot;,&quot;pred_pre_sig_n&quot;:&quot;5&quot;,&quot;pred_pre_n&quot;:&quot;-176.90&quot;,&quot;flu_rt_n&quot;:&quot;-2.09&quot;,&quot;trde_qty_n&quot;:&quot;127&quot;,&quot;acc_trde_qty_n&quot;:&quot;426581&quot;},{&quot;tm_n&quot;:&quot;145040&quot;,&quot;cur_prc_n&quot;:&quot;-8296.20&quot;,&quot;pred_pre_sig_n&quot;:&quot;5&quot;,&quot;pred_pre_n&quot;:&quot;-180.28&quot;,&quot;flu_rt_n&quot;:&quot;-2.13&quot;,&quot;trde_qty_n&quot;:&quot;171&quot;,&quot;acc_trde_qty_n&quot;:&quot;426454&quot;},{&quot;tm_n&quot;:&quot;145030&quot;,&quot;cur_prc_n&quot;:&quot;-8294.64&quot;,&quot;pred_pre_sig_n&quot;:&quot;5&quot;,&quot;pred_pre_n&quot;:&quot;-181.84&quot;,&quot;flu_rt_n&quot;:&quot;-2.15&quot;,&quot;trde_qty_n&quot;:&quot;120&quot;,&quot;acc_trde_qty_n&quot;:&quot;426283&quot;},{&quot;tm_n&quot;:&quot;145020&quot;,&quot;cur_prc_n&quot;:&quot;-8294.21&quot;,&quot;pred_pre_sig_n&quot;:&quot;5&quot;,&quot;pred_pre_n&quot;:&quot;-182.27&quot;,&quot;flu_rt_n&quot;:&quot;-2.15&quot;,&quot;trde_qty_n&quot;:&quot;110&quot;,&quot;acc_trde_qty_n&quot;:&quot;426163&quot;},{&quot;tm_n&quot;:&quot;145010&quot;,&quot;cur_prc_n&quot;:&quot;-8291.47&quot;,&quot;pred_pre_sig_n&quot;:&quot;5&quot;,&quot;pred_pre_n&quot;:&quot;-185.01&quot;,&quot;flu_rt_n&quot;:&quot;-2.18&quot;,&quot;trde_qty_n&quot;:&quot;206&quot;,&quot;acc_trde_qty_n&quot;:&quot;426053&quot;},{&quot;tm_n&quot;:&quot;145000&quot;,&quot;cur_prc_n&quot;:&quot;-8297.23&quot;,&quot;pred_pre_sig_n&quot;:&quot;5&quot;,&quot;pred_pre_n&quot;:&quot;-179.25&quot;,&quot;flu_rt_n&quot;:&quot;-2.11&quot;,&quot;trde_qty_n&quot;:&quot;115&quot;,&quot;acc_trde_qty_n&quot;:&quot;425847&quot;},{&quot;tm_n&quot;:&quot;144950&quot;,&quot;cur_prc_n&quot;:&quot;-8295.38&quot;,&quot;pred_pre_sig_n&quot;:&quot;5&quot;,&quot;pred_pre_n&quot;:&quot;-181.10&quot;,&quot;flu_rt_n&quot;:&quot;-2.14&quot;,&quot;trde_qty_n&quot;:&quot;179&quot;,&quot;acc_trde_qty_n&quot;:&quot;425732&quot;},{&quot;tm_n&quot;:&quot;144940&quot;,&quot;cur_prc_n&quot;:&quot;-8304.08&quot;,&quot;pred_pre_sig_n&quot;:&quot;5&quot;,&quot;pred_pre_n&quot;:&quot;-172.40&quot;,&quot;flu_rt_n&quot;:&quot;-2.03&quot;,&quot;trde_qty_n&quot;:&quot;149&quot;,&quot;acc_trde_qty_n&quot;:&quot;425553&quot;},{&quot;tm_n&quot;:&quot;144930&quot;,&quot;cur_prc_n&quot;:&quot;-8304.29&quot;,&quot;pred_pre_sig_n&quot;:&quot;5&quot;,&quot;pred_pre_n&quot;:&quot;-172.19&quot;,&quot;flu_rt_n&quot;:&quot;-2.03&quot;,&quot;trde_qty_n&quot;:&quot;83&quot;,&quot;acc_trde_qty_n&quot;:&quot;425404&quot;},{&quot;tm_n&quot;:&quot;144920&quot;,&quot;cur_prc_n&quot;:&quot;-8311.26&quot;,&quot;pred_pre_sig_n&quot;:&quot;5&quot;,&quot;pred_pre_n&quot;:&quot;-165.22&quot;,&quot;flu_rt_n&quot;:&quot;-1.95&quot;,&quot;trde_qty_n&quot;:&quot;131&quot;,&quot;acc_trde_qty_n&quot;:&quot;425321&quot;},{&quot;tm_n&quot;:&quot;144910&quot;,&quot;cur_prc_n&quot;:&quot;-8311.48&quot;,&quot;pred_pre_sig_n&quot;:&quot;5&quot;,&quot;pred_pre_n&quot;:&quot;-165.00&quot;,&quot;flu_rt_n&quot;:&quot;-1.95&quot;,&quot;trde_qty_n&quot;:&quot;141&quot;,&quot;acc_trde_qty_n&quot;:&quot;425190&quot;},{&quot;tm_n&quot;:&quot;144900&quot;,&quot;cur_prc_n&quot;:&quot;-8314.38&quot;,&quot;pred_pre_sig_n&quot;:&quot;5&quot;,&quot;pred_pre_n&quot;:&quot;-162.10&quot;,&quot;flu_rt_n&quot;:&quot;-1.91&quot;,&quot;trde_qty_n&quot;:&quot;112&quot;,&quot;acc_trde_qty_n&quot;:&quot;425049&quot;},{&quot;tm_n&quot;:&quot;144850&quot;,&quot;cur_prc_n&quot;:&quot;-8308.38&quot;,&quot;pred_pre_sig_n&quot;:&quot;5&quot;,&quot;pred_pre_n&quot;:&quot;-168.10&quot;,&quot;flu_rt_n&quot;:&quot;-1.98&quot;,&quot;trde_qty_n&quot;:&quot;133&quot;,&quot;acc_trde_qty_n&quot;:&quot;424937&quot;},{&quot;tm_n&quot;:&quot;144840&quot;,&quot;cur_prc_n&quot;:&quot;-8309.00&quot;,&quot;pred_pre_sig_n&quot;:&quot;5&quot;,&quot;pred_pre_n&quot;:&quot;-167.48&quot;,&quot;flu_rt_n&quot;:&quot;-1.98&quot;,&quot;trde_qty_n&quot;:&quot;96&quot;,&quot;acc_trde_qty_n&quot;:&quot;424804&quot;},{&quot;tm_n&quot;:&quot;144830&quot;,&quot;cur_prc_n&quot;:&quot;-8312.55&quot;,&quot;pred_pre_sig_n&quot;:&quot;5&quot;,&quot;pred_pre_n&quot;:&quot;-163.93&quot;,&quot;flu_rt_n&quot;:&quot;-1.93&quot;,&quot;trde_qty_n&quot;:&quot;141&quot;,&quot;acc_trde_qty_n&quot;:&quot;424708&quot;},{&quot;tm_n&quot;:&quot;144820&quot;,&quot;cur_prc_n&quot;:&quot;-8304.75&quot;,&quot;pred_pre_sig_n&quot;:&quot;5&quot;,&quot;pred_pre_n&quot;:&quot;-171.73&quot;,&quot;flu_rt_n&quot;:&quot;-2.03&quot;,&quot;trde_qty_n&quot;:&quot;142&quot;,&quot;acc_trde_qty_n&quot;:&quot;424567&quot;},{&quot;tm_n&quot;:&quot;144810&quot;,&quot;cur_prc_n&quot;:&quot;-8300.76&quot;,&quot;pred_pre_sig_n&quot;:&quot;5&quot;,&quot;pred_pre_n&quot;:&quot;-175.72&quot;,&quot;flu_rt_n&quot;:&quot;-2.07&quot;,&quot;trde_qty_n&quot;:&quot;107&quot;,&quot;acc_trde_qty_n&quot;:&quot;424425&quot;}],&quot;return_code&quot;:0,&quot;return_msg&quot;:&quot;정상적으로 처리되었습니다&quot;}</pre>
+  </div>
+</div>
+</body>
+</html>

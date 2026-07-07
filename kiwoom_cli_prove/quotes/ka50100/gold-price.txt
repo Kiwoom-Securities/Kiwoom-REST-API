@@ -1,0 +1,1 @@
+{"pred_pre_sig":"5","pred_pre":"-1150","flu_rt":"-0.58","trde_qty":"159118","open_pric":"-198440","high_pric":"+199480","low_pric":"-197280","pred_rt":"-35.19","upl_pric":"+218290","lst_pric":"-178610","pred_close_pric":"198450","return_code":0,"return_msg":"정상적으로 처리되었습니다"}

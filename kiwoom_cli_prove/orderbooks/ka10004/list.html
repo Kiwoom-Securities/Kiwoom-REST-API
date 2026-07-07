@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: transparent; display: flex; justify-content: center; padding: 32px; }
+  .window {
+    background: #282a36;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    min-width: 480px;
+    max-width: 960px;
+    overflow: hidden;
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .titlebar {
+    background: #21222c;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+  .title {
+    flex: 1;
+    text-align: center;
+    color: #bd93f9;
+    font-size: 12px;
+    margin-right: 36px;
+  }
+  .body { padding: 20px 24px; }
+  .meta { color: #6272a4; margin-bottom: 12px; }
+  .meta span { color: #50fa7b; }
+  pre {
+    color: #f8f8f2;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+    <div class="title">kiwoom orderbooks list</div>
+  </div>
+  <div class="body">
+    <div class="meta"><span>$</span> kiwoom orderbooks list --code 005930 --format json</div>
+    <div class="meta">mode=read · exit=0 · elapsed=0.44s</div>
+    <pre>{&quot;bid_req_base_tm&quot;:&quot;144805&quot;,&quot;sel_10th_pre_req_pre&quot;:&quot;0&quot;,&quot;sel_10th_pre_req&quot;:&quot;17653&quot;,&quot;sel_10th_pre_bid&quot;:&quot;-320000&quot;,&quot;sel_9th_pre_req_pre&quot;:&quot;0&quot;,&quot;sel_9th_pre_req&quot;:&quot;5242&quot;,&quot;sel_9th_pre_bid&quot;:&quot;-319500&quot;,&quot;sel_8th_pre_req_pre&quot;:&quot;0&quot;,&quot;sel_8th_pre_req&quot;:&quot;17978&quot;,&quot;sel_8th_pre_bid&quot;:&quot;-319000&quot;,&quot;sel_7th_pre_req_pre&quot;:&quot;0&quot;,&quot;sel_7th_pre_req&quot;:&quot;7221&quot;,&quot;sel_7th_pre_bid&quot;:&quot;-318500&quot;,&quot;sel_6th_pre_req_pre&quot;:&quot;0&quot;,&quot;sel_6th_pre_req&quot;:&quot;13822&quot;,&quot;sel_6th_pre_bid&quot;:&quot;-318000&quot;,&quot;sel_5th_pre_req_pre&quot;:&quot;0&quot;,&quot;sel_5th_pre_req&quot;:&quot;15022&quot;,&quot;sel_5th_pre_bid&quot;:&quot;-317500&quot;,&quot;sel_4th_pre_req_pre&quot;:&quot;0&quot;,&quot;sel_4th_pre_req&quot;:&quot;11240&quot;,&quot;sel_4th_pre_bid&quot;:&quot;-317000&quot;,&quot;sel_3th_pre_req_pre&quot;:&quot;0&quot;,&quot;sel_3th_pre_req&quot;:&quot;13031&quot;,&quot;sel_3th_pre_bid&quot;:&quot;-316500&quot;,&quot;sel_2th_pre_req_pre&quot;:&quot;0&quot;,&quot;sel_2th_pre_req&quot;:&quot;42426&quot;,&quot;sel_2th_pre_bid&quot;:&quot;-316000&quot;,&quot;sel_1th_pre_req_pre&quot;:&quot;0&quot;,&quot;sel_fpr_req&quot;:&quot;37348&quot;,&quot;sel_fpr_bid&quot;:&quot;-315500&quot;,&quot;buy_fpr_bid&quot;:&quot;-315000&quot;,&quot;buy_fpr_req&quot;:&quot;177994&quot;,&quot;buy_1th_pre_req_pre&quot;:&quot;+3&quot;,&quot;buy_2th_pre_bid&quot;:&quot;-314500&quot;,&quot;buy_2th_pre_req&quot;:&quot;30888&quot;,&quot;buy_2th_pre_req_pre&quot;:&quot;0&quot;,&quot;buy_3th_pre_bid&quot;:&quot;-314000&quot;,&quot;buy_3th_pre_req&quot;:&quot;47021&quot;,&quot;buy_3th_pre_req_pre&quot;:&quot;--2&quot;,&quot;buy_4th_pre_bid&quot;:&quot;-313500&quot;,&quot;buy_4th_pre_req&quot;:&quot;36717&quot;,&quot;buy_4th_pre_req_pre&quot;:&quot;0&quot;,&quot;buy_5th_pre_bid&quot;:&quot;-313000&quot;,&quot;buy_5th_pre_req&quot;:&quot;62576&quot;,&quot;buy_5th_pre_req_pre&quot;:&quot;0&quot;,&quot;buy_6th_pre_bid&quot;:&quot;-312500&quot;,&quot;buy_6th_pre_req&quot;:&quot;49028&quot;,&quot;buy_6th_pre_req_pre&quot;:&quot;+2&quot;,&quot;buy_7th_pre_bid&quot;:&quot;-312000&quot;,&quot;buy_7th_pre_req&quot;:&quot;133372&quot;,&quot;buy_7th_pre_req_pre&quot;:&quot;+1&quot;,&quot;buy_8th_pre_bid&quot;:&quot;-311500&quot;,&quot;buy_8th_pre_req&quot;:&quot;69554&quot;,&quot;buy_8th_pre_req_pre&quot;:&quot;0&quot;,&quot;buy_9th_pre_bid&quot;:&quot;-311000&quot;,&quot;buy_9th_pre_req&quot;:&quot;73495&quot;,&quot;buy_9th_pre_req_pre&quot;:&quot;--2&quot;,&quot;buy_10th_pre_bid&quot;:&quot;-310500&quot;,&quot;buy_10th_pre_req&quot;:&quot;65306&quot;,&quot;buy_10th_pre_req_pre&quot;:&quot;0&quot;,&quot;tot_sel_req_jub_pre&quot;:&quot;0&quot;,&quot;tot_sel_req&quot;:&quot;180983&quot;,&quot;tot_buy_req&quot;:&quot;745951&quot;,&quot;tot_buy_req_jub_pre&quot;:&quot;+2&quot;,&quot;ovt_sel_req_pre&quot;:&quot;0&quot;,&quot;ovt_sel_req&quot;:&quot;0&quot;,&quot;ovt_buy_req&quot;:&quot;0&quot;,&quot;ovt_buy_req_pre&quot;:&quot;0&quot;,&quot;return_code&quot;:0,&quot;return_msg&quot;:&quot;정상적으로 처리되었습니다&quot;}</pre>
+  </div>
+</div>
+</body>
+</html>
