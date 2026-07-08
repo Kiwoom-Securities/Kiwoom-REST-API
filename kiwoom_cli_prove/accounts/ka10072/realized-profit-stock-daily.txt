@@ -1,1 +1,0 @@
-{"dt_stk_div_rlzt_pl":[{"stk_nm":"삼성전자","cntr_qty":"1","buy_uv":"67399.39","cntr_pric":"396000","tdy_sel_pl":"327748.61","pl_rt":"+486.28","stk_cd":"005930","tdy_trde_cmsn":"60","tdy_trde_tax":"792","wthd_alowa":"0","loan_dt":"","crd_tp":"현금잔고","stk_cd_1":"005930","tdy_sel_pl_1":"327748.61"}],"return_code":0,"return_msg":" 조회가 완료되었습니다."}

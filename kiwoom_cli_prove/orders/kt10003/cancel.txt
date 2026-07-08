@@ -1,1 +1,0 @@
-{"message":"취소주문은 아직 전송되지 않았습니다. 실제 전송하려면 같은 명령에 --confirm을 붙여 다시 실행하세요.","order":{"kind":"주식 취소","exchange":"KRX","code":"005930","original_order_id":"0000000","quantity":"1"}}

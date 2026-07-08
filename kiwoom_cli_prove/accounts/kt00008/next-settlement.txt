@@ -1,1 +1,0 @@
-{"trde_dt":"20260630","setl_dt":"20260702","sell_amt_sum":"000000000000","buy_amt_sum":"000000000000","acnt_nxdy_setl_frcs_prps_array":[],"return_code":0,"return_msg":"관련자료가 없습니다"}

@@ -1,1 +1,0 @@
-{"tot_1":"","tot_2":"","tot_3":"","tot_4":"","tot_5":"","tot_6":"","stk_prm_trde_prst":[{"stk_cd":"","stk_nm":"","cur_prc":"","flu_sig":"","pred_pre":"","buy_cntr_qty":"","buy_cntr_amt":"","sel_cntr_qty":"","sel_cntr_amt":"","netprps_prica":"","all_trde_rt":""}],"return_code":0,"return_msg":"정상적으로 처리되었습니다"}

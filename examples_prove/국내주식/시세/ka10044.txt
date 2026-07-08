@@ -1,5 +1,0 @@
-
-[일별기관매매종목]
-Empty DataFrame
-Columns: []
-Index: []

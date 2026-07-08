@@ -1,1 +1,0 @@
-{"date":"20260701","open_pric":"+334500","high_pric":"+339000","low_pric":"-311500","close_pric":"-315500","pre":"-18500","flu_rt":"-5.54","trde_qty":"20209597","trde_prica":"6514688","cntr_str":"77.16","return_code":0,"return_msg":"정상적으로 처리되었습니다"}

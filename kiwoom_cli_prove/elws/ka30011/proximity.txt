@@ -1,1 +1,0 @@
-{"elwalacc_rt":[{"stk_cd":"068270","stk_nm":"셀트리온","cur_prc":"+173800","pre_sig":"2","pred_pre":"+500","flu_rt":"+0.29","acc_trde_qty":"406849","alacc_rt":"1.00"}],"return_code":0,"return_msg":"정상적으로 처리되었습니다"}
