@@ -28,7 +28,7 @@ python3 --version
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # 3) CLI 설치
-uv tool install kiwoomcli
+uv tool install kwcli
 
 # 4) 인증 설정 (대화형: 별칭/서버/키 입력)
 kiwoomcli setup
@@ -52,7 +52,7 @@ py --version
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 
 # 3) CLI 설치
-uv tool install kiwoomcli
+uv tool install kwcli
 
 # 4) 인증 설정 (대화형: 별칭/서버/키 입력)
 kiwoomcli setup
@@ -189,18 +189,18 @@ uv --version
 
 ## 4단계: CLI 설치
 
-`kiwoomcli` 명령(CLI)을 설치합니다. `uv tool install`로 설치하면 어느 폴더에서나 `kiwoomcli` 명령을 쓸 수 있습니다.
+CLI를 설치합니다. 배포 패키지 이름은 `kwcli`이며, 설치 후 사용하는 명령은 `kiwoomcli`입니다. `uv tool install`로 설치하면 어느 폴더에서나 `kiwoomcli` 명령을 쓸 수 있습니다.
 
 ### macOS/Linux
 
 ```bash
-uv tool install kiwoomcli
+uv tool install kwcli
 ```
 
 ### Windows PowerShell
 
 ```powershell
-uv tool install kiwoomcli
+uv tool install kwcli
 ```
 
 설치 확인(공통):
@@ -374,7 +374,7 @@ $env:KIWOOM_MODE
 ### `kiwoomcli` 명령을 찾을 수 없음
 
 - CLI 설치 후 PATH가 반영되도록 **새 터미널**을 엽니다.
-- `uv tool install kiwoomcli`가 정상 완료되었는지 확인합니다.
+- `uv tool install kwcli`가 정상 완료되었는지 확인합니다.
 
 ### 자격 증명을 찾을 수 없음 (`CredentialsNotFoundError`)
 
@@ -430,7 +430,7 @@ $env:KIWOOM_MODE
 1. 키움에서 App Key/Secret 발급 (운영/모의 각각)
 2. Python 3.13+ 설치
 3. `uv` 설치
-4. `uv tool install kiwoomcli`로 CLI 설치
+4. `uv tool install kwcli`로 CLI 설치
 5. `kiwoomcli setup`으로 인증 설정
 6. `kiwoomcli auth status` / `kiwoomcli domestic stocks info --code 005930`로 확인
 7. (선택) 프로젝트 폴더에서 `uv sync` 후 `uv run python "examples/..."`로 샘플코드 실행
