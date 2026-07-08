@@ -1,3 +1,0 @@
-[REG] {'trnm': 'REG', 'return_code': 0, 'return_msg': ''}
-system [{'trnm': 'REG', 'return_code': 0, 'return_msg': ''}]
-data [{'item': '005930', 'type': '0C', '(최우선)매도호가': '-339000', '(최우선)매수호가': '-338000'}]

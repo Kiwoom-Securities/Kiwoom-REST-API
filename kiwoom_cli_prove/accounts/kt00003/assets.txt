@@ -1,1 +1,0 @@
-{"prsm_dpst_aset_amt":"100608710338","return_code":0,"return_msg":"조회가 완료되었습니다.."}

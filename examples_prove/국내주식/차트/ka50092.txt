@@ -1,5 +1,0 @@
-
-[금현물일봉차트조회]
-Empty DataFrame
-Columns: []
-Index: []

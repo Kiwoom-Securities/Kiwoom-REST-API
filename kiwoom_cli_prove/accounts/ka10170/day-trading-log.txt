@@ -1,1 +1,0 @@
-{"tot_sell_amt":"0","tot_buy_amt":"0","tot_cmsn_tax":"0","tot_exct_amt":"0","tot_pl_amt":"0","tot_prft_rt":"0.00","tdy_trde_diary":[{"stk_nm":"","buy_avg_pric":"","buy_qty":"","sel_avg_pric":"","sell_qty":"","cmsn_alm_tax":"","pl_amt":"","sell_amt":"","buy_amt":"","prft_rt":"","stk_cd":""}],"return_code":0,"return_msg":" 조회가 완료되었습니다."}

@@ -1,1 +1,0 @@
-{"tdy_rlzt_pl":"0","tdy_rlzt_pl_dtl":[{"stk_nm":"","cntr_qty":"","buy_uv":"","cntr_pric":"","tdy_sel_pl":"","pl_rt":"","tdy_trde_cmsn":"","tdy_trde_tax":"","stk_cd":""}],"return_code":0,"return_msg":" 조회가 완료되었습니다."}

@@ -1,1 +1,0 @@
-{"inds_cd":"001","inds_yr_pole_qry":[{"cur_prc":"883908","trde_qty":"2648","dt":"20260619","open_pric":"897435","high_pric":"1162548","low_pric":"694814","trde_prica":"629514"}],"return_code":0,"return_msg":"정상적으로 처리되었습니다"}
