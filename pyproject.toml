@@ -1,5 +1,5 @@
 [project]
-name = "kiwoomcli"
+name = "kwcli"
 version = "0.1.0"
 description = "Kiwoom OpenAPI toolkit"
 readme = "README.md"
