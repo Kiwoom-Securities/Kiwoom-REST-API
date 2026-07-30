@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10022"
 API_URL = "/api/dostk/rkinfo"
@@ -88,12 +88,12 @@ def get_domestic_order_balance_ratio_surge(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        mrkt_tp: 001:코스피, 101:코스닥
-        rt_tp: 1:매수/매도비율, 2:매도/매수비율
-        tm_tp: 분 입력
-        trde_qty_tp: 5:5천주이상, 10:만주이상, 50:5만주이상, 100:10만주이상
-        stk_cnd: 0:전체조회, 1:관리종목제외, 5:증100제외, 6:증100만보기, 7:증40만보기, 8:증30만보기, 9:증20만보기
-        stex_tp: 1:KRX, 2:NXT 3.통합
+        mrkt_tp: 시장구분 — 001:코스피, 101:코스닥
+        rt_tp: 비율구분 — 1:매수/매도비율, 2:매도/매수비율
+        tm_tp: 시간구분 — 분 입력
+        trde_qty_tp: 거래량구분 — 5:5천주이상, 10:만주이상, 50:5만주이상, 100:10만주이상
+        stk_cnd: 종목조건 — 0:전체조회, 1:관리종목제외, 5:증100제외, 6:증100만보기, 7:증40만보기, 8:증30만보기, 9:증20만보기
+        stex_tp: 거래소구분 — 1:KRX, 2:NXT 3.통합
 
     Returns:
         API 응답 데이터입니다.
@@ -127,12 +127,12 @@ def get_domestic_order_balance_ratio_surge(
 
     # 2. 요청 파라미터 바디
     body = {
-        "mrkt_tp": mrkt_tp,
-        "rt_tp": rt_tp,
-        "tm_tp": tm_tp,
-        "trde_qty_tp": trde_qty_tp,
-        "stk_cnd": stk_cnd,
-        "stex_tp": stex_tp,
+        "mrkt_tp": mrkt_tp,  # 시장구분
+        "rt_tp": rt_tp,  # 비율구분
+        "tm_tp": tm_tp,  # 시간구분
+        "trde_qty_tp": trde_qty_tp,  # 거래량구분
+        "stk_cnd": stk_cnd,  # 종목조건
+        "stex_tp": stex_tp,  # 거래소구분
     }
 
     # 3. 인증 클라이언트
@@ -164,9 +164,12 @@ def get_domestic_order_balance_ratio_surge(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -200,14 +203,17 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_order_balance_ratio_surge(
-        mrkt_tp='001',
-        rt_tp='1',
-        tm_tp='1',
-        trde_qty_tp='5',
-        stk_cnd='0',
-        stex_tp='3',
-    )
+    try:
+        result = get_domestic_order_balance_ratio_surge(
+            mrkt_tp='001',
+            rt_tp='1',
+            tm_tp='1',
+            trde_qty_tp='5',
+            stk_cnd='0',
+            stex_tp='3',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

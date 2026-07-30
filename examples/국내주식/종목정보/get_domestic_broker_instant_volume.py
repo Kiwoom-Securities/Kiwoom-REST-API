@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10052"
 API_URL = "/api/dostk/stkinfo"
@@ -42,7 +42,11 @@ COLUMNS = {
 }
 
 
-NUMERIC_COLUMNS = ('현재가',)
+NUMERIC_COLUMNS = (
+    '등락율',
+    '순간거래량',
+    '현재가',
+)
 
 def _format_display(df: pd.DataFrame) -> pd.DataFrame:
     display = df.copy()
@@ -86,12 +90,12 @@ def get_domestic_broker_instant_volume(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        mmcm_cd: 회원사 코드는 ka10102 조회
-        mrkt_tp: 0:전체, 1:코스피, 2:코스닥, 3:종목
-        qty_tp: 0:전체, 1:1000주, 2:2000주, 3:, 5:, 10:10000주, 30: 30000주, 50: 50000주, 100: 100000주
-        pric_tp: 0:전체, 1:1천원 미만, 8:1천원 이상, 2:1천원 ~ 2천원, 3:2천원 ~ 5천원, 4:5천원 ~ 1만원, 5:1만원 이상
-        stex_tp: 1:KRX, 2:NXT 3.통합
-        stk_cd: 거래소별 종목코드
+        mmcm_cd: 회원사코드 — 회원사 코드는 ka10102 조회
+        mrkt_tp: 시장구분 — 0:전체, 1:코스피, 2:코스닥, 3:종목
+        qty_tp: 수량구분 — 0:전체, 1:1000주, 2:2000주, 3:, 5:, 10:10000주, 30: 30000주, 50: 50000주, 100: 100000주
+        pric_tp: 가격구분 — 0:전체, 1:1천원 미만, 8:1천원 이상, 2:1천원 ~ 2천원, 3:2천원 ~ 5천원, 4:5천원 ~ 1만원, 5:1만원 이상
+        stex_tp: 거래소구분 — 1:KRX, 2:NXT 3.통합
+        stk_cd: 종목코드 — 거래소별 종목코드
             (KRX:039490,NXT:039490_NX,SOR:039490_AL)
 
     Returns:
@@ -124,14 +128,14 @@ def get_domestic_broker_instant_volume(
 
     # 2. 요청 파라미터 바디
     body = {
-        "mmcm_cd": mmcm_cd,
-        "mrkt_tp": mrkt_tp,
-        "qty_tp": qty_tp,
-        "pric_tp": pric_tp,
-        "stex_tp": stex_tp,
+        "mmcm_cd": mmcm_cd,  # 회원사코드
+        "mrkt_tp": mrkt_tp,  # 시장구분
+        "qty_tp": qty_tp,  # 수량구분
+        "pric_tp": pric_tp,  # 가격구분
+        "stex_tp": stex_tp,  # 거래소구분
     }
     if stk_cd is not None:
-        body["stk_cd"] = stk_cd
+        body["stk_cd"] = stk_cd  # 종목코드
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -162,9 +166,12 @@ def get_domestic_broker_instant_volume(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -198,14 +205,17 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_broker_instant_volume(
-        mmcm_cd='888',
-        mrkt_tp='0',
-        qty_tp='0',
-        pric_tp='0',
-        stex_tp='3',
-        stk_cd='',
-    )
+    try:
+        result = get_domestic_broker_instant_volume(
+            mmcm_cd='888',
+            mrkt_tp='0',
+            qty_tp='0',
+            pric_tp='0',
+            stex_tp='3',
+            stk_cd='',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

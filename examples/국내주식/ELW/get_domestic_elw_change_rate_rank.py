@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka30009"
 API_URL = "/api/dostk/elw"
@@ -88,9 +88,9 @@ def get_domestic_elw_change_rate_rank(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        sort_tp: 1:상승률, 2:상승폭, 3:하락률, 4:하락폭
-        rght_tp: 000:전체, 001:콜, 002:풋, 003:DC, 004:DP, 006:조기종료콜, 007:조기종료풋
-        trde_end_skip: 1:거래종료제외, 0:거래종료포함
+        sort_tp: 정렬구분 — 1:상승률, 2:상승폭, 3:하락률, 4:하락폭
+        rght_tp: 권리구분 — 000:전체, 001:콜, 002:풋, 003:DC, 004:DP, 006:조기종료콜, 007:조기종료풋
+        trde_end_skip: 거래종료제외 — 1:거래종료제외, 0:거래종료포함
 
     Returns:
         API 응답 데이터입니다.
@@ -115,9 +115,9 @@ def get_domestic_elw_change_rate_rank(
 
     # 2. 요청 파라미터 바디
     body = {
-        "sort_tp": sort_tp,
-        "rght_tp": rght_tp,
-        "trde_end_skip": trde_end_skip,
+        "sort_tp": sort_tp,  # 정렬구분
+        "rght_tp": rght_tp,  # 권리구분
+        "trde_end_skip": trde_end_skip,  # 거래종료제외
     }
 
     # 3. 인증 클라이언트
@@ -149,9 +149,12 @@ def get_domestic_elw_change_rate_rank(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -185,11 +188,14 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_elw_change_rate_rank(
-        sort_tp='1',
-        rght_tp='000',
-        trde_end_skip='0',
-    )
+    try:
+        result = get_domestic_elw_change_rate_rank(
+            sort_tp='1',
+            rght_tp='000',
+            trde_end_skip='0',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka90003"
 API_URL = "/api/dostk/stkinfo"
@@ -43,6 +43,8 @@ COLUMNS = {
 
 
 NUMERIC_COLUMNS = (
+    '누적거래량',
+    '등락율',
     '프로그램매도금액',
     '프로그램매수금액',
     '프로그램순매수금액',
@@ -89,10 +91,10 @@ def get_domestic_program_net_buy_top_50(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        trde_upper_tp: 1:순매도상위, 2:순매수상위
-        amt_qty_tp: 1:금액, 2:수량
-        mrkt_tp: P00101:코스피, P10102:코스닥
-        stex_tp: 1:KRX, 2:NXT 3.통합
+        trde_upper_tp: 매매상위구분 — 1:순매도상위, 2:순매수상위
+        amt_qty_tp: 금액수량구분 — 1:금액, 2:수량
+        mrkt_tp: 시장구분 — P00101:코스피, P10102:코스닥
+        stex_tp: 거래소구분 — 1:KRX, 2:NXT 3.통합
 
     Returns:
         API 응답 데이터입니다.
@@ -120,10 +122,10 @@ def get_domestic_program_net_buy_top_50(
 
     # 2. 요청 파라미터 바디
     body = {
-        "trde_upper_tp": trde_upper_tp,
-        "amt_qty_tp": amt_qty_tp,
-        "mrkt_tp": mrkt_tp,
-        "stex_tp": stex_tp,
+        "trde_upper_tp": trde_upper_tp,  # 매매상위구분
+        "amt_qty_tp": amt_qty_tp,  # 금액수량구분
+        "mrkt_tp": mrkt_tp,  # 시장구분
+        "stex_tp": stex_tp,  # 거래소구분
     }
 
     # 3. 인증 클라이언트
@@ -155,9 +157,12 @@ def get_domestic_program_net_buy_top_50(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -191,12 +196,15 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_program_net_buy_top_50(
-        trde_upper_tp='1',
-        amt_qty_tp='1',
-        mrkt_tp='P00101',
-        stex_tp='1',
-    )
+    try:
+        result = get_domestic_program_net_buy_top_50(
+            trde_upper_tp='1',
+            amt_qty_tp='1',
+            mrkt_tp='P00101',
+            stex_tp='1',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10069"
 API_URL = "/api/dostk/slb"
@@ -98,10 +98,10 @@ def get_domestic_stock_lending_top_10_stocks(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        strt_dt: YYYYMMDD
+        strt_dt: 시작일자 — YYYYMMDD
             (연도4자리, 월 2자리, 일 2자리 형식)
-        mrkt_tp: 001:코스피, 101:코스닥
-        end_dt: YYYYMMDD
+        mrkt_tp: 시장구분 — 001:코스피, 101:코스닥
+        end_dt: 종료일자 — YYYYMMDD
             (연도4자리, 월 2자리, 일 2자리 형식)
 
     Returns:
@@ -125,11 +125,11 @@ def get_domestic_stock_lending_top_10_stocks(
 
     # 2. 요청 파라미터 바디
     body = {
-        "strt_dt": strt_dt,
-        "mrkt_tp": mrkt_tp,
+        "strt_dt": strt_dt,  # 시작일자
+        "mrkt_tp": mrkt_tp,  # 시장구분
     }
     if end_dt is not None:
-        body["end_dt"] = end_dt
+        body["end_dt"] = end_dt  # 종료일자
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -165,9 +165,12 @@ def get_domestic_stock_lending_top_10_stocks(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -205,11 +208,14 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_stock_lending_top_10_stocks(
-        strt_dt='20241110',
-        mrkt_tp='001',
-        end_dt='20241125',
-    )
+    try:
+        result = get_domestic_stock_lending_top_10_stocks(
+            strt_dt='20241110',
+            mrkt_tp='001',
+            end_dt='20241125',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

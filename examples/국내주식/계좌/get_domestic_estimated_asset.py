@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "kt00003"
 API_URL = "/api/dostk/acnt"
@@ -69,7 +69,7 @@ def get_domestic_estimated_asset(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        qry_tp: 0:전체, 1:상장폐지종목제외
+        qry_tp: 상장폐지조회구분 — 0:전체, 1:상장폐지종목제외
 
     Returns:
         API 응답 데이터입니다.
@@ -87,7 +87,7 @@ def get_domestic_estimated_asset(
 
     # 2. 요청 파라미터 바디
     body = {
-        "qry_tp": qry_tp,
+        "qry_tp": qry_tp,  # 상장폐지조회구분
     }
 
     # 3. 인증 클라이언트
@@ -148,8 +148,11 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    df = get_domestic_estimated_asset(
-        qry_tp='0',
-    )
+    try:
+        df = get_domestic_estimated_asset(
+            qry_tp='0',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     print(_format_display(df))

@@ -14,7 +14,7 @@ from typing import Any, Literal
 
 import pandas as pd
 
-from kiwoom import get_ws_client
+from kiwoom import get_ws_client, KiwoomError
 
 # WebSocket 클라이언트가 LOGIN 패킷을 자동 처리합니다.
 
@@ -69,7 +69,7 @@ async def list_domestic_condition_searches(
     공통 WebSocket 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        trnm: CNSRLST고정값
+        trnm: TR명 — CNSRLST고정값
         output: "dataframe" 또는 "json".
 
     Returns:
@@ -80,7 +80,7 @@ async def list_domestic_condition_searches(
         ...     trnm='CNSRLST',
         ... )
         >>> for k, v in (result.items() if isinstance(result, dict) else [("data", result)]):
-        ...     print(k, v.to_string(index=False) if isinstance(v, pd.DataFrame) else v)
+        ...     print(k, v.head() if isinstance(v, pd.DataFrame) else v)
     """
 
     # 1. 필수 파라미터 검증
@@ -89,7 +89,7 @@ async def list_domestic_condition_searches(
 
     # 2. 요청 파라미터 바디
     body = {
-        "trnm": trnm,
+        "trnm": trnm,  # TR명
     }
 
     response_body = await get_ws_client().request_once(api_url=API_URL, body=body)
@@ -123,12 +123,15 @@ async def main() -> None:
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = await list_domestic_condition_searches(
-        trnm='CNSRLST',
-    )
+    try:
+        result = await list_domestic_condition_searches(
+            trnm='CNSRLST',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for k, v in (result.items() if isinstance(result, dict) else [("data", result)]):
-        print(k, _format_display(v).to_string(index=False) if isinstance(v, pd.DataFrame) else v)
+        print(k, _format_display(v).head() if isinstance(v, pd.DataFrame) else v)
 
 
 if __name__ == "__main__":

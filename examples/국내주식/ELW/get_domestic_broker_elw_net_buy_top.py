@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka30002"
 API_URL = "/api/dostk/elw"
@@ -88,11 +88,11 @@ def get_domestic_broker_elw_net_buy_top(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        isscomp_cd: 3자리, 영웅문4 0273화면참조 (교보:001, 신한금융투자:002, 한국투자증권:003, 대신:004, 미래대우:005, ,,,)
-        trde_qty_tp: 0:전체, 5:5천주, 10:만주, 50:5만주, 100:10만주, 500:50만주, 1000:백만주
-        trde_tp: 1:순매수, 2:순매도
-        dt: 1:전일, 5:5일, 10:10일, 40:40일, 60:60일
-        trde_end_elwskip: 0:포함, 1:제외
+        isscomp_cd: 발행사코드 — 3자리, 영웅문4 0273화면참조 (교보:001, 신한금융투자:002, 한국투자증권:003, 대신:004, 미래대우:005, ,,,)
+        trde_qty_tp: 거래량구분 — 0:전체, 5:5천주, 10:만주, 50:5만주, 100:10만주, 500:50만주, 1000:백만주
+        trde_tp: 매매구분 — 1:순매수, 2:순매도
+        dt: 기간 — 1:전일, 5:5일, 10:10일, 40:40일, 60:60일
+        trde_end_elwskip: 거래종료ELW제외 — 0:포함, 1:제외
 
     Returns:
         API 응답 데이터입니다.
@@ -123,11 +123,11 @@ def get_domestic_broker_elw_net_buy_top(
 
     # 2. 요청 파라미터 바디
     body = {
-        "isscomp_cd": isscomp_cd,
-        "trde_qty_tp": trde_qty_tp,
-        "trde_tp": trde_tp,
-        "dt": dt,
-        "trde_end_elwskip": trde_end_elwskip,
+        "isscomp_cd": isscomp_cd,  # 발행사코드
+        "trde_qty_tp": trde_qty_tp,  # 거래량구분
+        "trde_tp": trde_tp,  # 매매구분
+        "dt": dt,  # 기간
+        "trde_end_elwskip": trde_end_elwskip,  # 거래종료ELW제외
     }
 
     # 3. 인증 클라이언트
@@ -159,9 +159,12 @@ def get_domestic_broker_elw_net_buy_top(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -195,13 +198,16 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_broker_elw_net_buy_top(
-        isscomp_cd='003',
-        trde_qty_tp='0',
-        trde_tp='2',
-        dt='60',
-        trde_end_elwskip='0',
-    )
+    try:
+        result = get_domestic_broker_elw_net_buy_top(
+            isscomp_cd='003',
+            trde_qty_tp='0',
+            trde_tp='2',
+            dt='60',
+            trde_end_elwskip='0',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

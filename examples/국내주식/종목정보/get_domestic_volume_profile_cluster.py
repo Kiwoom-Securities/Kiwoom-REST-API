@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10025"
 API_URL = "/api/dostk/stkinfo"
@@ -45,7 +45,9 @@ COLUMNS = {
 NUMERIC_COLUMNS = (
     '가격대끝',
     '가격대시작',
+    '등락률',
     '현재가',
+    '현재거래량',
 )
 
 def _format_display(df: pd.DataFrame) -> pd.DataFrame:
@@ -90,12 +92,12 @@ def get_domestic_volume_profile_cluster(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        mrkt_tp: 000:전체, 001:코스피, 101:코스닥
-        prps_cnctr_rt: 0~100 입력
-        cur_prc_entry: 0:현재가 매물대 진입 포함안함, 1:현재가 매물대 진입포함
-        prpscnt: 숫자입력
-        cycle_tp: 50:50일, 100:100일, 150:150일, 200:200일, 250:250일, 300:300일
-        stex_tp: 1:KRX, 2:NXT 3.통합
+        mrkt_tp: 시장구분 — 000:전체, 001:코스피, 101:코스닥
+        prps_cnctr_rt: 매물집중비율 — 0~100 입력
+        cur_prc_entry: 현재가진입 — 0:현재가 매물대 진입 포함안함, 1:현재가 매물대 진입포함
+        prpscnt: 매물대수 — 숫자입력
+        cycle_tp: 주기구분 — 50:50일, 100:100일, 150:150일, 200:200일, 250:250일, 300:300일
+        stex_tp: 거래소구분 — 1:KRX, 2:NXT 3.통합
 
     Returns:
         API 응답 데이터입니다.
@@ -129,12 +131,12 @@ def get_domestic_volume_profile_cluster(
 
     # 2. 요청 파라미터 바디
     body = {
-        "mrkt_tp": mrkt_tp,
-        "prps_cnctr_rt": prps_cnctr_rt,
-        "cur_prc_entry": cur_prc_entry,
-        "prpscnt": prpscnt,
-        "cycle_tp": cycle_tp,
-        "stex_tp": stex_tp,
+        "mrkt_tp": mrkt_tp,  # 시장구분
+        "prps_cnctr_rt": prps_cnctr_rt,  # 매물집중비율
+        "cur_prc_entry": cur_prc_entry,  # 현재가진입
+        "prpscnt": prpscnt,  # 매물대수
+        "cycle_tp": cycle_tp,  # 주기구분
+        "stex_tp": stex_tp,  # 거래소구분
     }
 
     # 3. 인증 클라이언트
@@ -166,9 +168,12 @@ def get_domestic_volume_profile_cluster(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -202,14 +207,17 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_volume_profile_cluster(
-        mrkt_tp='000',
-        prps_cnctr_rt='50',
-        cur_prc_entry='0',
-        prpscnt='10',
-        cycle_tp='50',
-        stex_tp='3',
-    )
+    try:
+        result = get_domestic_volume_profile_cluster(
+            mrkt_tp='000',
+            prps_cnctr_rt='50',
+            cur_prc_entry='0',
+            prpscnt='10',
+            cycle_tp='50',
+            stex_tp='3',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

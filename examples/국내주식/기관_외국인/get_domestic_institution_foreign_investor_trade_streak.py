@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10131"
 API_URL = "/api/dostk/frgnistt"
@@ -105,14 +105,14 @@ def get_domestic_institution_foreign_investor_trade_streak(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        dt: 1:최근일, 3:3일, 5:5일, 10:10일, 20:20일, 120:120일, 0:시작일자/종료일자로 조회
-        mrkt_tp: 001:코스피, 101:코스닥
-        netslmt_tp: 2:순매수(고정값)
-        stk_inds_tp: 0:종목(주식),1:업종
-        amt_qty_tp: 0:금액, 1:수량
-        stex_tp: 1:KRX, 2:NXT, 3:통합
-        strt_dt: YYYYMMDD
-        end_dt: YYYYMMDD
+        dt: 기간 — 1:최근일, 3:3일, 5:5일, 10:10일, 20:20일, 120:120일, 0:시작일자/종료일자로 조회
+        mrkt_tp: 장구분 — 001:코스피, 101:코스닥
+        netslmt_tp: 순매도수구분 — 2:순매수(고정값)
+        stk_inds_tp: 종목업종구분 — 0:종목(주식),1:업종
+        amt_qty_tp: 금액수량구분 — 0:금액, 1:수량
+        stex_tp: 거래소구분 — 1:KRX, 2:NXT, 3:통합
+        strt_dt: 시작일자 — YYYYMMDD
+        end_dt: 종료일자 — YYYYMMDD
 
     Returns:
         API 응답 데이터입니다.
@@ -148,17 +148,17 @@ def get_domestic_institution_foreign_investor_trade_streak(
 
     # 2. 요청 파라미터 바디
     body = {
-        "dt": dt,
-        "mrkt_tp": mrkt_tp,
-        "netslmt_tp": netslmt_tp,
-        "stk_inds_tp": stk_inds_tp,
-        "amt_qty_tp": amt_qty_tp,
-        "stex_tp": stex_tp,
+        "dt": dt,  # 기간
+        "mrkt_tp": mrkt_tp,  # 장구분
+        "netslmt_tp": netslmt_tp,  # 순매도수구분
+        "stk_inds_tp": stk_inds_tp,  # 종목업종구분
+        "amt_qty_tp": amt_qty_tp,  # 금액수량구분
+        "stex_tp": stex_tp,  # 거래소구분
     }
     if strt_dt is not None:
-        body["strt_dt"] = strt_dt
+        body["strt_dt"] = strt_dt  # 시작일자
     if end_dt is not None:
-        body["end_dt"] = end_dt
+        body["end_dt"] = end_dt  # 종료일자
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -189,9 +189,12 @@ def get_domestic_institution_foreign_investor_trade_streak(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -225,16 +228,19 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_institution_foreign_investor_trade_streak(
-        dt='1',
-        mrkt_tp='001',
-        netslmt_tp='2',
-        stk_inds_tp='0',
-        amt_qty_tp='0',
-        stex_tp='1',
-        strt_dt='',
-        end_dt='',
-    )
+    try:
+        result = get_domestic_institution_foreign_investor_trade_streak(
+            dt='1',
+            mrkt_tp='001',
+            netslmt_tp='2',
+            stk_inds_tp='0',
+            amt_qty_tp='0',
+            stex_tp='1',
+            strt_dt='',
+            end_dt='',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

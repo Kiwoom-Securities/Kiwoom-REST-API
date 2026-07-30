@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka50100"
 API_URL = "/api/dostk/mrkcond"
@@ -88,7 +88,7 @@ def get_domestic_gold_spot_quote_info(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        stk_cd: 종목코드
+        stk_cd: 종목코드 — M04020000: 금 99.99_1kg, M04020100: 미니금 99.99_100g
 
     Returns:
         API 응답 데이터입니다.
@@ -106,7 +106,7 @@ def get_domestic_gold_spot_quote_info(
 
     # 2. 요청 파라미터 바디
     body = {
-        "stk_cd": stk_cd,
+        "stk_cd": stk_cd,  # 종목코드
     }
 
     # 3. 인증 클라이언트
@@ -167,8 +167,11 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    df = get_domestic_gold_spot_quote_info(
-        stk_cd='M04020000',
-    )
+    try:
+        df = get_domestic_gold_spot_quote_info(
+            stk_cd='M04020000',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     print(_format_display(df))

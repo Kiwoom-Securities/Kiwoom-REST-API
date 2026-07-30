@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10078"
 API_URL = "/api/dostk/mrkcond"
@@ -89,11 +89,11 @@ def get_domestic_broker_stock_trade_trend(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        mmcm_cd: 회원사 코드는 ka10102 조회
-        stk_cd: 거래소별 종목코드
+        mmcm_cd: 회원사코드 — 회원사 코드는 ka10102 조회
+        stk_cd: 종목코드 — 거래소별 종목코드
             (KRX:039490,NXT:039490_NX,SOR:039490_AL)
-        strt_dt: YYYYMMDD
-        end_dt: YYYYMMDD
+        strt_dt: 시작일자 — YYYYMMDD
+        end_dt: 종료일자 — YYYYMMDD
 
     Returns:
         API 응답 데이터입니다.
@@ -121,10 +121,10 @@ def get_domestic_broker_stock_trade_trend(
 
     # 2. 요청 파라미터 바디
     body = {
-        "mmcm_cd": mmcm_cd,
-        "stk_cd": stk_cd,
-        "strt_dt": strt_dt,
-        "end_dt": end_dt,
+        "mmcm_cd": mmcm_cd,  # 회원사코드
+        "stk_cd": stk_cd,  # 종목코드
+        "strt_dt": strt_dt,  # 시작일자
+        "end_dt": end_dt,  # 종료일자
     }
 
     # 3. 인증 클라이언트
@@ -156,9 +156,12 @@ def get_domestic_broker_stock_trade_trend(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -192,12 +195,15 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_broker_stock_trade_trend(
-        mmcm_cd='001',
-        stk_cd='005930',
-        strt_dt='20241106',
-        end_dt='20241107',
-    )
+    try:
+        result = get_domestic_broker_stock_trade_trend(
+            mmcm_cd='001',
+            stk_cd='005930',
+            strt_dt='20241106',
+            end_dt='20241107',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

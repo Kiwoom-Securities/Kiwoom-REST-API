@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka40001"
 API_URL = "/api/dostk/etf"
@@ -81,7 +81,7 @@ def get_domestic_etf_return_rate(
     Args:
         stk_cd: 종목코드
         etfobjt_idex_cd: ETF대상지수코드
-        dt: 0:1주, 1:1달, 2:6개월, 3:1년
+        dt: 기간 — 0:1주, 1:1달, 2:6개월, 3:1년
 
     Returns:
         API 응답 데이터입니다.
@@ -106,9 +106,9 @@ def get_domestic_etf_return_rate(
 
     # 2. 요청 파라미터 바디
     body = {
-        "stk_cd": stk_cd,
-        "etfobjt_idex_cd": etfobjt_idex_cd,
-        "dt": dt,
+        "stk_cd": stk_cd,  # 종목코드
+        "etfobjt_idex_cd": etfobjt_idex_cd,  # ETF대상지수코드
+        "dt": dt,  # 기간
     }
 
     # 3. 인증 클라이언트
@@ -140,9 +140,12 @@ def get_domestic_etf_return_rate(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -176,11 +179,14 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_etf_return_rate(
-        stk_cd='069500',
-        etfobjt_idex_cd='207',
-        dt='3',
-    )
+    try:
+        result = get_domestic_etf_return_rate(
+            stk_cd='069500',
+            etfobjt_idex_cd='207',
+            dt='3',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10030"
 API_URL = "/api/dostk/rkinfo"
@@ -115,15 +115,15 @@ def get_domestic_today_volume_top(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        mrkt_tp: 000:전체, 001:코스피, 101:코스닥
-        sort_tp: 1:거래량, 2:거래회전율, 3:거래대금
-        mang_stk_incls: 0:관리종목 포함, 1:관리종목 미포함, 3:우선주제외, 11:정리매매종목제외, 4:관리종목, 우선주제외, 5:증100제외, 6:증100마나보기, 13:증60만보기, 12:증50만보기, 7:증40만보기, 8:증30만보기, 9:증20만보기, 14:ETF제외, 15:스팩제외, 16:ETF+ETN제외
-        crd_tp: 0:전체조회, 9:신용융자전체, 1:신용융자A군, 2:신용융자B군, 3:신용융자C군, 4:신용융자D군, 8:신용대주
-        trde_qty_tp: 0:전체조회, 5:5천주이상, 10:1만주이상, 50:5만주이상, 100:10만주이상, 200:20만주이상, 300:30만주이상, 500:500만주이상, 1000:백만주이상
-        pric_tp: 0:전체조회, 1:1천원미만, 2:1천원이상, 3:1천원~2천원, 4:2천원~5천원, 5:5천원이상, 6:5천원~1만원, 10:1만원미만, 7:1만원이상, 8:5만원이상, 9:10만원이상
-        trde_prica_tp: 0:전체조회, 1:1천만원이상, 3:3천만원이상, 4:5천만원이상, 10:1억원이상, 30:3억원이상, 50:5억원이상, 100:10억원이상, 300:30억원이상, 500:50억원이상, 1000:100억원이상, 3000:300억원이상, 5000:500억원이상
-        mrkt_open_tp: 0:전체조회, 1:장중, 2:장전시간외, 3:장후시간외
-        stex_tp: 1:KRX, 2:NXT 3.통합
+        mrkt_tp: 시장구분 — 000:전체, 001:코스피, 101:코스닥
+        sort_tp: 정렬구분 — 1:거래량, 2:거래회전율, 3:거래대금
+        mang_stk_incls: 관리종목포함 — 0:관리종목 포함, 1:관리종목 미포함, 3:우선주제외, 11:정리매매종목제외, 4:관리종목, 우선주제외, 5:증100제외, 6:증100마나보기, 13:증60만보기, 12:증50만보기, 7:증40만보기, 8:증30만보기, 9:증20만보기, 14:ETF제외, 15:스팩제외, 16:ETF+ETN제외
+        crd_tp: 신용구분 — 0:전체조회, 9:신용융자전체, 1:신용융자A군, 2:신용융자B군, 3:신용융자C군, 4:신용융자D군, 8:신용대주
+        trde_qty_tp: 거래량구분 — 0:전체조회, 5:5천주이상, 10:1만주이상, 50:5만주이상, 100:10만주이상, 200:20만주이상, 300:30만주이상, 500:500만주이상, 1000:백만주이상
+        pric_tp: 가격구분 — 0:전체조회, 1:1천원미만, 2:1천원이상, 3:1천원~2천원, 4:2천원~5천원, 5:5천원이상, 6:5천원~1만원, 10:1만원미만, 7:1만원이상, 8:5만원이상, 9:10만원이상
+        trde_prica_tp: 거래대금구분 — 0:전체조회, 1:1천만원이상, 3:3천만원이상, 4:5천만원이상, 10:1억원이상, 30:3억원이상, 50:5억원이상, 100:10억원이상, 300:30억원이상, 500:50억원이상, 1000:100억원이상, 3000:300억원이상, 5000:500억원이상
+        mrkt_open_tp: 장운영구분 — 0:전체조회, 1:장중, 2:장전시간외, 3:장후시간외
+        stex_tp: 거래소구분 — 1:KRX, 2:NXT 3.통합
 
     Returns:
         API 응답 데이터입니다.
@@ -166,15 +166,15 @@ def get_domestic_today_volume_top(
 
     # 2. 요청 파라미터 바디
     body = {
-        "mrkt_tp": mrkt_tp,
-        "sort_tp": sort_tp,
-        "mang_stk_incls": mang_stk_incls,
-        "crd_tp": crd_tp,
-        "trde_qty_tp": trde_qty_tp,
-        "pric_tp": pric_tp,
-        "trde_prica_tp": trde_prica_tp,
-        "mrkt_open_tp": mrkt_open_tp,
-        "stex_tp": stex_tp,
+        "mrkt_tp": mrkt_tp,  # 시장구분
+        "sort_tp": sort_tp,  # 정렬구분
+        "mang_stk_incls": mang_stk_incls,  # 관리종목포함
+        "crd_tp": crd_tp,  # 신용구분
+        "trde_qty_tp": trde_qty_tp,  # 거래량구분
+        "pric_tp": pric_tp,  # 가격구분
+        "trde_prica_tp": trde_prica_tp,  # 거래대금구분
+        "mrkt_open_tp": mrkt_open_tp,  # 장운영구분
+        "stex_tp": stex_tp,  # 거래소구분
     }
 
     # 3. 인증 클라이언트
@@ -206,9 +206,12 @@ def get_domestic_today_volume_top(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -242,17 +245,20 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_today_volume_top(
-        mrkt_tp='000',
-        sort_tp='1',
-        mang_stk_incls='0',
-        crd_tp='0',
-        trde_qty_tp='0',
-        pric_tp='0',
-        trde_prica_tp='0',
-        mrkt_open_tp='0',
-        stex_tp='3',
-    )
+    try:
+        result = get_domestic_today_volume_top(
+            mrkt_tp='000',
+            sort_tp='1',
+            mang_stk_incls='0',
+            crd_tp='0',
+            trde_qty_tp='0',
+            pric_tp='0',
+            trde_prica_tp='0',
+            mrkt_open_tp='0',
+            stex_tp='3',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

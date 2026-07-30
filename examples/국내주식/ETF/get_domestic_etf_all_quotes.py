@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka40004"
 API_URL = "/api/dostk/etf"
@@ -100,12 +100,12 @@ def get_domestic_etf_all_quotes(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        txon_type: 0:전체, 1:비과세, 2:보유기간과세, 3:회사형, 4:외국, 5:비과세해외(보유기간관세)
-        navpre: 0:전체, 1:NAV > 전일종가, 2:NAV < 전일종가
-        mngmcomp: 0000:전체, 3020:KODEX(삼성), 3027:KOSEF(키움), 3191:TIGER(미래에셋), 3228:KINDEX(한국투자), 3023:KStar(KB), 3022:아리랑(한화), 9999:기타운용사
-        txon_yn: 0:전체, 1:과세, 2:비과세
-        trace_idex: 0:전체
-        stex_tp: 1:KRX, 2:NXT, 3:통합
+        txon_type: 과세유형 — 0:전체, 1:비과세, 2:보유기간과세, 3:회사형, 4:외국, 5:비과세해외(보유기간관세)
+        navpre: NAV대비 — 0:전체, 1:NAV > 전일종가, 2:NAV < 전일종가
+        mngmcomp: 운용사 — 0000:전체, 3020:KODEX(삼성), 3027:KOSEF(키움), 3191:TIGER(미래에셋), 3228:KINDEX(한국투자), 3023:KStar(KB), 3022:아리랑(한화), 9999:기타운용사
+        txon_yn: 과세여부 — 0:전체, 1:과세, 2:비과세
+        trace_idex: 추적지수 — 0:전체
+        stex_tp: 거래소구분 — 1:KRX, 2:NXT, 3:통합
 
     Returns:
         API 응답 데이터입니다.
@@ -139,12 +139,12 @@ def get_domestic_etf_all_quotes(
 
     # 2. 요청 파라미터 바디
     body = {
-        "txon_type": txon_type,
-        "navpre": navpre,
-        "mngmcomp": mngmcomp,
-        "txon_yn": txon_yn,
-        "trace_idex": trace_idex,
-        "stex_tp": stex_tp,
+        "txon_type": txon_type,  # 과세유형
+        "navpre": navpre,  # NAV대비
+        "mngmcomp": mngmcomp,  # 운용사
+        "txon_yn": txon_yn,  # 과세여부
+        "trace_idex": trace_idex,  # 추적지수
+        "stex_tp": stex_tp,  # 거래소구분
     }
 
     # 3. 인증 클라이언트
@@ -176,9 +176,12 @@ def get_domestic_etf_all_quotes(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -212,14 +215,17 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_etf_all_quotes(
-        txon_type='0',
-        navpre='0',
-        mngmcomp='0000',
-        txon_yn='0',
-        trace_idex='0',
-        stex_tp='1',
-    )
+    try:
+        result = get_domestic_etf_all_quotes(
+            txon_type='0',
+            navpre='0',
+            mngmcomp='0000',
+            txon_yn='0',
+            trace_idex='0',
+            stex_tp='1',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

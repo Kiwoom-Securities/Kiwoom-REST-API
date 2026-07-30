@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "kt00011"
 API_URL = "/api/dostk/acnt"
@@ -142,8 +142,8 @@ def get_domestic_orderable_quantity_by_margin_rate(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        stk_cd: 종목번호
-        uv: 매수가격
+        stk_cd: 종목번호 — 종목 코드 입력
+        uv: 매수가격 — 단위: 원
 
     Returns:
         API 응답 데이터입니다.
@@ -162,10 +162,10 @@ def get_domestic_orderable_quantity_by_margin_rate(
 
     # 2. 요청 파라미터 바디
     body = {
-        "stk_cd": stk_cd,
+        "stk_cd": stk_cd,  # 종목번호
     }
     if uv is not None:
-        body["uv"] = uv
+        body["uv"] = uv  # 매수가격
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -225,9 +225,12 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    df = get_domestic_orderable_quantity_by_margin_rate(
-        stk_cd='005930',
-        uv='',
-    )
+    try:
+        df = get_domestic_orderable_quantity_by_margin_rate(
+            stk_cd='005930',
+            uv='',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     print(_format_display(df))

@@ -1,6 +1,6 @@
 [project]
 name = "kwcli"
-version = "0.1.0"
+version = "1.0.0"
 description = "Kiwoom OpenAPI toolkit"
 readme = "README.md"
 requires-python = ">=3.13"

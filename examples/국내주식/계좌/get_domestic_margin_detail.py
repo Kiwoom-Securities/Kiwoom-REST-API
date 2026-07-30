@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "kt00013"
 API_URL = "/api/dostk/acnt"
@@ -242,7 +242,10 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    df = get_domestic_margin_detail(
-    )
+    try:
+        df = get_domestic_margin_detail(
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     print(_format_display(df))

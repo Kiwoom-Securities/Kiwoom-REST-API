@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10026"
 API_URL = "/api/dostk/stkinfo"
@@ -41,8 +41,11 @@ COLUMNS = {
 
 
 NUMERIC_COLUMNS = (
+    'PER',
+    '등락률',
     '매도호가',
     '현재가',
+    '현재거래량',
 )
 
 def _format_display(df: pd.DataFrame) -> pd.DataFrame:
@@ -83,8 +86,8 @@ def get_domestic_high_low_per_stocks(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        pertp: 1:저PBR, 2:고PBR, 3:저PER, 4:고PER, 5:저ROE, 6:고ROE
-        stex_tp: 1:KRX, 2:NXT 3.통합
+        pertp: PER구분 — 1:저PBR, 2:고PBR, 3:저PER, 4:고PER, 5:저ROE, 6:고ROE
+        stex_tp: 거래소구분 — 1:KRX, 2:NXT 3.통합
 
     Returns:
         API 응답 데이터입니다.
@@ -106,8 +109,8 @@ def get_domestic_high_low_per_stocks(
 
     # 2. 요청 파라미터 바디
     body = {
-        "pertp": pertp,
-        "stex_tp": stex_tp,
+        "pertp": pertp,  # PER구분
+        "stex_tp": stex_tp,  # 거래소구분
     }
 
     # 3. 인증 클라이언트
@@ -139,9 +142,12 @@ def get_domestic_high_low_per_stocks(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -175,10 +181,13 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_high_low_per_stocks(
-        pertp='1',
-        stex_tp='3',
-    )
+    try:
+        result = get_domestic_high_low_per_stocks(
+            pertp='1',
+            stex_tp='3',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

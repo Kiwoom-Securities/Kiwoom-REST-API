@@ -13,42 +13,11 @@ from typing import Any, Literal
 
 import pandas as pd
 
-from kiwoom import get_auth
+from kiwoom import get_auth, KiwoomError
 
 API_ID = "au10002"
 API_PATH = "/oauth2/revoke"
 COLUMNS = {}
-
-
-NUMERIC_COLUMNS = ()
-
-def _format_display(df: pd.DataFrame) -> pd.DataFrame:
-    display = df.copy()
-    for column in tuple(NUMERIC_COLUMNS):
-        if column in display.columns:
-            display[column] = display[column].map(_format_display_value)
-    return display
-
-
-def _format_display_value(value: object) -> object:
-    if value is None or isinstance(value, (dict, list, tuple, set)):
-        return value
-    try:
-        if pd.isna(value):
-            return value
-    except (TypeError, ValueError):
-        return value
-    text = str(value).strip()
-    sign = "-" if text.startswith("-") else ""
-    unsigned = text[1:] if sign else text
-    if "." in unsigned:
-        integer, fraction = unsigned.split(".", 1)
-        if integer.isdigit() and fraction.isdigit():
-            return f"{sign}{int(integer or '0'):,}.{fraction}"
-        return value
-    if unsigned.isdigit() and len(unsigned) >= 6:
-        return f"{sign}{int(unsigned or '0'):,}"
-    return value
 
 def delete_access_token(
     output: Literal["dataframe", "json"] = "dataframe",
@@ -76,7 +45,7 @@ def delete_access_token(
     auth = get_auth(mode=mode)
     auth.revoke_access_token()
     response_body = {
-        "mode": auth.mode,
+        "mode": mode,
         "revoked": True,
         "return_code": 0,
         "return_msg": "토큰 폐기 완료",
@@ -102,8 +71,10 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = delete_access_token(
-    )
+    try:
+        result = delete_access_token(
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
-    for k, v in (result.items() if isinstance(result, dict) else [("data", result)]):
-        print(k, _format_display(v).head() if isinstance(v, pd.DataFrame) else v)
+    print(result)

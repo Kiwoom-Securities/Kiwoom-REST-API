@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "kt00016"
 API_URL = "/api/dostk/acnt"
@@ -101,6 +101,7 @@ NUMERIC_COLUMNS = (
     '평가손익',
     '현금미수금_말',
     '현금미수금_초',
+    '회전율',
 )
 
 def _format_display(df: pd.DataFrame) -> pd.DataFrame:
@@ -141,8 +142,8 @@ def get_domestic_daily_account_return_rate_detail(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        fr_dt: 평가시작일
-        to_dt: 평가종료일
+        fr_dt: 평가시작일 — YYYYMMDD
+        to_dt: 평가종료일 — YYYYMMDD
 
     Returns:
         API 응답 데이터입니다.
@@ -163,8 +164,8 @@ def get_domestic_daily_account_return_rate_detail(
 
     # 2. 요청 파라미터 바디
     body = {
-        "fr_dt": fr_dt,
-        "to_dt": to_dt,
+        "fr_dt": fr_dt,  # 평가시작일
+        "to_dt": to_dt,  # 평가종료일
     }
 
     # 3. 인증 클라이언트
@@ -225,9 +226,12 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    df = get_domestic_daily_account_return_rate_detail(
-        fr_dt='20241111',
-        to_dt='20241125',
-    )
+    try:
+        df = get_domestic_daily_account_return_rate_detail(
+            fr_dt='20241111',
+            to_dt='20241125',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     print(_format_display(df))

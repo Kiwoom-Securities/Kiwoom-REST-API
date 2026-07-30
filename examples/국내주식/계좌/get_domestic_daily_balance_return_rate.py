@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka01690"
 API_URL = "/api/dostk/acnt"
@@ -53,6 +53,7 @@ SUMMARY_COLUMNS = {
 
 
 NUMERIC_COLUMNS = (
+    '매수비중',
     '매입 단가',
     '보유 수량',
     '예수금',
@@ -104,7 +105,7 @@ def get_domestic_daily_balance_return_rate(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        qry_dt: 조회일자
+        qry_dt: 조회일자 — YYYYMMDD
 
     Returns:
         API 응답 데이터입니다.
@@ -123,7 +124,7 @@ def get_domestic_daily_balance_return_rate(
 
     # 2. 요청 파라미터 바디
     body = {
-        "qry_dt": qry_dt,
+        "qry_dt": qry_dt,  # 조회일자
     }
 
     # 3. 인증 클라이언트
@@ -160,9 +161,12 @@ def get_domestic_daily_balance_return_rate(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -200,9 +204,12 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_daily_balance_return_rate(
-        qry_dt='20250825',
-    )
+    try:
+        result = get_domestic_daily_balance_return_rate(
+            qry_dt='20250825',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

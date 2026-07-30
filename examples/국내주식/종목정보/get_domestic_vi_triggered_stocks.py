@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10054"
 API_URL = "/api/dostk/stkinfo"
@@ -46,9 +46,12 @@ COLUMNS = {
 
 
 NUMERIC_COLUMNS = (
+    '누적거래량',
+    '동적괴리율',
     '동적기준가격',
     '발동가격',
     '시가대비등락률',
+    '정적괴리율',
     '정적기준가격',
 )
 
@@ -101,19 +104,19 @@ def get_domestic_vi_triggered_stocks(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        mrkt_tp: 000:전체, 001: 코스피, 101:코스닥
-        bf_mkrt_tp: 0:전체, 1:정규시장,2:시간외단일가
-        motn_tp: 0:전체, 1:정적VI, 2:동적VI, 3:동적VI + 정적VI
-        skip_stk: 전종목포함 조회시 9개 0으로 설정(000000000),전종목제외 조회시 9개 1으로 설정(111111111),9개 종목조회여부를 조회포함(0), 조회제외(1)로 설정하며 종목순서는 우선주,관리종목,투자경고/위험,투자주의,환기종목,단기과열종목,증거금100%,ETF,ETN가 됨.우선주만 조회시"011111111"", 관리종목만 조회시 ""101111111"" 설정"
-        trde_qty_tp: 0:사용안함, 1:사용
-        min_trde_qty: 0 주 이상, 거래량구분이 1일때만 입력(공백허용)
-        max_trde_qty: 100000000 주 이하, 거래량구분이 1일때만 입력(공백허용)
-        trde_prica_tp: 0:사용안함, 1:사용
-        min_trde_prica: 0 백만원 이상, 거래대금구분 1일때만 입력(공백허용)
-        max_trde_prica: 100000000 백만원 이하, 거래대금구분 1일때만 입력(공백허용)
-        motn_drc: 0:전체, 1:상승, 2:하락
-        stex_tp: 1:KRX, 2:NXT 3.통합
-        stk_cd: 거래소별 종목코드
+        mrkt_tp: 시장구분 — 000:전체, 001: 코스피, 101:코스닥
+        bf_mkrt_tp: 장전구분 — 0:전체, 1:정규시장,2:시간외단일가
+        motn_tp: 발동구분 — 0:전체, 1:정적VI, 2:동적VI, 3:동적VI + 정적VI
+        skip_stk: 제외종목 — 전종목포함 조회시 9개 0으로 설정(000000000),전종목제외 조회시 9개 1으로 설정(111111111),9개 종목조회여부를 조회포함(0), 조회제외(1)로 설정하며 종목순서는 우선주,관리종목,투자경고/위험,투자주의,환기종목,단기과열종목,증거금100%,ETF,ETN가 됨.우선주만 조회시"011111111"", 관리종목만 조회시 ""101111111"" 설정"
+        trde_qty_tp: 거래량구분 — 0:사용안함, 1:사용
+        min_trde_qty: 최소거래량 — 0 주 이상, 거래량구분이 1일때만 입력(공백허용)
+        max_trde_qty: 최대거래량 — 100000000 주 이하, 거래량구분이 1일때만 입력(공백허용)
+        trde_prica_tp: 거래대금구분 — 0:사용안함, 1:사용
+        min_trde_prica: 최소거래대금 — 0 백만원 이상, 거래대금구분 1일때만 입력(공백허용)
+        max_trde_prica: 최대거래대금 — 100000000 백만원 이하, 거래대금구분 1일때만 입력(공백허용)
+        motn_drc: 발동방향 — 0:전체, 1:상승, 2:하락
+        stex_tp: 거래소구분 — 1:KRX, 2:NXT 3.통합
+        stk_cd: 종목코드 — 거래소별 종목코드
             (KRX:039490,NXT:039490_NX,SOR:039490_AL)
             공백입력시 시장구분으로 설정한 전체종목조회
 
@@ -168,21 +171,21 @@ def get_domestic_vi_triggered_stocks(
 
     # 2. 요청 파라미터 바디
     body = {
-        "mrkt_tp": mrkt_tp,
-        "bf_mkrt_tp": bf_mkrt_tp,
-        "motn_tp": motn_tp,
-        "skip_stk": skip_stk,
-        "trde_qty_tp": trde_qty_tp,
-        "min_trde_qty": min_trde_qty,
-        "max_trde_qty": max_trde_qty,
-        "trde_prica_tp": trde_prica_tp,
-        "min_trde_prica": min_trde_prica,
-        "max_trde_prica": max_trde_prica,
-        "motn_drc": motn_drc,
-        "stex_tp": stex_tp,
+        "mrkt_tp": mrkt_tp,  # 시장구분
+        "bf_mkrt_tp": bf_mkrt_tp,  # 장전구분
+        "motn_tp": motn_tp,  # 발동구분
+        "skip_stk": skip_stk,  # 제외종목
+        "trde_qty_tp": trde_qty_tp,  # 거래량구분
+        "min_trde_qty": min_trde_qty,  # 최소거래량
+        "max_trde_qty": max_trde_qty,  # 최대거래량
+        "trde_prica_tp": trde_prica_tp,  # 거래대금구분
+        "min_trde_prica": min_trde_prica,  # 최소거래대금
+        "max_trde_prica": max_trde_prica,  # 최대거래대금
+        "motn_drc": motn_drc,  # 발동방향
+        "stex_tp": stex_tp,  # 거래소구분
     }
     if stk_cd is not None:
-        body["stk_cd"] = stk_cd
+        body["stk_cd"] = stk_cd  # 종목코드
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -213,9 +216,12 @@ def get_domestic_vi_triggered_stocks(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -249,21 +255,24 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_vi_triggered_stocks(
-        mrkt_tp='000',
-        bf_mkrt_tp='0',
-        motn_tp='0',
-        skip_stk='000000000',
-        trde_qty_tp='0',
-        min_trde_qty='0',
-        max_trde_qty='0',
-        trde_prica_tp='0',
-        min_trde_prica='0',
-        max_trde_prica='0',
-        motn_drc='0',
-        stex_tp='3',
-        stk_cd='',
-    )
+    try:
+        result = get_domestic_vi_triggered_stocks(
+            mrkt_tp='000',
+            bf_mkrt_tp='0',
+            motn_tp='0',
+            skip_stk='000000000',
+            trde_qty_tp='0',
+            min_trde_qty='0',
+            max_trde_qty='0',
+            trde_prica_tp='0',
+            min_trde_prica='0',
+            max_trde_prica='0',
+            motn_drc='0',
+            stex_tp='3',
+            stk_cd='',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

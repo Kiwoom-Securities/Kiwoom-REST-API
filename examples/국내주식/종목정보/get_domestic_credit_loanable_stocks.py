@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "kt20016"
 API_URL = "/api/dostk/stkinfo"
@@ -78,8 +78,8 @@ def _format_display_value(value: object) -> object:
     return value
 
 def get_domestic_credit_loanable_stocks(
+    mrkt_deal_tp: str,
     crd_stk_grde_tp: str | None = 'A',
-    mrkt_deal_tp: str | None = '%',
     stk_cd: str | None = '039490',
 ) -> dict[str, pd.DataFrame]:
     """
@@ -88,17 +88,17 @@ def get_domestic_credit_loanable_stocks(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        crd_stk_grde_tp: %:전체, A:A군, B:B군, C:C군, D:D군, E:E군
-        mrkt_deal_tp: %:전체, 1:코스피, 0:코스닥
-        stk_cd: 종목코드
+        mrkt_deal_tp: 시장거래구분 — %:전체, 1:코스피, 0:코스닥
+        crd_stk_grde_tp: 신용종목등급구분 — %:전체, A:A군, B:B군, C:C군, D:D군, E:E군
+        stk_cd: 종목코드 — 종목 코드 입력
 
     Returns:
         API 응답 데이터입니다.
 
     Example:
         >>> result = get_domestic_credit_loanable_stocks(
-        ...     crd_stk_grde_tp='A',
         ...     mrkt_deal_tp='%',
+        ...     crd_stk_grde_tp='A',
         ...     stk_cd='039490',
         ... )
         >>> for key, df in result.items():
@@ -106,16 +106,17 @@ def get_domestic_credit_loanable_stocks(
     """
 
     # 1. 필수 파라미터 검증
+    if not mrkt_deal_tp:
+        raise ValueError('mrkt_deal_tp is required.')
 
     # 2. 요청 파라미터 바디
     body = {
+        "mrkt_deal_tp": mrkt_deal_tp,  # 시장거래구분
     }
     if crd_stk_grde_tp is not None:
-        body["crd_stk_grde_tp"] = crd_stk_grde_tp
-    if mrkt_deal_tp is not None:
-        body["mrkt_deal_tp"] = mrkt_deal_tp
+        body["crd_stk_grde_tp"] = crd_stk_grde_tp  # 신용종목등급구분
     if stk_cd is not None:
-        body["stk_cd"] = stk_cd
+        body["stk_cd"] = stk_cd  # 종목코드
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -151,9 +152,12 @@ def get_domestic_credit_loanable_stocks(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -191,11 +195,14 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_credit_loanable_stocks(
-        crd_stk_grde_tp='A',
-        mrkt_deal_tp='%',
-        stk_cd='039490',
-    )
+    try:
+        result = get_domestic_credit_loanable_stocks(
+            mrkt_deal_tp='%',
+            crd_stk_grde_tp='A',
+            stk_cd='039490',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

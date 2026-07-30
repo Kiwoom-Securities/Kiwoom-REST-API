@@ -10,187 +10,219 @@
 
 import asyncio
 import logging
-from collections import defaultdict
 from typing import Any
 
 from kiwoom import get_ws_client
+from kiwoom.realtime import event_to_dataframe, run_pubsub
 
-# WebSocket 클라이언트가 LOGIN 패킷과 PING 응답을 자동 처리합니다.
-# 이 예제는 asyncio.Queue 기반 in-process Pub/Sub 구조를 보여줍니다.
+# 주식호가잔량(0D) 실시간 구독 — 한 스트림을 여러 소비자에 분배
+# in-process Pub/Sub(asyncio.Queue). LOGIN/PING은 공통 클라이언트가 처리합니다.
 
-API_ID = "0D"
 API_URL = "/api/dostk/websocket"
+COLUMNS = {
+    '21': '호가시간',
+    '41': '매도호가1',
+    '61': '매도호가수량1',
+    '81': '매도호가직전대비1',
+    '51': '매수호가1',
+    '71': '매수호가수량1',
+    '91': '매수호가직전대비1',
+    '42': '매도호가2',
+    '62': '매도호가수량2',
+    '82': '매도호가직전대비2',
+    '52': '매수호가2',
+    '72': '매수호가수량2',
+    '92': '매수호가직전대비2',
+    '43': '매도호가3',
+    '63': '매도호가수량3',
+    '83': '매도호가직전대비3',
+    '53': '매수호가3',
+    '73': '매수호가수량3',
+    '93': '매수호가직전대비3',
+    '44': '매도호가4',
+    '64': '매도호가수량4',
+    '84': '매도호가직전대비4',
+    '54': '매수호가4',
+    '74': '매수호가수량4',
+    '94': '매수호가직전대비4',
+    '45': '매도호가5',
+    '65': '매도호가수량5',
+    '85': '매도호가직전대비5',
+    '55': '매수호가5',
+    '75': '매수호가수량5',
+    '95': '매수호가직전대비5',
+    '46': '매도호가6',
+    '66': '매도호가수량6',
+    '86': '매도호가직전대비6',
+    '56': '매수호가6',
+    '76': '매수호가수량6',
+    '96': '매수호가직전대비6',
+    '47': '매도호가7',
+    '67': '매도호가수량7',
+    '87': '매도호가직전대비7',
+    '57': '매수호가7',
+    '77': '매수호가수량7',
+    '97': '매수호가직전대비7',
+    '48': '매도호가8',
+    '68': '매도호가수량8',
+    '88': '매도호가직전대비8',
+    '58': '매수호가8',
+    '78': '매수호가수량8',
+    '98': '매수호가직전대비8',
+    '49': '매도호가9',
+    '69': '매도호가수량9',
+    '89': '매도호가직전대비9',
+    '59': '매수호가9',
+    '79': '매수호가수량9',
+    '99': '매수호가직전대비9',
+    '50': '매도호가10',
+    '70': '매도호가수량10',
+    '90': '매도호가직전대비10',
+    '60': '매수호가10',
+    '80': '매수호가수량10',
+    '100': '매수호가직전대비10',
+    '121': '매도호가총잔량',
+    '122': '매도호가총잔량직전대비',
+    '125': '매수호가총잔량',
+    '126': '매수호가총잔량직전대비',
+    '23': '예상체결가',
+    '24': '예상체결수량',
+    '128': '순매수잔량',
+    '129': '매수비율',
+    '138': '순매도잔량',
+    '139': '매도비율',
+    '200': '예상체결가전일종가대비',
+    '201': '예상체결가전일종가대비등락율',
+    '238': '예상체결가전일종가대비기호',
+    '291': '예상체결가',
+    '292': '예상체결량',
+    '293': '예상체결가전일대비기호',
+    '294': '예상체결가전일대비',
+    '295': '예상체결가전일대비등락율',
+    '621': 'LP매도호가수량1',
+    '631': 'LP매수호가수량1',
+    '622': 'LP매도호가수량2',
+    '632': 'LP매수호가수량2',
+    '623': 'LP매도호가수량3',
+    '633': 'LP매수호가수량3',
+    '624': 'LP매도호가수량4',
+    '634': 'LP매수호가수량4',
+    '625': 'LP매도호가수량5',
+    '635': 'LP매수호가수량5',
+    '626': 'LP매도호가수량6',
+    '636': 'LP매수호가수량6',
+    '627': 'LP매도호가수량7',
+    '637': 'LP매수호가수량7',
+    '628': 'LP매도호가수량8',
+    '638': 'LP매수호가수량8',
+    '629': 'LP매도호가수량9',
+    '639': 'LP매수호가수량9',
+    '630': 'LP매도호가수량10',
+    '640': 'LP매수호가수량10',
+    '13': '누적거래량',
+    '299': '전일거래량대비예상체결율',
+    '215': '장운영구분',
+    '216': '투자자별ticker',
+    '6044': 'KRX 매도호가잔량1',
+    '6045': 'KRX 매도호가잔량2',
+    '6046': 'KRX 매도호가잔량3',
+    '6047': 'KRX 매도호가잔량4',
+    '6048': 'KRX 매도호가잔량5',
+    '6049': 'KRX 매도호가잔량6',
+    '6050': 'KRX 매도호가잔량7',
+    '6051': 'KRX 매도호가잔량8',
+    '6052': 'KRX 매도호가잔량9',
+    '6053': 'KRX 매도호가잔량10',
+    '6054': 'KRX 매수호가잔량1',
+    '6055': 'KRX 매수호가잔량2',
+    '6056': 'KRX 매수호가잔량3',
+    '6057': 'KRX 매수호가잔량4',
+    '6058': 'KRX 매수호가잔량5',
+    '6059': 'KRX 매수호가잔량6',
+    '6060': 'KRX 매수호가잔량7',
+    '6061': 'KRX 매수호가잔량8',
+    '6062': 'KRX 매수호가잔량9',
+    '6063': 'KRX 매수호가잔량10',
+    '6064': 'KRX 매도호가총잔량',
+    '6065': 'KRX 매수호가총잔량',
+    '6066': 'NXT 매도호가잔량1',
+    '6067': 'NXT 매도호가잔량2',
+    '6068': 'NXT 매도호가잔량3',
+    '6069': 'NXT 매도호가잔량4',
+    '6070': 'NXT 매도호가잔량5',
+    '6071': 'NXT 매도호가잔량6',
+    '6072': 'NXT 매도호가잔량7',
+    '6073': 'NXT 매도호가잔량8',
+    '6074': 'NXT 매도호가잔량9',
+    '6075': 'NXT 매도호가잔량10',
+    '6076': 'NXT 매수호가잔량1',
+    '6077': 'NXT 매수호가잔량2',
+    '6078': 'NXT 매수호가잔량3',
+    '6079': 'NXT 매수호가잔량4',
+    '6080': 'NXT 매수호가잔량5',
+    '6081': 'NXT 매수호가잔량6',
+    '6082': 'NXT 매수호가잔량7',
+    '6083': 'NXT 매수호가잔량8',
+    '6084': 'NXT 매수호가잔량9',
+    '6085': 'NXT 매수호가잔량10',
+    '6086': 'NXT 매도호가총잔량',
+    '6087': 'NXT 매수호가총잔량',
+    '6100': 'KRX 중간가 매도 총잔량 증감',
+    '6101': 'KRX 중간가 매도 총잔량',
+    '6102': 'KRX 중간가',
+    '6103': 'KRX 중간가 매수 총잔량',
+    '6104': 'KRX 중간가 매수 총잔량 증감',
+    '6105': 'NXT중간가 매도 총잔량 증감',
+    '6106': 'NXT중간가 매도 총잔량',
+    '6107': 'NXT중간가',
+    '6108': 'NXT중간가 매수 총잔량',
+    '6109': 'NXT중간가 매수 총잔량 증감',
+    '6110': 'KRX중간가대비',
+    '6111': 'KRX중간가대비 기호',
+    '6112': 'KRX중간가대비등락율',
+    '6113': 'NXT중간가대비',
+    '6114': 'NXT중간가대비 기호',
+    '6115': 'NXT중간가대비등락율',
+}
 
 
-class AsyncPubSub:
-    """예제용 in-process Pub/Sub입니다.
-
-    Redis/Kafka 같은 외부 인프라 없이 asyncio.Queue만 사용합니다.
-    WebSocket 수신 데이터 1개를 여러 소비자에게 분기하는 구조를 보여주기 위한
-    예제 전용 클래스입니다.
-    """
-
-    def __init__(self) -> None:
-        self._subscribers: dict[str, list[asyncio.Queue[Any]]] = defaultdict(list)
-
-    def subscribe(self, topic: str) -> asyncio.Queue[Any]:
-        queue: asyncio.Queue[Any] = asyncio.Queue()
-        self._subscribers[topic].append(queue)
-        return queue
-
-    async def publish(self, topic: str, message: Any) -> None:
-        for queue in self._subscribers.get(topic, []):
-            await queue.put(message)
-
-
-def resolve_topic(message: Any) -> str:
-    """수신 메시지를 발행할 topic을 결정합니다."""
-    if not isinstance(message, dict):
-        return "kiwoom.raw"
-
-    trnm = str(message.get("trnm", "")).upper()
-    if trnm == "REAL":
-        data = message.get("data", [])
-        if isinstance(data, list) and data and isinstance(data[0], dict):
-            realtime_type = str(data[0].get("type", "")).strip()
-            if realtime_type:
-                return f"kiwoom.realtime.{realtime_type}"
-        return "kiwoom.realtime"
-    if trnm == "REG":
-        return "kiwoom.system.reg"
-    if trnm == "SYSTEM":
-        return "kiwoom.system"
-    if trnm:
-        return f"kiwoom.system.{trnm.lower()}"
-    return "kiwoom.raw"
-
-
-async def websocket_publisher(
-    *,
-    pubsub: AsyncPubSub,
-    body: dict[str, Any],
-    max_messages: int | None = None,
-) -> None:
-    """키움 WebSocket 수신 메시지를 Pub/Sub topic으로 발행합니다."""
-    if max_messages is not None and max_messages < 1:
-        raise ValueError("max_messages must be greater than 0")
-
-    client = get_ws_client()
-    published = 0
-
-    try:
-        await client.subscribe(api_url=API_URL, body=body)
-
-        async for message in client.iter_messages():
-            topic = resolve_topic(message)
-            await pubsub.publish(topic, message)
-            await pubsub.publish("kiwoom.all", message)
-
-            published += 1
-            if max_messages is not None and published >= max_messages:
-                break
-
-            if isinstance(message, dict):
-                trnm = str(message.get("trnm", "")).upper()
-                return_code = message.get("return_code")
-                if trnm == "SYSTEM" or return_code not in (None, 0, "0"):
-                    break
-    finally:
-        await client.close()
-
-
-async def strategy_subscriber(queue: asyncio.Queue[Any]) -> None:
-    """전략 로직 소비자 예시입니다."""
+async def print_dataframe(queue: asyncio.Queue[Any]) -> None:
+    # "kiwoom.realtime" 토픽: REAL 이벤트만 도착 → DataFrame으로 출력
     while True:
-        message = await queue.get()
-        print("[strategy]", message, flush=True)
+        event = await queue.get()
+        print(event_to_dataframe(event), flush=True)
 
 
-async def logger_subscriber(queue: asyncio.Queue[Any]) -> None:
-    """로그/저장 로직 소비자 예시입니다."""
+async def log_raw(queue: asyncio.Queue[Any]) -> None:
+    # "kiwoom.all" 토픽: REG/SYSTEM 포함 모든 메시지를 원본 그대로 출력
     while True:
-        message = await queue.get()
-        print("[logger]", message, flush=True)
-
-
-async def run_pubsub(
-    *,
-    body: dict[str, Any],
-    max_messages: int | None = None,
-) -> None:
-    """publisher 1개와 subscriber 2개를 실행합니다."""
-    pubsub = AsyncPubSub()
-    strategy_queue = pubsub.subscribe("kiwoom.all")
-    logger_queue = pubsub.subscribe("kiwoom.all")
-
-    subscriber_tasks = [
-        asyncio.create_task(strategy_subscriber(strategy_queue)),
-        asyncio.create_task(logger_subscriber(logger_queue)),
-    ]
-    try:
-        await websocket_publisher(
-            pubsub=pubsub,
-            body=body,
-            max_messages=max_messages,
-        )
-    finally:
-        for task in subscriber_tasks:
-            task.cancel()
-        await asyncio.gather(*subscriber_tasks, return_exceptions=True)
-
-
-def build_realtime_reg_packet(
-    *,
-    items: list[str],
-    types: list[str],
-    group_no: str = "1",
-    refresh: str = "1",
-) -> dict[str, Any]:
-    """키움 실시간 항목 등록(REG) 패킷을 생성합니다."""
-    if not types:
-        raise ValueError("types is required.")
-    return {
-        "trnm": "REG",
-        "grp_no": group_no,
-        "refresh": refresh,
-        "data": [
-            {
-                "item": items,
-                "type": types,
-            }
-        ],
-    }
-
-async def subscribe_domestic_stock_order_book_depth_pubsub(
-    items: list[str],
-    types: list[str] | None = None,
-    group_no: str = "1",
-    refresh: str = "1",
-    max_messages: int | None = None,
-) -> None:
-    """
-    주식호가잔량[0D] 실시간 데이터를 Pub/Sub로 분배합니다.
-
-    공통 WebSocket 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
-    """
-    if not items:
-        raise ValueError("items is required.")
-
-    body = build_realtime_reg_packet(
-        items=items,
-        types=types or [API_ID],
-        group_no=group_no,
-        refresh=refresh,
-    )
-    await run_pubsub(body=body, max_messages=max_messages)
+        event = await queue.get()
+        print(event, flush=True)
 
 
 async def main() -> None:
     logging.basicConfig(level=logging.INFO)
-    await subscribe_domestic_stock_order_book_depth_pubsub(
-        items=['005930'],
-        types=['0D'],
-        max_messages=None,
+
+    # Kiwoom 실시간 등록 패킷(REG)
+    body = {
+        "trnm": "REG",  # 등록("0"이면 해제)
+        "grp_no": "1",  # 그룹번호
+        "refresh": "1",  # 기존 등록 유지 여부
+        # 등록할 종목(item)과 실시간 타입(type)
+        "data": [{"item": ['005930'], "type": ['0D']}],
+    }
+
+    # 같은 스트림을 두 소비자에 분배: 가공(print_dataframe) / 원본 로깅(log_raw)
+    await run_pubsub(
+        get_ws_client(),
+        api_url=API_URL,
+        bodies=body,
+        consumers={
+            "kiwoom.realtime": print_dataframe,
+            "kiwoom.all": log_raw,
+        },
+        columns=COLUMNS,
+        max_messages=10,
     )
 
 

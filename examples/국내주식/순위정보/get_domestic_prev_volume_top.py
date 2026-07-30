@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10031"
 API_URL = "/api/dostk/rkinfo"
@@ -83,11 +83,11 @@ def get_domestic_prev_volume_top(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        mrkt_tp: 000:전체, 001:코스피, 101:코스닥
-        qry_tp: 1:전일거래량 상위100종목, 2:전일거래대금 상위100종목
-        rank_strt: 0 ~ 100 값 중에  조회를 원하는 순위 시작값
-        rank_end: 0 ~ 100 값 중에  조회를 원하는 순위 끝값
-        stex_tp: 1:KRX, 2:NXT 3.통합
+        mrkt_tp: 시장구분 — 000:전체, 001:코스피, 101:코스닥
+        qry_tp: 조회구분 — 1:전일거래량 상위100종목, 2:전일거래대금 상위100종목
+        rank_strt: 순위시작 — 0 ~ 100 값 중에  조회를 원하는 순위 시작값
+        rank_end: 순위끝 — 0 ~ 100 값 중에  조회를 원하는 순위 끝값
+        stex_tp: 거래소구분 — 1:KRX, 2:NXT 3.통합
 
     Returns:
         API 응답 데이터입니다.
@@ -118,11 +118,11 @@ def get_domestic_prev_volume_top(
 
     # 2. 요청 파라미터 바디
     body = {
-        "mrkt_tp": mrkt_tp,
-        "qry_tp": qry_tp,
-        "rank_strt": rank_strt,
-        "rank_end": rank_end,
-        "stex_tp": stex_tp,
+        "mrkt_tp": mrkt_tp,  # 시장구분
+        "qry_tp": qry_tp,  # 조회구분
+        "rank_strt": rank_strt,  # 순위시작
+        "rank_end": rank_end,  # 순위끝
+        "stex_tp": stex_tp,  # 거래소구분
     }
 
     # 3. 인증 클라이언트
@@ -154,9 +154,12 @@ def get_domestic_prev_volume_top(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -190,13 +193,16 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_prev_volume_top(
-        mrkt_tp='101',
-        qry_tp='1',
-        rank_strt='0',
-        rank_end='10',
-        stex_tp='3',
-    )
+    try:
+        result = get_domestic_prev_volume_top(
+            mrkt_tp='101',
+            qry_tp='1',
+            rank_strt='0',
+            rank_end='10',
+            stex_tp='3',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

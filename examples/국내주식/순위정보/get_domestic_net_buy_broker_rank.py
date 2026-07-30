@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10042"
 API_URL = "/api/dostk/rkinfo"
@@ -79,16 +79,16 @@ def get_domestic_net_buy_broker_rank(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        stk_cd: 거래소별 종목코드
+        stk_cd: 종목코드 — 거래소별 종목코드
             (KRX:039490,NXT:039490_NX,SOR:039490_AL)
-        qry_dt_tp: 0:기간으로 조회, 1:시작일자, 종료일자로 조회
-        pot_tp: 0:당일, 1:전일
-        sort_base: 1:종가순, 2:날짜순
-        strt_dt: YYYYMMDD
+        qry_dt_tp: 조회기간구분 — 0:기간으로 조회, 1:시작일자, 종료일자로 조회
+        pot_tp: 시점구분 — 0:당일, 1:전일
+        sort_base: 정렬기준 — 1:종가순, 2:날짜순
+        strt_dt: 시작일자 — YYYYMMDD
             (연도4자리, 월 2자리, 일 2자리 형식)
-        end_dt: YYYYMMDD
+        end_dt: 종료일자 — YYYYMMDD
             (연도4자리, 월 2자리, 일 2자리 형식)
-        dt: 5:5일, 10:10일, 20:20일, 40:40일, 60:60일, 120:120일
+        dt: 기간 — 5:5일, 10:10일, 20:20일, 40:40일, 60:60일, 120:120일
 
     Returns:
         API 응답 데이터입니다.
@@ -119,17 +119,17 @@ def get_domestic_net_buy_broker_rank(
 
     # 2. 요청 파라미터 바디
     body = {
-        "stk_cd": stk_cd,
-        "qry_dt_tp": qry_dt_tp,
-        "pot_tp": pot_tp,
-        "sort_base": sort_base,
+        "stk_cd": stk_cd,  # 종목코드
+        "qry_dt_tp": qry_dt_tp,  # 조회기간구분
+        "pot_tp": pot_tp,  # 시점구분
+        "sort_base": sort_base,  # 정렬기준
     }
     if strt_dt is not None:
-        body["strt_dt"] = strt_dt
+        body["strt_dt"] = strt_dt  # 시작일자
     if end_dt is not None:
-        body["end_dt"] = end_dt
+        body["end_dt"] = end_dt  # 종료일자
     if dt is not None:
-        body["dt"] = dt
+        body["dt"] = dt  # 기간
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -160,9 +160,12 @@ def get_domestic_net_buy_broker_rank(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -196,15 +199,18 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_net_buy_broker_rank(
-        stk_cd='005930',
-        qry_dt_tp='0',
-        pot_tp='0',
-        sort_base='1',
-        strt_dt='20241031',
-        end_dt='20241107',
-        dt='5',
-    )
+    try:
+        result = get_domestic_net_buy_broker_rank(
+            stk_cd='005930',
+            qry_dt_tp='0',
+            pot_tp='0',
+            sort_base='1',
+            strt_dt='20241031',
+            end_dt='20241107',
+            dt='5',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

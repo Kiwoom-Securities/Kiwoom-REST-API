@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka30012"
 API_URL = "/api/dostk/elw"
@@ -47,7 +47,7 @@ COLUMNS = {
     "elwpric_rising_part_rt": "ELW가격상승참여율",
     "elwrght_type": "ELW권리유형",
     "elwsrvive_dys": "ELW잔존일수",
-    "stkcnt": "주식수",
+    "stkcnt": "상장주식수",
     "elwlpord_pos": "ELWLP주문가능",
     "lpposs_rt": "LP보유비율",
     "lprmnd_qty": "LP보유수량",
@@ -184,7 +184,7 @@ def get_domestic_elw_detail(
 
     # 2. 요청 파라미터 바디
     body = {
-        "stk_cd": stk_cd,
+        "stk_cd": stk_cd,  # 종목코드
     }
 
     # 3. 인증 클라이언트
@@ -245,8 +245,11 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    df = get_domestic_elw_detail(
-        stk_cd='57JBHH',
-    )
+    try:
+        df = get_domestic_elw_detail(
+            stk_cd='57JBHH',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     print(_format_display(df))

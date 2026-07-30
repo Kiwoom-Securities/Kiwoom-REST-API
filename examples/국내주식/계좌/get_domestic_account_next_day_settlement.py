@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "kt00008"
 API_URL = "/api/dostk/acnt"
@@ -117,7 +117,7 @@ def get_domestic_account_next_day_settlement(
     body = {
     }
     if strt_dcd_seq is not None:
-        body["strt_dcd_seq"] = strt_dcd_seq
+        body["strt_dcd_seq"] = strt_dcd_seq  # 시작결제번호
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -153,9 +153,12 @@ def get_domestic_account_next_day_settlement(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -193,9 +196,12 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_account_next_day_settlement(
-        strt_dcd_seq='',
-    )
+    try:
+        result = get_domestic_account_next_day_settlement(
+            strt_dcd_seq='',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10001"
 API_URL = "/api/dostk/stkinfo"
@@ -79,17 +79,26 @@ NUMERIC_COLUMNS = (
     '250최고가일',
     '250최저가대비율',
     '250최저가일',
+    'BPS',
+    'EPS',
+    'PBR',
+    'PER',
+    'ROE',
+    '거래량',
     '고가',
     '기준가',
     '대용가',
+    '등락율',
     '상한가',
     '시가',
     '시가총액',
     '시가총액비중',
+    '신용비율',
     '액면가',
     '액면가단위',
     '예상체결가',
     '예상체결수량',
+    '유통비율',
     '자본금',
     '저가',
     '하한가',
@@ -133,7 +142,7 @@ def get_domestic_stock_info(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        stk_cd: 거래소별 종목코드
+        stk_cd: 종목코드 — 거래소별 종목코드
             (KRX:039490,NXT:039490_NX,SOR:039490_AL)
 
     Returns:
@@ -152,7 +161,7 @@ def get_domestic_stock_info(
 
     # 2. 요청 파라미터 바디
     body = {
-        "stk_cd": stk_cd,
+        "stk_cd": stk_cd,  # 종목코드
     }
 
     # 3. 인증 클라이언트
@@ -213,8 +222,11 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    df = get_domestic_stock_info(
-        stk_cd='005930',
-    )
+    try:
+        df = get_domestic_stock_info(
+            stk_cd='005930',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     print(_format_display(df))

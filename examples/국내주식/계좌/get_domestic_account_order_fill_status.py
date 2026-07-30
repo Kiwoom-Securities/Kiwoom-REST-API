@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "kt00009"
 API_URL = "/api/dostk/acnt"
@@ -115,14 +115,14 @@ def get_domestic_account_order_fill_status(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        stk_bond_tp: 0:전체, 1:주식, 2:채권
-        mrkt_tp: 0:전체, 1:코스피, 2:코스닥, 3:OTCBB, 4:ECN
-        sell_tp: 0:전체, 1:매도, 2:매수
-        qry_tp: 0:전체, 1:체결
-        dmst_stex_tp: %:(전체),KRX:한국거래소,NXT:넥스트트레이드,SOR:최선주문집행
-        ord_dt: YYYYMMDD
-        stk_cd: 전문 조회할 종목코드
-        fr_ord_no: 시작주문번호
+        stk_bond_tp: 주식채권구분 — 0:전체, 1:주식, 2:채권
+        mrkt_tp: 시장구분 — 0:전체, 1:코스피, 2:코스닥, 3:OTCBB, 4:ECN
+        sell_tp: 매도수구분 — 0:전체, 1:매도, 2:매수
+        qry_tp: 조회구분 — 0:전체, 1:체결
+        dmst_stex_tp: 국내거래소구분 — %:(전체),KRX:한국거래소,NXT:넥스트트레이드,SOR:최선주문집행
+        ord_dt: 주문일자 — YYYYMMDD
+        stk_cd: 종목코드 — 전문 조회할 종목코드
+        fr_ord_no: 시작주문번호 — 시작주문번호의 이전 주문은 조회 되지 않으며 약정금액에도 포함 되지 않음
 
     Returns:
         API 응답 데이터입니다.
@@ -156,18 +156,18 @@ def get_domestic_account_order_fill_status(
 
     # 2. 요청 파라미터 바디
     body = {
-        "stk_bond_tp": stk_bond_tp,
-        "mrkt_tp": mrkt_tp,
-        "sell_tp": sell_tp,
-        "qry_tp": qry_tp,
-        "dmst_stex_tp": dmst_stex_tp,
+        "stk_bond_tp": stk_bond_tp,  # 주식채권구분
+        "mrkt_tp": mrkt_tp,  # 시장구분
+        "sell_tp": sell_tp,  # 매도수구분
+        "qry_tp": qry_tp,  # 조회구분
+        "dmst_stex_tp": dmst_stex_tp,  # 국내거래소구분
     }
     if ord_dt is not None:
-        body["ord_dt"] = ord_dt
+        body["ord_dt"] = ord_dt  # 주문일자
     if stk_cd is not None:
-        body["stk_cd"] = stk_cd
+        body["stk_cd"] = stk_cd  # 종목코드
     if fr_ord_no is not None:
-        body["fr_ord_no"] = fr_ord_no
+        body["fr_ord_no"] = fr_ord_no  # 시작주문번호
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -203,9 +203,12 @@ def get_domestic_account_order_fill_status(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -243,16 +246,19 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_account_order_fill_status(
-        stk_bond_tp='0',
-        mrkt_tp='0',
-        sell_tp='0',
-        qry_tp='0',
-        dmst_stex_tp='KRX',
-        ord_dt='',
-        stk_cd='',
-        fr_ord_no='',
-    )
+    try:
+        result = get_domestic_account_order_fill_status(
+            stk_bond_tp='0',
+            mrkt_tp='0',
+            sell_tp='0',
+            qry_tp='0',
+            dmst_stex_tp='KRX',
+            ord_dt='',
+            stk_cd='',
+            fr_ord_no='',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

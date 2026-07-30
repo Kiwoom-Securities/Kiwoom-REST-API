@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10028"
 API_URL = "/api/dostk/stkinfo"
@@ -45,10 +45,12 @@ COLUMNS = {
 
 NUMERIC_COLUMNS = (
     '고가',
+    '등락률',
     '시가',
     '시가대비',
     '저가',
     '현재가',
+    '현재거래량',
 )
 
 def _format_display(df: pd.DataFrame) -> pd.DataFrame:
@@ -96,15 +98,15 @@ def get_domestic_open_price_change_rate(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        sort_tp: 1:시가, 2:고가, 3:저가, 4:기준가
-        trde_qty_cnd: 0000:전체조회, 0010:만주이상, 0050:5만주이상, 0100:10만주이상, 0500:50만주이상, 1000:백만주이상
-        mrkt_tp: 000:전체, 001:코스피, 101:코스닥
-        updown_incls: 0:불 포함, 1:포함
-        stk_cnd: 0:전체조회, 1:관리종목제외, 4:우선주+관리주제외, 3:우선주제외, 5:증100제외, 6:증100만보기, 7:증40만보기, 8:증30만보기, 9:증20만보기
-        crd_cnd: 0:전체조회, 1:신용융자A군, 2:신용융자B군, 3:신용융자C군, 4:신용융자D군, 7:신용융자E군, 9:신용융자전체
-        trde_prica_cnd: 0:전체조회, 3:3천만원이상, 5:5천만원이상, 10:1억원이상, 30:3억원이상, 50:5억원이상, 100:10억원이상, 300:30억원이상, 500:50억원이상, 1000:100억원이상, 3000:300억원이상, 5000:500억원이상
-        flu_cnd: 1:상위, 2:하위
-        stex_tp: 1:KRX, 2:NXT 3.통합
+        sort_tp: 정렬구분 — 1:시가, 2:고가, 3:저가, 4:기준가
+        trde_qty_cnd: 거래량조건 — 0000:전체조회, 0010:만주이상, 0050:5만주이상, 0100:10만주이상, 0500:50만주이상, 1000:백만주이상
+        mrkt_tp: 시장구분 — 000:전체, 001:코스피, 101:코스닥
+        updown_incls: 상하한포함 — 0:불 포함, 1:포함
+        stk_cnd: 종목조건 — 0:전체조회, 1:관리종목제외, 4:우선주+관리주제외, 3:우선주제외, 5:증100제외, 6:증100만보기, 7:증40만보기, 8:증30만보기, 9:증20만보기
+        crd_cnd: 신용조건 — 0:전체조회, 1:신용융자A군, 2:신용융자B군, 3:신용융자C군, 4:신용융자D군, 7:신용융자E군, 9:신용융자전체
+        trde_prica_cnd: 거래대금조건 — 0:전체조회, 3:3천만원이상, 5:5천만원이상, 10:1억원이상, 30:3억원이상, 50:5억원이상, 100:10억원이상, 300:30억원이상, 500:50억원이상, 1000:100억원이상, 3000:300억원이상, 5000:500억원이상
+        flu_cnd: 등락조건 — 1:상위, 2:하위
+        stex_tp: 거래소구분 — 1:KRX, 2:NXT 3.통합
 
     Returns:
         API 응답 데이터입니다.
@@ -147,15 +149,15 @@ def get_domestic_open_price_change_rate(
 
     # 2. 요청 파라미터 바디
     body = {
-        "sort_tp": sort_tp,
-        "trde_qty_cnd": trde_qty_cnd,
-        "mrkt_tp": mrkt_tp,
-        "updown_incls": updown_incls,
-        "stk_cnd": stk_cnd,
-        "crd_cnd": crd_cnd,
-        "trde_prica_cnd": trde_prica_cnd,
-        "flu_cnd": flu_cnd,
-        "stex_tp": stex_tp,
+        "sort_tp": sort_tp,  # 정렬구분
+        "trde_qty_cnd": trde_qty_cnd,  # 거래량조건
+        "mrkt_tp": mrkt_tp,  # 시장구분
+        "updown_incls": updown_incls,  # 상하한포함
+        "stk_cnd": stk_cnd,  # 종목조건
+        "crd_cnd": crd_cnd,  # 신용조건
+        "trde_prica_cnd": trde_prica_cnd,  # 거래대금조건
+        "flu_cnd": flu_cnd,  # 등락조건
+        "stex_tp": stex_tp,  # 거래소구분
     }
 
     # 3. 인증 클라이언트
@@ -187,9 +189,12 @@ def get_domestic_open_price_change_rate(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -223,17 +228,20 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_open_price_change_rate(
-        sort_tp='1',
-        trde_qty_cnd='0000',
-        mrkt_tp='000',
-        updown_incls='1',
-        stk_cnd='0',
-        crd_cnd='0',
-        trde_prica_cnd='0',
-        flu_cnd='1',
-        stex_tp='3',
-    )
+    try:
+        result = get_domestic_open_price_change_rate(
+            sort_tp='1',
+            trde_qty_cnd='0000',
+            mrkt_tp='000',
+            updown_incls='1',
+            stk_cnd='0',
+            crd_cnd='0',
+            trde_prica_cnd='0',
+            flu_cnd='1',
+            stex_tp='3',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

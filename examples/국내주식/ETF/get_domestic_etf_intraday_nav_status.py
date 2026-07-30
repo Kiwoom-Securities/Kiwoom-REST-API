@@ -1,11 +1,11 @@
 # ---
 # api_id: ka40009
-# api_name: ETF시간대별체결요청
+# api_name: ETF시간대별NAV현황
 # category: 국내주식
 # sub_category: ETF
 # template: rest
 # api_url: /api/dostk/etf
-# menu_path: 국내주식 > ETF > ETF시간대별체결요청(ka40009)
+# menu_path: 국내주식 > ETF > ETF시간대별NAV현황(ka40009)
 # ---
 
 import logging
@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka40009"
 API_URL = "/api/dostk/etf"
@@ -86,7 +86,7 @@ def get_domestic_etf_intraday_nav_status(
     stk_cd: str,
 ) -> dict[str, pd.DataFrame]:
     """
-    ETF시간대별체결요청[ka40009] API를 호출합니다.
+    ETF시간대별NAV현황[ka40009] API를 호출합니다.
 
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
@@ -110,7 +110,7 @@ def get_domestic_etf_intraday_nav_status(
 
     # 2. 요청 파라미터 바디
     body = {
-        "stk_cd": stk_cd,
+        "stk_cd": stk_cd,  # 종목코드
     }
 
     # 3. 인증 클라이언트
@@ -142,9 +142,12 @@ def get_domestic_etf_intraday_nav_status(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -178,9 +181,12 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_etf_intraday_nav_status(
-        stk_cd='069500',
-    )
+    try:
+        result = get_domestic_etf_intraday_nav_status(
+            stk_cd='069500',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

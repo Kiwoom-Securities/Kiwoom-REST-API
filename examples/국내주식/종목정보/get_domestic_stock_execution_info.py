@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10003"
 API_URL = "/api/dostk/stkinfo"
@@ -45,8 +45,11 @@ COLUMNS = {
 
 NUMERIC_COLUMNS = (
     '누적거래대금',
+    '누적거래량',
+    '대비율',
     '우선매도호가단위',
     '우선매수호가단위',
+    '체결거래량',
     '현재가',
 )
 
@@ -87,7 +90,7 @@ def get_domestic_stock_execution_info(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        stk_cd: 거래소별 종목코드
+        stk_cd: 종목코드 — 거래소별 종목코드
             (KRX:039490,NXT:039490_NX,SOR:039490_AL)
 
     Returns:
@@ -107,7 +110,7 @@ def get_domestic_stock_execution_info(
 
     # 2. 요청 파라미터 바디
     body = {
-        "stk_cd": stk_cd,
+        "stk_cd": stk_cd,  # 종목코드
     }
 
     # 3. 인증 클라이언트
@@ -139,9 +142,12 @@ def get_domestic_stock_execution_info(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -175,9 +181,12 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_stock_execution_info(
-        stk_cd='005930',
-    )
+    try:
+        result = get_domestic_stock_execution_info(
+            stk_cd='005930',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

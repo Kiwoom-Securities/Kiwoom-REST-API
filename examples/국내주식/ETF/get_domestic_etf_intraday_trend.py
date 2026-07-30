@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka40006"
 API_URL = "/api/dostk/etf"
@@ -37,8 +37,8 @@ COLUMNS = {
     "nav": "NAV",
     "trde_prica": "거래대금",
     "navidex": "NAV지수",
-    "navetf": "NAVETF",
-    "trace": "추적",
+    "navetf": "괴리율",
+    "trace": "추적오차율",
     "trace_idex": "추적지수",
     "trace_idex_pred_pre": "추적지수전일대비",
     "trace_idex_pred_pre_sig": "추적지수전일대비기호"
@@ -56,9 +56,11 @@ SUMMARY_COLUMNS = {
 NUMERIC_COLUMNS = (
     '거래대금',
     '거래량',
+    '괴리율',
     '등락율',
     '원주가격',
     '종가',
+    '추적오차율',
 )
 
 def _format_display(df: pd.DataFrame) -> pd.DataFrame:
@@ -117,7 +119,7 @@ def get_domestic_etf_intraday_trend(
 
     # 2. 요청 파라미터 바디
     body = {
-        "stk_cd": stk_cd,
+        "stk_cd": stk_cd,  # 종목코드
     }
 
     # 3. 인증 클라이언트
@@ -154,9 +156,12 @@ def get_domestic_etf_intraday_trend(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -194,9 +199,12 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_etf_intraday_trend(
-        stk_cd='069500',
-    )
+    try:
+        result = get_domestic_etf_intraday_trend(
+            stk_cd='069500',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10068"
 API_URL = "/api/dostk/slb"
@@ -31,8 +31,8 @@ COLUMNS = {
     "dt": "일자",
     "dbrt_trde_cntrcnt": "대차거래체결주수",
     "dbrt_trde_rpy": "대차거래상환주수",
-    "rmnd": "잔고주수",
     "dbrt_trde_irds": "대차거래증감",
+    "rmnd": "잔고주수",
     "remn_amt": "잔고금액"
 }
 
@@ -81,9 +81,9 @@ def get_domestic_stock_lending_trade_trend(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        all_tp: 1: 전체표시
-        strt_dt: YYYYMMDD
-        end_dt: YYYYMMDD
+        all_tp: 전체구분 — 1: 전체표시
+        strt_dt: 시작일자 — YYYYMMDD
+        end_dt: 종료일자 — YYYYMMDD
 
     Returns:
         API 응답 데이터입니다.
@@ -104,12 +104,12 @@ def get_domestic_stock_lending_trade_trend(
 
     # 2. 요청 파라미터 바디
     body = {
-        "all_tp": all_tp,
+        "all_tp": all_tp,  # 전체구분
     }
     if strt_dt is not None:
-        body["strt_dt"] = strt_dt
+        body["strt_dt"] = strt_dt  # 시작일자
     if end_dt is not None:
-        body["end_dt"] = end_dt
+        body["end_dt"] = end_dt  # 종료일자
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -140,9 +140,12 @@ def get_domestic_stock_lending_trade_trend(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -176,11 +179,14 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_stock_lending_trade_trend(
-        all_tp='1',
-        strt_dt='20250401',
-        end_dt='20250430',
-    )
+    try:
+        result = get_domestic_stock_lending_trade_trend(
+            all_tp='1',
+            strt_dt='20250401',
+            end_dt='20250430',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

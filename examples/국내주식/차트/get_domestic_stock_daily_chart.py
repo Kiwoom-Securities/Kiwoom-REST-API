@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10081"
 API_URL = "/api/dostk/chart"
@@ -94,10 +94,10 @@ def get_domestic_stock_daily_chart(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        stk_cd: 거래소별 종목코드
+        stk_cd: 종목코드 — 거래소별 종목코드
             (KRX:039490,NXT:039490_NX,SOR:039490_AL)
-        base_dt: YYYYMMDD
-        upd_stkpc_tp: 0 or 1
+        base_dt: 기준일자 — YYYYMMDD
+        upd_stkpc_tp: 수정주가구분 — 0 or 1 / 수정주가 적용을 원하시는 경우, 권리발생일 이후 일자를 base_dt에 넣어 조회 또는 연속조회해주시기 바랍니다. 예를 들어 삼성전자 2018년 05월 04일 (액면분할 권리발생일)을 base_dt에 넣고 수정주가적용(1)로 조회하면 2018년 05월 04일 이전 데이터는 수정주가 적용된 3만원대 가격이 나옵니다. 연속조회도 동일합니다. 권리 발생일 이전인 2018년 05월 03일 이전 일자로 base_dt 조회 시 수정주가 적용되지 않아 200만원 이상 가격대가 나옵니다. 수정주가 적용을 원하는 과거 차트 데이터 조회를 위해서는 해당 권리발생일 이후로 base_dt를 세팅하고, 수정주가 적용(1)로 세팅하고 조회 및 연속조회하여야합니다.
 
     Returns:
         API 응답 데이터입니다.
@@ -122,9 +122,9 @@ def get_domestic_stock_daily_chart(
 
     # 2. 요청 파라미터 바디
     body = {
-        "stk_cd": stk_cd,
-        "base_dt": base_dt,
-        "upd_stkpc_tp": upd_stkpc_tp,
+        "stk_cd": stk_cd,  # 종목코드
+        "base_dt": base_dt,  # 기준일자
+        "upd_stkpc_tp": upd_stkpc_tp,  # 수정주가구분
     }
 
     # 3. 인증 클라이언트
@@ -161,9 +161,12 @@ def get_domestic_stock_daily_chart(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -201,11 +204,14 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_stock_daily_chart(
-        stk_cd='005930',
-        base_dt='20250908',
-        upd_stkpc_tp='1',
-    )
+    try:
+        result = get_domestic_stock_daily_chart(
+            stk_cd='005930',
+            base_dt='20250908',
+            upd_stkpc_tp='1',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")
