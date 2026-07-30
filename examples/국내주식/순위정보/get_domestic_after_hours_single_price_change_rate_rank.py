@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10098"
 API_URL = "/api/dostk/rkinfo"
@@ -95,12 +95,12 @@ def get_domestic_after_hours_single_price_change_rate_rank(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        mrkt_tp: 000:전체,001:코스피,101:코스닥
-        sort_base: 1:상승률, 2:상승폭, 3:하락률, 4:하락폭, 5:보합
-        stk_cnd: 0:전체조회,1:관리종목제외,2:정리매매종목제외,3:우선주제외,4:관리종목우선주제외,5:증100제외,6:증100만보기,7:증40만보기,8:증30만보기,9:증20만보기,12:증50만보기,13:증60만보기,14:ETF제외,15:스팩제외,16:ETF+ETN제외,17:ETN제외
-        trde_qty_cnd: 0:전체조회, 10:백주이상,50:5백주이상,100;천주이상, 500:5천주이상, 1000:만주이상, 5000:5만주이상, 10000:10만주이상
-        crd_cnd: 0:전체조회, 9:신용융자전체, 1:신용융자A군, 2:신용융자B군, 3:신용융자C군, 4:신용융자D군, 7:신용융자E군, 8:신용대주, 5:신용한도초과제외
-        trde_prica: 0:전체조회, 5:5백만원이상,10:1천만원이상, 30:3천만원이상, 50:5천만원이상, 100:1억원이상, 300:3억원이상, 500:5억원이상, 1000:10억원이상, 3000:30억원이상, 5000:50억원이상, 10000:100억원이상
+        mrkt_tp: 시장구분 — 000:전체,001:코스피,101:코스닥
+        sort_base: 정렬기준 — 1:상승률, 2:상승폭, 3:하락률, 4:하락폭, 5:보합
+        stk_cnd: 종목조건 — 0:전체조회,1:관리종목제외,2:정리매매종목제외,3:우선주제외,4:관리종목우선주제외,5:증100제외,6:증100만보기,7:증40만보기,8:증30만보기,9:증20만보기,12:증50만보기,13:증60만보기,14:ETF제외,15:스팩제외,16:ETF+ETN제외,17:ETN제외
+        trde_qty_cnd: 거래량조건 — 0:전체조회, 10:백주이상,50:5백주이상,100;천주이상, 500:5천주이상, 1000:만주이상, 5000:5만주이상, 10000:10만주이상
+        crd_cnd: 신용조건 — 0:전체조회, 9:신용융자전체, 1:신용융자A군, 2:신용융자B군, 3:신용융자C군, 4:신용융자D군, 7:신용융자E군, 8:신용대주, 5:신용한도초과제외
+        trde_prica: 거래대금 — 0:전체조회, 5:5백만원이상,10:1천만원이상, 30:3천만원이상, 50:5천만원이상, 100:1억원이상, 300:3억원이상, 500:5억원이상, 1000:10억원이상, 3000:30억원이상, 5000:50억원이상, 10000:100억원이상
 
     Returns:
         API 응답 데이터입니다.
@@ -134,12 +134,12 @@ def get_domestic_after_hours_single_price_change_rate_rank(
 
     # 2. 요청 파라미터 바디
     body = {
-        "mrkt_tp": mrkt_tp,
-        "sort_base": sort_base,
-        "stk_cnd": stk_cnd,
-        "trde_qty_cnd": trde_qty_cnd,
-        "crd_cnd": crd_cnd,
-        "trde_prica": trde_prica,
+        "mrkt_tp": mrkt_tp,  # 시장구분
+        "sort_base": sort_base,  # 정렬기준
+        "stk_cnd": stk_cnd,  # 종목조건
+        "trde_qty_cnd": trde_qty_cnd,  # 거래량조건
+        "crd_cnd": crd_cnd,  # 신용조건
+        "trde_prica": trde_prica,  # 거래대금
     }
 
     # 3. 인증 클라이언트
@@ -171,9 +171,12 @@ def get_domestic_after_hours_single_price_change_rate_rank(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -207,14 +210,17 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_after_hours_single_price_change_rate_rank(
-        mrkt_tp='000',
-        sort_base='5',
-        stk_cnd='0',
-        trde_qty_cnd='0',
-        crd_cnd='0',
-        trde_prica='0',
-    )
+    try:
+        result = get_domestic_after_hours_single_price_change_rate_rank(
+            mrkt_tp='000',
+            sort_base='5',
+            stk_cnd='0',
+            trde_qty_cnd='0',
+            crd_cnd='0',
+            trde_prica='0',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

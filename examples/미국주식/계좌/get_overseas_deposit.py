@@ -1,11 +1,11 @@
 # ---
-# api_id: ka10009
-# api_name: 주식기관요청
-# category: 국내주식
-# sub_category: 기관/외국인
+# api_id: ust21110
+# api_name: 해외주식 예수금
+# category: 미국주식
+# sub_category: 계좌
 # template: rest
-# api_url: /api/dostk/frgnistt
-# menu_path: 국내주식 > 기관/외국인 > 주식기관요청(ka10009)
+# api_url: /api/us/acnt
+# menu_path: 미국주식 > 계좌 > 해외주식 예수금(ust21110)
 # ---
 
 import logging
@@ -13,10 +13,10 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
-API_ID = "ka10009"
-API_URL = "/api/dostk/frgnistt"
+API_ID = "ust21110"
+API_URL = "/api/us/acnt"
 MAX_PAGES = 10 # 최대 조회 페이지 수
 REQUEST_DELAY_SECONDS = 0.2 # 요청 간격 (초)
 MESSAGE_KEY = "메시지"
@@ -24,21 +24,41 @@ MESSAGE_COLUMNS = {
     "return_code": "응답코드",
     "return_msg": "응답메시지"
 }
-TABLE_KEYS = {}
+TABLE_KEYS = {
+    "result_list": "결과리스트"
+}
 COLUMNS = {
-    "date": "날짜",
-    "close_pric": "종가",
-    "pre": "대비",
-    "orgn_dt_acc": "기관기간누적",
-    "orgn_daly_nettrde": "기관일별순매매",
-    "frgnr_daly_nettrde": "외국인일별순매매",
-    "frgnr_qota_rt": "외국인지분율"
+    "crnc_code": "통화코드",
+    "crnc_nm": "통화명",
+    "fc_entra": "외화예수금",
+    "fc_pymn_alowa": "외화출금가능금액",
+    "futr_repl_profa": "선물대용증거금",
+    "fc_booka": "외화장부금액",
+    "fc_ord_alowa": "외화주문가능금액",
+    "futr_profa_booka": "선물증거금장부금액",
+    "fc_ch_uncla": "외화현금미수금",
+    "fc_etc_loana": "외화기타대여금"
+}
+SUMMARY_KEY = "요약"
+SUMMARY_COLUMNS = {
+    "krw_entra": "원화예수금",
+    "ch_uncla": "현금미수금",
+    "etc_loana": "기타대여금"
 }
 
 
 NUMERIC_COLUMNS = (
-    '외국인지분율',
-    '종가',
+    '기타대여금',
+    '선물대용증거금',
+    '선물증거금장부금액',
+    '외화기타대여금',
+    '외화예수금',
+    '외화장부금액',
+    '외화주문가능금액',
+    '외화출금가능금액',
+    '외화현금미수금',
+    '원화예수금',
+    '현금미수금',
 )
 
 def _format_display(df: pd.DataFrame) -> pd.DataFrame:
@@ -69,35 +89,29 @@ def _format_display_value(value: object) -> object:
         return f"{sign}{int(unsigned or '0'):,}"
     return value
 
-def get_domestic_stock_institution_trade(
-    stk_cd: str,
-) -> pd.DataFrame:
+def get_overseas_deposit(
+) -> dict[str, pd.DataFrame]:
     """
-    주식기관요청[ka10009] API를 호출합니다.
+    해외주식 예수금[ust21110] API를 호출합니다.
 
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        stk_cd: 거래소별 종목코드
-            (KRX:039490,NXT:039490_NX,SOR:039490_AL)
 
     Returns:
         API 응답 데이터입니다.
 
     Example:
-        >>> df = get_domestic_stock_institution_trade(
-        ...     stk_cd='005930',
+        >>> result = get_overseas_deposit(
         ... )
-        >>> print(df)
+        >>> for key, df in result.items():
+        ...     print(key, df)
     """
 
     # 1. 필수 파라미터 검증
-    if not stk_cd:
-        raise ValueError('stk_cd is required.')
 
     # 2. 요청 파라미터 바디
     body = {
-        "stk_cd": stk_cd,
     }
 
     # 3. 인증 클라이언트
@@ -105,7 +119,10 @@ def get_domestic_stock_institution_trade(
 
     # 4. 응답 데이터 저장소
     message_rows = []
-    rows = []
+    summary_rows = []
+    rows = {
+        "result_list": [],
+    }
     # 5. API 호출 및 연속조회
     next_cont_yn = None
     next_key = None
@@ -124,12 +141,19 @@ def get_domestic_stock_institution_trade(
                 key: response_body.get(key)
                 for key in MESSAGE_COLUMNS
             })
-        row = {
+        summary_rows.append({
             key: response_body.get(key)
-            for key in COLUMNS
-        }
-        if row:
-            rows.append(row)
+            for key in SUMMARY_COLUMNS
+        })
+        for key in rows:
+            records = response_body.get(key, [])
+            if isinstance(records, list):
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -143,10 +167,19 @@ def get_domestic_stock_institution_trade(
         time.sleep(REQUEST_DELAY_SECONDS)
 
     # 6. DataFrame 변환
-    result = pd.DataFrame(rows).rename(columns=COLUMNS)
+    result = {
+        TABLE_KEYS.get(key, key): pd.DataFrame(records).rename(columns=COLUMNS)
+        for key, records in rows.items()
+    }
+    result = {
+        SUMMARY_KEY: pd.DataFrame(summary_rows).rename(columns=SUMMARY_COLUMNS),
+        **result,
+    }
     if message_rows:
-        message_df = pd.DataFrame(message_rows).rename(columns=MESSAGE_COLUMNS)
-        result = pd.concat([message_df, result], axis=1)
+        result = {
+            MESSAGE_KEY: pd.DataFrame(message_rows).rename(columns=MESSAGE_COLUMNS),
+            **result,
+        }
     return result
 
 
@@ -158,8 +191,12 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    df = get_domestic_stock_institution_trade(
-        stk_cd='005930',
-    )
+    try:
+        result = get_overseas_deposit(
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
-    print(_format_display(df))
+    for key, df in result.items():
+        print(f"\n[{key}]")
+        print(_format_display(df))

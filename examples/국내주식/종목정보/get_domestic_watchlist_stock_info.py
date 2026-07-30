@@ -1,11 +1,11 @@
 # ---
 # api_id: ka10095
-# api_name: 관심종목정보요청
+# api_name: 지정종목 정보요청
 # category: 국내주식
 # sub_category: 종목정보
 # template: rest
 # api_url: /api/dostk/stkinfo
-# menu_path: 국내주식 > 종목정보 > 관심종목정보요청(ka10095)
+# menu_path: 국내주식 > 종목정보 > 지정종목 정보요청(ka10095)
 # ---
 
 import logging
@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10095"
 API_URL = "/api/dostk/stkinfo"
@@ -97,8 +97,10 @@ COLUMNS = {
 NUMERIC_COLUMNS = (
     'ELW행사가',
     '거래대금',
+    '거래량',
     '고가',
     '기준가',
+    '등락율',
     '매도1차호가',
     '매도2차호가',
     '매도3차호가',
@@ -121,6 +123,8 @@ NUMERIC_COLUMNS = (
     '이론가',
     '자본금',
     '저가',
+    '전일거래량대비',
+    '전환비율',
     '종가',
     '하한가',
     '현재가',
@@ -158,12 +162,12 @@ def get_domestic_watchlist_stock_info(
     stk_cd: str,
 ) -> dict[str, pd.DataFrame]:
     """
-    관심종목정보요청[ka10095] API를 호출합니다.
+    지정종목 정보요청[ka10095] API를 호출합니다.
 
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        stk_cd: 거래소별 종목코드
+        stk_cd: 종목코드 — 거래소별 종목코드
             (KRX:039490,NXT:039490_NX,SOR:039490_AL)
             여러개의 종목코드 입력시 | 로 구분
 
@@ -184,7 +188,7 @@ def get_domestic_watchlist_stock_info(
 
     # 2. 요청 파라미터 바디
     body = {
-        "stk_cd": stk_cd,
+        "stk_cd": stk_cd,  # 종목코드
     }
 
     # 3. 인증 클라이언트
@@ -216,9 +220,12 @@ def get_domestic_watchlist_stock_info(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -252,9 +259,12 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_watchlist_stock_info(
-        stk_cd='005930',
-    )
+    try:
+        result = get_domestic_watchlist_stock_info(
+            stk_cd='005930',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

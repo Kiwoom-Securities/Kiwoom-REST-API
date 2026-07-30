@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka30004"
 API_URL = "/api/dostk/elw"
@@ -95,11 +95,11 @@ def get_domestic_elw_disparity_rate(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        isscomp_cd: 전체:000000000000, 한국투자증권:3, 미래대우:5, 신영:6, NK투자증권:12, KB증권:17
-        bsis_aset_cd: 전체:000000000000, KOSPI200:201, KOSDAQ150:150, 삼성전자:005930, KT:030200..
-        rght_tp: 000: 전체, 001: 콜, 002: 풋, 003: DC, 004: DP, 005: EX, 006: 조기종료콜, 007: 조기종료풋
-        lpcd: 전체:000000000000, 한국투자증권:3, 미래대우:5, 신영:6, NK투자증권:12, KB증권:17
-        trde_end_elwskip: 1:거래종료ELW제외, 0:거래종료ELW포함
+        isscomp_cd: 발행사코드 — 전체:000000000000, 한국투자증권:3, 미래대우:5, 신영:6, NK투자증권:12, KB증권:17
+        bsis_aset_cd: 기초자산코드 — 전체:000000000000, KOSPI200:201, KOSDAQ150:150, 삼성전자:005930, KT:030200..
+        rght_tp: 권리구분 — 000: 전체, 001: 콜, 002: 풋, 003: DC, 004: DP, 005: EX, 006: 조기종료콜, 007: 조기종료풋
+        lpcd: LP코드 — 전체:000000000000, 한국투자증권:3, 미래대우:5, 신영:6, NK투자증권:12, KB증권:17
+        trde_end_elwskip: 거래종료ELW제외 — 1:거래종료ELW제외, 0:거래종료ELW포함
 
     Returns:
         API 응답 데이터입니다.
@@ -130,11 +130,11 @@ def get_domestic_elw_disparity_rate(
 
     # 2. 요청 파라미터 바디
     body = {
-        "isscomp_cd": isscomp_cd,
-        "bsis_aset_cd": bsis_aset_cd,
-        "rght_tp": rght_tp,
-        "lpcd": lpcd,
-        "trde_end_elwskip": trde_end_elwskip,
+        "isscomp_cd": isscomp_cd,  # 발행사코드
+        "bsis_aset_cd": bsis_aset_cd,  # 기초자산코드
+        "rght_tp": rght_tp,  # 권리구분
+        "lpcd": lpcd,  # LP코드
+        "trde_end_elwskip": trde_end_elwskip,  # 거래종료ELW제외
     }
 
     # 3. 인증 클라이언트
@@ -166,9 +166,12 @@ def get_domestic_elw_disparity_rate(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -202,13 +205,16 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_elw_disparity_rate(
-        isscomp_cd='000000000000',
-        bsis_aset_cd='000000000000',
-        rght_tp='000',
-        lpcd='000000000000',
-        trde_end_elwskip='0',
-    )
+    try:
+        result = get_domestic_elw_disparity_rate(
+            isscomp_cd='000000000000',
+            bsis_aset_cd='000000000000',
+            rght_tp='000',
+            lpcd='000000000000',
+            trde_end_elwskip='0',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

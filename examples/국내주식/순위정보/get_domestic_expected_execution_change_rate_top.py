@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10029"
 API_URL = "/api/dostk/rkinfo"
@@ -94,13 +94,13 @@ def get_domestic_expected_execution_change_rate_top(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        mrkt_tp: 000:전체, 001:코스피, 101:코스닥
-        sort_tp: 1:상승률, 2:상승폭, 3:보합, 4:하락률, 5:하락폭, 6:체결량, 7:상한, 8:하한
-        trde_qty_cnd: 0:전체조회, 1;천주이상, 3:3천주, 5:5천주, 10:만주이상, 50:5만주이상, 100:10만주이상
-        stk_cnd: 0:전체조회, 1:관리종목제외, 3:우선주제외, 4:관리종목,우선주제외, 5:증100제외, 6:증100만보기, 7:증40만보기, 8:증30만보기, 9:증20만보기, 11:정리매매종목제외, 12:증50만보기, 13:증60만보기, 14:ETF제외, 15:스팩제외, 16:ETF+ETN제외
-        crd_cnd: 0:전체조회, 1:신용융자A군, 2:신용융자B군, 3:신용융자C군, 4:신용융자D군, 5:신용한도초과제외, 7:신용융자E군, 8:신용대주, 9:신용융자전체
-        pric_cnd: 0:전체조회, 1:1천원미만, 2:1천원~2천원, 3:2천원~5천원, 4:5천원~1만원, 5:1만원이상, 8:1천원이상, 10:1만원미만
-        stex_tp: 1:KRX, 2:NXT 3.통합
+        mrkt_tp: 시장구분 — 000:전체, 001:코스피, 101:코스닥
+        sort_tp: 정렬구분 — 1:상승률, 2:상승폭, 3:보합, 4:하락률, 5:하락폭, 6:체결량, 7:상한, 8:하한
+        trde_qty_cnd: 거래량조건 — 0:전체조회, 1;천주이상, 3:3천주, 5:5천주, 10:만주이상, 50:5만주이상, 100:10만주이상
+        stk_cnd: 종목조건 — 0:전체조회, 1:관리종목제외, 3:우선주제외, 4:관리종목,우선주제외, 5:증100제외, 6:증100만보기, 7:증40만보기, 8:증30만보기, 9:증20만보기, 11:정리매매종목제외, 12:증50만보기, 13:증60만보기, 14:ETF제외, 15:스팩제외, 16:ETF+ETN제외
+        crd_cnd: 신용조건 — 0:전체조회, 1:신용융자A군, 2:신용융자B군, 3:신용융자C군, 4:신용융자D군, 5:신용한도초과제외, 7:신용융자E군, 8:신용대주, 9:신용융자전체
+        pric_cnd: 가격조건 — 0:전체조회, 1:1천원미만, 2:1천원~2천원, 3:2천원~5천원, 4:5천원~1만원, 5:1만원이상, 8:1천원이상, 10:1만원미만
+        stex_tp: 거래소구분 — 1:KRX, 2:NXT 3.통합
 
     Returns:
         API 응답 데이터입니다.
@@ -137,13 +137,13 @@ def get_domestic_expected_execution_change_rate_top(
 
     # 2. 요청 파라미터 바디
     body = {
-        "mrkt_tp": mrkt_tp,
-        "sort_tp": sort_tp,
-        "trde_qty_cnd": trde_qty_cnd,
-        "stk_cnd": stk_cnd,
-        "crd_cnd": crd_cnd,
-        "pric_cnd": pric_cnd,
-        "stex_tp": stex_tp,
+        "mrkt_tp": mrkt_tp,  # 시장구분
+        "sort_tp": sort_tp,  # 정렬구분
+        "trde_qty_cnd": trde_qty_cnd,  # 거래량조건
+        "stk_cnd": stk_cnd,  # 종목조건
+        "crd_cnd": crd_cnd,  # 신용조건
+        "pric_cnd": pric_cnd,  # 가격조건
+        "stex_tp": stex_tp,  # 거래소구분
     }
 
     # 3. 인증 클라이언트
@@ -175,9 +175,12 @@ def get_domestic_expected_execution_change_rate_top(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -211,15 +214,18 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_expected_execution_change_rate_top(
-        mrkt_tp='000',
-        sort_tp='1',
-        trde_qty_cnd='0',
-        stk_cnd='0',
-        crd_cnd='0',
-        pric_cnd='0',
-        stex_tp='3',
-    )
+    try:
+        result = get_domestic_expected_execution_change_rate_top(
+            mrkt_tp='000',
+            sort_tp='1',
+            trde_qty_cnd='0',
+            stk_cnd='0',
+            crd_cnd='0',
+            pric_cnd='0',
+            stex_tp='3',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

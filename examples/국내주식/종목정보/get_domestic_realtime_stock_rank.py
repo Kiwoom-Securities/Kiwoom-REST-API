@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka00198"
 API_URL = "/api/dostk/stkinfo"
@@ -47,6 +47,7 @@ NUMERIC_COLUMNS = (
     '과거 현재가',
     '기준가 대비 등락율',
     '기준가 대비 부호',
+    '직전 기준 대비 등락율',
 )
 
 def _format_display(df: pd.DataFrame) -> pd.DataFrame:
@@ -86,7 +87,7 @@ def get_domestic_realtime_stock_rank(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        qry_tp: 1:1분, 2:10분, 3:1시간, 4:당일 누적, 5:30초
+        qry_tp: 구분 — 1:1분, 2:10분, 3:1시간, 4:당일 누적, 5:30초
 
     Returns:
         API 응답 데이터입니다.
@@ -105,7 +106,7 @@ def get_domestic_realtime_stock_rank(
 
     # 2. 요청 파라미터 바디
     body = {
-        "qry_tp": qry_tp,
+        "qry_tp": qry_tp,  # 구분
     }
 
     # 3. 인증 클라이언트
@@ -137,9 +138,12 @@ def get_domestic_realtime_stock_rank(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -173,9 +177,12 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_realtime_stock_rank(
-        qry_tp='1',
-    )
+    try:
+        result = get_domestic_realtime_stock_rank(
+            qry_tp='1',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

@@ -94,8 +94,8 @@ class MemoryTokenStore:
     def save(self, record: TokenRecord) -> None:
         self._records[self._key(record.mode, profile=record.profile)] = record
 
-    def clear(self, mode: Mode, *, profile: str | None = None) -> None:
-        self._records.pop(self._key(mode, profile=profile), None)
+    def clear(self, mode: Mode, *, profile: str | None = None) -> bool:
+        return self._records.pop(self._key(mode, profile=profile), None) is not None
 
     def peek(self, mode: Mode, *, profile: str | None = None) -> TokenRecord | None:
         return self.load(mode, profile=profile)
@@ -160,9 +160,11 @@ class FileTokenStore:
         temp_path.replace(path)
         protect_file(path, strict=self.strict_permissions)
 
-    def clear(self, mode: Mode, *, profile: str | None = None) -> None:
+    def clear(self, mode: Mode, *, profile: str | None = None) -> bool:
         path = self._token_path(mode, profile=profile)
+        existed = path.exists()
         path.unlink(missing_ok=True)
+        return existed
 
     @staticmethod
     def _token_directory(profile: str | None) -> Path:

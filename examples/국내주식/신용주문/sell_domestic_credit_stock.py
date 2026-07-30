@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "kt10007"
 API_URL = "/api/dostk/crdordr"
@@ -77,14 +77,14 @@ def sell_domestic_credit_stock(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        dmst_stex_tp: KRX,NXT,SOR
+        dmst_stex_tp: 국내거래소구분 — KRX,NXT,SOR
         stk_cd: 종목코드
-        ord_qty: 주문수량
-        trde_tp: 0:보통 , 3:시장가 , 5:조건부지정가 , 81:장마감후시간외 , 61:장시작전시간외, 62:시간외단일가 , 6:최유리지정가 , 7:최우선지정가 , 10:보통(IOC) , 13:시장가(IOC) , 16:최유리(IOC) , 20:보통(FOK) , 23:시장가(FOK) , 26:최유리(FOK) , 28:스톱지정가,29:중간가,30:중간가(IOC),31:중간가(FOK)
-        crd_deal_tp: 33:융자 , 99:융자합
-        ord_uv: 주문단가
-        crd_loan_dt: YYYYMMDD(융자일경우필수)
-        cond_uv: 조건단가
+        ord_qty: 주문수량 — 단위: 1주
+        trde_tp: 매매구분 — 0:보통 , 3:시장가 , 5:조건부지정가 , 81:장마감후시간외 , 61:장시작전시간외, 62:시간외단일가 , 6:최유리지정가 , 7:최우선지정가 , 10:보통(IOC) , 13:시장가(IOC) , 16:최유리(IOC) , 20:보통(FOK) , 23:시장가(FOK) , 26:최유리(FOK) , 28:스톱지정가,29:중간가,30:중간가(IOC),31:중간가(FOK)
+        crd_deal_tp: 신용거래구분 — 33:융자 , 99:융자합
+        ord_uv: 주문단가 — 단위: 원
+        crd_loan_dt: 대출일 — YYYYMMDD(융자일경우필수)
+        cond_uv: 조건단가 — 단위: 원
 
     Returns:
         API 응답 데이터입니다.
@@ -117,18 +117,18 @@ def sell_domestic_credit_stock(
 
     # 2. 요청 파라미터 바디
     body = {
-        "dmst_stex_tp": dmst_stex_tp,
-        "stk_cd": stk_cd,
-        "ord_qty": ord_qty,
-        "trde_tp": trde_tp,
-        "crd_deal_tp": crd_deal_tp,
+        "dmst_stex_tp": dmst_stex_tp,  # 국내거래소구분
+        "stk_cd": stk_cd,  # 종목코드
+        "ord_qty": ord_qty,  # 주문수량
+        "trde_tp": trde_tp,  # 매매구분
+        "crd_deal_tp": crd_deal_tp,  # 신용거래구분
     }
     if ord_uv is not None:
-        body["ord_uv"] = ord_uv
+        body["ord_uv"] = ord_uv  # 주문단가
     if crd_loan_dt is not None:
-        body["crd_loan_dt"] = crd_loan_dt
+        body["crd_loan_dt"] = crd_loan_dt  # 대출일
     if cond_uv is not None:
-        body["cond_uv"] = cond_uv
+        body["cond_uv"] = cond_uv  # 조건단가
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -188,15 +188,18 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    df = sell_domestic_credit_stock(
-        dmst_stex_tp='KRX',
-        stk_cd='005930',
-        ord_qty='3',
-        trde_tp='0',
-        crd_deal_tp='99',
-        ord_uv='6450',
-        crd_loan_dt='',
-        cond_uv='',
-    )
+    try:
+        df = sell_domestic_credit_stock(
+            dmst_stex_tp='KRX',
+            stk_cd='005930',
+            ord_qty='3',
+            trde_tp='0',
+            crd_deal_tp='99',
+            ord_uv='6450',
+            crd_loan_dt='',
+            cond_uv='',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     print(_format_display(df))

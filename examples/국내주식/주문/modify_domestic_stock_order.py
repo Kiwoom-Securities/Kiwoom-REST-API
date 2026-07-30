@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "kt10002"
 API_URL = "/api/dostk/ordr"
@@ -77,12 +77,12 @@ def modify_domestic_stock_order(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        dmst_stex_tp: KRX,NXT,SOR
-        orig_ord_no: 원주문번호
+        dmst_stex_tp: 국내거래소구분 — KRX,NXT,SOR
+        orig_ord_no: 원주문번호 — 매수/매도 주문 요청 응답 결과로 받은 7자리 주문번호
         stk_cd: 종목코드
-        mdfy_qty: 정정수량
-        mdfy_uv: 정정단가
-        mdfy_cond_uv: 정정조건단가
+        mdfy_qty: 정정수량 — 단위: 1주, '0' 입력 시 잔량 전부 정정
+        mdfy_uv: 정정단가 — 단위: 원
+        mdfy_cond_uv: 정정조건단가 — 단위: 원
 
     Returns:
         API 응답 데이터입니다.
@@ -113,14 +113,14 @@ def modify_domestic_stock_order(
 
     # 2. 요청 파라미터 바디
     body = {
-        "dmst_stex_tp": dmst_stex_tp,
-        "orig_ord_no": orig_ord_no,
-        "stk_cd": stk_cd,
-        "mdfy_qty": mdfy_qty,
-        "mdfy_uv": mdfy_uv,
+        "dmst_stex_tp": dmst_stex_tp,  # 국내거래소구분
+        "orig_ord_no": orig_ord_no,  # 원주문번호
+        "stk_cd": stk_cd,  # 종목코드
+        "mdfy_qty": mdfy_qty,  # 정정수량
+        "mdfy_uv": mdfy_uv,  # 정정단가
     }
     if mdfy_cond_uv is not None:
-        body["mdfy_cond_uv"] = mdfy_cond_uv
+        body["mdfy_cond_uv"] = mdfy_cond_uv  # 정정조건단가
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -180,13 +180,16 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    df = modify_domestic_stock_order(
-        dmst_stex_tp='KRX',
-        orig_ord_no='0000139',
-        stk_cd='005930',
-        mdfy_qty='1',
-        mdfy_uv='199700',
-        mdfy_cond_uv='',
-    )
+    try:
+        df = modify_domestic_stock_order(
+            dmst_stex_tp='KRX',
+            orig_ord_no='0000139',
+            stk_cd='005930',
+            mdfy_qty='1',
+            mdfy_uv='199700',
+            mdfy_cond_uv='',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     print(_format_display(df))

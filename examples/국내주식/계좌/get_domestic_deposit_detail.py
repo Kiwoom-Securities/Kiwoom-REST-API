@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "kt00001"
 API_URL = "/api/dostk/acnt"
@@ -32,8 +32,8 @@ COLUMNS = {
     "fx_entr": "외화예수금",
     "fc_krw_repl_evlta": "원화대용평가금",
     "fc_trst_profa": "해외주식증거금",
-    "pymn_alow_amt_entr": "출금가능금액(예수금)",
     "pymn_alow_amt": "출금가능금액",
+    "pymn_alow_amt_entr": "출금가능금액(예수금)",
     "ord_alow_amt_entr": "주문가능금액(예수금)",
     "fc_uncla": "외화미수(합계)",
     "fc_ch_uncla": "외화현금미수금",
@@ -236,7 +236,7 @@ def get_domestic_deposit_detail(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        qry_tp: 3:추정조회, 2:일반조회
+        qry_tp: 조회구분 — 3:추정조회, 2:일반조회
 
     Returns:
         API 응답 데이터입니다.
@@ -255,7 +255,7 @@ def get_domestic_deposit_detail(
 
     # 2. 요청 파라미터 바디
     body = {
-        "qry_tp": qry_tp,
+        "qry_tp": qry_tp,  # 조회구분
     }
 
     # 3. 인증 클라이언트
@@ -292,9 +292,12 @@ def get_domestic_deposit_detail(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -332,9 +335,12 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_deposit_detail(
-        qry_tp='3',
-    )
+    try:
+        result = get_domestic_deposit_detail(
+            qry_tp='3',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

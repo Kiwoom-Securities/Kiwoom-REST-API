@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka90002"
 API_URL = "/api/dostk/thme"
@@ -96,9 +96,9 @@ def get_domestic_theme_stocks(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        thema_grp_cd: 테마그룹코드 번호
-        stex_tp: 1:KRX, 2:NXT 3.통합
-        date_tp: 1일 ~ 99일 날짜입력
+        thema_grp_cd: 테마그룹코드 — 테마그룹코드 번호
+        stex_tp: 거래소구분 — 1:KRX, 2:NXT 3.통합
+        date_tp: 날짜구분 — 1일 ~ 99일 날짜입력
 
     Returns:
         API 응답 데이터입니다.
@@ -121,11 +121,11 @@ def get_domestic_theme_stocks(
 
     # 2. 요청 파라미터 바디
     body = {
-        "thema_grp_cd": thema_grp_cd,
-        "stex_tp": stex_tp,
+        "thema_grp_cd": thema_grp_cd,  # 테마그룹코드
+        "stex_tp": stex_tp,  # 거래소구분
     }
     if date_tp is not None:
-        body["date_tp"] = date_tp
+        body["date_tp"] = date_tp  # 날짜구분
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -161,9 +161,12 @@ def get_domestic_theme_stocks(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -201,11 +204,14 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_theme_stocks(
-        thema_grp_cd='100',
-        stex_tp='1',
-        date_tp='2',
-    )
+    try:
+        result = get_domestic_theme_stocks(
+            thema_grp_cd='100',
+            stex_tp='1',
+            date_tp='2',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

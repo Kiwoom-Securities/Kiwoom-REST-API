@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10076"
 API_URL = "/api/dostk/acnt"
@@ -101,11 +101,11 @@ def get_domestic_filled_orders(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        qry_tp: 0:전체, 1:종목
-        sell_tp: 0:전체, 1:매도, 2:매수
-        stex_tp: 0 : 통합, 1 : KRX, 2 : NXT
-        stk_cd: 종목코드
-        ord_no: 검색 기준 값으로 입력한 주문번호 보다 과거에 체결된 내역이 조회됩니다.
+        qry_tp: 조회구분 — 0:전체, 1:종목
+        sell_tp: 매도수구분 — 0:전체, 1:매도, 2:매수
+        stex_tp: 거래소구분 — 0 : 통합, 1 : KRX, 2 : NXT
+        stk_cd: 종목코드 — 종목코드 6자리
+        ord_no: 주문번호 — 검색 기준 값으로 입력한 주문번호 보다 과거에 체결된 내역이 조회됩니다.
 
     Returns:
         API 응답 데이터입니다.
@@ -132,14 +132,14 @@ def get_domestic_filled_orders(
 
     # 2. 요청 파라미터 바디
     body = {
-        "qry_tp": qry_tp,
-        "sell_tp": sell_tp,
-        "stex_tp": stex_tp,
+        "qry_tp": qry_tp,  # 조회구분
+        "sell_tp": sell_tp,  # 매도수구분
+        "stex_tp": stex_tp,  # 거래소구분
     }
     if stk_cd is not None:
-        body["stk_cd"] = stk_cd
+        body["stk_cd"] = stk_cd  # 종목코드
     if ord_no is not None:
-        body["ord_no"] = ord_no
+        body["ord_no"] = ord_no  # 주문번호
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -170,9 +170,12 @@ def get_domestic_filled_orders(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -206,13 +209,16 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_filled_orders(
-        qry_tp='1',
-        sell_tp='0',
-        stex_tp='0',
-        stk_cd='005930',
-        ord_no='',
-    )
+    try:
+        result = get_domestic_filled_orders(
+            qry_tp='1',
+            sell_tp='0',
+            stex_tp='0',
+            stk_cd='005930',
+            ord_no='',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

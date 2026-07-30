@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10038"
 API_URL = "/api/dostk/rkinfo"
@@ -36,14 +36,15 @@ COLUMNS = {
 }
 SUMMARY_KEY = "요약"
 SUMMARY_COLUMNS = {
-    "rank_1": "순위1",
-    "rank_2": "순위2",
-    "rank_3": "순위3",
+    "rank_1": "기간별 누적 매수량",
+    "rank_2": "기간별 누적 매도량",
+    "rank_3": "기간별 누적 순매수",
     "prid_trde_qty": "기간중거래량"
 }
 
 
 NUMERIC_COLUMNS = (
+    '기간별 누적 매수량',
     '기간중거래량',
     '누적순매수수량',
     '매도수량',
@@ -80,9 +81,9 @@ def _format_display_value(value: object) -> object:
 
 def get_domestic_stock_broker_rank(
     stk_cd: str,
-    strt_dt: str,
-    end_dt: str,
     qry_tp: str,
+    strt_dt: str | None = '20241106',
+    end_dt: str | None = '20241107',
     dt: str | None = '1',
 ) -> dict[str, pd.DataFrame]:
     """
@@ -91,14 +92,15 @@ def get_domestic_stock_broker_rank(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        stk_cd: 거래소별 종목코드
+        stk_cd: 종목코드 — 거래소별 종목코드
             (KRX:039490,NXT:039490_NX,SOR:039490_AL)
-        strt_dt: YYYYMMDD
+        qry_tp: 조회구분 — 1:순매도순위정렬, 2:순매수순위정렬
+        strt_dt: 시작일자 — YYYYMMDD
             (연도4자리, 월 2자리, 일 2자리 형식)
-        end_dt: YYYYMMDD
+        end_dt: 종료일자 — YYYYMMDD
             (연도4자리, 월 2자리, 일 2자리 형식)
-        qry_tp: 1:순매도순위정렬, 2:순매수순위정렬
-        dt: 1:전일, 4:5일, 9:10일, 19:20일, 39:40일, 59:60일, 119:120일
+        dt: 기간 — 1:전일, 4:5일, 9:10일, 19:20일, 39:40일, 59:60일, 119:120일
+            ※ 시작일자와 종료일자로 조회를 원하는 경우 기간(dt)값은 빈값('')으로 설정
 
     Returns:
         API 응답 데이터입니다.
@@ -106,9 +108,9 @@ def get_domestic_stock_broker_rank(
     Example:
         >>> result = get_domestic_stock_broker_rank(
         ...     stk_cd='005930',
+        ...     qry_tp='2',
         ...     strt_dt='20241106',
         ...     end_dt='20241107',
-        ...     qry_tp='2',
         ...     dt='1',
         ... )
         >>> for key, df in result.items():
@@ -118,22 +120,20 @@ def get_domestic_stock_broker_rank(
     # 1. 필수 파라미터 검증
     if not stk_cd:
         raise ValueError('stk_cd is required.')
-    if not strt_dt:
-        raise ValueError('strt_dt is required.')
-    if not end_dt:
-        raise ValueError('end_dt is required.')
     if not qry_tp:
         raise ValueError('qry_tp is required.')
 
     # 2. 요청 파라미터 바디
     body = {
-        "stk_cd": stk_cd,
-        "strt_dt": strt_dt,
-        "end_dt": end_dt,
-        "qry_tp": qry_tp,
+        "stk_cd": stk_cd,  # 종목코드
+        "qry_tp": qry_tp,  # 조회구분
     }
+    if strt_dt is not None:
+        body["strt_dt"] = strt_dt  # 시작일자
+    if end_dt is not None:
+        body["end_dt"] = end_dt  # 종료일자
     if dt is not None:
-        body["dt"] = dt
+        body["dt"] = dt  # 기간
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -169,9 +169,12 @@ def get_domestic_stock_broker_rank(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -209,13 +212,16 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_stock_broker_rank(
-        stk_cd='005930',
-        strt_dt='20241106',
-        end_dt='20241107',
-        qry_tp='2',
-        dt='1',
-    )
+    try:
+        result = get_domestic_stock_broker_rank(
+            stk_cd='005930',
+            qry_tp='2',
+            strt_dt='20241106',
+            end_dt='20241107',
+            dt='1',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

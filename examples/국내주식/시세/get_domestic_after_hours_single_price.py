@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10087"
 API_URL = "/api/dostk/mrkcond"
@@ -137,7 +137,7 @@ def get_domestic_after_hours_single_price(
 
     # 2. 요청 파라미터 바디
     body = {
-        "stk_cd": stk_cd,
+        "stk_cd": stk_cd,  # 종목코드
     }
 
     # 3. 인증 클라이언트
@@ -198,8 +198,11 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    df = get_domestic_after_hours_single_price(
-        stk_cd='005930',
-    )
+    try:
+        df = get_domestic_after_hours_single_price(
+            stk_cd='005930',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     print(_format_display(df))

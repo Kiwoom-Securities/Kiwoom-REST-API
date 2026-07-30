@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10023"
 API_URL = "/api/dostk/rkinfo"
@@ -92,14 +92,14 @@ def get_domestic_volume_surge(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        mrkt_tp: 000:전체, 001:코스피, 101:코스닥
-        sort_tp: 1:급증량, 2:급증률, 3:급감량, 4:급감률
-        tm_tp: 1:분, 2:전일
-        trde_qty_tp: 5:5천주이상, 10:만주이상, 50:5만주이상, 100:10만주이상, 200:20만주이상, 300:30만주이상, 500:50만주이상, 1000:백만주이상
-        stk_cnd: 0:전체조회, 1:관리종목제외, 3:우선주제외, 11:정리매매종목제외, 4:관리종목,우선주제외, 5:증100제외, 6:증100만보기, 13:증60만보기, 12:증50만보기, 7:증40만보기, 8:증30만보기, 9:증20만보기, 17:ETN제외, 14:ETF제외, 18:ETF+ETN제외, 15:스팩제외, 20:ETF+ETN+스팩제외
-        pric_tp: 0:전체조회, 2:5만원이상, 5:1만원이상, 6:5천원이상, 8:1천원이상, 9:10만원이상
-        stex_tp: 1:KRX, 2:NXT 3.통합
-        tm: 분 입력
+        mrkt_tp: 시장구분 — 000:전체, 001:코스피, 101:코스닥
+        sort_tp: 정렬구분 — 1:급증량, 2:급증률, 3:급감량, 4:급감률
+        tm_tp: 시간구분 — 1:분, 2:전일
+        trde_qty_tp: 거래량구분 — 5:5천주이상, 10:만주이상, 50:5만주이상, 100:10만주이상, 200:20만주이상, 300:30만주이상, 500:50만주이상, 1000:백만주이상
+        stk_cnd: 종목조건 — 0:전체조회, 1:관리종목제외, 3:우선주제외, 11:정리매매종목제외, 4:관리종목,우선주제외, 5:증100제외, 6:증100만보기, 13:증60만보기, 12:증50만보기, 7:증40만보기, 8:증30만보기, 9:증20만보기, 17:ETN제외, 14:ETF제외, 18:ETF+ETN제외, 15:스팩제외, 20:ETF+ETN+스팩제외
+        pric_tp: 가격구분 — 0:전체조회, 2:5만원이상, 5:1만원이상, 6:5천원이상, 8:1천원이상, 9:10만원이상
+        stex_tp: 거래소구분 — 1:KRX, 2:NXT 3.통합
+        tm: 시간 — 분 입력
 
     Returns:
         API 응답 데이터입니다.
@@ -137,16 +137,16 @@ def get_domestic_volume_surge(
 
     # 2. 요청 파라미터 바디
     body = {
-        "mrkt_tp": mrkt_tp,
-        "sort_tp": sort_tp,
-        "tm_tp": tm_tp,
-        "trde_qty_tp": trde_qty_tp,
-        "stk_cnd": stk_cnd,
-        "pric_tp": pric_tp,
-        "stex_tp": stex_tp,
+        "mrkt_tp": mrkt_tp,  # 시장구분
+        "sort_tp": sort_tp,  # 정렬구분
+        "tm_tp": tm_tp,  # 시간구분
+        "trde_qty_tp": trde_qty_tp,  # 거래량구분
+        "stk_cnd": stk_cnd,  # 종목조건
+        "pric_tp": pric_tp,  # 가격구분
+        "stex_tp": stex_tp,  # 거래소구분
     }
     if tm is not None:
-        body["tm"] = tm
+        body["tm"] = tm  # 시간
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -177,9 +177,12 @@ def get_domestic_volume_surge(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -213,16 +216,19 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_volume_surge(
-        mrkt_tp='000',
-        sort_tp='1',
-        tm_tp='2',
-        trde_qty_tp='5',
-        stk_cnd='0',
-        pric_tp='0',
-        stex_tp='3',
-        tm='',
-    )
+    try:
+        result = get_domestic_volume_surge(
+            mrkt_tp='000',
+            sort_tp='1',
+            tm_tp='2',
+            trde_qty_tp='5',
+            stk_cnd='0',
+            pric_tp='0',
+            stex_tp='3',
+            tm='',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

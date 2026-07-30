@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka30005"
 API_URL = "/api/dostk/elw"
@@ -130,11 +130,11 @@ def search_domestic_elw_by_condition(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        isscomp_cd: 12자리입력(전체:000000000000, 한국투자증권:000,,,3, 미래대우:000,,,5, 신영:000,,,6, NK투자증권:000,,,12, KB증권:000,,,17)
-        bsis_aset_cd: 전체일때만 12자리입력(전체:000000000000, KOSPI200:201, KOSDAQ150:150, 삼정전자:005930, KT:030200,,)
-        rght_tp: 0:전체, 1:콜, 2:풋, 3:DC, 4:DP, 5:EX, 6:조기종료콜, 7:조기종료풋
-        lpcd: 전체일때만 12자리입력(전체:000000000000, 한국투자증권:003, 미래대우:005, 신영:006, NK투자증권:012, KB증권:017)
-        sort_tp: 0:정렬없음, 1:상승율순, 2:상승폭순, 3:하락율순, 4:하락폭순, 5:거래량순, 6:거래대금순, 7:잔존일순
+        isscomp_cd: 발행사코드 — 12자리입력(전체:000000000000, 한국투자증권:000,,,3, 미래대우:000,,,5, 신영:000,,,6, NK투자증권:000,,,12, KB증권:000,,,17)
+        bsis_aset_cd: 기초자산코드 — 전체일때만 12자리입력(전체:000000000000, KOSPI200:201, KOSDAQ150:150, 삼정전자:005930, KT:030200,,)
+        rght_tp: 권리구분 — 0:전체, 1:콜, 2:풋, 3:DC, 4:DP, 5:EX, 6:조기종료콜, 7:조기종료풋
+        lpcd: LP코드 — 전체일때만 12자리입력(전체:000000000000, 한국투자증권:003, 미래대우:005, 신영:006, NK투자증권:012, KB증권:017)
+        sort_tp: 정렬구분 — 0:정렬없음, 1:상승율순, 2:상승폭순, 3:하락율순, 4:하락폭순, 5:거래량순, 6:거래대금순, 7:잔존일순
 
     Returns:
         API 응답 데이터입니다.
@@ -165,11 +165,11 @@ def search_domestic_elw_by_condition(
 
     # 2. 요청 파라미터 바디
     body = {
-        "isscomp_cd": isscomp_cd,
-        "bsis_aset_cd": bsis_aset_cd,
-        "rght_tp": rght_tp,
-        "lpcd": lpcd,
-        "sort_tp": sort_tp,
+        "isscomp_cd": isscomp_cd,  # 발행사코드
+        "bsis_aset_cd": bsis_aset_cd,  # 기초자산코드
+        "rght_tp": rght_tp,  # 권리구분
+        "lpcd": lpcd,  # LP코드
+        "sort_tp": sort_tp,  # 정렬구분
     }
 
     # 3. 인증 클라이언트
@@ -201,9 +201,12 @@ def search_domestic_elw_by_condition(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -237,13 +240,16 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = search_domestic_elw_by_condition(
-        isscomp_cd='000000000017',
-        bsis_aset_cd='201',
-        rght_tp='1',
-        lpcd='000000000000',
-        sort_tp='0',
-    )
+    try:
+        result = search_domestic_elw_by_condition(
+            isscomp_cd='000000000017',
+            bsis_aset_cd='201',
+            rght_tp='1',
+            lpcd='000000000000',
+            sort_tp='0',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

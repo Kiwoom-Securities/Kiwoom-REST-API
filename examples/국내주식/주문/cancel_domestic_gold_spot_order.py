@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "kt50003"
 API_URL = "/api/dostk/ordr"
@@ -73,9 +73,9 @@ def cancel_domestic_gold_spot_order(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        orig_ord_no: 원주문번호
-        stk_cd: M04020000 금 99.99_1kg, M04020100 미니금 99.99_100g
-        cncl_qty: '0' 입력시 잔량 전부 취소
+        orig_ord_no: 원주문번호 — 매수/매도 주문 요청 응답 결과로 받은 7자리 주문번호
+        stk_cd: 종목코드 — M04020000 금 99.99_1kg, M04020100 미니금 99.99_100g
+        cncl_qty: 취소수량 — 단위: 1주, '0' 입력시 잔량 전부 취소
 
     Returns:
         API 응답 데이터입니다.
@@ -99,9 +99,9 @@ def cancel_domestic_gold_spot_order(
 
     # 2. 요청 파라미터 바디
     body = {
-        "orig_ord_no": orig_ord_no,
-        "stk_cd": stk_cd,
-        "cncl_qty": cncl_qty,
+        "orig_ord_no": orig_ord_no,  # 원주문번호
+        "stk_cd": stk_cd,  # 종목코드
+        "cncl_qty": cncl_qty,  # 취소수량
     }
 
     # 3. 인증 클라이언트
@@ -162,10 +162,13 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    df = cancel_domestic_gold_spot_order(
-        orig_ord_no='0000014',
-        stk_cd='M04020000',
-        cncl_qty='1',
-    )
+    try:
+        df = cancel_domestic_gold_spot_order(
+            orig_ord_no='0000014',
+            stk_cd='M04020000',
+            cncl_qty='1',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     print(_format_display(df))

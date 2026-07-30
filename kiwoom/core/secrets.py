@@ -22,7 +22,7 @@ class SecretProvider(Protocol):
 
     def set_credentials(self, mode: Mode, appkey: str, secretkey: str) -> None: ...
 
-    def clear_credentials(self, mode: Mode) -> None: ...
+    def clear_credentials(self, mode: Mode) -> bool: ...
 
 
 class EnvSecretProvider:
@@ -37,7 +37,7 @@ class EnvSecretProvider:
     def set_credentials(self, mode: Mode, appkey: str, secretkey: str) -> None:
         raise RuntimeError("환경변수 공급자는 읽기 전용입니다.")
 
-    def clear_credentials(self, mode: Mode) -> None:
+    def clear_credentials(self, mode: Mode) -> bool:
         raise RuntimeError("환경변수 공급자는 읽기 전용입니다.")
 
 
@@ -72,13 +72,16 @@ class KeyringSecretProvider:
             self._best_effort_clear(mode)
             raise KeyringUnavailableError(f"운영체제 자격 증명 저장소에 저장하는 중 오류가 발생했습니다: {exc}") from exc
 
-    def clear_credentials(self, mode: Mode) -> None:
+    def clear_credentials(self, mode: Mode) -> bool:
         try:
+            deleted = False
             for name in ("appkey", "secretkey"):
                 try:
                     keyring.delete_password(self._service_name(mode), name)
+                    deleted = True
                 except keyring.errors.PasswordDeleteError:
                     continue
+            return deleted
         except NoKeyringError as exc:
             raise KeyringUnavailableError(
                 "사용 가능한 운영체제 자격 증명 저장소를 찾을 수 없습니다. "
@@ -132,13 +135,16 @@ class ProfileKeyringSecretProvider:
             self._best_effort_clear()
             raise KeyringUnavailableError(f"운영체제 자격 증명 저장소에 저장하는 중 오류가 발생했습니다: {exc}") from exc
 
-    def clear_credentials(self, mode: Mode) -> None:
+    def clear_credentials(self, mode: Mode) -> bool:
         try:
+            deleted = False
             for name in ("appkey", "secretkey"):
                 try:
                     keyring.delete_password(self._service_name(), name)
+                    deleted = True
                 except keyring.errors.PasswordDeleteError:
                     continue
+            return deleted
         except NoKeyringError as exc:
             raise KeyringUnavailableError(
                 "사용 가능한 운영체제 자격 증명 저장소를 찾을 수 없습니다. "
@@ -185,10 +191,10 @@ class CompositeSecretProvider:
             raise RuntimeError("이 자격 증명 공급자는 읽기 전용입니다.")
         self.writable_provider.set_credentials(mode, appkey, secretkey)
 
-    def clear_credentials(self, mode: Mode) -> None:
+    def clear_credentials(self, mode: Mode) -> bool:
         if self.writable_provider is None:
             raise RuntimeError("이 자격 증명 공급자는 읽기 전용입니다.")
-        self.writable_provider.clear_credentials(mode)
+        return self.writable_provider.clear_credentials(mode)
 
 
 def default_secret_provider(*, profile: str | None = None) -> CompositeSecretProvider:

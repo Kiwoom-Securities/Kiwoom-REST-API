@@ -1,14 +1,30 @@
 # Kiwoom OpenAPI 사용자 가이드
 
-이 문서 하나만 따라 하면 **키 발급 → 설치 → 인증 → CLI/샘플코드 실행**까지 끝낼 수 있습니다.
+이 문서 하나만 따라 하면 **키 발급 → 설치 → 인증 → 샘플코드/Postman 실행**까지 끝낼 수 있습니다.
 처음 사용하는 분을 기준으로, 위에서 아래로 순서대로 진행하면 됩니다.
 운영체제별로 명령이 다른 곳은 `macOS/Linux`와 `Windows PowerShell`을 나누어 표기했습니다.
 
 ---
 
+## 이 저장소에 포함된 것
+
+- `kiwoom/`: OAuth·REST·WebSocket 런타임과 전체 337 API 스펙
+- `examples/`: 함수명 기반 Python 예제 362개
+  - OAuth 2개, 국내주식 226개, 미국주식 134개
+- `postman/kiwoom-openapi.postman_collection.json`
+  - HTTP API 306개를 PRD/MOCK 환경별로 제공(총 요청 612개)
+- `.env.example`, `pyproject.toml`, `uv.lock`, `LICENSE.md`
+
+CLI 소스(`kiwoom_cli/`)는 이 공개 저장소에 포함되지 않습니다. CLI가 필요하면
+PyPI 패키지 `kwcli`를 별도로 설치하며, 설치 후 명령은 `kiwoomcli`입니다.
+Postman Collection에는 OAuth 2, 국내 HTTP 183, 미국 HTTP 121개가 포함되고,
+WebSocket API 31개는 Python 예제로 제공합니다.
+
+---
+
 ## 시작하기 전에
 
-- **인증은 CLI(`kiwoomcli setup`)로 하는 것을 권장합니다.** App Key/Secret이 운영체제 자격 증명 저장소(macOS Keychain, Windows 자격 증명 관리자, Linux Secret Service)에 저장되며, 프로젝트 폴더나 Git에는 저장되지 않습니다.
+- **인증은 PyPI CLI(`uv tool install kwcli` 후 `kiwoomcli setup`)로 하는 것을 권장합니다.** App Key/Secret이 운영체제 자격 증명 저장소(macOS Keychain, Windows 자격 증명 관리자, Linux Secret Service)에 저장되며, 프로젝트 폴더나 Git에는 저장되지 않습니다.
 - CLI로 인증하면 같은 자격 증명을 샘플코드(`examples/`)도 그대로 사용합니다. 즉 **CLI 인증만 마치면 `.env`를 따로 만들지 않아도 예제가 실행됩니다.**
 - 반대로 `.env`를 만들어 두면 예제가 그쪽을 먼저 사용하므로, CLI로 인증하는 경우에는 `.env`를 만들지 마세요. `.env` 방식은 자격 증명 저장소를 쓸 수 없는 환경을 위한 대체 경로이며 [부록 A](#부록-a-env-대체-경로)에서 다룹니다.
 
@@ -38,6 +54,7 @@ kiwoomcli auth status
 kiwoomcli domestic stocks info --code 005930
 
 # 6) (선택) 샘플코드 실행 - 이 프로젝트 폴더에서
+cd <저장소를-clone한-폴더>
 uv sync
 uv run python "examples/국내주식/종목정보/list_domestic_stocks.py"
 ```
@@ -62,6 +79,7 @@ kiwoomcli auth status
 kiwoomcli domestic stocks info --code 005930
 
 # 6) (선택) 샘플코드 실행 - 이 프로젝트 폴더에서
+cd <저장소를-clone한-폴더>
 uv sync
 uv run python "examples/국내주식/종목정보/list_domestic_stocks.py"
 ```
@@ -139,7 +157,7 @@ winget install Python.Python.3.13
 
 ## 3단계: uv 설치
 
-이 프로젝트의 표준 실행 도구는 [`uv`](https://docs.astral.sh/uv/)입니다. CLI 설치와 샘플코드 실행 모두 `uv`를 사용합니다.
+이 저장소의 의존성 동기화와 샘플코드 실행에는 [`uv`](https://docs.astral.sh/uv/)를 사용합니다. CLI는 PyPI 패키지 `kwcli`를 `uv tool`로 별도 설치합니다.
 
 설치 여부 확인:
 
@@ -189,7 +207,11 @@ uv --version
 
 ## 4단계: CLI 설치
 
-CLI를 설치합니다. 배포 패키지 이름은 `kwcli`이며, 설치 후 사용하는 명령은 `kiwoomcli`입니다. `uv tool install`로 설치하면 어느 폴더에서나 `kiwoomcli` 명령을 쓸 수 있습니다.
+> CLI는 이 공개 저장소에 포함되지 않습니다.
+
+PyPI에서 CLI를 설치합니다. 배포 패키지 이름은 `kwcli`이며, 설치 후 사용하는
+명령은 `kiwoomcli`입니다. `uv tool install`로 설치하면 어느 폴더에서나
+`kiwoomcli` 명령을 쓸 수 있습니다.
 
 ### macOS/Linux
 
@@ -251,7 +273,8 @@ kiwoomcli auth status
 
 ## 6단계: CLI 사용법
 
-인증이 끝나면 CLI로 바로 조회할 수 있습니다. 전체 명령은 `--help`로 확인합니다.
+인증이 끝나면 별도 설치한 CLI로 국내주식과 미국주식을 조회할 수 있습니다.
+전체 명령은 `--help`로 확인합니다.
 
 ```bash
 kiwoomcli --help
@@ -261,6 +284,7 @@ kiwoomcli --help
 
 ```bash
 kiwoomcli domestic stocks info --code 005930
+kiwoomcli overseas stocks info --exchange NASDAQ --code AAPL
 ```
 
 여러 계좌(별칭)를 쓰는 경우 `--profile`로 대상을 지정할 수 있습니다.
@@ -283,14 +307,15 @@ kiwoomcli auth --help
 
 ## 7단계: 샘플코드(examples) 실행
 
-`examples/` 폴더에는 키움 OpenAPI를 호출하는 Python 샘플코드가 들어 있습니다. **5단계에서 CLI로 인증을 마쳤다면 `.env` 없이 그대로 실행됩니다.**
+`examples/` 폴더에는 전체 337 API를 대상으로 한 함수명 예제 362개가 있습니다.
+**5단계에서 CLI로 인증을 마쳤다면 `.env` 없이 그대로 실행됩니다.**
 
 먼저 이 프로젝트 폴더로 이동해 의존성을 설치합니다.
 
 ### macOS/Linux
 
 ```bash
-cd Kiwoom-Github-Active-Project
+cd <저장소를-clone한-폴더>
 uv sync
 uv run python "examples/국내주식/종목정보/list_domestic_stocks.py"
 ```
@@ -298,7 +323,7 @@ uv run python "examples/국내주식/종목정보/list_domestic_stocks.py"
 ### Windows PowerShell
 
 ```powershell
-cd Kiwoom-Github-Active-Project
+cd <저장소를-clone한-폴더>
 uv sync
 uv run python "examples/국내주식/종목정보/list_domestic_stocks.py"
 ```
@@ -309,11 +334,35 @@ uv run python "examples/국내주식/종목정보/list_domestic_stocks.py"
 uv run python "examples/국내주식/시세/get_domestic_stock_quote.py"
 uv run python "examples/국내주식/차트/get_domestic_stock_daily_chart.py"
 uv run python "examples/국내주식/계좌/list_domestic_accounts.py"
+uv run python "examples/미국주식/종목정보/get_overseas_stock_list.py"
+uv run python "examples/미국주식/시세/get_overseas_stock_quote.py"
 ```
 
-실행 결과는 `pandas.DataFrame` 형태로 출력되며, 표 응답은 `[테이블명]` 단위로 나뉘어 표시됩니다.
+실행 결과는 API에 따라 `pandas.DataFrame` 또는
+`dict[str, pandas.DataFrame]` 형태입니다. 복수 테이블 응답은 `[테이블명]`
+단위로 나뉘어 표시됩니다.
 
-> `examples/국내주식/주문/` 아래 예제는 실제 주문/정정/취소를 수행할 수 있습니다. 운영 환경에서는 반드시 파일 내용과 대상 계좌를 확인한 뒤 실행하세요.
+WebSocket 실시간 예제는 `*_async.py`, `*_pubsub.py` 두 패턴으로 제공되며
+연결을 유지하므로 장시간 실행될 수 있습니다.
+
+> `examples/국내주식/주문/`, `examples/국내주식/신용주문/`,
+> `examples/미국주식/주문/` 아래 예제는 실제 주문/정정/취소를 수행할 수
+> 있습니다. 운영 환경에서는 반드시 파일 내용과 대상 계좌를 확인하세요.
+
+---
+
+## 8단계: Postman Collection
+
+`postman/kiwoom-openapi.postman_collection.json`을 Postman에서 Import합니다.
+
+- `PRD`: 운영 환경 HTTP 요청 306개
+- `MOCK(모의투자)`: 모의 환경 HTTP 요청 306개
+- Collection 변수: `APP_KEY`, `APP_SECRET`, `APP_KEY_MOCK`,
+  `APP_SECRET_MOCK`
+- WebSocket API는 포함되지 않으며 `examples/`의 실시간 예제를 사용합니다.
+
+OAuth 토큰 발급 요청을 실행하면 토큰은 Collection 변수에 저장됩니다. 실제
+키와 토큰을 공유 Collection, export 파일 또는 Git에 포함하지 마세요.
 
 ---
 
@@ -339,6 +388,10 @@ Copy-Item .env.example .env
 
 - 운영(real): `KIWOOM_MODE=real`, `APP_KEY=<운영 App Key>`, `APP_SECRET=<운영 App Secret>`
 - 모의투자(demo): `KIWOOM_MODE=demo`, `APP_KEY_MOCK=<모의 App Key>`, `APP_SECRET_MOCK=<모의 App Secret>`
+
+`.env.example`에서 사용할 mode에 맞는 운영 또는 모의투자 키를 입력합니다.
+`PRD`, `MOCK`, `W_PRD`, `W_MOCK`은 기본 키움 엔드포인트가 내장되어 있어
+기본값을 사용할 때는 수정할 필요가 없습니다.
 
 환경에 로드합니다.
 
@@ -378,8 +431,15 @@ $env:KIWOOM_MODE
 
 ### 자격 증명을 찾을 수 없음 (`CredentialsNotFoundError`)
 
-- `kiwoomcli setup`을 완료했는지 확인합니다: `kiwoomcli auth status`
-- `.env`를 로드한 상태라면, `KIWOOM_MODE`만 있고 키가 비어 있을 수 있습니다. CLI 인증을 쓰는 경우 **로드된 `.env` 환경변수를 해제**하거나 새 터미널을 사용하세요.
+- CLI 사용: `kiwoomcli setup` 완료 여부를 `kiwoomcli auth status`로 확인합니다.
+- `.env` 사용: `KIWOOM_MODE`와 현재 mode에 맞는
+  `APP_KEY(_MOCK)`/`APP_SECRET(_MOCK)`을 확인합니다.
+- CLI 인증을 쓰는 경우 로드된 `.env` 환경변수를 해제하거나 새 터미널을 사용하세요.
+
+### 실행 mode를 찾을 수 없음 (`ModeNotConfiguredError`)
+
+- `kiwoomcli setup`으로 현재 프로필을 설정하거나 `.env`의
+  `KIWOOM_MODE=real|demo`를 로드합니다.
 
 ### 자격 증명 저장소를 쓸 수 없음 (`KeyringUnavailableError`)
 
@@ -400,28 +460,8 @@ $env:KIWOOM_MODE
 - App Key/Secret은 **운영 자금에 직접 영향**을 줄 수 있는 민감 정보입니다.
 - 가능하면 자격 증명 저장소를 쓰는 CLI 인증(`kiwoomcli setup`)을 사용하고, `.env`는 꼭 필요한 환경에서만 쓰세요.
 - 키를 화면 공유, 캡처, 공용 저장소에 노출하지 마세요.
+- Postman Collection/환경 변수에도 실제 키나 토큰을 저장한 채 공유하지 마세요.
 - 운영(real)과 모의투자(demo)를 구분해 사용하고, 주문 계열 명령/예제는 대상 환경을 반드시 확인한 뒤 실행하세요.
-
----
-
-## 부록 D: AI 에이전트에게 "CLI 설치까지" 맡길 때
-
-> 이 절은 사용자가 AI 코딩 에이전트에게 "이 문서대로 CLI를 설정해줘"라고 요청할 때를 위한 **실행 규칙**입니다.
-> 명령 자체는 위 본문(2~4단계)을 그대로 사용하고, 이 절은 **에이전트가 지켜야 할 범위와 경계**만 정의합니다.
-
-**수행 범위**: 본문 **2단계(Python) → 3단계(uv) → 4단계(CLI 설치)** 까지. 각 단계는 "버전 확인 후 없을 때만 설치"(멱등) 원칙을 따르고, OS는 자동 판별해 해당 명령만 실행한다.
-
-**멈추는 지점**: 4단계의 `kiwoomcli --help` 검증이 성공하면 **종료**한다. 그 다음(5단계 `kiwoomcli setup` 이후)은 진행하지 않는다.
-
-**세션 내 PATH 처리**: 설치 직후 `kiwoomcli`이 안 잡히면, 새 터미널 대신 `uv tool update-shell`(필요 시 `uv tool dir`/`uv tool list`로 경로 확인)로 **현재 세션에 PATH를 반영**한다. (자세한 안내는 4단계 끝의 주석 참고)
-
-**절대 하지 않을 것**:
-
-- `kiwoomcli setup` / `kiwoomcli auth` / `kiwoomcli domestic stocks` 등 **자격 증명이 필요한 명령 실행** — App Key/Secret은 사용자만 입력한다.
-- `examples/` 실행 등 **실제 API 호출**, 특히 주문 계열.
-- `.env` 등 자격 증명 관련 파일 임의 생성.
-
-**완료 후**: CLI 설치 완료를 알리고, 남은 **1단계(키 발급)**와 **5단계(`kiwoomcli setup` 인증)**는 사용자가 직접 진행하도록 안내한다.
 
 ---
 
@@ -432,5 +472,6 @@ $env:KIWOOM_MODE
 3. `uv` 설치
 4. `uv tool install kwcli`로 CLI 설치
 5. `kiwoomcli setup`으로 인증 설정
-6. `kiwoomcli auth status` / `kiwoomcli domestic stocks info --code 005930`로 확인
-7. (선택) 프로젝트 폴더에서 `uv sync` 후 `uv run python "examples/..."`로 샘플코드 실행
+6. `kiwoomcli auth status`와 국내/미국 조회 명령으로 확인
+7. 저장소에서 `uv sync` 후 `uv run python "examples/..."`로 샘플코드 실행
+8. 필요하면 `postman/kiwoom-openapi.postman_collection.json` Import

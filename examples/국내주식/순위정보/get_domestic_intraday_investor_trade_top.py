@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10065"
 API_URL = "/api/dostk/rkinfo"
@@ -30,13 +30,16 @@ TABLE_KEYS = {
 COLUMNS = {
     "stk_cd": "종목코드",
     "stk_nm": "종목명",
-    "sel_qty": "매도량",
-    "buy_qty": "매수량",
-    "netslmt": "순매도"
+    "sel_qty": "매도금액/매도량",
+    "buy_qty": "매수금액/매수량",
+    "netslmt": "순매수/순매도"
 }
 
 
-NUMERIC_COLUMNS = ('매수량',)
+NUMERIC_COLUMNS = (
+    '매도금액/매도량',
+    '매수금액/매수량',
+)
 
 def _format_display(df: pd.DataFrame) -> pd.DataFrame:
     display = df.copy()
@@ -78,10 +81,10 @@ def get_domestic_intraday_investor_trade_top(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        trde_tp: 1:순매수, 2:순매도
-        mrkt_tp: 000:전체, 001:코스피, 101:코스닥
-        orgn_tp: 9000:외국인, 9100:외국계, 1000:금융투자, 3000:투신, 5000:기타금융, 4000:은행, 2000:보험, 6000:연기금, 7000:국가, 7100:기타법인, 9999:기관계
-        amt_qty_tp: 1:금액, 2:수량
+        trde_tp: 매매구분 — 1:순매수, 2:순매도
+        mrkt_tp: 시장구분 — 000:전체, 001:코스피, 101:코스닥
+        orgn_tp: 기관구분 — 9000:외국인, 9100:외국계, 1000:금융투자, 3000:투신, 5000:기타금융, 4000:은행, 2000:보험, 6000:연기금, 7000:국가, 7100:기타법인, 9999:기관계
+        amt_qty_tp: 금액수량구분 — 1:금액, 2:수량
 
     Returns:
         API 응답 데이터입니다.
@@ -107,12 +110,12 @@ def get_domestic_intraday_investor_trade_top(
 
     # 2. 요청 파라미터 바디
     body = {
-        "trde_tp": trde_tp,
-        "mrkt_tp": mrkt_tp,
-        "orgn_tp": orgn_tp,
+        "trde_tp": trde_tp,  # 매매구분
+        "mrkt_tp": mrkt_tp,  # 시장구분
+        "orgn_tp": orgn_tp,  # 기관구분
     }
     if amt_qty_tp is not None:
-        body["amt_qty_tp"] = amt_qty_tp
+        body["amt_qty_tp"] = amt_qty_tp  # 금액수량구분
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -143,9 +146,12 @@ def get_domestic_intraday_investor_trade_top(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -179,12 +185,15 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_intraday_investor_trade_top(
-        trde_tp='1',
-        mrkt_tp='000',
-        orgn_tp='9000',
-        amt_qty_tp='1',
-    )
+    try:
+        result = get_domestic_intraday_investor_trade_top(
+            trde_tp='1',
+            mrkt_tp='000',
+            orgn_tp='9000',
+            amt_qty_tp='1',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

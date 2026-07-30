@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka90004"
 API_URL = "/api/dostk/stkinfo"
@@ -42,21 +42,27 @@ COLUMNS = {
 }
 SUMMARY_KEY = "요약"
 SUMMARY_COLUMNS = {
-    "tot_1": "합계1",
-    "tot_2": "합계2",
-    "tot_3": "합계3",
-    "tot_4": "합계4",
-    "tot_5": "합계5",
+    "tot_1": "매수체결수량합계",
+    "tot_2": "매수체결금액합계",
+    "tot_3": "매도체결수량합계",
+    "tot_4": "매도체결금액합계",
+    "tot_5": "순매수대금합계",
     "tot_6": "합계6"
 }
 
 
 NUMERIC_COLUMNS = (
     '매도체결금액',
+    '매도체결금액합계',
     '매도체결수량',
+    '매도체결수량합계',
     '매수체결금액',
+    '매수체결금액합계',
     '매수체결수량',
+    '매수체결수량합계',
     '순매수대금',
+    '순매수대금합계',
+    '전체거래비율',
     '현재가',
 )
 
@@ -99,9 +105,9 @@ def get_domestic_stock_program_trade_status(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        dt: YYYYMMDD
-        mrkt_tp: P00101:코스피, P10102:코스닥
-        stex_tp: 1:KRX, 2:NXT 3.통합
+        dt: 일자 — YYYYMMDD
+        mrkt_tp: 시장구분 — P00101:코스피, P10102:코스닥
+        stex_tp: 거래소구분 — 1:KRX, 2:NXT 3.통합
 
     Returns:
         API 응답 데이터입니다.
@@ -126,9 +132,9 @@ def get_domestic_stock_program_trade_status(
 
     # 2. 요청 파라미터 바디
     body = {
-        "dt": dt,
-        "mrkt_tp": mrkt_tp,
-        "stex_tp": stex_tp,
+        "dt": dt,  # 일자
+        "mrkt_tp": mrkt_tp,  # 시장구분
+        "stex_tp": stex_tp,  # 거래소구분
     }
 
     # 3. 인증 클라이언트
@@ -165,9 +171,12 @@ def get_domestic_stock_program_trade_status(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -205,11 +214,14 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_stock_program_trade_status(
-        dt='20241125',
-        mrkt_tp='P00101',
-        stex_tp='1',
-    )
+    try:
+        result = get_domestic_stock_program_trade_status(
+            dt='20241125',
+            mrkt_tp='P00101',
+            stex_tp='1',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

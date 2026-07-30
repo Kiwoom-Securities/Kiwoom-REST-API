@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "kt00010"
 API_URL = "/api/dostk/acnt"
@@ -129,12 +129,12 @@ def get_domestic_order_withdrawable_amount(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        stk_cd: 종목번호
-        trde_tp: 1:매도, 2:매수
-        uv: 매수가격
-        io_amt: 입출금액
-        trde_qty: 매매수량
-        exp_buy_unp: 예상매수단가
+        stk_cd: 종목번호 — 종목 코드 입력
+        trde_tp: 매매구분 — 1:매도, 2:매수
+        uv: 매수가격 — 단위: 원
+        io_amt: 입출금액 — 단위: 원
+        trde_qty: 매매수량 — 단위: 1주
+        exp_buy_unp: 예상매수단가 — 단위: 원
 
     Returns:
         API 응답 데이터입니다.
@@ -161,16 +161,16 @@ def get_domestic_order_withdrawable_amount(
 
     # 2. 요청 파라미터 바디
     body = {
-        "stk_cd": stk_cd,
-        "trde_tp": trde_tp,
-        "uv": uv,
+        "stk_cd": stk_cd,  # 종목번호
+        "trde_tp": trde_tp,  # 매매구분
+        "uv": uv,  # 매수가격
     }
     if io_amt is not None:
-        body["io_amt"] = io_amt
+        body["io_amt"] = io_amt  # 입출금액
     if trde_qty is not None:
-        body["trde_qty"] = trde_qty
+        body["trde_qty"] = trde_qty  # 매매수량
     if exp_buy_unp is not None:
-        body["exp_buy_unp"] = exp_buy_unp
+        body["exp_buy_unp"] = exp_buy_unp  # 예상매수단가
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -230,13 +230,16 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    df = get_domestic_order_withdrawable_amount(
-        stk_cd='005930',
-        trde_tp='2',
-        uv='267000',
-        io_amt='',
-        trde_qty='',
-        exp_buy_unp='',
-    )
+    try:
+        df = get_domestic_order_withdrawable_amount(
+            stk_cd='005930',
+            trde_tp='2',
+            uv='267000',
+            io_amt='',
+            trde_qty='',
+            exp_buy_unp='',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     print(_format_display(df))

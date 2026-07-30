@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10043"
 API_URL = "/api/dostk/stkinfo"
@@ -41,6 +41,8 @@ COLUMNS = {
 
 
 NUMERIC_COLUMNS = (
+    '거래량합',
+    '거래비중',
     '매수량',
     '순매수수량',
     '종가',
@@ -91,16 +93,16 @@ def get_domestic_broker_volume_profile_analysis(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        stk_cd: 거래소별 종목코드
+        stk_cd: 종목코드 — 거래소별 종목코드
             (KRX:039490,NXT:039490_NX,SOR:039490_AL)
-        strt_dt: YYYYMMDD
-        end_dt: YYYYMMDD
-        qry_dt_tp: 0:기간으로 조회, 1:시작일자, 종료일자로 조회
-        pot_tp: 0:당일, 1:전일
-        dt: 5:5일, 10:10일, 20:20일, 40:40일, 60:60일, 120:120일
-        sort_base: 1:종가순, 2:날짜순
-        mmcm_cd: 회원사 코드는 ka10102 조회
-        stex_tp: 1:KRX, 2:NXT 3.통합
+        strt_dt: 시작일자 — YYYYMMDD
+        end_dt: 종료일자 — YYYYMMDD
+        qry_dt_tp: 조회기간구분 — 0:기간으로 조회, 1:시작일자, 종료일자로 조회
+        pot_tp: 시점구분 — 0:당일, 1:전일
+        dt: 기간 — 5:5일, 10:10일, 20:20일, 40:40일, 60:60일, 120:120일
+        sort_base: 정렬기준 — 1:종가순, 2:날짜순
+        mmcm_cd: 회원사코드 — 회원사 코드는 ka10102 조회
+        stex_tp: 거래소구분 — 1:KRX, 2:NXT 3.통합
 
     Returns:
         API 응답 데이터입니다.
@@ -143,15 +145,15 @@ def get_domestic_broker_volume_profile_analysis(
 
     # 2. 요청 파라미터 바디
     body = {
-        "stk_cd": stk_cd,
-        "strt_dt": strt_dt,
-        "end_dt": end_dt,
-        "qry_dt_tp": qry_dt_tp,
-        "pot_tp": pot_tp,
-        "dt": dt,
-        "sort_base": sort_base,
-        "mmcm_cd": mmcm_cd,
-        "stex_tp": stex_tp,
+        "stk_cd": stk_cd,  # 종목코드
+        "strt_dt": strt_dt,  # 시작일자
+        "end_dt": end_dt,  # 종료일자
+        "qry_dt_tp": qry_dt_tp,  # 조회기간구분
+        "pot_tp": pot_tp,  # 시점구분
+        "dt": dt,  # 기간
+        "sort_base": sort_base,  # 정렬기준
+        "mmcm_cd": mmcm_cd,  # 회원사코드
+        "stex_tp": stex_tp,  # 거래소구분
     }
 
     # 3. 인증 클라이언트
@@ -183,9 +185,12 @@ def get_domestic_broker_volume_profile_analysis(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -219,17 +224,20 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_broker_volume_profile_analysis(
-        stk_cd='005930',
-        strt_dt='20241031',
-        end_dt='20241107',
-        qry_dt_tp='0',
-        pot_tp='0',
-        dt='5',
-        sort_base='1',
-        mmcm_cd='36',
-        stex_tp='3',
-    )
+    try:
+        result = get_domestic_broker_volume_profile_analysis(
+            stk_cd='005930',
+            strt_dt='20241031',
+            end_dt='20241107',
+            qry_dt_tp='0',
+            pot_tp='0',
+            dt='5',
+            sort_base='1',
+            mmcm_cd='36',
+            stex_tp='3',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

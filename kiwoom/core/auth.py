@@ -161,8 +161,8 @@ class KiwoomAuth:
     def authorization_header(self) -> str:
         return f"Bearer {self.get_access_token()}"
 
-    def clear_token(self) -> None:
-        self.token_store.clear(self.mode, profile=self.profile)
+    def clear_token(self) -> bool:
+        return self.token_store.clear(self.mode, profile=self.profile)
 
     def recover_from_auth_failure(self) -> str:
         self.clear_token()

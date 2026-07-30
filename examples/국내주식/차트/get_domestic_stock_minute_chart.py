@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10080"
 API_URL = "/api/dostk/chart"
@@ -28,13 +28,12 @@ TABLE_KEYS = {
     "stk_min_pole_chart_qry": "주식분봉차트조회"
 }
 COLUMNS = {
-    "cur_prc": "현재가",
+    "cur_prc": "현재가(종가)",
     "trde_qty": "거래량",
     "cntr_tm": "체결시간",
     "open_pric": "시가",
     "high_pric": "고가",
     "low_pric": "저가",
-    "acc_trde_qty": "누적거래량",
     "pred_pre": "전일대비",
     "pred_pre_sig": "전일대비 기호"
 }
@@ -47,10 +46,9 @@ SUMMARY_COLUMNS = {
 NUMERIC_COLUMNS = (
     '거래량',
     '고가',
-    '누적거래량',
     '시가',
     '저가',
-    '현재가',
+    '현재가(종가)',
 )
 
 def _format_display(df: pd.DataFrame) -> pd.DataFrame:
@@ -93,11 +91,11 @@ def get_domestic_stock_minute_chart(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        stk_cd: 거래소별 종목코드
+        stk_cd: 종목코드 — 거래소별 종목코드
             (KRX:039490,NXT:039490_NX,SOR:039490_AL)
-        tic_scope: 1:1분, 3:3분, 5:5분, 10:10분, 15:15분, 30:30분, 45:45분, 60:60분
-        upd_stkpc_tp: 0 or 1
-        base_dt: YYYYMMDD
+        tic_scope: 틱범위 — 1:1분, 3:3분, 5:5분, 10:10분, 15:15분, 30:30분, 45:45분, 60:60분
+        upd_stkpc_tp: 수정주가구분 — 0 or 1
+        base_dt: 기준일자 — YYYYMMDD
 
     Returns:
         API 응답 데이터입니다.
@@ -123,12 +121,12 @@ def get_domestic_stock_minute_chart(
 
     # 2. 요청 파라미터 바디
     body = {
-        "stk_cd": stk_cd,
-        "tic_scope": tic_scope,
-        "upd_stkpc_tp": upd_stkpc_tp,
+        "stk_cd": stk_cd,  # 종목코드
+        "tic_scope": tic_scope,  # 틱범위
+        "upd_stkpc_tp": upd_stkpc_tp,  # 수정주가구분
     }
     if base_dt is not None:
-        body["base_dt"] = base_dt
+        body["base_dt"] = base_dt  # 기준일자
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -164,9 +162,12 @@ def get_domestic_stock_minute_chart(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -204,12 +205,15 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_stock_minute_chart(
-        stk_cd='005930',
-        tic_scope='1',
-        upd_stkpc_tp='1',
-        base_dt='20260202',
-    )
+    try:
+        result = get_domestic_stock_minute_chart(
+            stk_cd='005930',
+            tic_scope='1',
+            upd_stkpc_tp='1',
+            base_dt='20260202',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

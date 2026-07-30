@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "kt50001"
 API_URL = "/api/dostk/ordr"
@@ -72,10 +72,10 @@ def sell_domestic_gold_spot(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        stk_cd: M04020000 금 99.99_1kg, M04020100 미니금 99.99_100g
-        ord_qty: 주문수량
-        trde_tp: 00:보통, 10:보통(IOC), 20:보통(FOK)
-        ord_uv: 주문단가
+        stk_cd: 종목코드 — M04020000 금 99.99_1kg, M04020100 미니금 99.99_100g
+        ord_qty: 주문수량 — 단위: 1주
+        trde_tp: 매매구분 — 00:보통, 10:보통(IOC), 20:보통(FOK)
+        ord_uv: 주문단가 — 단위: 원
 
     Returns:
         API 응답 데이터입니다.
@@ -100,12 +100,12 @@ def sell_domestic_gold_spot(
 
     # 2. 요청 파라미터 바디
     body = {
-        "stk_cd": stk_cd,
-        "ord_qty": ord_qty,
-        "trde_tp": trde_tp,
+        "stk_cd": stk_cd,  # 종목코드
+        "ord_qty": ord_qty,  # 주문수량
+        "trde_tp": trde_tp,  # 매매구분
     }
     if ord_uv is not None:
-        body["ord_uv"] = ord_uv
+        body["ord_uv"] = ord_uv  # 주문단가
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -165,11 +165,14 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    df = sell_domestic_gold_spot(
-        stk_cd='M04020000',
-        ord_qty='1',
-        trde_tp='00',
-        ord_uv='160000',
-    )
+    try:
+        df = sell_domestic_gold_spot(
+            stk_cd='M04020000',
+            ord_qty='1',
+            trde_tp='00',
+            ord_uv='160000',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     print(_format_display(df))

@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "kt00015"
 API_URL = "/api/dostk/acnt"
@@ -138,6 +138,7 @@ def get_domestic_brokerage_account_transaction_history(
     stk_cd: str | None = '',
     crnc_cd: str | None = '',
     frgn_stex_code: str | None = '',
+    qry_sort_tp: str | None = '',
 ) -> dict[str, pd.DataFrame]:
     """
     위탁종합거래내역요청[kt00015] API를 호출합니다.
@@ -145,14 +146,15 @@ def get_domestic_brokerage_account_transaction_history(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        strt_dt: 시작일자
-        end_dt: 종료일자
-        tp: 0:전체,1:입출금,2:입출고,3:매매,4:매수,5:매도,6:입금,7:출금,A:예탁담보대출입금,B:매도담보대출입금,C:현금상환(융자,담보상환),F:환전,M:입출금+환전,G:외화매수,H:외화매도,I:환전정산입금,J:환전정산출금
-        gds_tp: 0:전체, 1:국내주식, 2:수익증권, 3:해외주식, 4:금융상품
-        dmst_stex_tp: %:(전체),KRX:한국거래소,NXT:넥스트트레이드
-        stk_cd: 종목코드
-        crnc_cd: 통화코드
+        strt_dt: 시작일자 — YYYYMMDD
+        end_dt: 종료일자 — YYYYMMDD
+        tp: 구분 — 0:전체,1:입출금,2:입출고,3:매매,4:매수,5:매도,6:입금,7:출금,A:예탁담보대출입금,B:매도담보대출입금,C:현금상환(융자,담보상환),F:환전,M:입출금+환전,G:외화매수,H:외화매도,I:환전정산입금,J:환전정산출금
+        gds_tp: 상품구분 — 0:전체, 1:국내주식, 2:수익증권, 3:해외주식, 4:금융상품
+        dmst_stex_tp: 국내거래소구분 — %:(전체),KRX:한국거래소,NXT:넥스트트레이드
+        stk_cd: 종목코드 — 종목 코드 입력
+        crnc_cd: 통화코드 — 통화코드 3자리
         frgn_stex_code: 해외거래소코드
+        qry_sort_tp: 조회정렬구분 — 1:최근거래순, 2:과거거래순(미입력시 과거거래순)
 
     Returns:
         API 응답 데이터입니다.
@@ -167,6 +169,7 @@ def get_domestic_brokerage_account_transaction_history(
         ...     stk_cd='',
         ...     crnc_cd='',
         ...     frgn_stex_code='',
+        ...     qry_sort_tp='',
         ... )
         >>> for key, df in result.items():
         ...     print(key, df)
@@ -186,18 +189,20 @@ def get_domestic_brokerage_account_transaction_history(
 
     # 2. 요청 파라미터 바디
     body = {
-        "strt_dt": strt_dt,
-        "end_dt": end_dt,
-        "tp": tp,
-        "gds_tp": gds_tp,
-        "dmst_stex_tp": dmst_stex_tp,
+        "strt_dt": strt_dt,  # 시작일자
+        "end_dt": end_dt,  # 종료일자
+        "tp": tp,  # 구분
+        "gds_tp": gds_tp,  # 상품구분
+        "dmst_stex_tp": dmst_stex_tp,  # 국내거래소구분
     }
     if stk_cd is not None:
-        body["stk_cd"] = stk_cd
+        body["stk_cd"] = stk_cd  # 종목코드
     if crnc_cd is not None:
-        body["crnc_cd"] = crnc_cd
+        body["crnc_cd"] = crnc_cd  # 통화코드
     if frgn_stex_code is not None:
-        body["frgn_stex_code"] = frgn_stex_code
+        body["frgn_stex_code"] = frgn_stex_code  # 해외거래소코드
+    if qry_sort_tp is not None:
+        body["qry_sort_tp"] = qry_sort_tp  # 조회정렬구분
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -228,9 +233,12 @@ def get_domestic_brokerage_account_transaction_history(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -264,16 +272,20 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_brokerage_account_transaction_history(
-        strt_dt='20241121',
-        end_dt='20241125',
-        tp='0',
-        gds_tp='0',
-        dmst_stex_tp='%',
-        stk_cd='',
-        crnc_cd='',
-        frgn_stex_code='',
-    )
+    try:
+        result = get_domestic_brokerage_account_transaction_history(
+            strt_dt='20241121',
+            end_dt='20241125',
+            tp='0',
+            gds_tp='0',
+            dmst_stex_tp='%',
+            stk_cd='',
+            crnc_cd='',
+            frgn_stex_code='',
+            qry_sort_tp='',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

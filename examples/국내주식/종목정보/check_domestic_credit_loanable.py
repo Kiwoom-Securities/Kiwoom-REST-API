@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "kt20017"
 API_URL = "/api/dostk/stkinfo"
@@ -69,7 +69,7 @@ def check_domestic_credit_loanable(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        stk_cd: 종목코드
+        stk_cd: 종목코드 — 종목 코드 입력
 
     Returns:
         API 응답 데이터입니다.
@@ -87,7 +87,7 @@ def check_domestic_credit_loanable(
 
     # 2. 요청 파라미터 바디
     body = {
-        "stk_cd": stk_cd,
+        "stk_cd": stk_cd,  # 종목코드
     }
 
     # 3. 인증 클라이언트
@@ -148,8 +148,11 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    df = check_domestic_credit_loanable(
-        stk_cd='039490',
-    )
+    try:
+        df = check_domestic_credit_loanable(
+            stk_cd='039490',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     print(_format_display(df))

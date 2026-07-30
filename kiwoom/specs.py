@@ -1,4 +1,5 @@
 import json
+from functools import lru_cache
 from importlib.resources import files
 from pathlib import Path
 from typing import Any
@@ -15,6 +16,31 @@ def load_api_specs(spec_path: Path | None = None) -> dict[str, dict[str, Any]]:
         for api_payload in payload.get("apis", {}).values()
         if str(api_payload.get("meta", {}).get("API ID", "")).strip()
     }
+
+
+@lru_cache(maxsize=None)
+def response_field_labels(api_id: str) -> dict[str, str]:
+    """Map a REST response's field codes to Korean display names for one API.
+
+    Built from the packaged spec's ``response.body`` (``element`` -> ``한글명``),
+    the same source the realtime schema uses for FID naming. Duplicate display
+    names are suffixed with the element code so relabeling cannot collapse two
+    distinct fields onto one key. Returns an empty map for unknown APIs.
+    """
+    payload = load_api_specs().get(str(api_id).strip())
+    if not payload:
+        return {}
+    labels: dict[str, str] = {}
+    used: set[str] = set()
+    for row in payload.get("response", {}).get("body", []):
+        element = str(row.get("element", "")).strip()
+        korean = str(row.get("한글명", "")).strip()
+        if not element or not korean or element in labels:
+            continue
+        label = korean if korean not in used else f"{korean}_{element}"
+        used.add(label)
+        labels[element] = label
+    return labels
 
 
 def load_search_entries(spec_path: Path | None = None) -> list[dict[str, object]]:

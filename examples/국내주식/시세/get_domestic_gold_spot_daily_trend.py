@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka50012"
 API_URL = "/api/dostk/mrkcond"
@@ -94,8 +94,8 @@ def get_domestic_gold_spot_daily_trend(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        stk_cd: M04020000 금 99.99_1kg, M04020100 미니금 99.99_100g
-        base_dt: YYYYMMDD
+        stk_cd: 종목코드 — M04020000 금 99.99_1kg, M04020100 미니금 99.99_100g
+        base_dt: 기준일자 — YYYYMMDD
 
     Returns:
         API 응답 데이터입니다.
@@ -117,8 +117,8 @@ def get_domestic_gold_spot_daily_trend(
 
     # 2. 요청 파라미터 바디
     body = {
-        "stk_cd": stk_cd,
-        "base_dt": base_dt,
+        "stk_cd": stk_cd,  # 종목코드
+        "base_dt": base_dt,  # 기준일자
     }
 
     # 3. 인증 클라이언트
@@ -150,9 +150,12 @@ def get_domestic_gold_spot_daily_trend(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -186,10 +189,13 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_gold_spot_daily_trend(
-        stk_cd='M04020000',
-        base_dt='20250820',
-    )
+    try:
+        result = get_domestic_gold_spot_daily_trend(
+            stk_cd='M04020000',
+            base_dt='20250820',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

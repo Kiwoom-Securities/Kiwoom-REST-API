@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka10051"
 API_URL = "/api/dostk/sect"
@@ -100,10 +100,10 @@ def get_domestic_sector_investor_net_buy(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        mrkt_tp: 코스피:0, 코스닥:1
-        amt_qty_tp: 금액:0, 수량:1
-        stex_tp: 1:KRX, 2:NXT, 3:통합
-        base_dt: YYYYMMDD
+        mrkt_tp: 시장구분 — 코스피:0, 코스닥:1
+        amt_qty_tp: 금액수량구분 — 금액:0, 수량:1
+        stex_tp: 거래소구분 — 1:KRX, 2:NXT, 3:통합
+        base_dt: 기준일자 — YYYYMMDD
 
     Returns:
         API 응답 데이터입니다.
@@ -129,12 +129,12 @@ def get_domestic_sector_investor_net_buy(
 
     # 2. 요청 파라미터 바디
     body = {
-        "mrkt_tp": mrkt_tp,
-        "amt_qty_tp": amt_qty_tp,
-        "stex_tp": stex_tp,
+        "mrkt_tp": mrkt_tp,  # 시장구분
+        "amt_qty_tp": amt_qty_tp,  # 금액수량구분
+        "stex_tp": stex_tp,  # 거래소구분
     }
     if base_dt is not None:
-        body["base_dt"] = base_dt
+        body["base_dt"] = base_dt  # 기준일자
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -165,9 +165,12 @@ def get_domestic_sector_investor_net_buy(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -201,12 +204,15 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_sector_investor_net_buy(
-        mrkt_tp='0',
-        amt_qty_tp='0',
-        stex_tp='3',
-        base_dt='20241107',
-    )
+    try:
+        result = get_domestic_sector_investor_net_buy(
+            mrkt_tp='0',
+            amt_qty_tp='0',
+            stex_tp='3',
+            base_dt='20241107',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

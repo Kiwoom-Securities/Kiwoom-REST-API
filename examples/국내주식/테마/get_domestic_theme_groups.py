@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "ka90001"
 API_URL = "/api/dostk/thme"
@@ -84,12 +84,12 @@ def get_domestic_theme_groups(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        qry_tp: 0:전체검색, 1:테마검색, 2:종목검색
-        date_tp: n일전 (1일 ~ 99일 날짜입력)
-        flu_pl_amt_tp: 1:상위기간수익률, 2:하위기간수익률, 3:상위등락률, 4:하위등락률
-        stex_tp: 1:KRX, 2:NXT 3.통합
-        stk_cd: 검색하려는 종목코드
-        thema_nm: 검색하려는 테마명
+        qry_tp: 검색구분 — 0:전체검색, 1:테마검색, 2:종목검색
+        date_tp: 날짜구분 — n일전 (1일 ~ 99일 날짜입력)
+        flu_pl_amt_tp: 등락수익구분 — 1:상위기간수익률, 2:하위기간수익률, 3:상위등락률, 4:하위등락률
+        stex_tp: 거래소구분 — 1:KRX, 2:NXT 3.통합
+        stk_cd: 종목코드 — 검색하려는 종목코드
+        thema_nm: 테마명 — 검색하려는 테마명
 
     Returns:
         API 응답 데이터입니다.
@@ -119,15 +119,15 @@ def get_domestic_theme_groups(
 
     # 2. 요청 파라미터 바디
     body = {
-        "qry_tp": qry_tp,
-        "date_tp": date_tp,
-        "flu_pl_amt_tp": flu_pl_amt_tp,
-        "stex_tp": stex_tp,
+        "qry_tp": qry_tp,  # 검색구분
+        "date_tp": date_tp,  # 날짜구분
+        "flu_pl_amt_tp": flu_pl_amt_tp,  # 등락수익구분
+        "stex_tp": stex_tp,  # 거래소구분
     }
     if stk_cd is not None:
-        body["stk_cd"] = stk_cd
+        body["stk_cd"] = stk_cd  # 종목코드
     if thema_nm is not None:
-        body["thema_nm"] = thema_nm
+        body["thema_nm"] = thema_nm  # 테마명
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -158,9 +158,12 @@ def get_domestic_theme_groups(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -194,14 +197,17 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_theme_groups(
-        qry_tp='0',
-        date_tp='10',
-        flu_pl_amt_tp='1',
-        stex_tp='1',
-        stk_cd='',
-        thema_nm='',
-    )
+    try:
+        result = get_domestic_theme_groups(
+            qry_tp='0',
+            date_tp='10',
+            flu_pl_amt_tp='1',
+            stex_tp='1',
+            stk_cd='',
+            thema_nm='',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")

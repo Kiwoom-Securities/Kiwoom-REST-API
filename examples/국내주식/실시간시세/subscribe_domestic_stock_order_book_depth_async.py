@@ -10,145 +10,202 @@
 
 import asyncio
 import logging
-from typing import Any, Literal
-
-import pandas as pd
 
 from kiwoom import get_ws_client
-from kiwoom.realtime.decoders import decode_values
+from kiwoom.realtime import collect_realtime
 
-# WebSocket 클라이언트가 LOGIN 패킷과 PING 응답을 자동 처리합니다.
+# 주식호가잔량(0D) 실시간 구독 예제
+# LOGIN/PING과 수신 루프는 공통 WebSocket 클라이언트가 처리합니다.
 
-API_ID = "0D"
 API_URL = "/api/dostk/websocket"
-
-
-def build_realtime_reg_packet(
-    *,
-    items: list[str],
-    types: list[str],
-    group_no: str = "1",
-    refresh: str = "1",
-) -> dict[str, Any]:
-    """키움 실시간 항목 등록(REG) 패킷을 생성합니다."""
-    if not types:
-        raise ValueError("types is required.")
-    return {
-        "trnm": "REG",
-        "grp_no": group_no,
-        "refresh": refresh,
-        "data": [
-            {
-                "item": items,
-                "type": types,
-            }
-        ],
-    }
-
-async def subscribe_domestic_stock_order_book_depth_async(
-    items: list[str],
-    types: list[str] | None = None,
-    group_no: str = "1",
-    refresh: str = "1",
-    output: Literal["dataframe", "json"] = "dataframe",
-    max_messages: int = 10,
-) -> pd.DataFrame | dict[str, Any] | list[dict[str, Any]]:
-    """
-    주식호가잔량[0D] 실시간 데이터를 수신합니다.
-
-    공통 WebSocket 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
-
-    Args:
-        items: 실시간 등록 종목 또는 요소 목록.
-        types: 실시간 항목 타입 목록. 생략하면 이 예제의 API_ID를 사용합니다.
-        group_no: 그룹번호.
-        refresh: 기존 등록 유지 여부. "1"은 기존 등록을 유지합니다.
-        output: "dataframe" 또는 "json".
-        max_messages: 수집할 최대 실시간 메시지 수.
-
-    Returns:
-        실시간 수신 데이터를 반환합니다.
-
-    Example:
-        >>> result = await subscribe_domestic_stock_order_book_depth_async(
-        ...     items=['005930'],
-        ...     types=['0D'],
-        ... )
-        >>> for k, v in (result.items() if isinstance(result, dict) else [("data", result)]):
-        ...     print(k, v.head() if isinstance(v, pd.DataFrame) else v)
-    """
-    if max_messages < 1:
-        raise ValueError("max_messages must be greater than 0")
-    if not items:
-        raise ValueError("items is required.")
-
-    body = build_realtime_reg_packet(
-        items=items,
-        types=types or [API_ID],
-        group_no=group_no,
-        refresh=refresh,
-    )
-
-    client = get_ws_client()
-    rows: list[dict[str, Any]] = []
-    system_rows: list[dict[str, Any]] = []
-    try:
-        await client.subscribe(api_url=API_URL, body=body)
-
-        async for message in client.iter_messages():
-            if not isinstance(message, dict):
-                continue
-            trnm = str(message.get("trnm", "")).upper()
-            if trnm in {"REG", "SYSTEM"}:
-                system_rows.append(message)
-                print(f"[{trnm}]", message, flush=True)
-                return_code = message.get("return_code")
-                if trnm == "SYSTEM" or return_code not in (None, 0, "0"):
-                    if output == "json":
-                        return {"system": system_rows, "data": rows} if rows else system_rows
-                    result: dict[str, pd.DataFrame] = {"system": pd.DataFrame(system_rows)}
-                    if rows:
-                        result["data"] = pd.DataFrame(rows)
-                    return result
-                continue
-            if trnm != "REAL":
-                system_rows.append(message)
-                print(f"[{trnm or 'MESSAGE'}]", message, flush=True)
-                continue
-            for entry in message.get("data", []):
-                if not isinstance(entry, dict):
-                    continue
-                values = decode_values(str(entry.get("type", "")), entry.get("values", {}))
-                rows.append({"item": entry.get("item", ""), "type": entry.get("type", ""), **values})
-                if len(rows) >= max_messages:
-                    if output == "json":
-                        return {"system": system_rows, "data": rows} if system_rows else rows
-                    result: dict[str, pd.DataFrame] = {"data": pd.DataFrame(rows)}
-                    if system_rows:
-                        result["system"] = pd.DataFrame(system_rows)
-                    return result
-    finally:
-        await client.close()
-
-    if output == "json":
-        return {"system": system_rows, "data": rows} if system_rows else rows
-    result: dict[str, pd.DataFrame] = {"data": pd.DataFrame(rows)}
-    if system_rows:
-        result["system"] = pd.DataFrame(system_rows)
-    return result
+COLUMNS = {
+    '21': '호가시간',
+    '41': '매도호가1',
+    '61': '매도호가수량1',
+    '81': '매도호가직전대비1',
+    '51': '매수호가1',
+    '71': '매수호가수량1',
+    '91': '매수호가직전대비1',
+    '42': '매도호가2',
+    '62': '매도호가수량2',
+    '82': '매도호가직전대비2',
+    '52': '매수호가2',
+    '72': '매수호가수량2',
+    '92': '매수호가직전대비2',
+    '43': '매도호가3',
+    '63': '매도호가수량3',
+    '83': '매도호가직전대비3',
+    '53': '매수호가3',
+    '73': '매수호가수량3',
+    '93': '매수호가직전대비3',
+    '44': '매도호가4',
+    '64': '매도호가수량4',
+    '84': '매도호가직전대비4',
+    '54': '매수호가4',
+    '74': '매수호가수량4',
+    '94': '매수호가직전대비4',
+    '45': '매도호가5',
+    '65': '매도호가수량5',
+    '85': '매도호가직전대비5',
+    '55': '매수호가5',
+    '75': '매수호가수량5',
+    '95': '매수호가직전대비5',
+    '46': '매도호가6',
+    '66': '매도호가수량6',
+    '86': '매도호가직전대비6',
+    '56': '매수호가6',
+    '76': '매수호가수량6',
+    '96': '매수호가직전대비6',
+    '47': '매도호가7',
+    '67': '매도호가수량7',
+    '87': '매도호가직전대비7',
+    '57': '매수호가7',
+    '77': '매수호가수량7',
+    '97': '매수호가직전대비7',
+    '48': '매도호가8',
+    '68': '매도호가수량8',
+    '88': '매도호가직전대비8',
+    '58': '매수호가8',
+    '78': '매수호가수량8',
+    '98': '매수호가직전대비8',
+    '49': '매도호가9',
+    '69': '매도호가수량9',
+    '89': '매도호가직전대비9',
+    '59': '매수호가9',
+    '79': '매수호가수량9',
+    '99': '매수호가직전대비9',
+    '50': '매도호가10',
+    '70': '매도호가수량10',
+    '90': '매도호가직전대비10',
+    '60': '매수호가10',
+    '80': '매수호가수량10',
+    '100': '매수호가직전대비10',
+    '121': '매도호가총잔량',
+    '122': '매도호가총잔량직전대비',
+    '125': '매수호가총잔량',
+    '126': '매수호가총잔량직전대비',
+    '23': '예상체결가',
+    '24': '예상체결수량',
+    '128': '순매수잔량',
+    '129': '매수비율',
+    '138': '순매도잔량',
+    '139': '매도비율',
+    '200': '예상체결가전일종가대비',
+    '201': '예상체결가전일종가대비등락율',
+    '238': '예상체결가전일종가대비기호',
+    '291': '예상체결가',
+    '292': '예상체결량',
+    '293': '예상체결가전일대비기호',
+    '294': '예상체결가전일대비',
+    '295': '예상체결가전일대비등락율',
+    '621': 'LP매도호가수량1',
+    '631': 'LP매수호가수량1',
+    '622': 'LP매도호가수량2',
+    '632': 'LP매수호가수량2',
+    '623': 'LP매도호가수량3',
+    '633': 'LP매수호가수량3',
+    '624': 'LP매도호가수량4',
+    '634': 'LP매수호가수량4',
+    '625': 'LP매도호가수량5',
+    '635': 'LP매수호가수량5',
+    '626': 'LP매도호가수량6',
+    '636': 'LP매수호가수량6',
+    '627': 'LP매도호가수량7',
+    '637': 'LP매수호가수량7',
+    '628': 'LP매도호가수량8',
+    '638': 'LP매수호가수량8',
+    '629': 'LP매도호가수량9',
+    '639': 'LP매수호가수량9',
+    '630': 'LP매도호가수량10',
+    '640': 'LP매수호가수량10',
+    '13': '누적거래량',
+    '299': '전일거래량대비예상체결율',
+    '215': '장운영구분',
+    '216': '투자자별ticker',
+    '6044': 'KRX 매도호가잔량1',
+    '6045': 'KRX 매도호가잔량2',
+    '6046': 'KRX 매도호가잔량3',
+    '6047': 'KRX 매도호가잔량4',
+    '6048': 'KRX 매도호가잔량5',
+    '6049': 'KRX 매도호가잔량6',
+    '6050': 'KRX 매도호가잔량7',
+    '6051': 'KRX 매도호가잔량8',
+    '6052': 'KRX 매도호가잔량9',
+    '6053': 'KRX 매도호가잔량10',
+    '6054': 'KRX 매수호가잔량1',
+    '6055': 'KRX 매수호가잔량2',
+    '6056': 'KRX 매수호가잔량3',
+    '6057': 'KRX 매수호가잔량4',
+    '6058': 'KRX 매수호가잔량5',
+    '6059': 'KRX 매수호가잔량6',
+    '6060': 'KRX 매수호가잔량7',
+    '6061': 'KRX 매수호가잔량8',
+    '6062': 'KRX 매수호가잔량9',
+    '6063': 'KRX 매수호가잔량10',
+    '6064': 'KRX 매도호가총잔량',
+    '6065': 'KRX 매수호가총잔량',
+    '6066': 'NXT 매도호가잔량1',
+    '6067': 'NXT 매도호가잔량2',
+    '6068': 'NXT 매도호가잔량3',
+    '6069': 'NXT 매도호가잔량4',
+    '6070': 'NXT 매도호가잔량5',
+    '6071': 'NXT 매도호가잔량6',
+    '6072': 'NXT 매도호가잔량7',
+    '6073': 'NXT 매도호가잔량8',
+    '6074': 'NXT 매도호가잔량9',
+    '6075': 'NXT 매도호가잔량10',
+    '6076': 'NXT 매수호가잔량1',
+    '6077': 'NXT 매수호가잔량2',
+    '6078': 'NXT 매수호가잔량3',
+    '6079': 'NXT 매수호가잔량4',
+    '6080': 'NXT 매수호가잔량5',
+    '6081': 'NXT 매수호가잔량6',
+    '6082': 'NXT 매수호가잔량7',
+    '6083': 'NXT 매수호가잔량8',
+    '6084': 'NXT 매수호가잔량9',
+    '6085': 'NXT 매수호가잔량10',
+    '6086': 'NXT 매도호가총잔량',
+    '6087': 'NXT 매수호가총잔량',
+    '6100': 'KRX 중간가 매도 총잔량 증감',
+    '6101': 'KRX 중간가 매도 총잔량',
+    '6102': 'KRX 중간가',
+    '6103': 'KRX 중간가 매수 총잔량',
+    '6104': 'KRX 중간가 매수 총잔량 증감',
+    '6105': 'NXT중간가 매도 총잔량 증감',
+    '6106': 'NXT중간가 매도 총잔량',
+    '6107': 'NXT중간가',
+    '6108': 'NXT중간가 매수 총잔량',
+    '6109': 'NXT중간가 매수 총잔량 증감',
+    '6110': 'KRX중간가대비',
+    '6111': 'KRX중간가대비 기호',
+    '6112': 'KRX중간가대비등락율',
+    '6113': 'NXT중간가대비',
+    '6114': 'NXT중간가대비 기호',
+    '6115': 'NXT중간가대비등락율',
+}
 
 
 async def main() -> None:
-    # 로깅 설정
     logging.basicConfig(level=logging.INFO)
-    # API 호출
-    result = await subscribe_domestic_stock_order_book_depth_async(
-        items=['005930'],
-        types=['0D'],
+
+    # Kiwoom 실시간 등록 패킷(REG) — 공식 문서/원본 샘플과 동일한 형태
+    body = {
+        "trnm": "REG",  # 등록("0"이면 해제)
+        "grp_no": "1",  # 그룹번호
+        "refresh": "1",  # 기존 등록 유지 여부
+        # 등록할 종목(item)과 실시간 타입(type)
+        "data": [{"item": ['005930'], "type": ['0D']}],
+    }
+
+    # 등록 후 실시간 10건을 모아 반환(DataFrame)
+    result = await collect_realtime(
+        get_ws_client(),
+        api_url=API_URL,
+        body=body,
+        columns=COLUMNS,
+        max_messages=10,
     )
-    # 결과 출력
-    for k, v in (result.items() if isinstance(result, dict) else [("data", result)]):
-        print(k, v.head() if isinstance(v, pd.DataFrame) else v)
+    print(result["data"])
 
 
 if __name__ == "__main__":

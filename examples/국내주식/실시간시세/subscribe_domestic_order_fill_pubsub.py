@@ -10,187 +10,91 @@
 
 import asyncio
 import logging
-from collections import defaultdict
 from typing import Any
 
 from kiwoom import get_ws_client
+from kiwoom.realtime import event_to_dataframe, run_pubsub
 
-# WebSocket 클라이언트가 LOGIN 패킷과 PING 응답을 자동 처리합니다.
-# 이 예제는 asyncio.Queue 기반 in-process Pub/Sub 구조를 보여줍니다.
+# 주문체결(00) 실시간 구독 — 한 스트림을 여러 소비자에 분배
+# in-process Pub/Sub(asyncio.Queue). LOGIN/PING은 공통 클라이언트가 처리합니다.
 
-API_ID = "00"
 API_URL = "/api/dostk/websocket"
+COLUMNS = {
+    '9201': '계좌번호',
+    '9203': '주문번호',
+    '9205': '관리자사번',
+    '9001': '종목코드,업종코드',
+    '912': '주문업무분류',
+    '913': '주문상태',
+    '302': '종목명',
+    '900': '주문수량',
+    '901': '주문가격',
+    '902': '미체결수량',
+    '903': '체결누계금액',
+    '904': '원주문번호',
+    '905': '주문구분',
+    '906': '매매구분',
+    '907': '매도수구분',
+    '908': '주문/체결시간',
+    '909': '체결번호',
+    '910': '체결가',
+    '911': '체결량',
+    '10': '현재가',
+    '27': '(최우선)매도호가',
+    '28': '(최우선)매수호가',
+    '914': '단위체결가',
+    '915': '단위체결량',
+    '938': '당일매매수수료',
+    '939': '당일매매세금',
+    '919': '거부사유',
+    '920': '화면번호',
+    '921': '터미널번호',
+    '922': '신용구분',
+    '923': '대출일',
+    '10010': '시간외단일가_현재가',
+    '2134': '거래소구분',
+    '2135': '거래소구분명',
+    '2136': 'SOR여부',
+}
 
 
-class AsyncPubSub:
-    """예제용 in-process Pub/Sub입니다.
-
-    Redis/Kafka 같은 외부 인프라 없이 asyncio.Queue만 사용합니다.
-    WebSocket 수신 데이터 1개를 여러 소비자에게 분기하는 구조를 보여주기 위한
-    예제 전용 클래스입니다.
-    """
-
-    def __init__(self) -> None:
-        self._subscribers: dict[str, list[asyncio.Queue[Any]]] = defaultdict(list)
-
-    def subscribe(self, topic: str) -> asyncio.Queue[Any]:
-        queue: asyncio.Queue[Any] = asyncio.Queue()
-        self._subscribers[topic].append(queue)
-        return queue
-
-    async def publish(self, topic: str, message: Any) -> None:
-        for queue in self._subscribers.get(topic, []):
-            await queue.put(message)
-
-
-def resolve_topic(message: Any) -> str:
-    """수신 메시지를 발행할 topic을 결정합니다."""
-    if not isinstance(message, dict):
-        return "kiwoom.raw"
-
-    trnm = str(message.get("trnm", "")).upper()
-    if trnm == "REAL":
-        data = message.get("data", [])
-        if isinstance(data, list) and data and isinstance(data[0], dict):
-            realtime_type = str(data[0].get("type", "")).strip()
-            if realtime_type:
-                return f"kiwoom.realtime.{realtime_type}"
-        return "kiwoom.realtime"
-    if trnm == "REG":
-        return "kiwoom.system.reg"
-    if trnm == "SYSTEM":
-        return "kiwoom.system"
-    if trnm:
-        return f"kiwoom.system.{trnm.lower()}"
-    return "kiwoom.raw"
-
-
-async def websocket_publisher(
-    *,
-    pubsub: AsyncPubSub,
-    body: dict[str, Any],
-    max_messages: int | None = None,
-) -> None:
-    """키움 WebSocket 수신 메시지를 Pub/Sub topic으로 발행합니다."""
-    if max_messages is not None and max_messages < 1:
-        raise ValueError("max_messages must be greater than 0")
-
-    client = get_ws_client()
-    published = 0
-
-    try:
-        await client.subscribe(api_url=API_URL, body=body)
-
-        async for message in client.iter_messages():
-            topic = resolve_topic(message)
-            await pubsub.publish(topic, message)
-            await pubsub.publish("kiwoom.all", message)
-
-            published += 1
-            if max_messages is not None and published >= max_messages:
-                break
-
-            if isinstance(message, dict):
-                trnm = str(message.get("trnm", "")).upper()
-                return_code = message.get("return_code")
-                if trnm == "SYSTEM" or return_code not in (None, 0, "0"):
-                    break
-    finally:
-        await client.close()
-
-
-async def strategy_subscriber(queue: asyncio.Queue[Any]) -> None:
-    """전략 로직 소비자 예시입니다."""
+async def print_dataframe(queue: asyncio.Queue[Any]) -> None:
+    # "kiwoom.realtime" 토픽: REAL 이벤트만 도착 → DataFrame으로 출력
     while True:
-        message = await queue.get()
-        print("[strategy]", message, flush=True)
+        event = await queue.get()
+        print(event_to_dataframe(event), flush=True)
 
 
-async def logger_subscriber(queue: asyncio.Queue[Any]) -> None:
-    """로그/저장 로직 소비자 예시입니다."""
+async def log_raw(queue: asyncio.Queue[Any]) -> None:
+    # "kiwoom.all" 토픽: REG/SYSTEM 포함 모든 메시지를 원본 그대로 출력
     while True:
-        message = await queue.get()
-        print("[logger]", message, flush=True)
-
-
-async def run_pubsub(
-    *,
-    body: dict[str, Any],
-    max_messages: int | None = None,
-) -> None:
-    """publisher 1개와 subscriber 2개를 실행합니다."""
-    pubsub = AsyncPubSub()
-    strategy_queue = pubsub.subscribe("kiwoom.all")
-    logger_queue = pubsub.subscribe("kiwoom.all")
-
-    subscriber_tasks = [
-        asyncio.create_task(strategy_subscriber(strategy_queue)),
-        asyncio.create_task(logger_subscriber(logger_queue)),
-    ]
-    try:
-        await websocket_publisher(
-            pubsub=pubsub,
-            body=body,
-            max_messages=max_messages,
-        )
-    finally:
-        for task in subscriber_tasks:
-            task.cancel()
-        await asyncio.gather(*subscriber_tasks, return_exceptions=True)
-
-
-def build_realtime_reg_packet(
-    *,
-    items: list[str],
-    types: list[str],
-    group_no: str = "1",
-    refresh: str = "1",
-) -> dict[str, Any]:
-    """키움 실시간 항목 등록(REG) 패킷을 생성합니다."""
-    if not types:
-        raise ValueError("types is required.")
-    return {
-        "trnm": "REG",
-        "grp_no": group_no,
-        "refresh": refresh,
-        "data": [
-            {
-                "item": items,
-                "type": types,
-            }
-        ],
-    }
-
-async def subscribe_domestic_order_fill_pubsub(
-    items: list[str],
-    types: list[str] | None = None,
-    group_no: str = "1",
-    refresh: str = "1",
-    max_messages: int | None = None,
-) -> None:
-    """
-    주문체결[00] 실시간 데이터를 Pub/Sub로 분배합니다.
-
-    공통 WebSocket 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
-    """
-    if not items:
-        raise ValueError("items is required.")
-
-    body = build_realtime_reg_packet(
-        items=items,
-        types=types or [API_ID],
-        group_no=group_no,
-        refresh=refresh,
-    )
-    await run_pubsub(body=body, max_messages=max_messages)
+        event = await queue.get()
+        print(event, flush=True)
 
 
 async def main() -> None:
     logging.basicConfig(level=logging.INFO)
-    await subscribe_domestic_order_fill_pubsub(
-        items=[''],
-        types=['00'],
-        max_messages=None,
+
+    # Kiwoom 실시간 등록 패킷(REG)
+    body = {
+        "trnm": "REG",  # 등록("0"이면 해제)
+        "grp_no": "1",  # 그룹번호
+        "refresh": "1",  # 기존 등록 유지 여부
+        # 등록할 종목(item)과 실시간 타입(type)
+        "data": [{"item": [], "type": ['00']}],
+    }
+
+    # 같은 스트림을 두 소비자에 분배: 가공(print_dataframe) / 원본 로깅(log_raw)
+    await run_pubsub(
+        get_ws_client(),
+        api_url=API_URL,
+        bodies=body,
+        consumers={
+            "kiwoom.realtime": print_dataframe,
+            "kiwoom.all": log_raw,
+        },
+        columns=COLUMNS,
+        max_messages=10,
     )
 
 

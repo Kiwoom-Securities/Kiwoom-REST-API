@@ -13,7 +13,7 @@ import time
 
 import pandas as pd
 
-from kiwoom import get_client
+from kiwoom import get_client, KiwoomError
 
 API_ID = "kt50075"
 API_URL = "/api/dostk/acnt"
@@ -107,14 +107,14 @@ def get_domestic_gold_spot_unfilled_orders(
     공통 클라이언트가 유효한 캐시 토큰을 사용하거나 필요 시 자동으로 발급합니다.
 
     Args:
-        ord_dt: 주문일자
-        mrkt_deal_tp: 시장구분
-        stk_bond_tp: 0:전체, 1:주식, 2:채권
-        sell_tp: 0:전체, 1:매도, 2:매수
-        qry_tp: 1: 주문순, 2: 역순
-        stk_cd: 종목코드
-        fr_ord_no: 시작주문번호
-        dmst_stex_tp: %:(전체), KRX, NXT, SOR
+        ord_dt: 주문일자 — YYYYMMDD
+        mrkt_deal_tp: 시장구분 — 5:KRW금현물, 5값으로 고정
+        stk_bond_tp: 주식채권구분 — 0:전체, 1:주식, 2:채권
+        sell_tp: 매도수구분 — 0:전체, 1:매도, 2:매수
+        qry_tp: 조회구분 — 1: 주문순, 2: 역순
+        stk_cd: 종목코드 — M04020000: 금 99.99_1kg, M04020100: 미니금 99.99_100g, 전체 조회는 빈값('')으로 설정
+        fr_ord_no: 시작주문번호 — 시작주문번호 입력 시 이전 주문은 조회되지 않음, 전체 조회는 빈값('')으로 설정
+        dmst_stex_tp: 국내거래소구분 — %:(전체), KRX, NXT, SOR
 
     Returns:
         API 응답 데이터입니다.
@@ -146,19 +146,19 @@ def get_domestic_gold_spot_unfilled_orders(
 
     # 2. 요청 파라미터 바디
     body = {
-        "ord_dt": ord_dt,
-        "mrkt_deal_tp": mrkt_deal_tp,
-        "stk_bond_tp": stk_bond_tp,
-        "sell_tp": sell_tp,
+        "ord_dt": ord_dt,  # 주문일자
+        "mrkt_deal_tp": mrkt_deal_tp,  # 시장구분
+        "stk_bond_tp": stk_bond_tp,  # 주식채권구분
+        "sell_tp": sell_tp,  # 매도수구분
     }
     if qry_tp is not None:
-        body["qry_tp"] = qry_tp
+        body["qry_tp"] = qry_tp  # 조회구분
     if stk_cd is not None:
-        body["stk_cd"] = stk_cd
+        body["stk_cd"] = stk_cd  # 종목코드
     if fr_ord_no is not None:
-        body["fr_ord_no"] = fr_ord_no
+        body["fr_ord_no"] = fr_ord_no  # 시작주문번호
     if dmst_stex_tp is not None:
-        body["dmst_stex_tp"] = dmst_stex_tp
+        body["dmst_stex_tp"] = dmst_stex_tp  # 국내거래소구분
 
     # 3. 인증 클라이언트
     client = get_client()
@@ -189,9 +189,12 @@ def get_domestic_gold_spot_unfilled_orders(
         for key in rows:
             records = response_body.get(key, [])
             if isinstance(records, list):
-                rows[key].extend(
-                    record for record in records if isinstance(record, dict)
-                )
+                column_keys = list(COLUMNS)
+                for record in records:
+                    if isinstance(record, dict):
+                        rows[key].append(record)
+                    elif isinstance(record, (list, tuple)):
+                        rows[key].append(dict(zip(column_keys, record)))
 
         next_cont_yn = response.continuation.cont_yn
         next_key = response.continuation.next_key
@@ -225,16 +228,19 @@ if __name__ == "__main__":
     pd.set_option("display.width", 160)
 
     # API 호출
-    result = get_domestic_gold_spot_unfilled_orders(
-        ord_dt='20250821',
-        mrkt_deal_tp='1',
-        stk_bond_tp='0',
-        sell_tp='0',
-        qry_tp='1',
-        stk_cd='M04020000',
-        fr_ord_no='',
-        dmst_stex_tp='KRX',
-    )
+    try:
+        result = get_domestic_gold_spot_unfilled_orders(
+            ord_dt='20250821',
+            mrkt_deal_tp='1',
+            stk_bond_tp='0',
+            sell_tp='0',
+            qry_tp='1',
+            stk_cd='M04020000',
+            fr_ord_no='',
+            dmst_stex_tp='KRX',
+        )
+    except KiwoomError as exc:
+        raise SystemExit(str(exc))
     # 결과 출력
     for key, df in result.items():
         print(f"\n[{key}]")
