@@ -96,7 +96,7 @@ uv run python "examples/국내주식/종목정보/list_domestic_stocks.py"
 
 ## 1단계: 키움 App Key / Secret 발급
 
-키움증권 OpenAPI를 호출하려면 **App Key**와 **App Secret**이 필요합니다.
+키움증권 OpenAPI를 호출하려면 **App Key**와 **App Secret**이 필요합니다. 발급은 [키움증권 OpenAPI 포털](https://openapi.kiwoom.com/main/home)에서 진행합니다.
 
 - **운영(real)** 과 **모의투자(demo)** 는 키가 **서로 다릅니다.** 사용할 환경의 키를 발급받으세요.
 - 발급받은 키는 외부에 노출되지 않도록 보관합니다. 문자 메시지/메일/공유 문서에 그대로 두지 마세요.
