@@ -1,0 +1,11 @@
+# MCPB 번들에서 제외 — 런타임에 필요 없거나(원격 배포용) 크기만 키우는 것들.
+# uv 런타임 규칙상 가상환경은 절대 포함하지 않는다.
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+.dockerignore
+Dockerfile
+railway.json
+.env.example
+scripts/

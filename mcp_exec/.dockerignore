@@ -1,0 +1,8 @@
+# 빌드 컨텍스트 최소화 — Dockerfile은 pyproject.toml/uv.lock/src만 COPY한다.
+.venv/
+__pycache__/
+*.pyc
+.env
+.env.*
+scripts/
+docs/

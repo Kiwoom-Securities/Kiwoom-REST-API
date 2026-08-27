@@ -328,8 +328,19 @@ class KiwoomAuth:
 
     @staticmethod
     def _credential_fingerprint(credentials: CredentialSet) -> str:
-        raw = f"{credentials.appkey}:{credentials.secretkey}".encode("utf-8")
-        return hashlib.sha256(raw).hexdigest()
+        return credential_fingerprint(credentials)
+
+
+def credential_fingerprint(credentials: CredentialSet) -> str:
+    """Non-reversible identity of an appkey/secret pair.
+
+    Stored beside a cached token so a token issued for one key pair is never
+    reused after the credentials change (`_load_valid_token`), and used by the
+    runtime to seed a pre-issued token (`KIWOOM_ACCESS_TOKEN`) with the
+    fingerprint the auth object will check it against.
+    """
+    raw = f"{credentials.appkey}:{credentials.secretkey}".encode("utf-8")
+    return hashlib.sha256(raw).hexdigest()
 
 
 def _safe_json(response: requests.Response) -> dict:

@@ -1,17 +1,29 @@
 from dataclasses import dataclass
+from datetime import UTC, datetime
 from typing import Literal
 
-from kiwoom.core.auth import KiwoomAuth, get_base_url as _auth_base_url, get_ws_base_url as _auth_ws_base_url
+from kiwoom.core.auth import (
+    KiwoomAuth,
+    credential_fingerprint,
+    get_base_url as _auth_base_url,
+    get_ws_base_url as _auth_ws_base_url,
+)
 from kiwoom.core.client import KiwoomClient
 from kiwoom.core.errors import ModeNotConfiguredError
 from kiwoom.core.profiles import AuthProfile, get_current_profile, get_profile
 from kiwoom.core.secrets import SecretProvider, default_secret_provider
-from kiwoom.core.settings import get_mode_from_env, get_profile_from_env
-from kiwoom.core.token_store import FileTokenStore, MemoryTokenStore
-from kiwoom.core.types import Mode, normalize_mode
+from kiwoom.core.settings import (
+    ACCESS_TOKEN_ENV_VAR,
+    TOKEN_STORE_ENV_VAR,
+    PreissuedToken,
+    get_mode_from_env,
+    get_preissued_token_from_env,
+    get_profile_from_env,
+    get_token_store_kind_from_env,
+)
+from kiwoom.core.token_store import FileTokenStore, MemoryTokenStore, TokenRecord
+from kiwoom.core.types import Mode, TokenStoreKind, normalize_mode
 from kiwoom.core.ws_client import KiwoomWebSocketClient
-
-TokenStoreKind = Literal["file", "memory"]
 
 SelectionSource = Literal[
     "--profile",
@@ -102,15 +114,28 @@ def get_auth(
     *,
     profile: str | None = None,
     secret_provider: SecretProvider | None = None,
-    token_store_kind: TokenStoreKind = "file",
+    token_store_kind: TokenStoreKind | None = None,
 ) -> KiwoomAuth:
+    """Build the auth object for the selected target.
+
+    `token_store_kind=None` (the default) resolves via `resolve_token_store_kind`,
+    i.e. `KIWOOM_TOKEN_STORE` when set, else the on-disk file cache. Pass an
+    explicit kind to override the environment (setup does this for its
+    throwaway validation auth).
+    """
     selection = _resolve_selection(mode=mode, profile=profile)
     profile_alias = selection.profile.alias if selection.profile else None
+    provider = secret_provider or default_secret_provider(profile=profile_alias)
     return KiwoomAuth(
         mode=selection.mode,
         profile=profile_alias,
-        secret_provider=secret_provider or default_secret_provider(profile=profile_alias),
-        token_store=_build_token_store(token_store_kind),
+        secret_provider=provider,
+        token_store=_build_token_store(
+            resolve_token_store_kind(token_store_kind),
+            mode=selection.mode,
+            profile=profile_alias,
+            secret_provider=provider,
+        ),
     )
 
 
@@ -145,9 +170,59 @@ def get_ws_base_url(mode: str | None = None, *, profile: str | None = None) -> s
     return _auth_ws_base_url(resolve_mode(mode, profile=profile))
 
 
-def _build_token_store(token_store_kind: TokenStoreKind):
+def resolve_token_store_kind(token_store_kind: TokenStoreKind | None = None) -> TokenStoreKind:
+    """Explicit argument > `KIWOOM_TOKEN_STORE` > `file`."""
+    if token_store_kind is not None:
+        return token_store_kind
+    return get_token_store_kind_from_env() or "file"
+
+
+def _build_token_store(
+    token_store_kind: TokenStoreKind,
+    *,
+    mode: Mode,
+    profile: str | None,
+    secret_provider: SecretProvider,
+):
+    preissued = get_preissued_token_from_env()
     if token_store_kind == "file":
+        if preissued is not None:
+            raise ValueError(f"{ACCESS_TOKEN_ENV_VAR} requires {TOKEN_STORE_ENV_VAR}=memory.")
         return FileTokenStore()
     if token_store_kind == "memory":
-        return MemoryTokenStore()
+        store = MemoryTokenStore()
+        if preissued is not None:
+            _seed_preissued_token(store, preissued, mode=mode, profile=profile, secret_provider=secret_provider)
+        return store
     raise ValueError(f"unsupported token_store_kind: {token_store_kind}")
+
+
+def _seed_preissued_token(
+    store: MemoryTokenStore,
+    preissued: PreissuedToken,
+    *,
+    mode: Mode,
+    profile: str | None,
+    secret_provider: SecretProvider,
+) -> None:
+    """Place a token handed in via env into the in-memory store.
+
+    The record carries the fingerprint of the credentials this process resolves,
+    so `KiwoomAuth._load_valid_token` accepts it exactly as it would a token it
+    issued itself; if the credentials are missing the token is not seeded and the
+    usual credentials error surfaces on first use.
+    """
+    credentials = secret_provider.get_credentials(mode)
+    if credentials is None:
+        return
+    store.save(
+        TokenRecord(
+            access_token=preissued.access_token,
+            token_type="bearer",
+            expires_at=preissued.expires_at.astimezone(UTC),
+            mode=mode,
+            profile=profile,
+            credential_fingerprint=credential_fingerprint(credentials),
+            saved_at=datetime.now(UTC),
+        )
+    )

@@ -1,0 +1,83 @@
+{
+  "manifest_version": "0.4",
+  "name": "kiwoom-exec-mcp",
+  "display_name": "키움증권 OpenAPI Exec MCP",
+  "version": "1.0.0",
+  "description": "키움증권 CLI를 통해 OpenAPI를 실행합니다.",
+  "author": {
+    "name": "Kiwoom Securities",
+    "url": "https://github.com/Kiwoom-Securities"
+  },
+  "homepage": "https://github.com/Kiwoom-Securities/Kiwoom-REST-API",
+  "documentation": "https://github.com/Kiwoom-Securities/Kiwoom-REST-API/tree/main/mcp_exec",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kiwoom-Securities/Kiwoom-REST-API"
+  },
+  "icon": "icon.png",
+  "keywords": ["kiwoom", "키움증권", "stock", "trading", "korea", "openapi"],
+  "server": {
+    "type": "uv",
+    "entry_point": "src/kiwoom_exec_mcp/server.py",
+    "mcp_config": {
+      "command": "uv",
+      "args": ["run", "--frozen", "--directory", "${__dirname}", "kiwoom-exec-mcp"],
+      "env": {
+        "APP_KEY": "${user_config.app_key}",
+        "APP_SECRET": "${user_config.app_secret}",
+        "KIWOOM_MODE": "${user_config.mode}",
+        "KIWOOM_MCP_ALLOW_ORDERS": "${user_config.allow_orders}"
+      }
+    }
+  },
+  "tools": [
+    {
+      "name": "kiwoom_commands",
+      "description": "실행 가능한 조회 명령 목록을 시장·그룹별로 돌려줍니다."
+    },
+    {
+      "name": "kiwoom_help",
+      "description": "특정 명령이 받는 옵션과 필수 여부를 돌려줍니다."
+    },
+    {
+      "name": "kiwoom_query",
+      "description": "시세·계좌 조회를 실행합니다. 주문성 명령은 받지 않습니다."
+    }
+  ],
+  "user_config": {
+    "app_key": {
+      "type": "string",
+      "title": "App Key",
+      "description": "조회·주문에 사용할 계좌의 App Key입니다.",
+      "sensitive": true,
+      "required": true
+    },
+    "app_secret": {
+      "type": "string",
+      "title": "App Secret",
+      "description": "조회·주문에 사용할 계좌의 App Secret입니다.",
+      "sensitive": true,
+      "required": true
+    },
+    "mode": {
+      "type": "string",
+      "title": "계좌 종류 - demo/real",
+      "description": "사용할 계좌의 종류입니다. demo - 모의계좌, real - 실전계좌",
+      "default": "demo",
+      "required": true
+    },
+    "allow_orders": {
+      "type": "string",
+      "title": "주문 도구 활성화 여부 (1 = 켬)",
+      "description": "1을 입력하면 주문 미리보기·전송 도구가 추가됩니다. 비워 두거나 0이면 조회만 가능합니다. 실주문은 전송 도구에 confirm을 함께 넘겨야 나갑니다.",
+      "default": "0",
+      "required": false
+    }
+  },
+  "compatibility": {
+    "platforms": ["darwin", "win32"],
+    "runtimes": {
+      "python": ">=3.13"
+    }
+  }
+}

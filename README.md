@@ -13,6 +13,12 @@
   - OAuth 2개, 국내주식 226개, 미국주식 134개
 - `postman/kiwoom-openapi.postman_collection.json`
   - HTTP API 306개를 PRD/MOCK 환경별로 제공(총 요청 612개)
+- `mcp_exec/`, `mcp_spec/`: 키움 OpenAPI를 AI 에이전트에 노출하는 MCP(Model
+  Context Protocol) 서버. 사용법은 각 폴더의 `README.md`를 참고하세요.
+- `mcpb/`: 쓰는 MCP 클라이언트에 따라 **둘 중 하나만** 고르면 됩니다 —
+  Claude Desktop이면 사전 빌드 `.mcpb` 번들(`mcp_exec/`, `mcp_spec/`를
+  packing한 것), Claude Code·Codex 같은 CLI 클라이언트면 설치 스크립트
+  `setup-mcp-cli.sh`/`.ps1`. 사용법은 `mcpb/README.md`를 참고하세요.
 - `.env.example`, `pyproject.toml`, `uv.lock`, `LICENSE.md`
 
 CLI 소스(`kiwoom_cli/`)는 이 공개 저장소에 포함되지 않습니다. CLI가 필요하면

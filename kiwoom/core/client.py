@@ -6,10 +6,11 @@ import requests
 
 from kiwoom.core.auth import KiwoomAuth, get_base_url
 from kiwoom.core.errors import (
-    AUTH_RETRY_RETURN_CODES,
     AuthenticationError,
     HTTPRequestError,
+    auth_retry_code,
     normalize_return_code,
+    raise_for_error_code,
 )
 from kiwoom.core.types import Continuation, KiwoomResponse
 
@@ -81,7 +82,9 @@ class KiwoomClient:
             }
 
         return_code = normalize_return_code(data.get("return_code"))
-        if return_code in AUTH_RETRY_RETURN_CODES and retry_on_auth_failure:
+        # 키움은 만료/무효 토큰을 top-level return_code=8005로도, return_code=3 +
+        # return_msg "[8005:...]"로도 돌려준다 — 어느 쪽이든 한 번 재발급 후 재시도.
+        if retry_on_auth_failure and auth_retry_code(return_code, data.get("return_msg")) is not None:
             self.auth.recover_from_auth_failure()
             return self.request(
                 api_id=resolved_api_id,
@@ -97,6 +100,14 @@ class KiwoomClient:
             if return_code not in (None, 0):
                 message = f"{message} (return_code={data['return_code']})"
             raise HTTPRequestError(response.status_code, message)
+
+        # 키움은 업무 오류도 HTTP 200으로 내려보내고 실패 여부는 본문 return_code에만 담는다.
+        if return_code not in (None, 0):
+            raise_for_error_code(
+                return_code,
+                str(data.get("return_msg") or "API 요청에 실패했습니다."),
+            )
+
         return _build_response(data, response.headers)
 
     def fetch_page(
