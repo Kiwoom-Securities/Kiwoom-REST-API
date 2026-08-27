@@ -1,0 +1,51 @@
+{
+  "manifest_version": "0.4",
+  "name": "kiwoom-spec-mcp",
+  "display_name": "키움증권 OpenAPI Spec MCP",
+  "version": "1.0.0",
+  "description": "키움증권 OpenAPI의 REST/WebSocket 명세를 검색하고 실행 예제 코드를 가져옵니다.",
+  "author": {
+    "name": "Kiwoom Securities",
+    "url": "https://github.com/Kiwoom-Securities"
+  },
+  "homepage": "https://github.com/Kiwoom-Securities/Kiwoom-REST-API",
+  "documentation": "https://github.com/Kiwoom-Securities/Kiwoom-REST-API/tree/main/mcp_spec",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kiwoom-Securities/Kiwoom-REST-API"
+  },
+  "icon": "icon.png",
+  "keywords": ["kiwoom", "키움증권", "openapi", "spec", "korea", "documentation"],
+  "server": {
+    "type": "uv",
+    "entry_point": "src/kiwoom_spec_mcp/server.py",
+    "mcp_config": {
+      "command": "uv",
+      "args": ["run", "--frozen", "--directory", "${__dirname}", "kiwoom-spec-mcp"]
+    }
+  },
+  "tools": [
+    {
+      "name": "spec_search",
+      "description": "조건에 맞는 API를 검색합니다. 검색어는 국문이어야 합니다."
+    },
+    {
+      "name": "spec_show",
+      "description": "특정 API의 요청·응답 필드 명세를 돌려줍니다."
+    },
+    {
+      "name": "spec_groups",
+      "description": "시장·그룹별 API 목록을 돌려줍니다."
+    },
+    {
+      "name": "get_example",
+      "description": "공식 저장소에서 해당 API의 실행 예제 코드를 가져옵니다."
+    }
+  ],
+  "compatibility": {
+    "platforms": ["darwin", "win32"],
+    "runtimes": {
+      "python": ">=3.13"
+    }
+  }
+}

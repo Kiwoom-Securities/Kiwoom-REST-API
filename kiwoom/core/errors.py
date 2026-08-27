@@ -1,8 +1,30 @@
+import re
 from pathlib import Path
 
 # Kiwoom auth-expiry return codes that warrant a one-shot credential
 # recovery + retry (shared by the REST client and the WebSocket client).
 AUTH_RETRY_RETURN_CODES = frozenset({8005, 8031, 8103})
+
+# Kiwoom often reports a generic top-level ``return_code`` (e.g. 3 = "인증에
+# 실패했습니다") and puts the specific code inside ``return_msg`` as
+# ``[8005:Token이 유효하지 않습니다]`` (REST) or ``CODE=8005`` (WebSocket).
+_EMBEDDED_CODE_RE = re.compile(r"\[(\d{3,5}):|CODE=(\d{3,5})")
+
+
+def embedded_return_code(return_msg: object) -> int | None:
+    """Return the specific code embedded in a Kiwoom ``return_msg``, if any."""
+    match = _EMBEDDED_CODE_RE.search(str(return_msg or ""))
+    if match is None:
+        return None
+    return int(match.group(1) or match.group(2))
+
+
+def auth_retry_code(return_code: int | None, return_msg: object) -> int | None:
+    """The auth-expiry code (top-level or embedded) that warrants recovery, else None."""
+    if return_code in AUTH_RETRY_RETURN_CODES:
+        return return_code
+    embedded = embedded_return_code(return_msg)
+    return embedded if embedded in AUTH_RETRY_RETURN_CODES else None
 
 
 def normalize_return_code(value: object) -> int | None:
@@ -137,6 +159,13 @@ class DeviceAuthenticationError(AuthenticationError):
         self.return_msg = return_msg
 
 
+class DemoUnsupportedError(APIError):
+    """Raised when the API exists but is not served in demo (모의투자) mode."""
+
+    def __init__(self, return_code: int, return_msg: str):
+        super().__init__(return_code, f"모의투자에서 지원하지 않는 API입니다. ({return_msg})")
+
+
 INPUT_VALIDATION_CODES = {
     1501,
     1504,
@@ -151,15 +180,35 @@ INPUT_VALIDATION_CODES = {
     1687,
     8020,
 }
-RATE_LIMIT_CODES = {1700}
-SYMBOL_NOT_FOUND_CODES = {1901, 1902}
+RATE_LIMIT_CODES = {1700, 1701, 1702}
+SYMBOL_NOT_FOUND_CODES = {1901, 1902, 1903}
 INVALID_CREDENTIAL_CODES = {8001, 8002, 8011, 8012}
 INVALID_TOKEN_CODES = {8003, 8005, 8006, 8009, 8015, 8016}
 MODE_MISMATCH_CODES = {8030, 8031}
 DEVICE_AUTH_CODES = {8010, 8040, 8050, 8103}
+DEMO_UNSUPPORTED_CODES = {8104}
+
+
+_CLASSIFIED_CODES = (
+    INPUT_VALIDATION_CODES
+    | RATE_LIMIT_CODES
+    | SYMBOL_NOT_FOUND_CODES
+    | INVALID_CREDENTIAL_CODES
+    | INVALID_TOKEN_CODES
+    | MODE_MISMATCH_CODES
+    | DEVICE_AUTH_CODES
+    | DEMO_UNSUPPORTED_CODES
+)
 
 
 def raise_for_error_code(return_code: int, return_msg: str) -> None:
+    # A generic top-level code (3, 5, ...) with a specific code embedded in the
+    # message is classified by the embedded code, so callers get the same
+    # error class either way; the message keeps Kiwoom's original text.
+    if return_code not in _CLASSIFIED_CODES:
+        embedded = embedded_return_code(return_msg)
+        if embedded in _CLASSIFIED_CODES:
+            return_code = embedded
     if return_code in INPUT_VALIDATION_CODES:
         raise InputValidationError(return_code, return_msg)
     if return_code in RATE_LIMIT_CODES:
@@ -174,4 +223,8 @@ def raise_for_error_code(return_code: int, return_msg: str) -> None:
         raise ModeMismatchError(return_code, return_msg)
     if return_code in DEVICE_AUTH_CODES:
         raise DeviceAuthenticationError(return_code, return_msg)
+    if return_code in DEMO_UNSUPPORTED_CODES:
+        raise DemoUnsupportedError(return_code, return_msg)
+    # 1999(예기치 못한 오류)·8200(법인 미지원)처럼 분류해도 대응이 달라지지 않는 코드는
+    # 원문 메시지를 그대로 노출하는 APIError로 남긴다.
     raise APIError(return_code, return_msg)

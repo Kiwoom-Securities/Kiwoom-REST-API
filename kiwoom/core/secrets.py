@@ -25,6 +25,29 @@ class SecretProvider(Protocol):
     def clear_credentials(self, mode: Mode) -> bool: ...
 
 
+class StaticSecretProvider:
+    """Read-only provider holding one appkey/secret pair in memory.
+
+    Used where credentials arrive for a single operation and must not be
+    persisted: setup's validation call before anything is stored, and a
+    server issuing a token for credentials received on a request.
+    """
+
+    def __init__(self, appkey: str, secretkey: str, *, source: str = "static") -> None:
+        self.appkey = appkey
+        self.secretkey = secretkey
+        self.source = source
+
+    def get_credentials(self, mode: Mode) -> CredentialSet | None:
+        return CredentialSet(appkey=self.appkey, secretkey=self.secretkey, source=self.source)
+
+    def set_credentials(self, mode: Mode, appkey: str, secretkey: str) -> None:
+        raise RuntimeError("정적 자격 증명 공급자는 읽기 전용입니다.")
+
+    def clear_credentials(self, mode: Mode) -> bool:
+        raise RuntimeError("정적 자격 증명 공급자는 읽기 전용입니다.")
+
+
 class EnvSecretProvider:
     def get_credentials(self, mode: Mode) -> CredentialSet | None:
         appkey_var, secretkey_var = env_var_names(mode)

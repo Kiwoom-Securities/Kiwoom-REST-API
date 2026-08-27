@@ -1,0 +1,30 @@
+[project]
+name = "kiwoom-exec-mcp"
+version = "1.0.0"
+description = "MCP server that executes Kiwoom OpenAPI reads (and env-gated order tools) by wrapping the kiwoomcli command"
+requires-python = ">=3.13"
+# 정확한 버전은 uv.lock이 고정한다(Dockerfile은 `uv sync --frozen`). 여기서는 호환
+# 하한만 선언한다 — HTTP 전송/middleware/get_http_headers는 fastmcp 3.x API다.
+dependencies = [
+    "fastmcp>=3.4.4,<4",
+    # HTTP 멀티테넌트 경로는 KIWOOM_TOKEN_STORE=memory / KIWOOM_ACCESS_TOKEN 계약(kwcli 1.1.0)이
+    # 필요하며 runner.require_token_contract가 실행 시 확인한다(계약 없으면 그 경로는 시작 거부).
+    # stdio(로컬)는 1.0.0으로도 동작한다. 1.1.0 게시 후 하한을 >=1.1.0으로 올린다.
+    "kwcli>=1.0.0,<2",
+]
+
+[project.scripts]
+kiwoom-exec-mcp = "kiwoom_exec_mcp.server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/kiwoom_exec_mcp"]
+
+# kwcli는 PyPI 게시본을 쓴다. 원격 빌드(Railway)의 컨텍스트가 이 디렉터리라 상위
+# 경로를 참조할 수 없기 때문이다. 모노repo의 로컬 kwcli 소스로 테스트하려면 아래를
+# 임시로 켠다(그 상태의 uv.lock은 커밋하지 말 것 — 로컬 경로가 박힌다):
+# [tool.uv.sources]
+# kwcli = { path = "../../", editable = true }

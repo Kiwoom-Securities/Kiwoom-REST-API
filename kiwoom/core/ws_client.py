@@ -5,7 +5,7 @@ from collections.abc import AsyncIterator, Callable
 from typing import Any
 
 from kiwoom.core.auth import KiwoomAuth, get_ws_base_url
-from kiwoom.core.errors import AUTH_RETRY_RETURN_CODES, normalize_return_code
+from kiwoom.core.errors import auth_retry_code, normalize_return_code
 
 logger = logging.getLogger(__name__)
 
@@ -194,9 +194,7 @@ class KiwoomWebSocketClient:
 
 
 def _is_auth_retry_login_error(exc: WebSocketLoginError) -> bool:
-    if exc.return_code in AUTH_RETRY_RETURN_CODES:
-        return True
-    return any(f"CODE={code}" in exc.return_msg for code in AUTH_RETRY_RETURN_CODES)
+    return auth_retry_code(exc.return_code, exc.return_msg) is not None
 
 
 async def _default_connect(uri: str, timeout_seconds: int) -> Any:
