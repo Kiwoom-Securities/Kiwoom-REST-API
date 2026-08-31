@@ -1,4 +1,4 @@
-# Kiwoom MCP 설치 안내 (Claude Desktop, `.mcpb`)
+# 키움증권 MCP 설치 안내 (Claude Desktop, `.mcpb`)
 
 이 폴더에는 키움 MCP 서버(`mcp_exec/`, `mcp_spec/`)를 **Claude Desktop**에
 설치하는 사전 빌드 `.mcpb` 번들이 들어 있습니다. Claude Code, Codex 등
