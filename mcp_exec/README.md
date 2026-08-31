@@ -1,4 +1,4 @@
-# Kiwoom Exec MCP
+# 키움증권 Exec MCP (Kiwoom Exec MCP)
 
 `kiwoom-exec-mcp`는 실제 키움증권 OpenAPI 조회·주문을 실행하는 MCP(Model
 Context Protocol) 서버입니다. AI 에이전트가 계좌를 조회하거나(읽기), 운영자가

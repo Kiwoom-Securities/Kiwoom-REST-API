@@ -1,4 +1,4 @@
-# Kiwoom Spec MCP
+# 키움증권 Spec MCP (Kiwoom Spec MCP)
 
 `kiwoom-spec-mcp`는 키움증권 OpenAPI 스펙을 검색하고, 해당 API의 실행 가능한
 예제 코드를 GitHub 공개 저장소에서 가져와 돌려주는 **자격증명이 필요 없는**
