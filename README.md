@@ -2,9 +2,7 @@
 
 안녕하세요, 키움증권입니다.
 
-이 문서 하나만 따라 하면 **키 발급 → 설치 → 인증 → 샘플코드/Postman 실행**까지 끝낼 수 있습니다.
-처음 사용하는 분을 기준으로, 위에서 아래로 순서대로 진행하면 됩니다.
-운영체제별로 명령이 다른 곳은 `macOS/Linux`와 `Windows PowerShell`을 나누어 표기했습니다.
+이 문서 하나만 따라 하면 **키 발급 → 설치 → 인증 → 샘플코드/Postman 실행**까지 끝낼 수 있습니다. 처음 사용하는 분을 기준으로, 위에서 아래로 순서대로 진행하면 됩니다. 운영체제별로 명령이 다른 곳은 `macOS/Linux`와 `Windows PowerShell`을 나누어 표기했습니다.
 
 ---
 
@@ -15,18 +13,11 @@
   - OAuth 2개, 국내주식 226개, 미국주식 134개
 - `postman/kiwoom-openapi.postman_collection.json`
   - HTTP API 306개를 PRD/MOCK 환경별로 제공(총 요청 612개)
-- `mcp_exec/`, `mcp_spec/`: 키움 OpenAPI를 AI 에이전트에 노출하는 MCP(Model
-  Context Protocol) 서버. 사용법은 각 폴더의 `README.md`를 참고하세요.
-- `mcpb/`: 쓰는 MCP 클라이언트에 따라 **둘 중 하나만** 고르면 됩니다 —
-  Claude Desktop이면 사전 빌드 `.mcpb` 번들(`mcp_exec/`, `mcp_spec/`를
-  packing한 것), Claude Code·Codex 같은 CLI 클라이언트면 설치 스크립트
-  `setup-mcp-cli.sh`/`.ps1`. 사용법은 `mcpb/README.md`를 참고하세요.
+- `mcp_exec/`, `mcp_spec/`: 키움 OpenAPI를 AI 에이전트에 노출하는 MCP(Model Context Protocol) 서버. 사용법은 각 폴더의 `README.md`를 참고하세요.
+- `mcpb/`: 쓰는 MCP 클라이언트에 따라 **둘 중 하나만** 고르면 됩니다 — Claude Desktop이면 사전 빌드 `.mcpb` 번들(`mcp_exec/`, `mcp_spec/`를 packing한 것), Claude Code·Codex 같은 CLI 클라이언트면 설치 스크립트 `setup-mcp-cli.sh`/`.ps1`. 사용법은 `mcpb/README.md`를 참고하세요.
 - `.env.example`, `pyproject.toml`, `uv.lock`, `LICENSE.md`
 
-CLI 소스(`kiwoom_cli/`)는 이 공개 저장소에 포함되지 않습니다. CLI가 필요하면
-PyPI 패키지 `kwcli`를 별도로 설치하며, 설치 후 명령은 `kiwoomcli`입니다.
-Postman Collection에는 OAuth 2, 국내 HTTP 183, 미국 HTTP 121개가 포함되고,
-WebSocket API 31개는 Python 예제로 제공합니다.
+CLI 소스(`kiwoom_cli/`)는 이 공개 저장소에 포함되지 않습니다. CLI가 필요하면 PyPI 패키지 `kwcli`를 별도로 설치하며, 설치 후 명령은 `kiwoomcli`입니다. Postman Collection에는 OAuth 2, 국내 HTTP 183, 미국 HTTP 121개가 포함되고, WebSocket API 31개는 Python 예제로 제공합니다.
 
 ---
 
@@ -217,9 +208,7 @@ uv --version
 
 > CLI는 이 공개 저장소에 포함되지 않습니다.
 
-PyPI에서 CLI를 설치합니다. 배포 패키지 이름은 `kwcli`이며, 설치 후 사용하는
-명령은 `kiwoomcli`입니다. `uv tool install`로 설치하면 어느 폴더에서나
-`kiwoomcli` 명령을 쓸 수 있습니다.
+PyPI에서 CLI를 설치합니다. 배포 패키지 이름은 `kwcli`이며, 설치 후 사용하는 명령은 `kiwoomcli`입니다. `uv tool install`로 설치하면 어느 폴더에서나 `kiwoomcli` 명령을 쓸 수 있습니다.
 
 ### macOS/Linux
 
@@ -281,8 +270,7 @@ kiwoomcli auth status
 
 ## 6단계: CLI 사용법
 
-인증이 끝나면 별도 설치한 CLI로 국내주식과 미국주식을 조회할 수 있습니다.
-전체 명령은 `--help`로 확인합니다.
+인증이 끝나면 별도 설치한 CLI로 국내주식과 미국주식을 조회할 수 있습니다. 전체 명령은 `--help`로 확인합니다.
 
 ```bash
 kiwoomcli --help
@@ -315,8 +303,7 @@ kiwoomcli auth --help
 
 ## 7단계: 샘플코드(examples) 실행
 
-`examples/` 폴더에는 전체 337 API를 대상으로 한 함수명 예제 362개가 있습니다.
-**5단계에서 CLI로 인증을 마쳤다면 `.env` 없이 그대로 실행됩니다.**
+`examples/` 폴더에는 전체 337 API를 대상으로 한 함수명 예제 362개가 있습니다. **5단계에서 CLI로 인증을 마쳤다면 `.env` 없이 그대로 실행됩니다.**
 
 먼저 이 프로젝트 폴더로 이동해 의존성을 설치합니다.
 
@@ -346,16 +333,11 @@ uv run python "examples/미국주식/종목정보/get_overseas_stock_list.py"
 uv run python "examples/미국주식/시세/get_overseas_stock_quote.py"
 ```
 
-실행 결과는 API에 따라 `pandas.DataFrame` 또는
-`dict[str, pandas.DataFrame]` 형태입니다. 복수 테이블 응답은 `[테이블명]`
-단위로 나뉘어 표시됩니다.
+실행 결과는 API에 따라 `pandas.DataFrame` 또는 `dict[str, pandas.DataFrame]` 형태입니다. 복수 테이블 응답은 `[테이블명]` 단위로 나뉘어 표시됩니다.
 
-WebSocket 실시간 예제는 `*_async.py`, `*_pubsub.py` 두 패턴으로 제공되며
-연결을 유지하므로 장시간 실행될 수 있습니다.
+WebSocket 실시간 예제는 `*_async.py`, `*_pubsub.py` 두 패턴으로 제공되며 연결을 유지하므로 장시간 실행될 수 있습니다.
 
-> `examples/국내주식/주문/`, `examples/국내주식/신용주문/`,
-> `examples/미국주식/주문/` 아래 예제는 실제 주문/정정/취소를 수행할 수
-> 있습니다. 운영 환경에서는 반드시 파일 내용과 대상 계좌를 확인하세요.
+> `examples/국내주식/주문/`, `examples/국내주식/신용주문/`, `examples/미국주식/주문/` 아래 예제는 실제 주문/정정/취소를 수행할 수 있습니다. 운영 환경에서는 반드시 파일 내용과 대상 계좌를 확인하세요.
 
 ---
 
@@ -365,12 +347,10 @@ WebSocket 실시간 예제는 `*_async.py`, `*_pubsub.py` 두 패턴으로 제�
 
 - `PRD`: 운영 환경 HTTP 요청 306개
 - `MOCK(모의투자)`: 모의 환경 HTTP 요청 306개
-- Collection 변수: `APP_KEY`, `APP_SECRET`, `APP_KEY_MOCK`,
-  `APP_SECRET_MOCK`
+- Collection 변수: `APP_KEY`, `APP_SECRET`, `APP_KEY_MOCK`, `APP_SECRET_MOCK`
 - WebSocket API는 포함되지 않으며 `examples/`의 실시간 예제를 사용합니다.
 
-OAuth 토큰 발급 요청을 실행하면 토큰은 Collection 변수에 저장됩니다. 실제
-키와 토큰을 공유 Collection, export 파일 또는 Git에 포함하지 마세요.
+OAuth 토큰 발급 요청을 실행하면 토큰은 Collection 변수에 저장됩니다. 실제 키와 토큰을 공유 Collection, export 파일 또는 Git에 포함하지 마세요.
 
 ---
 
@@ -397,9 +377,7 @@ Copy-Item .env.example .env
 - 운영(real): `KIWOOM_MODE=real`, `APP_KEY=<운영 App Key>`, `APP_SECRET=<운영 App Secret>`
 - 모의투자(demo): `KIWOOM_MODE=demo`, `APP_KEY_MOCK=<모의 App Key>`, `APP_SECRET_MOCK=<모의 App Secret>`
 
-`.env.example`에서 사용할 mode에 맞는 운영 또는 모의투자 키를 입력합니다.
-`PRD`, `MOCK`, `W_PRD`, `W_MOCK`은 기본 키움 엔드포인트가 내장되어 있어
-기본값을 사용할 때는 수정할 필요가 없습니다.
+`.env.example`에서 사용할 mode에 맞는 운영 또는 모의투자 키를 입력합니다. `PRD`, `MOCK`, `W_PRD`, `W_MOCK`은 기본 키움 엔드포인트가 내장되어 있어 기본값을 사용할 때는 수정할 필요가 없습니다.
 
 환경에 로드합니다.
 
@@ -440,14 +418,12 @@ $env:KIWOOM_MODE
 ### 자격 증명을 찾을 수 없음 (`CredentialsNotFoundError`)
 
 - CLI 사용: `kiwoomcli setup` 완료 여부를 `kiwoomcli auth status`로 확인합니다.
-- `.env` 사용: `KIWOOM_MODE`와 현재 mode에 맞는
-  `APP_KEY(_MOCK)`/`APP_SECRET(_MOCK)`을 확인합니다.
+- `.env` 사용: `KIWOOM_MODE`와 현재 mode에 맞는 `APP_KEY(_MOCK)`/`APP_SECRET(_MOCK)`을 확인합니다.
 - CLI 인증을 쓰는 경우 로드된 `.env` 환경변수를 해제하거나 새 터미널을 사용하세요.
 
 ### 실행 mode를 찾을 수 없음 (`ModeNotConfiguredError`)
 
-- `kiwoomcli setup`으로 현재 프로필을 설정하거나 `.env`의
-  `KIWOOM_MODE=real|demo`를 로드합니다.
+- `kiwoomcli setup`으로 현재 프로필을 설정하거나 `.env`의 `KIWOOM_MODE=real|demo`를 로드합니다.
 
 ### 자격 증명 저장소를 쓸 수 없음 (`KeyringUnavailableError`)
 

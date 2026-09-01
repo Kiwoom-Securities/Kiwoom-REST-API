@@ -50,7 +50,7 @@ ENV={
 `ARGS` 안의 `{{REPO_PATH}}`는 설치 과정에서 실제 clone된 repository의 **절대 경로**로 치환합니다. 이것이 이 문서에 남아 있는 유일한 placeholder이며, Step 4에서 Agent가 치환합니다.
 
 - `KIWOOM_MODE`는 `demo`(모의투자) 또는 `real`(실전투자). 두 모드는 **서로 다른 앱 키**를 씁니다. 기본값은 `demo`로 설치합니다.
-- 주문 도구는 기본 **꺼짐**입니다. Step 1.2에서 사용자에게 묻고, 사용자가 켜기를 선택한 경우에만 exec의 ENV에 `"KIWOOM_MCP_ALLOW_ORDERS": "1"`을 추가합니다. 값이 **정확히 `1`** 일 때만 켜집니다(`true`/`yes` 무효 — 오타로 주문이 열리지 않게 설계됨). Agent가 임의로 켜지 않습니다.
+- 주문 도구는 기본 **꺼짐**입니다. Step 1.2에서 사용자에게 묻고, 사용자가 켜기를 선택한 경우에만 exec의 ENV에 `"KIWOOM_MCP_ALLOW_ORDERS": "1"`을 추가합니다. 값이 **정확히** `1`일 때만 켜집니다(`true`/`yes` 무효 — 오타로 주문이 열리지 않게 설계됨). Agent가 임의로 켜지 않습니다.
 
 ---
 
@@ -71,12 +71,12 @@ ENV={
 11. repository 경로는 MCP config에 기록하기 전에 실제 **absolute path**로 확정합니다.
 12. 예제 경로나 예제 사용자 이름을 실제 config에 쓰지 않습니다.
 13. Windows 경로는 JSON/TOML에서 안전하게 표현하고, 가능하면 `C:/Users/...` 형태의 forward slash 경로를 사용합니다.
-14. **`APP_KEY`, `APP_SECRET`의 실제 값을 사용자에게 묻거나 읽거나 출력하지 않습니다.** `.env`나 keychain을 뒤져 값을 확인하지도 않습니다.
+14. `APP_KEY`, `APP_SECRET`의 실제 값을 **사용자에게 묻거나 읽거나 출력하지 않습니다.** `.env`나 keychain을 뒤져 값을 확인하지도 않습니다.
 15. 앱 키는 config에 placeholder(`your_app_key`)로만 쓰고, 실제 값 교체는 사용자에게 안내합니다 (Step 9).
 16. 설정 파일을 저장한 뒤 JSON/TOML syntax를 검증합니다.
 17. **설정 파일이 생성됐다는 이유만으로 설치 성공이라고 판단하지 않습니다.**
 18. **MCP `tools/list` 요청이 실제로 성공해야 설치 완료입니다.**
-19. 설치 검증 목적으로 `tools/call`을 호출하지 않습니다 — 조회도, 주문은 더더욱 호출하지 않습니다. **`tools/list`까지만 수행하고 종료합니다.**
+19. 설치 검증 목적으로 `tools/call`을 호출하지 않습니다 — 조회도, 주문은 더더욱 호출하지 않습니다. `tools/list`까지만 수행하고 종료합니다.
 20. `KIWOOM_MCP_ALLOW_ORDERS`는 Step 1.2에서 사용자에게 물은 결과로만 결정합니다. 사용자가 켜기를 선택하지 않았다면 켜지 않고, 답이 모호하면 끄기로 둡니다.
 
 ---
@@ -121,8 +121,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
-> **설치 직후에는 현재 shell의 PATH에 uv가 아직 없을 수 있습니다.** 새 터미널을 요구하지
-> 말고, installer의 기본 설치 위치를 직접 확인해 그 절대 경로를 사용합니다.
+> **설치 직후에는 현재 shell의 PATH에 uv가 아직 없을 수 있습니다.** 새 터미널을 요구하지 말고, installer의 기본 설치 위치를 직접 확인해 그 절대 경로를 사용합니다.
 >
 > ```text
 > macOS   : ~/.local/bin/uv
@@ -154,10 +153,7 @@ elseif (Test-Path "$env:USERPROFILE/.local/bin/uv.exe") { "$env:USERPROFILE/.loc
 <UV_PATH> --version
 ```
 
-MCP config의 `command`에는 `uv`가 아니라 **`<UV_PATH>`를 넣습니다.** GUI 기반 MCP
-client(특히 Claude Desktop)는 shell의 PATH를 상속하지 않아서, `"command": "uv"`로 적으면
-터미널에서는 되는데 client에서만 `command not found`로 죽는 사례가 전형적입니다.
-Windows 경로는 `C:/Users/<user>/.local/bin/uv.exe` forward slash 표기로 기록합니다.
+MCP config의 `command`에는 `uv`가 아니라 `<UV_PATH>`를 넣습니다. GUI 기반 MCP client(특히 Claude Desktop)는 shell의 PATH를 상속하지 않아서, `"command": "uv"`로 적으면 터미널에서는 되는데 client에서만 `command not found`로 죽는 사례가 전형적입니다. Windows 경로는 `C:/Users/<user>/.local/bin/uv.exe` forward slash 표기로 기록합니다.
 
 ## 0.3 git 확인
 
@@ -173,8 +169,7 @@ Windows : winget install Git.Git  (또는 git-scm.com/download/win)
 Linux   : 배포판 패키지 매니저 (예: sudo apt install git)
 ```
 
-git은 Step 3의 repository clone에만 필요합니다. 이미 clone된 repository를 쓰는 경우
-(3.1) git이 없어도 진행할 수 있습니다.
+git은 Step 3의 repository clone에만 필요합니다. 이미 clone된 repository를 쓰는 경우 (3.1) git이 없어도 진행할 수 있습니다.
 
 ---
 
@@ -199,8 +194,7 @@ git은 Step 3의 repository clone에만 필요합니다. 이미 clone된 reposit
 > 주문 도구(`kiwoom_order_preview` / `kiwoom_order_submit`)를 켤까요?
 >
 > * **끄기 (기본, 권장)** — 시세·계좌 조회만 가능합니다. 나중에 설정에 한 줄 추가로 켤 수 있습니다.
-> * **켜기** — AI 대화로 **실제 주문이 전송될 수 있습니다.** 켜는 경우 클라이언트의 도구 실행
->   자동 승인을 사용하지 않는 것이 전제입니다 — 최종 안전장치는 도구 실행 승인 화면입니다.
+> * **켜기** — AI 대화로 **실제 주문이 전송될 수 있습니다.** 켜는 경우 클라이언트의 도구 실행 자동 승인을 사용하지 않는 것이 전제입니다 — 최종 안전장치는 도구 실행 승인 화면입니다.
 
 사용자가 답하지 않거나 모호하면 **끄기**로 진행합니다. Agent가 먼저 켜기를 권하지 않습니다.
 
@@ -208,8 +202,7 @@ git은 Step 3의 repository clone에만 필요합니다. 이미 clone된 reposit
 
 두 답을 받으면 다음과 같이 한 번 확인합니다.
 
-> `<SELECTED_CLIENT>`용 Local MCP 설정으로 진행하겠습니다. spec(명세 검색)과 exec(시세·계좌 조회)
-> 서버 두 개를 설치하고, 주문 도구는 <켜기|끄기(기본)>로 둡니다.
+> `<SELECTED_CLIENT>`용 Local MCP 설정으로 진행하겠습니다. spec(명세 검색)과 exec(시세·계좌 조회) 서버 두 개를 설치하고, 주문 도구는 <켜기|끄기(기본)>로 둡니다.
 
 그 이후에는 동일한 선택을 다시 묻지 않고 설치를 진행합니다.
 
@@ -309,16 +302,14 @@ MCP config에는 `~`, `%USERPROFILE%`, `%LOCALAPPDATA%` 같은 상대적 표현�
 
 # Step 5. Dependency 설치
 
-Step 0의 `<UV_PATH>`로 두 서버 directory에 대해 각각 실행합니다. `uv.lock`에 고정된
-버전만 설치됩니다.
+Step 0의 `<UV_PATH>`로 두 서버 directory에 대해 각각 실행합니다. `uv.lock`에 고정된 버전만 설치됩니다.
 
 ```bash
 <UV_PATH> sync --frozen --directory <REPO_PATH>/mcp_spec
 <UV_PATH> sync --frozen --directory <REPO_PATH>/mcp_exec
 ```
 
-> **첫 sync는 시간이 걸립니다.** Python 3.13과 의존성(pandas 포함, 약 140MB)을 받아옵니다.
-> 지금 미리 받아두기 때문에 클라이언트의 첫 기동이 timeout으로 죽지 않습니다.
+> **첫 sync는 시간이 걸립니다.** Python 3.13과 의존성(pandas 포함, 약 140MB)을 받아옵니다. 지금 미리 받아두기 때문에 클라이언트의 첫 기동이 timeout으로 죽지 않습니다.
 
 ---
 
@@ -361,23 +352,15 @@ server: kiwoom-exec
 
 설정 directory 또는 file이 없다면 생성합니다. 이미 파일이 있다면 **반드시 먼저 읽고** 기존 설정을 보존합니다.
 
-**Step 1.2에서 주문 도구 켜기를 선택한 경우**, 아래 각 예시의 `kiwoom-exec` `env`에
-`"KIWOOM_MCP_ALLOW_ORDERS": "1"`을 한 줄 추가합니다 (Codex는 `[mcp_servers.kiwoom_exec.env]`
-table에 `KIWOOM_MCP_ALLOW_ORDERS = "1"`). 끄기를 선택했으면 이 항목을 **아예 넣지 않습니다.**
+**Step 1.2에서 주문 도구 켜기를 선택한 경우**, 아래 각 예시의 `kiwoom-exec` `env`에 `"KIWOOM_MCP_ALLOW_ORDERS": "1"`을 한 줄 추가합니다 (Codex는 `[mcp_servers.kiwoom_exec.env]` table에 `KIWOOM_MCP_ALLOW_ORDERS = "1"`). 끄기를 선택했으면 이 항목을 **아예 넣지 않습니다.**
 
 ## 앱 키 전달 방식
 
-`kiwoom-exec`의 `APP_KEY`/`APP_SECRET`은 **설정 파일에 사용자가 직접 입력**하는 것이
-기본입니다. 다섯 client 모두 동일하게 동작하는 유일한 방법이고, 값은 MCP 서버
-프로세스에만 전달됩니다.
+`kiwoom-exec`의 `APP_KEY`/`APP_SECRET`은 **설정 파일에 사용자가 직접 입력**하는 것이 기본입니다. 다섯 client 모두 동일하게 동작하는 유일한 방법이고, 값은 MCP 서버 프로세스에만 전달됩니다.
 
-- Agent는 아래 예시처럼 `your_app_key` / `your_app_secret` **placeholder 상태로 파일을
-  만들어 두고**, 사용자에게 "파일을 열어 직접 값을 넣으라"고 안내합니다 (Step 9).
-  Agent가 실제 값을 채우지 않습니다.
-- 이 설정 파일들은 홈 디렉터리의 user-scope 파일입니다. **저장소 커밋·dotfiles 동기화·
-  공유 금지**를 사용자에게 안내합니다.
-- 값을 파일에 두고 싶지 않은 사용자를 위한 환경변수 참조 방식은 Step 9의 **대안** 항목에
-  있습니다 (일부 client만 지원).
+- Agent는 아래 예시처럼 `your_app_key` / `your_app_secret` **placeholder 상태로 파일을 만들어 두고**, 사용자에게 "파일을 열어 직접 값을 넣으라"고 안내합니다 (Step 9). Agent가 실제 값을 채우지 않습니다.
+- 이 설정 파일들은 홈 디렉터리의 user-scope 파일입니다. **저장소 커밋·dotfiles 동기화· 공유 금지**를 사용자에게 안내합니다.
+- 값을 파일에 두고 싶지 않은 사용자를 위한 환경변수 참조 방식은 Step 9의 **대안** 항목에 있습니다 (일부 client만 지원).
 
 ## 7.1 Cursor
 
@@ -433,9 +416,7 @@ user scope 설정 파일 `~/.claude.json`의 top-level `mcpServers`에 다음 �
 }
 ```
 
-`claude` 명령이 사용 가능하면 직접 편집 대신 아래가 더 안전합니다 (merge를 CLI가 처리).
-앱 키를 명령 인자로 넣지 않도록 `-e`에는 placeholder를 그대로 둡니다 — 실제 값은
-등록 후 사용자가 `~/.claude.json`에서 교체합니다.
+`claude` 명령이 사용 가능하면 직접 편집 대신 아래가 더 안전합니다 (merge를 CLI가 처리). 앱 키를 명령 인자로 넣지 않도록 `-e`에는 placeholder를 그대로 둡니다 — 실제 값은 등록 후 사용자가 `~/.claude.json`에서 교체합니다.
 
 ```bash
 claude mcp add kiwoom-spec -s user -- <UV_PATH> run --frozen --directory <REPO_PATH>/mcp_spec kiwoom-spec-mcp
@@ -568,8 +549,7 @@ Agent는 다음을 해서는 안 됩니다.
 
 사용자에게 다음을 안내합니다.
 
-> Step 7에서 만든 설정 파일(`<CONFIG_PATH>`)을 열어 `your_app_key` / `your_app_secret`을
-> 발급받은 실제 값으로 바꾼 뒤 저장하세요. 실제 키 값은 채팅에 입력하지 마세요.
+> Step 7에서 만든 설정 파일(`<CONFIG_PATH>`)을 열어 `your_app_key` / `your_app_secret`을 발급받은 실제 값으로 바꾼 뒤 저장하세요. 실제 키 값은 채팅에 입력하지 마세요.
 
 함께 안내할 주의사항:
 
@@ -582,9 +562,7 @@ Agent는 다음을 해서는 안 됩니다.
 
 ## 9.2 대안 — 환경변수 참조 (일부 client만)
 
-설정 파일에 값을 두고 싶지 않은 사용자에게만 안내합니다. **지원 client가 제한적입니다** —
-Claude Desktop과 Antigravity는 `${...}` 확장을 지원하지 않아 이 방식을 쓸 수 없습니다
-(Claude Desktop은 GUI 앱이라 shell 환경변수도 상속하지 않습니다).
+설정 파일에 값을 두고 싶지 않은 사용자에게만 안내합니다. **지원 client가 제한적입니다** — Claude Desktop과 Antigravity는 `${...}` 확장을 지원하지 않아 이 방식을 쓸 수 없습니다 (Claude Desktop은 GUI 앱이라 shell 환경변수도 상속하지 않습니다).
 
 | Client | Step 7 예시의 `your_app_key` 자리를 이렇게 교체 |
 | --- | --- |
@@ -592,8 +570,7 @@ Claude Desktop과 Antigravity는 `${...}` 확장을 지원하지 않아 이 방�
 | Cursor | `"${env:APP_KEY}"` |
 | Codex | `env` table에서 두 키를 지우고 `env_vars = ["APP_KEY", "APP_SECRET"]` 추가 |
 
-환경변수 설정은 사용자가 직접 합니다. 아래 명령을 **제시만** 합니다 (Agent가 실행하지
-않고, `your_app_key`도 채우지 않습니다).
+환경변수 설정은 사용자가 직접 합니다. 아래 명령을 **제시만** 합니다 (Agent가 실행하지 않고, `your_app_key`도 채우지 않습니다).
 
 ### macOS / Linux
 
@@ -610,8 +587,7 @@ source ~/.zshrc
 [System.Environment]::SetEnvironmentVariable("APP_SECRET", "your_app_secret", "User")
 ```
 
-> 설정 후 터미널과 client를 재시작해야 반영됩니다. GUI에서 실행한 client는 shell
-> 환경변수를 못 볼 수 있습니다 — 안 되면 9.1로 돌아갑니다.
+> 설정 후 터미널과 client를 재시작해야 반영됩니다. GUI에서 실행한 client는 shell 환경변수를 못 볼 수 있습니다 — 안 되면 9.1로 돌아갑니다.
 
 ---
 
@@ -645,10 +621,7 @@ MCP initialize
 
 ## 10.2 방법 A — uv 내장 검증 (기본, 추가 설치 불필요)
 
-Node.js 등 어떤 추가 runtime도 요구하지 않습니다 — Step 0에서 준비한 uv만 씁니다.
-아래 스크립트를 **임시 파일**(예: `verify_tools_list.py`)로 저장합니다. 표준 라이브러리만
-사용하며, initialize → tools/list를 수행하고 10.3의 성공 조건까지 스스로 판정합니다
-(성공 시 exit 0, 실패 시 비0).
+Node.js 등 어떤 추가 runtime도 요구하지 않습니다 — Step 0에서 준비한 uv만 씁니다. 아래 스크립트를 **임시 파일**(예: `verify_tools_list.py`)로 저장합니다. 표준 라이브러리만 사용하며, initialize → tools/list를 수행하고 10.3의 성공 조건까지 스스로 판정합니다 (성공 시 exit 0, 실패 시 비0).
 
 ```python
 """MCP stdio tools/list verifier — stdlib only (Node/npx 불필요).
@@ -711,8 +684,7 @@ if __name__ == "__main__":
     sys.exit(main())
 ```
 
-두 서버를 각각 검증합니다. Step 5에서 만든 venv의 python을 uv가 그대로 재사용하므로
-추가 다운로드가 없습니다.
+두 서버를 각각 검증합니다. Step 5에서 만든 venv의 python을 uv가 그대로 재사용하므로 추가 다운로드가 없습니다.
 
 ```bash
 <UV_PATH> run --frozen --directory <REPO_PATH>/mcp_spec python verify_tools_list.py spec_search -- \
@@ -722,13 +694,11 @@ if __name__ == "__main__":
   <UV_PATH> run --frozen --directory <REPO_PATH>/mcp_exec kiwoom-exec-mcp
 ```
 
-각 명령의 exit code가 0이고 출력의 `"found": true`이면 그 서버는 검증 성공입니다.
-임시 스크립트는 완료 후 삭제합니다.
+각 명령의 exit code가 0이고 출력의 `"found": true`이면 그 서버는 검증 성공입니다. 임시 스크립트는 완료 후 삭제합니다.
 
 ## 10.2-B 방법 B — MCP Inspector (Node.js가 이미 있는 환경)
 
-`node`/`npx`가 이미 설치된 환경에서는 공식 MCP Inspector CLI를 써도 됩니다.
-검증용 임시 JSON config를 생성합니다. **이 파일에 secret 값을 기록하지 않습니다.**
+`node`/`npx`가 이미 설치된 환경에서는 공식 MCP Inspector CLI를 써도 됩니다. 검증용 임시 JSON config를 생성합니다. **이 파일에 secret 값을 기록하지 않습니다.**
 
 ```json
 {
@@ -753,11 +723,9 @@ npx -y @modelcontextprotocol/inspector --cli \
   --config <TEMP_MCP_CONFIG_PATH> --server kiwoom-exec --method tools/list
 ```
 
-Inspector는 tools 배열만 돌려주므로 10.3의 성공 조건은 Agent가 직접 판정합니다.
-검증용 임시 config는 완료 후 삭제합니다.
+Inspector는 tools 배열만 돌려주므로 10.3의 성공 조건은 Agent가 직접 판정합니다. 검증용 임시 config는 완료 후 삭제합니다.
 
-> **Node.js가 없다고 설치하지 마세요.** 방법 A가 같은 protocol-level 검증을 추가 설치
-> 없이 수행합니다. 어떤 방법을 쓰든 **실제 MCP `tools/list`가 실행되어야 합니다.**
+> **Node.js가 없다고 설치하지 마세요.** 방법 A가 같은 protocol-level 검증을 추가 설치 없이 수행합니다. 어떤 방법을 쓰든 **실제 MCP `tools/list`가 실행되어야 합니다.**
 
 ## 10.3 성공 조건
 
@@ -804,8 +772,7 @@ protocol-level `tools/list` 검증이 성공한 뒤 해당 client가 새로운 M
 
 ### Cursor
 
-새 agent session을 시작하거나 MCP 설정을 reload합니다.
-Settings → MCP에서 `kiwoom-spec` / `kiwoom-exec`가 초록 상태인지 확인할 수 있습니다.
+새 agent session을 시작하거나 MCP 설정을 reload합니다. Settings → MCP에서 `kiwoom-spec` / `kiwoom-exec`가 초록 상태인지 확인할 수 있습니다.
 
 ### Claude Code
 
@@ -819,21 +786,17 @@ claude mcp list
 
 ### Claude Desktop
 
-Claude Desktop을 **완전히 종료한 뒤** 다시 실행합니다. 창을 닫는 것만으로는 종료되지
-않습니다 — macOS는 메뉴바에서 Quit(Cmd+Q), Windows는 시스템 트레이 아이콘에서 종료합니다.
+Claude Desktop을 **완전히 종료한 뒤** 다시 실행합니다. 창을 닫는 것만으로는 종료되지 않습니다 — macOS는 메뉴바에서 Quit(Cmd+Q), Windows는 시스템 트레이 아이콘에서 종료합니다.
 
-placeholder(`your_app_key`)를 아직 실제 값으로 바꾸지 않았다면, 재시작 후 도구 목록은
-뜨지만 실제 조회만 인증 오류가 납니다 — 정상이며, 값을 채운 뒤 한 번 더 재시작합니다.
+placeholder(`your_app_key`)를 아직 실제 값으로 바꾸지 않았다면, 재시작 후 도구 목록은 뜨지만 실제 조회만 인증 오류가 납니다 — 정상이며, 값을 채운 뒤 한 번 더 재시작합니다.
 
 ### Antigravity
 
-MCP configuration을 reload하거나 새 agent session을 시작합니다.
-Settings → Customizations의 MCP 패널에서 서버 상태를 확인할 수 있습니다.
+MCP configuration을 reload하거나 새 agent session을 시작합니다. Settings → Customizations의 MCP 패널에서 서버 상태를 확인할 수 있습니다.
 
 ### Codex
 
-Codex CLI는 새 session을 시작합니다. IDE extension을 사용하는 경우 extension을
-restart합니다. `codex mcp list`로 등록 상태를 확인할 수 있습니다.
+Codex CLI는 새 session을 시작합니다. IDE extension을 사용하는 경우 extension을 restart합니다. `codex mcp list`로 등록 상태를 확인할 수 있습니다.
 
 > 어느 client든 첫 기동은 Step 5에서 dependency를 미리 받아뒀으므로 빠르게 끝납니다.
 
@@ -912,13 +875,11 @@ macOS `command -v uv` / Windows `(Get-Command uv).Source`로 경로를 확인하
 
 ## 앱 키가 `${APP_KEY}` 문자열 그대로 서버에 전달됨
 
-9.2 대안(환경변수 참조)을 쓰는 중인데 그 client가 `${...}` 확장을 지원하지 않는
-경우입니다 (Claude Desktop, Antigravity). 9.1 기본 방식(직접 입력)으로 전환합니다.
+9.2 대안(환경변수 참조)을 쓰는 중인데 그 client가 `${...}` 확장을 지원하지 않는 경우입니다 (Claude Desktop, Antigravity). 9.1 기본 방식(직접 입력)으로 전환합니다.
 
 ## 주문 도구만 안 보인다
 
-Step 1.2에서 끄기를 선택했다면 이것은 오류가 아니라 의도된 상태입니다. 켜기를 선택했는데
-안 보인다면 `KIWOOM_MCP_ALLOW_ORDERS`가 **정확히 `1`** 인지 확인합니다.
+Step 1.2에서 끄기를 선택했다면 이것은 오류가 아니라 의도된 상태입니다. 켜기를 선택했는데 안 보인다면 `KIWOOM_MCP_ALLOW_ORDERS`가 **정확히** `1`인지 확인합니다.
 
 ## JSON / TOML parse 실패
 
@@ -961,4 +922,4 @@ Step 1.2에서 끄기를 선택했다면 이것은 오류가 아니라 의도된
 * [ ] 앱 키 값을 묻지도, 읽지도, 기록하지도 않았다.
 * [ ] 설치 검증을 위해 `tools/call` 또는 destructive operation을 실행하지 않았다.
 
-**`tools/list` 성공 전에는 설치 완료라고 보고하지 않습니다.**
+`tools/list` 성공 전에는 설치 완료라고 보고하지 않습니다.
