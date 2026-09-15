@@ -1,6 +1,6 @@
 [project]
 name = "kiwoom-spec-mcp"
-version = "1.0.0"
+version = "1.0.1"
 description = "Credential-free MCP server: Kiwoom OpenAPI spec search + example code fetched from GitHub"
 requires-python = ">=3.13"
 # 정확한 버전은 uv.lock이 고정한다(Dockerfile은 `uv sync --frozen`). 여기서는 호환

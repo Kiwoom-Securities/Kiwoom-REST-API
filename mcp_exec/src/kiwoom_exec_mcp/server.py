@@ -66,6 +66,16 @@ def _lookup(command_path: str) -> dict | None:
     return _COMMANDS.get(command_path.removeprefix("kiwoomcli ").strip())
 
 
+# maps notes 컬럼의 사용자 노출 접두 — kwcli `-h` epilog 와 같은 규약. 새 kwcli 함수에
+# 의존하지 않도록 여기서 직접 자른다(게시본 CSV에 문구가 없으면 None).
+_RESPONSE_NOTE_MARKER = "응답 주의:"
+
+
+def _response_note(notes: str) -> str | None:
+    _, found, tail = (notes or "").partition(_RESPONSE_NOTE_MARKER)
+    return f"{_RESPONSE_NOTE_MARKER} {tail.strip()}" if found and tail.strip() else None
+
+
 def _guard(command_path: str, allowed_policies: set[str]) -> list[str] | dict:
     """command_path를 검증하고 실행할 kiwoomcli argv를 돌려준다.
 
@@ -140,6 +150,10 @@ async def _guarded_query(command_path: str, options: dict | None, allowed_polici
 def kiwoom_commands(market: str = "", group: str = "") -> list[dict]:
     """Lists executable Kiwoom Securities(키움증권) OpenAPI commands with command_path, API name, and safety_policy.
 
+    Rows may carry `response_note`: a unit/encoding caveat for that command's response
+    verified against the live server (e.g. ×100 integers, saturated volumes, fields
+    whose unit depends on a request flag). Read it before interpreting kiwoom_query output.
+
     Narrow with market/group — the full list is 330+ rows.
 
     Args:
@@ -165,6 +179,7 @@ def kiwoom_commands(market: str = "", group: str = "") -> list[dict]:
             "market": path_market,
             "group": path_group,
             "safety_policy": row["safety_policy"],
+            "response_note": _response_note(row.get("notes", "")),
         })
     return out
 

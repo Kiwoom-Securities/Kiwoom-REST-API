@@ -70,8 +70,20 @@ def _command_index() -> dict[str, dict]:
             # 공식 저장소는 함수명 파일만 게시한다 (api-id 중복 파일 없음).
             "example_path": f"examples/{row['major_category']}/{row['subcategory']}/{row['function_name']}.py",
             "safety_policy": row["safety_policy"],
+            "notes": row.get("notes", ""),
         }
     return index
+
+
+# maps notes 컬럼에서 사용자·에이전트에게 노출하는 문구의 접두. kwcli 의
+# `kiwoom_cli.registry`/`commands.mapped.RESPONSE_NOTE_MARKER` 와 같은 규약이며,
+# 새 kwcli 함수에 의존하지 않도록 여기서 직접 자른다(게시본 버전과 무관하게 동작).
+_RESPONSE_NOTE_MARKER = "응답 주의:"
+
+
+def _response_note(notes: str) -> str | None:
+    _, found, tail = (notes or "").partition(_RESPONSE_NOTE_MARKER)
+    return f"{_RESPONSE_NOTE_MARKER} {tail.strip()}" if found and tail.strip() else None
 
 
 # write성 API의 예제에만 응답으로 실리는 경고. 읽기 예제는 오버헤드 없음.
@@ -140,13 +152,25 @@ def spec_search(query: str, market: str = "", group: str = "", limit: int = 10) 
 def spec_show(api_id: str) -> dict:
     """Returns the full spec of one Kiwoom Securities(키움증권) OpenAPI endpoint: HTTP method, path, and the request/response field contract.
 
+    The result also carries `cli` — the kwcli command_path and, when present,
+    `response_note`: unit/encoding corrections verified against the live server
+    (e.g. a field documented as 1주 that is actually 천주, ×100 integers, saturated
+    volumes). When `response_note` disagrees with a field description, trust the note.
+
     Args:
         api_id: Kiwoom API ID, e.g. "ka10081". Find it with spec_search.
     """
     try:
-        return dict(specs.get_api_spec(api_id))
+        payload = dict(specs.get_api_spec(api_id))
     except Exception as exc:  # unknown api_id 등
         return {"error": f"spec not found for api_id={api_id!r}: {exc}"}
+    meta = _command_index().get(api_id)
+    payload["cli"] = (
+        {"command_path": meta["command_path"], "response_note": _response_note(meta.get("notes", ""))}
+        if meta
+        else None
+    )
+    return payload
 
 
 def spec_groups() -> list[dict]:

@@ -1,6 +1,6 @@
 [project]
 name = "kiwoom-exec-mcp"
-version = "1.0.0"
+version = "1.0.1"
 description = "MCP server that executes Kiwoom OpenAPI reads (and env-gated order tools) by wrapping the kiwoomcli command"
 requires-python = ">=3.13"
 # 정확한 버전은 uv.lock이 고정한다(Dockerfile은 `uv sync --frozen`). 여기서는 호환
