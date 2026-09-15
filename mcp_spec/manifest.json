@@ -2,7 +2,7 @@
   "manifest_version": "0.4",
   "name": "kiwoom-spec-mcp",
   "display_name": "키움증권 OpenAPI Spec MCP",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "키움증권 OpenAPI의 REST/WebSocket 명세를 검색하고 실행 예제 코드를 가져옵니다.",
   "author": {
     "name": "Kiwoom Securities",

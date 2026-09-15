@@ -2,7 +2,7 @@
   "manifest_version": "0.4",
   "name": "kiwoom-exec-mcp",
   "display_name": "키움증권 OpenAPI Exec MCP",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "키움증권 CLI를 통해 OpenAPI를 실행합니다.",
   "author": {
     "name": "Kiwoom Securities",
