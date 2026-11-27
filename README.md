@@ -15,6 +15,7 @@
   - HTTP API 306개를 PRD/MOCK 환경별로 제공(총 요청 612개)
 - `mcp_exec/`, `mcp_spec/`: 키움 OpenAPI를 AI 에이전트에 노출하는 MCP(Model Context Protocol) 서버. 사용법은 각 폴더의 `README.md`를 참고하세요.
 - `mcpb/`: 쓰는 MCP 클라이언트에 따라 **둘 중 하나만** 고르면 됩니다 — Claude Desktop이면 사전 빌드 `.mcpb` 번들(`mcp_exec/`, `mcp_spec/`를 packing한 것), Claude Code·Codex 같은 CLI 클라이언트면 설치 스크립트 `setup-mcp-cli.sh`/`.ps1`. 사용법은 `mcpb/README.md`를 참고하세요.
+- `llms.txt`: ChatGPT, Claude 같은 AI 에이전트가 저장소 구조·인증·안전 규칙을 빠르게 파악하도록 정리한 안내 파일
 - `.env.example`, `pyproject.toml`, `uv.lock`, `LICENSE.md`
 
 CLI 소스(`kiwoom_cli/`)는 이 공개 저장소에 포함되지 않습니다. CLI가 필요하면 PyPI 패키지 `kwcli`를 별도로 설치하며, 설치 후 명령은 `kiwoomcli`입니다. Postman Collection에는 OAuth 2, 국내 HTTP 183, 미국 HTTP 121개가 포함되고, WebSocket API 31개는 Python 예제로 제공합니다.

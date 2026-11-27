@@ -1,0 +1,49 @@
+# Kiwoom Securities OpenAPI (Kiwoom-REST-API)
+
+> Official Python runtime, 362 function-level examples, a Postman collection, and MCP servers for the Kiwoom Securities (키움증권) REST/WebSocket OpenAPI. Covers 337 APIs for Korean stocks (KRX/NXT) and US stocks. Works on macOS, Linux, and Windows. Licensed under Apache-2.0.
+
+Key facts for AI agents:
+
+- Requirements: Python 3.13+ and `uv`. Install dependencies with `uv sync` in the repository root.
+- Authentication: the recommended path is `uv tool install kwcli`, then `kiwoomcli setup`. `kiwoomcli setup` is interactive and must be run by the human user; it stores the App Key/Secret in the OS credential store (macOS Keychain, Windows Credential Manager, Linux Secret Service). Never ask the user to paste App Keys or Secrets into a chat or tool argument.
+- If a `.env` file exists, examples use it before the CLI credentials. `.env` is only a fallback for environments without a credential store (README, Appendix A).
+- Modes: `real` (live trading) and `demo` (모의투자, paper trading) use different App Keys. Prefer `demo` when testing anything that writes.
+- Running an example: `uv run python "examples/<market>/<group>/<function_name>.py"`. Paths contain Korean characters and spaces, so always quote them.
+- Example file format: each file starts with a comment header (`api_id`, `api_name`, `category`, `sub_category`, `api_url`, `menu_path`) and defines one function named after the file. Examples call `from kiwoom import get_client`, then `client.fetch_page(api_id=..., path=..., body=..., cont_yn=..., next_key=...)`, and paginate with `response.continuation` (`cont_yn == "Y"` means more pages). Results are a `pandas.DataFrame` or `dict[str, pandas.DataFrame]`.
+- Spec lookup: all 337 API contracts are in `kiwoom/_data/kiwoom_api_spec.json`; search them with `from kiwoom import search_api_specs`, or use the `kiwoom-spec-mcp` server.
+- Safety: files under `examples/국내주식/주문/`, `examples/국내주식/신용주문/`, and `examples/미국주식/주문/` place, modify, or cancel real orders. CLI order commands require an explicit confirmation (`--confirm`). In `kiwoom-exec-mcp`, order tools are registered only when `KIWOOM_MCP_ALLOW_ORDERS` is exactly `"1"`, and `kiwoom_order_submit` sends only with `confirm=true`. Always confirm the target account and mode with the user before any order.
+
+## Docs
+
+- [README.md](README.md): Korean user guide covering App Key issuance, install, authentication, CLI, examples, Postman, and troubleshooting.
+- [SETUP-CLI.md](SETUP-CLI.md): Agent-oriented install procedure for the `kwcli` CLI (the authentication step must be done by the user).
+- [SETUP-MCP.md](SETUP-MCP.md): Install guide for the MCP servers.
+- [mcpb/README.md](mcpb/README.md): Choosing between the prebuilt Claude Desktop bundles (`.mcpb`) and the CLI-client setup scripts.
+- [LICENSE.md](LICENSE.md) and [NOTICE](NOTICE): Apache-2.0. "키움증권"/"Kiwoom" names and logos are trademarks and are not licensed.
+
+## MCP servers
+
+- [mcp_spec/README.md](mcp_spec/README.md): `kiwoom-spec-mcp`. No credentials needed. Tools: `spec_search`, `spec_show`, `spec_groups`, `get_example` (returns runnable example code from this repository).
+- [mcp_exec/README.md](mcp_exec/README.md): `kiwoom-exec-mcp`. Runs real queries with credentials injected via the MCP client `env` (`KIWOOM_MODE`, `APP_KEY`, `APP_SECRET`, or `KIWOOM_PROFILE`). Tools: `kiwoom_commands`, `kiwoom_help`, `kiwoom_query` (account numbers masked), and gated `kiwoom_order_preview` / `kiwoom_order_submit`. The `command_path` returned by `spec_search` can be passed directly to `kiwoom_query`.
+
+## Runtime (kiwoom/)
+
+- [kiwoom/__init__.py](kiwoom/__init__.py): Public API: `get_client`, `get_ws_client`, `get_auth`, `KiwoomClient`, `KiwoomWebSocketClient`, `KiwoomError`, `search_api_specs`, profile helpers.
+- [kiwoom/core/client.py](kiwoom/core/client.py): REST client with token caching and continuation (paging) handling.
+- [kiwoom/core/ws_client.py](kiwoom/core/ws_client.py): WebSocket client for realtime data.
+- [kiwoom/realtime/](kiwoom/realtime/): Realtime packet decoding, events, and schemas.
+
+## Examples (examples/)
+
+362 Python examples: OAuth 2, Korean stocks 226, US stocks 134. Folder (count):
+
+- `examples/OAuth 인증/`: issue (`create_access_token`) and revoke (`delete_access_token`) tokens (2)
+- `examples/국내주식/` (Korean stocks): 계좌 account 33, 시세 quotes 25, 실시간시세 realtime 38, 차트 charts 21, 종목정보 stock info 31, 순위정보 rankings 23, 주문 orders 8, 신용주문 credit orders 4, ELW 11, ETF 9, 업종 sectors 6, 조건검색 condition search 5, 대차거래 stock lending 4, 기관_외국인 institutional/foreign flows 3, 관심종목 watchlist 2, 테마 themes 2, 공매도 short selling 1
+- `examples/미국주식/` (US stocks): 순위정보 rankings 35, 종목정보 stock info 33, 계좌 account 28, 실시간시세 realtime 8, 차트 charts 7, 시세 quotes 5, 주문 orders 5, 조건검색 condition search 5, 환전 FX exchange 3, 관심종목 watchlist 2, 업종 sectors 2, 투자정보 investment info 1
+- Realtime (WebSocket) examples use two patterns: `*_async.py` and `*_pubsub.py`. They keep the connection open and may run for a long time.
+
+## Optional
+
+- [postman/kiwoom-openapi.postman_collection.json](postman/kiwoom-openapi.postman_collection.json): 306 HTTP APIs for both PRD and MOCK environments (612 requests). WebSocket APIs are not included.
+- [.env.example](.env.example): Fallback credential template.
+- [Kiwoom OpenAPI portal](https://openapi.kiwoom.com): App Key issuance and official API documentation.
