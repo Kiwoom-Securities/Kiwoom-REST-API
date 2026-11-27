@@ -21,6 +21,23 @@ CLI 소스(`kiwoom_cli/`)는 이 공개 저장소에 포함되지 않습니다. 
 
 ---
 
+## 라이선스
+
+이 저장소의 코드(`kiwoom/`, `examples/`, `mcp_exec/`, `mcp_spec/`, `postman/`)는 [Apache License 2.0](LICENSE.md)으로 배포됩니다. 개인·상업 프로젝트에 자유롭게 복사·수정·재배포할 수 있습니다. 재배포할 때는 `LICENSE.md`와 `NOTICE`를 함께 포함해 주세요. "키움증권" 명칭과 로고는 상표로 별도 보호되며, OpenAPI 서비스 이용은 키움증권 OpenAPI 이용약관을 따릅니다.
+
+## 커뮤니티 프로젝트 (Showcase)
+
+키움 REST API로 만든 프로젝트를 소개합니다. 아래 프로젝트는 개인 개발자가 만든 것으로 키움증권 공식 제품이 아닙니다.
+
+| 프로젝트 | 설명 |
+| --- | --- |
+| [chicago007/kiwoom_mac_trading](https://github.com/chicago007/kiwoom_mac_trading) | 영웅문 없이 macOS에서 공식 REST로 미국주식 시세·잔고 확인 후 수동 주문하는 웹앱 (자동매매 없음) |
+| [duct-tape2/hts-for-mac](https://github.com/duct-tape2/hts-for-mac) | 위 프로젝트를 확장한 macOS용 조회 전용 HTS. 국내·미국 현재가, 10단계 호가, 4차트 배치, 관심종목 (주문 기능 없음) |
+
+직접 만든 프로젝트가 있다면 [이슈](https://github.com/Kiwoom-Securities/Kiwoom-REST-API/issues/new)에 `[Showcase]`로 시작하는 제목으로 남겨 주세요. 확인 후 이 목록에 추가합니다.
+
+---
+
 ## 시작하기 전에
 
 - **인증은 PyPI CLI(`uv tool install kwcli` 후 `kiwoomcli setup`)로 하는 것을 권장합니다.** App Key/Secret이 운영체제 자격 증명 저장소(macOS Keychain, Windows 자격 증명 관리자, Linux Secret Service)에 저장되며, 프로젝트 폴더나 Git에는 저장되지 않습니다.

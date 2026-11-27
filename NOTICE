@@ -1,0 +1,9 @@
+Kiwoom OpenAPI (Kiwoom-REST-API)
+Copyright 2025-2026 Kiwoom Securities Co., Ltd. (키움증권 주식회사)
+
+This product is licensed under the Apache License, Version 2.0.
+이 저장소의 코드·샘플코드·MCP 서버는 Apache License 2.0으로 배포됩니다.
+개인·상업 프로젝트에 자유롭게 복사·수정·재배포할 수 있으며, 재배포 시 LICENSE와 이 NOTICE를 함께 포함해 주세요.
+
+"키움증권", "Kiwoom" 명칭과 로고는 키움증권 주식회사의 상표이며 Apache License 2.0 제6조에 따라 이 라이선스로 사용 허락되지 않습니다.
+키움증권 OpenAPI 서비스 자체의 이용(키 발급, 호출 한도, 거래 등)은 키움증권 OpenAPI 이용약관을 따릅니다.
