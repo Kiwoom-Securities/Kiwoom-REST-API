@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: API 사용법·오류 질문
+    url: https://github.com/Kiwoom-Securities/Kiwoom-REST-API/discussions/categories/q-a
+    about: 사용법이나 API 응답 관련 질문은 Discussions Q&A에 남겨 주세요.
+  - name: 만든 프로젝트 소개 (Showcase)
+    url: https://github.com/Kiwoom-Securities/Kiwoom-REST-API/discussions/categories/show-and-tell
+    about: 키움 API로 만든 프로젝트를 소개해 주세요. README Showcase에 소개될 수 있습니다.
+  - name: 예제·기능 제안
+    url: https://github.com/Kiwoom-Securities/Kiwoom-REST-API/discussions/categories/%EC%95%84%EC%9D%B4%EB%94%94%EC%96%B4
+    about: 필요한 예제나 기능을 제안해 주세요.
+  - name: 키움증권 OpenAPI 포털 (키 발급·이용약관)
+    url: https://openapi.kiwoom.com
+    about: App Key 발급, 서비스 이용 신청, 공식 API 문서는 포털에서 확인하세요.
