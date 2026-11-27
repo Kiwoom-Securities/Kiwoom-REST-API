@@ -1,22 +1,84 @@
-# 키움증권 OpenAPI 사용자 가이드
+# 키움증권 OpenAPI 공식 SDK · CLI · MCP
 
-안녕하세요, 키움증권입니다.
+[![PyPI kwcli](https://img.shields.io/pypi/v/kwcli?label=kwcli)](https://pypi.org/project/kwcli/)
+[![License](https://img.shields.io/github/license/Kiwoom-Securities/Kiwoom-REST-API)](LICENSE.md)
+[![Python](https://img.shields.io/badge/python-3.13%2B-blue)](https://www.python.org/downloads/)
+[![Release](https://img.shields.io/github/v/release/Kiwoom-Securities/Kiwoom-REST-API)](https://github.com/Kiwoom-Securities/Kiwoom-REST-API/releases)
 
-이 문서 하나만 따라 하면 **키 발급 → 설치 → 인증 → 샘플코드/Postman 실행**까지 끝낼 수 있습니다. 처음 사용하는 분을 기준으로, 위에서 아래로 순서대로 진행하면 됩니다. 운영체제별로 명령이 다른 곳은 `macOS/Linux`와 `Windows PowerShell`을 나누어 표기했습니다.
+국내·미국 주식 337개 API를 Python, CLI, AI 에이전트(MCP)로 바로 쓰는 키움증권 공식 저장소입니다.
+
+- macOS · Linux · Windows 모두 지원 (영웅문 설치 없이)
+- Apache 2.0: 개인·상업 프로젝트에 자유롭게 사용
+- 앱키는 OS 키체인에 저장, 주문은 명시적 확인 후에만 전송
 
 ---
 
-## 이 저장소에 포함된 것
+## MCP가 뭔가요?
 
-- `kiwoom/`: OAuth·REST·WebSocket 런타임과 전체 337 API 스펙
-- `examples/`: 함수명 기반 Python 예제 362개
-  - OAuth 2개, 국내주식 226개, 미국주식 134개
-- `postman/kiwoom-openapi.postman_collection.json`
-  - HTTP API 306개를 PRD/MOCK 환경별로 제공(총 요청 612개)
-- `mcp_exec/`, `mcp_spec/`: 키움 OpenAPI를 AI 에이전트에 노출하는 MCP(Model Context Protocol) 서버. 사용법은 각 폴더의 `README.md`를 참고하세요.
-- `mcpb/`: 쓰는 MCP 클라이언트에 따라 **둘 중 하나만** 고르면 됩니다 — Claude Desktop이면 사전 빌드 `.mcpb` 번들(`mcp_exec/`, `mcp_spec/`를 packing한 것), Claude Code·Codex 같은 CLI 클라이언트면 설치 스크립트 `setup-mcp-cli.sh`/`.ps1`. 사용법은 `mcpb/README.md`를 참고하세요.
-- `llms.txt`: ChatGPT, Claude 같은 AI 에이전트가 저장소 구조·인증·안전 규칙을 빠르게 파악하도록 정리한 안내 파일
-- `.env.example`, `pyproject.toml`, `uv.lock`, `LICENSE.md`
+MCP(Model Context Protocol)는 Claude, ChatGPT 같은 AI가 외부 프로그램을 "도구"로 쓸 수 있게 해 주는 표준 연결 방식입니다.
+MCP 서버를 연결하면 AI에게 "삼성전자 현재가 알려줘", "내 잔고 보여줘"처럼 말로 물어볼 수 있고, AI가 키움 OpenAPI를 직접 호출해 답합니다.
+
+## 키움 MCP는 CLI 기반입니다
+
+```
+Claude · Codex 등 AI  →  키움 MCP  →  kiwoomcli  →  키움 OpenAPI
+```
+
+키움 MCP는 API를 따로 감싸지 않고, 사람이 터미널에서 쓰는 공식 CLI(`kiwoomcli`)를 그대로 실행합니다.
+그래서 AI가 하는 일과 사람이 하는 일이 같은 명령, 같은 인증, 같은 안전장치를 거칩니다.
+
+| 서버 | 앱키 | 하는 일 |
+| --- | --- | --- |
+| `kiwoom-spec-mcp` | 필요 없음 | 337개 API 스펙 검색, 실행 가능한 예제 코드 반환 |
+| `kiwoom-exec-mcp` | 필요 | 시세·계좌 조회 실행, (허용 시) 주문 미리보기·전송 |
+
+## 키움 OpenAPI가 다른 점
+
+1. **사람·코드·AI가 같은 명령을 씁니다**
+   공식 CLI 하나를 CLI, Python 예제, MCP가 함께 씁니다. AI가 실행한 조회는 터미널에서 같은 `kiwoomcli` 명령으로 그대로 재현할 수 있습니다.
+2. **앱키를 파일에 적지 않습니다**
+   `kiwoomcli setup` 한 번이면 키가 OS 키체인에 저장되고, CLI·예제·MCP가 함께 씁니다. 설정 파일이나 `.env`에 평문으로 둘 필요가 없습니다.
+3. **AI 주문은 기본으로 막혀 있습니다**
+   주문 도구는 직접 켜야 등록되고, 켠 뒤에도 미리보기 → `confirm=true`를 거쳐야 전송됩니다. 키는 AI 대화나 도구 인자로 받지 않습니다.
+4. **외부 코드를 내려받아 실행하지 않습니다**
+   MCP는 설치된 공식 CLI만 실행합니다.
+5. **키 없이 바로 체험할 수 있습니다**
+   `kiwoom-spec-mcp`는 앱키 없이 337개 API 스펙 검색과 예제 코드를 제공합니다.
+
+## 30초 만에 써보기
+
+**① 키 없이 (Claude Desktop)**
+
+[`mcpb/kiwoom-spec-mcp-1.0.1.mcpb`](mcpb/) 파일을 내려받아 더블클릭해 설치한 뒤, Claude에게 "삼성전자 현재가 조회하는 코드 알려줘"라고 물어보세요.
+(시스템에 Python 3.13+와 uv가 필요합니다. 자세한 내용은 [mcpb/README.md](mcpb/README.md))
+
+**② CLI**
+
+```bash
+uv tool install kwcli
+kiwoomcli setup                               # 앱키 입력 (OS 키체인에 저장)
+kiwoomcli domestic stocks info --code 005930  # 삼성전자 종목 정보
+```
+
+**③ Python** (②의 `kiwoomcli setup`을 마친 뒤, 이 저장소에서 `uv sync`)
+
+```python
+from kiwoom import get_client
+
+res = get_client().fetch_page(api_id="ka10001", path="/api/dostk/stkinfo", body={"stk_cd": "005930"})
+print(res.body["stk_nm"], res.body["cur_prc"])
+```
+
+## 무엇이 들어있나
+
+| 구성 | 내용 |
+| --- | --- |
+| [`kiwoom/`](kiwoom/) | OAuth·REST·WebSocket 런타임, 전체 337 API 스펙 |
+| [`examples/`](examples/) | 함수명 기반 Python 예제 362개 (국내주식 226 · 미국주식 134 · OAuth 2) |
+| [`mcp_spec/`](mcp_spec/), [`mcp_exec/`](mcp_exec/) | AI 에이전트용 MCP 서버 (스펙 검색 / 조회·주문) |
+| [`mcpb/`](mcpb/) | Claude Desktop용 사전 빌드 번들, CLI 클라이언트용 설치 스크립트 |
+| [`postman/`](postman/) | HTTP API 306개, 실전·모의 환경별 요청 612개 |
+| [`llms.txt`](llms.txt) | AI 에이전트가 저장소 구조·인증·안전 규칙을 파악하기 위한 안내 |
 
 CLI 소스(`kiwoom_cli/`)는 이 공개 저장소에 포함되지 않습니다. CLI가 필요하면 PyPI 패키지 `kwcli`를 별도로 설치하며, 설치 후 명령은 `kiwoomcli`입니다. Postman Collection에는 OAuth 2, 국내 HTTP 183, 미국 HTTP 121개가 포함되고, WebSocket API 31개는 Python 예제로 제공합니다.
 
@@ -38,6 +100,12 @@ CLI 소스(`kiwoom_cli/`)는 이 공개 저장소에 포함되지 않습니다. 
 직접 만든 프로젝트가 있다면 [이슈](https://github.com/Kiwoom-Securities/Kiwoom-REST-API/issues/new)에 `[Showcase]`로 시작하는 제목으로 남겨 주세요. 확인 후 이 목록에 추가합니다.
 
 ---
+
+# 상세 설치 가이드
+
+안녕하세요, 키움증권입니다.
+
+이 가이드 하나만 따라 하면 **키 발급 → 설치 → 인증 → 샘플코드/Postman 실행**까지 끝낼 수 있습니다. 처음 사용하는 분을 기준으로, 위에서 아래로 순서대로 진행하면 됩니다. 운영체제별로 명령이 다른 곳은 `macOS/Linux`와 `Windows PowerShell`을 나누어 표기했습니다.
 
 ## 시작하기 전에
 
