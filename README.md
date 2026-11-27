@@ -97,7 +97,7 @@ CLI 소스(`kiwoom_cli/`)는 이 공개 저장소에 포함되지 않습니다. 
 | [chicago007/kiwoom_mac_trading](https://github.com/chicago007/kiwoom_mac_trading) | 영웅문 없이 macOS에서 공식 REST로 미국주식 시세·잔고 확인 후 수동 주문하는 웹앱 (자동매매 없음) |
 | [duct-tape2/hts-for-mac](https://github.com/duct-tape2/hts-for-mac) | 위 프로젝트를 확장한 macOS용 조회 전용 HTS. 국내·미국 현재가, 10단계 호가, 4차트 배치, 관심종목 (주문 기능 없음) |
 
-직접 만든 프로젝트가 있다면 [이슈](https://github.com/Kiwoom-Securities/Kiwoom-REST-API/issues/new)에 `[Showcase]`로 시작하는 제목으로 남겨 주세요. 확인 후 이 목록에 추가합니다.
+직접 만든 프로젝트가 있다면 [Discussions의 Show and tell](https://github.com/Kiwoom-Securities/Kiwoom-REST-API/discussions/categories/show-and-tell)에 소개해 주세요. 확인 후 이 목록에 추가합니다.
 
 ---
 
