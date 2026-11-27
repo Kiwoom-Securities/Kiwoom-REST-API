@@ -1,0 +1,84 @@
+name: 버그 신고
+description: SDK·CLI·MCP·예제가 예상과 다르게 동작할 때
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        버그를 알려주셔서 감사합니다.
+        **앱키, 시크릿, 토큰, 계좌번호는 절대 적지 마세요.** 로그에 있다면 가린 뒤 붙여 주세요.
+        사용법 질문은 [Discussions Q&A](https://github.com/Kiwoom-Securities/Kiwoom-REST-API/discussions/categories/q-a)에 남겨 주시면 더 빨리 답을 받을 수 있습니다.
+  - type: dropdown
+    id: component
+    attributes:
+      label: 문제가 생긴 곳
+      options:
+        - kiwoom 런타임 (Python)
+        - kwcli / kiwoomcli (CLI)
+        - kiwoom-exec-mcp
+        - kiwoom-spec-mcp
+        - Claude Desktop 번들 (.mcpb)
+        - examples 예제 코드
+        - Postman Collection
+        - 문서 (README 등)
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: 버전
+      description: "kiwoomcli --version 결과나 MCP 번들 버전"
+      placeholder: "예: kwcli 1.0.3, kiwoom-exec-mcp 1.0.1"
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: 운영체제
+      options:
+        - macOS
+        - Windows
+        - Linux
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: 실행 환경
+      options:
+        - demo (모의투자)
+        - real (실전)
+    validations:
+      required: true
+  - type: input
+    id: api
+    attributes:
+      label: 관련 API ID 또는 명령
+      placeholder: "예: ka10001, kiwoomcli domestic stocks info --code 005930"
+  - type: textarea
+    id: what
+    attributes:
+      label: 무슨 일이 있었나요? (재현 방법)
+      description: 실행한 명령이나 코드, 순서를 적어 주세요.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 기대한 결과
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: 오류 메시지·로그
+      description: 민감정보는 가린 뒤 붙여 주세요.
+      render: shell
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: 확인
+      options:
+        - label: 앱키·시크릿·토큰·계좌번호를 모두 지웠습니다.
+          required: true
